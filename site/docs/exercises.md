@@ -5,11 +5,11 @@ All exercises in one place. Tags: **[core]** everyone finishes it in class · **
 | Session | # | Exercise | Tag | Time |
 |---|---|---|---|---|
 | [S0](setup.md) | 0.1 | [Ten minutes in the terminal](#01-ten-minutes-in-the-terminal) | core | 10 min |
-| [S1](sessions/s1.md) | 1.1 | [Website under version control](#11-website-under-version-control) | core | 30 min |
-| S1 | 1.2 | [Recover a deleted file](#12-recover-a-deleted-file) | core | 15 min |
-| S1 | 1.3 | [Your course repository on GitHub](#13-your-course-repository-on-github) | core | 20 min |
-| S1 | 1.4 | [Branch, merge, conflict](#14-branch-merge-conflict) | stretch | 20 min |
-| S1 | 1.5 | [History as evidence](#15-history-as-evidence) | home | 25 min |
+| [S1](sessions/s1.md) | 1.1 | [Recipe history](#11-recipe-history) | core | 25 min |
+| S1 | 1.2 | [Scrabble counter: three merges](#12-scrabble-counter-three-merges) | core | 30 min |
+| S1 | 1.3 | [Your course repository on GitHub](#13-your-course-repository-on-github) | core | 15 min |
+| S1 | 1.4 | [Keep a trace: fork or second remote](#14-keep-a-trace-fork-or-second-remote) | stretch | 15 min |
+| [S1½](sessions/s1-collab.md) | 1.5 | [Git as a collaboration tool](sessions/s1-collab.md) (reading) | home | 40 min |
 | [S2](sessions/s2.md) | 2.1 | [A uv project from scratch](#21-a-uv-project-from-scratch) | core | 20 min |
 | S2 | 2.2 | [Notebook → script with argparse](#22-notebook-script-with-argparse) | core | 30 min |
 | S2 | 2.3 | [Secret hygiene audit](#23-secret-hygiene-audit) | home | 30 min |
@@ -43,105 +43,186 @@ All exercises in one place. Tags: **[core]** everyone finishes it in class · **
 
 ## Session 1 — Git
 
-### 1.1 Website under version control
+Two prepared repositories on GitHub, public: [`KnuxV/recipe-history`](https://github.com/KnuxV/recipe-history) and [`KnuxV/scrabble-counter`](https://github.com/KnuxV/scrabble-counter). You **clone** them (a copy on your machine) or **fork** them first (a copy on your GitHub, then clone that) — the difference is exercise 1.4 and the [Session 1½ reading](sessions/s1-collab.md#2-clone-vs-fork). Cloning is enough to do the work.
 
-**[core]** · Goal: the everyday cycle on a folder you can *see* change in a browser.
+### 1.1 Recipe history
 
-1. Download the practice site and open it in your browser ([S1 §4.1](sessions/s1.md#41-get-the-files)).
-2. Make it a repository and take the first snapshot.
-3. Make three separate edits, each followed by `git diff`, `git add`, `git commit -m`: the meetup time, the tagline, the header colour in `style.css` (`--header-bg`).
-4. Add a `notes.txt` and make Git ignore it.
+**[core]** · Goal: read a history you did not write — the skill you will use on agent-written commits — and meet `git clone` and `git remote`.
 
-**Done when** `git log --oneline` shows at least five commits and `git status` says `working tree clean`.
+```bash title="Any terminal"
+cd ~
+git clone https://github.com/KnuxV/recipe-history.git
+cd recipe-history
+git remote -v
+git log --oneline
+```
+
+**Part 0 — where did this come from?** `git remote -v` prints the address the copy came from, under the name `origin`. It is the instructor's repository: you could read it (it is public), you cannot write to it. Try `git push` — Git asks for credentials or answers `Permission denied`; either way nothing leaves your machine. Your commits will live on your laptop only, which is fine for today. (Want them online? Exercise 1.4.)
+
+**Part 1 — read the history.** Using only `git log`, `git log --oneline`, `git show <hash>` and `git diff <hash1> <hash2>` — do not open `recipe.md` in an editor yet:
+
+1. How many commits, and in one line each, what does every commit *claim* to do?
+2. One early commit fixes a typo. Which one, and what was the wrong value? (`git show` it; do not trust the message alone.)
+3. The serving size changes once. Did *every* ingredient scale by the same factor?
+4. Butter becomes oil in one commit. Does it touch only the ingredient line, or something else too?
+
+**Part 2 — bring back the original sugar without losing the serving suggestion.** A later commit cuts the sugar for a savoury version; a serving suggestion was added *after* that. Some classmates want the sweet version back, with the suggestion kept.
+
+```bash title="Any terminal, inside recipe-history"
+git log --oneline                           # find the hash of the commit just BEFORE the sugar cut
+git restore --source=<hash> recipe.md
+git diff                                    # you got more than you asked for
+```
+
+Understand why, undo that (`git restore recipe.md`), then fix it properly: edit the one sugar line by hand, `git add`, `git commit` with a message that says what you did.
 
 ??? note "Solution"
-    Sections 4.2–4.7 of the [Session 1 page](sessions/s1.md#42-git-init-start-tracking) are the solution, step by step. The expected `git log --oneline` shape:
+    Part 1: eight commits (`git log --oneline`), newest first: README, serving suggestion, sugar reduction, resting step, butter→oil, scale to 8, flour typo fix, initial recipe. `git show` on the typo commit shows the flour quantity changing; on the scale-up, check whether the eggs/milk/oil lines scaled by exactly 2 like the flour — read the `-`/`+` pairs. The butter→oil commit touches the ingredient line *and* a step ("whisk in the oil").
 
-    ```text
-    3f2a1c9 Ignore local scratch notes
-    b7e4d02 Darken the header background
-    91c0aa5 Add 'all levels welcome' to the tagline
-    5d8e7b3 Move meetup time to 7:30 PM
-    a1b2c3d Initial commit of the club website
+    Part 2: `git restore --source` replaces the **whole file** with that commit's version, so the serving suggestion (a later commit) disappears from your working copy too — `git diff` shows it as removed lines. Restore works on snapshots, not lines. Correct fix:
+
+    ```bash title="Any terminal, inside recipe-history"
+    git restore recipe.md                       # drop the whole-file restore
+    nano recipe.md                              # put the original sugar quantity back on its line only
+    git diff                                    # exactly one line changed
+    git add recipe.md
+    git commit -m "Restore the original sugar quantity"
     ```
 
-    (Hashes will differ — they depend on your name, email and the time of each commit.)
+    Check yourself: if the sugar change and the serving suggestion had been in the *same* commit, no `restore` trick would have separated them — you would edit by hand from the start. That is why Session 1 insists on one logical change per commit.
 
-### 1.2 Recover a deleted file
+### 1.2 Scrabble counter: three merges
 
-**[core]** · Goal: trust the undo button. Do this inside the `practice-site` repository from 1.1, with a clean working tree.
+**[core]** · Goal: see the three outcomes of `git merge` from [S1 §5](sessions/s1.md#5-branches-and-merges) on a real Python project, and resolve a conflict by hand.
 
-1. Delete `style.css` and `about.html` from disk (`rm`). Refresh the browser: the page is unstyled and the About link is broken.
-2. Put both files back using only Git — no retyping, no re-downloading. The browser must show the site as before.
-3. Now the harder one: the *first* commit had the meetup at `7:00 PM`. Bring the version of `index.html` from that first commit into your working copy, look at what `git diff` says, and commit it with a message that says what you did.
-4. Question to answer in one sentence: after step 3, is the "7:30 PM" commit still in the history?
+```bash title="Any terminal"
+cd ~
+git clone https://github.com/KnuxV/scrabble-counter.git
+cd scrabble-counter
+git log --oneline
+git branch -a
+```
 
-??? note "Solution"
-    ```bash title="Any terminal, inside practice-site"
-    rm style.css about.html
-    git status                       # both listed as deleted
-    git restore style.css about.html
-    git status                       # clean again
+`git branch -a` lists your one local branch, `main`, and three **remote-tracking** branches: `origin/add-readme`, `origin/german`, `origin/portuguese`. They are Git's memory of the branches on GitHub; switching to one creates a local branch that follows it:
 
-    git log --oneline                # copy the hash of "Initial commit ..."
-    git restore --source=<hash> index.html
-    git diff                         # shows 7:30 -> 7:00, and any later edits to index.html undone
-    git add index.html
-    git commit -m "Revert index.html to the original meetup time"
+```bash title="Any terminal, inside scrabble-counter"
+git switch add-readme
+git switch german
+git switch portuguese
+git switch main
+git log --oneline --all --graph
+```
+
+Read the graph: all three branches start from the same commit on `main`. Now merge them in this order and watch what Git says each time.
+
+**Merge 1 — `add-readme`.** `main` has not moved since the branch was made.
+
+```bash title="Any terminal, inside scrabble-counter — on main"
+git merge add-readme
+git log --oneline --graph
+```
+
+Expected: `Fast-forward`. No new commit; `main` simply moved up one.
+
+**Merge 2 — `german`.** `main` *has* moved now (the README commit), and `german` does not have it.
+
+```bash title="Any terminal, inside scrabble-counter — on main"
+git merge german
+git log --oneline --graph
+```
+
+Expected: an editor opens on `Merge branch 'german'` (save and quit), then `Merge made by the 'ort' strategy`. The graph shows a diamond: a merge commit with two parents. The two sides changed different lines, so Git combined them alone.
+
+**Merge 3 — `portuguese`.** Both `german` and `portuguese` added a language *at the same place* in `score.py`, and both edited the same `choices=[...]` line.
+
+```bash title="Any terminal, inside scrabble-counter — on main"
+git merge portuguese
+git status
+```
+
+Expected:
+
+```text
+Auto-merging score.py
+CONFLICT (content): Merge conflict in score.py
+Auto-merging tests/test_score.py
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+`git status` says `both modified: score.py` (the tests file merged fine on its own). Open `score.py`; there are **two** conflict blocks. Resolve both so that the program knows *both* languages: keep the German block *and* the Portuguese block in the dictionary, and one `choices` line that lists `"DE"` and `"PT"`. Delete every `<<<<<<<`, `=======`, `>>>>>>>` line. Then:
+
+```bash title="Any terminal, inside scrabble-counter"
+git add score.py
+git commit                     # accept the proposed message
+git log --oneline --graph
+python3 score.py HALLO -l DE   # The word 'HALLO' (DE) scores 9 points
+python3 score.py CASA -l PT    # The word 'CASA' (PT) scores 5 points
+```
+
+(No `python3` on your machine — typical on Git Bash? Skip the last two lines; after Session 2, `uv run score.py HALLO -l DE` works everywhere, and `uv run --with pytest pytest` runs the project's 56 tests.)
+
+**Done when** `git log --oneline --graph` shows two merge commits and both languages score correctly. Lost? `git merge --abort` puts you back to before merge 3.
+
+??? note "Solution — the resolved hunks"
+    First block: the German dictionary ends with `'Q': 10, 'Y': 10` and a closing brace; the Portuguese one follows. The only thing to add by hand is the comma after the German block's closing brace:
+
+    ```python
+            "DE": {
+                'A': 1, 'D': 1, 'E': 1, 'I': 1, 'N': 1, 'R': 1, 'S': 1, 'T': 1, 'U': 1,
+                'G': 2, 'H': 2, 'L': 2, 'O': 2,
+                'B': 3, 'M': 3, 'W': 3, 'Z': 3,
+                'C': 4, 'F': 4, 'K': 4, 'P': 4,
+                'J': 6, 'V': 6,
+                'X': 8,
+                'Q': 10, 'Y': 10
+            },
+            "PT": {
+                'A': 1, 'E': 1, 'I': 1, 'O': 1, 'S': 1, 'U': 1, 'M': 1, 'R': 1, 'T': 1,
+                'D': 2, 'L': 2, 'C': 2, 'P': 2,
+                'N': 3, 'B': 3,
+                'F': 4, 'G': 4, 'H': 4, 'V': 4,
+                'J': 5,
+                'Q': 6,
+                'X': 8, 'Z': 8
+            }
+        }
     ```
 
-    Step 4: yes. `git restore --source` changes the *working copy*; the commit you made is a new snapshot on top of the history, which still contains the 7:30 commit. Nothing was erased. (Also note that `--source` replaces the *whole file*: if you had changed the tagline in `index.html` in a later commit, that change is undone too — one file, one snapshot, not one line.)
+    Second block, one line:
+
+    ```python
+        parser.add_argument("-l", "--lang", default="EN", choices=["EN", "FR", "ES", "IT", "DE", "PT"],
+    ```
+
+    Verified: after this resolution `uv run --with pytest pytest` reports `56 passed`, and the graph reads, newest first: `Merge branch 'portuguese'` (two parents) → `Merge branch 'german'` (two parents) → `Add a README with usage` → …
 
 ### 1.3 Your course repository on GitHub
 
 **[core]** · The session's deliverable. Goal: a repository you own, on GitHub, that Sessions 2–4 will live in.
 
-Follow [S1 §7](sessions/s1.md#7-the-deliverable-your-course-repository). **Done when** your repository page on GitHub shows the README, `git status` is clean, and `git remote -v` prints your GitHub URL twice.
+Follow [S1 §6](sessions/s1.md#6-the-deliverable-your-course-repository): create `agent-lab` locally, log in with `gh auth login`, create the empty repository on GitHub, push. **Done when** `https://github.com/YOUR-USERNAME/agent-lab` shows your README, `git status` is clean, and `git remote -v` prints your GitHub URL twice.
 
 ??? note "Solution"
-    The commands are in §7 verbatim. The two mistakes to check for: the repository was created on GitHub *with* a README (then `git pull --no-rebase origin main` before the push), and the push asked for a password (then [§6.1](sessions/s1.md#61-log-in-once-from-the-terminal) was skipped).
+    The commands are in §6 verbatim. The two mistakes to check for: the repository was created on GitHub *with* a README (then `git pull --no-rebase origin main` before the push), and the push asked for a password (then [§6.2](sessions/s1.md#62-log-in-to-github-from-the-terminal-once) was skipped).
 
-### 1.4 Branch, merge, conflict
+### 1.4 Keep a trace: fork or second remote
 
-**[stretch]** · Goal: see a conflict, read the markers, resolve it by hand. Inside `practice-site`, on `main`, clean tree.
+**[stretch]** · Goal: put your exercise commits on your own GitHub, and understand why the plain clone could not be pushed. Two ways; do one.
 
-1. Create a branch `shorter-tagline`; change the tagline in `index.html` to `We build weird little projects.`; commit.
-2. Back on `main`, create a branch `friendlier-tagline`; change the *same* line to `Come build weird little projects with us — all levels welcome.`; commit.
-3. On `main`, merge `shorter-tagline` (fast-forward), then merge `friendlier-tagline`. Git stops: `CONFLICT (content): Merge conflict in index.html`.
-4. Open `index.html`, find the block between `<<<<<<<` and `>>>>>>>`, keep the version you prefer (or write a third one), delete the markers, save, `git add index.html`, `git commit` (no `-m` this time: accept the proposed message, ++ctrl+x++ in nano).
-5. `git log --oneline --graph` shows the history fork and rejoin.
+**Way A — fork first.** On [github.com/KnuxV/scrabble-counter](https://github.com/KnuxV/scrabble-counter), click **Fork** → **Create fork**. Clone *your* fork (`git clone https://github.com/YOUR-USERNAME/scrabble-counter.git`), redo exercise 1.2 in it, `git push`. It works: `origin` is yours. Then `git remote add upstream https://github.com/KnuxV/scrabble-counter.git` — the convention for "the original I forked from".
+
+**Way B — second remote on your existing clone.** Create an empty repository `scrabble-counter` on your GitHub (no README). Then, in the clone from 1.2:
+
+```bash title="Any terminal, inside scrabble-counter"
+git remote add mine https://github.com/YOUR-USERNAME/scrabble-counter.git
+git remote -v                  # origin = KnuxV (read-only for you), mine = yours
+git push -u mine main
+```
+
+A repository can have as many remotes as you like: the same commits can go to GitHub *and* to a GitLab at your institution. `origin` is a habit, not a law.
 
 ??? note "Solution"
-    ```bash title="Any terminal, inside practice-site"
-    git switch -c shorter-tagline
-    # edit the tagline line in index.html, save
-    git commit -am "Shorten the tagline"
-    git switch main
-    git switch -c friendlier-tagline
-    # edit the same line differently, save
-    git commit -am "Make the tagline friendlier"
-    git switch main
-    git merge shorter-tagline          # Fast-forward
-    git merge friendlier-tagline       # CONFLICT
-    git status                         # "both modified: index.html"
-    # edit index.html: keep one version, remove <<<<<<< ======= >>>>>>> lines, save
-    git add index.html
-    git commit                         # accept the "Merge branch ..." message
-    git log --oneline --graph
-    ```
-
-    `git commit -am` stages every *already tracked* modified file and commits in one step — handy here, dangerous when you have unrelated edits lying around.
-
-### 1.5 History as evidence
-
-**[home]** · Goal: read a history you did not write — the skill you will use on agent-written commits.
-
-A prepared repository holds a crêpe recipe with eight commits: a typo fix, a scale-up from 4 to 8 servings, a butter→oil swap, an added step, a sugar reduction, a serving suggestion, a README. Using only `git log`, `git show` and `git diff <hash> <hash>` (do not open the file in an editor for part 1):
-
-1. List every commit and what it *claims* to do; then check with `git show` whether the scale-up scaled every ingredient by the same factor.
-2. Bring the original sugar quantity back *without* losing the serving suggestion added after the sugar cut. (`git restore --source` will give you more than you asked for; understand why, undo it, and do it by hand.)
-
-TODO(verify): clone URL — the repository will be published with the exercises of Task 03.
+    Both ways end with your `main`, including the two merge commits, visible on your GitHub. Way A shows "forked from KnuxV/scrabble-counter" under the repository name; Way B does not (GitHub does not know the two are related). `git remote -v` prints two lines per remote (fetch and push); with Way B you have four lines.
 
 ## Session 2 — Python tooling
 
@@ -149,10 +230,10 @@ TODO(verify): clone URL — the repository will be published with the exercises 
 
 **[core]** · Goal: three files that make a project reproducible, and the habit of never committing `.venv`.
 
-Follow [S2 §3](sessions/s2.md#3-a-project-from-scratch) in your course repository. **Done when** a classmate can run `git clone <your repo> && cd <repo> && uv sync && uv run python -c "import polars"` without errors — swap repositories with your neighbour and check.
+Follow [S2 §3](sessions/s2.md#3-a-project-from-scratch) in your course repository. **Done when** a classmate can run `git clone <your repo> && cd agent-lab && uv sync && uv run python -c "import polars"` without errors — swap repositories with your neighbour and check.
 
 ??? note "Solution"
-    ```bash title="Any terminal, inside cours-agents"
+    ```bash title="Any terminal, inside agent-lab"
     uv init --no-package --python 3.12
     uv run main.py
     uv add polars
