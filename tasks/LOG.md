@@ -47,3 +47,14 @@ Run restricted by the instructor to the s0 class. Produced the site scaffold + t
 2. Whether Path D (Git Bash) should stay on the page at all, given the Session 4 constraint — it is currently framed as "last resort, Sessions 1–3 only, prefer Codespaces".
 3. Menu labels in §5.1 are quoted in French from the Unistra doc (Profil / Réglages / Compte / Générer une nouvelle clé); confirm on a student account.
 4. `presenterm --validate` conflict (Task 01 LOG) still open; no deck was validated in this run.
+
+### Task 02 s0 — revision after instructor review (2026-08-28)
+
+Instructor decisions applied (these deviate from SPEC Session 0 on purpose; SPEC not edited, rule 8):
+- **No forum deliverable** — `setup.md` §6 removed; index schedule now says "your terminal passes the check command". SPEC still mentions the forum post.
+- **No install clinic** — `setup.md` §8 and every clinic mention removed from the site and this log. SPEC still mentions it (Session 0 bullet + Known risks).
+- **Git Bash stays**, first-class for Session 1: Path D reframed as "quickest way to git + bash on Windows, fine for S1–S3, WSL/Codespaces needed by S4"; path table and A2 fallback text updated accordingly.
+- **Student API-key access confirmed** by the instructor → `TODO(verify): student access` admonition removed.
+- Repo pushed as `KnuxV/cours-agents`: `repo_url`/`site_url` set in `mkdocs.yml`, index links the repo. Pages source (`gh-pages`) still to be enabled after the first workflow run.
+
+Remaining TODO(verify) on the site: forum link (index), Codespaces idle/deletion defaults, GitHub Education bonus, key regeneration = rotation, `check-setup.sh` link. Plain `TODO:` for session dates and exam rubric.

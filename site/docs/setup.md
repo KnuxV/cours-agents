@@ -5,13 +5,12 @@ Do this **before Session 1**, at home, when you have time and a stable connectio
 **At the end you will have:**
 
 1. a terminal that runs Linux-style commands (`ls`, `curl`, `git`…);
-2. a personal API key for the university's LLM platform, stored as an environment variable;
-3. a post on the course forum with the output of one check command (never your key).
+2. a personal API key for the university's LLM platform, stored as an environment variable.
 
 !!! tip "How to read this page"
     - Every grey box is something to type. Use the copy button at its right edge, paste into the window named in the box title, press ++enter++.
     - A **terminal** is a window where you type commands. The **prompt** is the text it shows while waiting for you (it ends with `$` on Linux/Mac). You never type the prompt.
-    - When something fails, copy the *exact* error message into the forum thread. "It doesn't work" cannot be debugged; `0x80370102` can.
+    - When something fails, keep the *exact* error message (screenshot or copy-paste) and bring it to Session 1. "It doesn't work" cannot be debugged; `0x80370102` can.
 
 ## 0. Which path is yours?
 
@@ -19,10 +18,12 @@ Do this **before Session 1**, at home, when you have time and a stable connectio
 |---|---|---|
 | Windows 10 / 11, you can install software (admin rights) | [Path A — WSL](#path-a-windows-wsl) | 20–30 min + a reboot |
 | Mac | [Path B — Terminal](#path-b-mac) | 5–15 min |
-| Windows **without** admin rights (managed laptop), or WSL failed and the clinic is too far away | [Path C — GitHub Codespaces](#path-c-github-codespaces-the-lifeboat) | 10 min, needs a GitHub account |
-| Windows, last resort for Sessions 1–3 only | [Path D — Git Bash](#path-d-git-bash-sessions-13-only) | 10 min |
+| Windows **without** admin rights (managed laptop), or WSL failed | [Path C — GitHub Codespaces](#path-c-github-codespaces-the-lifeboat) | 10 min, needs a GitHub account |
+| Windows, quickest way to a working `git` + `bash` for Session 1 | [Path D — Git Bash](#path-d-git-bash) | 10 min |
 
-Everyone then does [section 5 (API key)](#5-your-unistra-llm-api-key) and [section 6 (forum post)](#6-the-forum-deliverable).
+Windows users: Path D (Git Bash) is the fastest way to be ready for Session 1 (git), and you can do it even if WSL is giving you trouble. Path A (WSL) is what you will need from Session 4 on, so start it early. Doing both is fine.
+
+Everyone then does [section 5 (API key)](#5-your-unistra-llm-api-key) and [section 6 (ten minutes in the terminal)](#6-ten-minutes-in-the-terminal).
 
 Codespaces is a real option, not a shameful one: it gives you the same Ubuntu terminal in a browser tab. If your laptop is locked down, go straight there.
 
@@ -32,17 +33,17 @@ WSL (*Windows Subsystem for Linux*) runs a real Ubuntu Linux inside Windows. Eve
 
 ### A1. Check your Windows version
 
-Press ++win+r++, type `winver`, press ++enter++. You need **Windows 11**, or **Windows 10 version 2004 or later (build 19041+)**. Older builds fail silently. Note the version — you will post it with your deliverable.
+Press ++win+r++, type `winver`, press ++enter++. You need **Windows 11**, or **Windows 10 version 2004 or later (build 19041+)**. Older builds fail silently. Note the version — it matters if something fails later.
 
 ### A2. Check that virtualization is enabled — *do this first*
 
-WSL needs hardware virtualization. This is the #1 cause of failure on student laptops, and the fix (a BIOS setting) cannot be done over the forum.
+WSL needs hardware virtualization. This is the #1 cause of failure on student laptops, and the fix (a BIOS setting) cannot be done remotely.
 
 1. Press ++ctrl+shift+esc++ to open Task Manager.
 2. Click **Performance** → **CPU**.
 3. In the bottom right, read the line **Virtualization: Enabled / Disabled**.
 
-If it says **Disabled**: it must be enabled in your BIOS/UEFI settings (the menu name varies: "Intel VT-x", "AMD-V", "SVM Mode", "Virtualization Technology"). If you are not comfortable doing that, **stop here, use [Path C](#path-c-github-codespaces-the-lifeboat) for now, and come to the install clinic** with your laptop.
+If it says **Disabled**: it must be enabled in your BIOS/UEFI settings (the menu name varies: "Intel VT-x", "AMD-V", "SVM Mode", "Virtualization Technology"). If you are not comfortable doing that, **stop here and use [Path D](#path-d-git-bash) or [Path C](#path-c-github-codespaces-the-lifeboat) for now**; bring the laptop to Session 1 and we will look at it together.
 
 ### A3. Install WSL
 
@@ -91,11 +92,11 @@ curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13 ...
 |---|---|---|
 | `0x80370102` | Virtualization is off (BIOS) or the *Virtual Machine Platform* Windows feature is disabled | Redo A2. If Task Manager says *Enabled*, open Start → *Turn Windows features on or off* → tick **Virtual Machine Platform** and **Windows Subsystem for Linux** → reboot. |
 | `0x8007019e` | The WSL optional component is not enabled | Same as above: tick both features, reboot, run `wsl --install` again. |
-| `0x80070003` | The distribution must be installed on the system drive (`C:`) | Free up space on `C:` or come to the clinic. |
+| `0x80070003` | The distribution must be installed on the system drive (`C:`) | Free up space on `C:`, or use Path C/D for now. |
 | Download stuck at `0.0%` | Store download blocked (VPN, proxy, network) | `wsl --install --web-download -d Ubuntu` in admin PowerShell. |
 | After install, "no installed distributions" (typical on a fresh Windows 11 24H2) | WSL is there but Ubuntu is not | `wsl --install -d Ubuntu` in admin PowerShell. |
 | Old Windows 10 build (< 19041) | `wsl --install` does nothing useful | Update Windows, or use [Path C](#path-c-github-codespaces-the-lifeboat). |
-| Anything else | | Run `wsl --update` in admin PowerShell, reboot, retry. Then post the exact message on the forum. |
+| Anything else | | Run `wsl --update` in admin PowerShell, reboot, retry. Keep the exact message for Session 1. |
 
 Known non-starters: WSL 2 cannot run inside a VirtualBox VM; some corporate VPNs break WSL networking (disconnect the VPN to test).
 
@@ -152,9 +153,9 @@ Things to know:
 
 Reference: [Codespaces quickstart](https://docs.github.com/en/codespaces/getting-started/quickstart) · [Creating a codespace from a template](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template).
 
-## Path D — Git Bash (Sessions 1–3 only)
+## Path D — Git Bash
 
-Git Bash gives a `bash` shell with `curl` and `git` on Windows, with no admin rights. It is enough for Sessions 1–3. **It is not enough for Session 4**: OpenCode has no native Windows support (its documentation recommends WSL), so a Git Bash user must switch to WSL or Codespaces before Session 4. Prefer Path C over this one.
+Git Bash gives a `bash` shell with `curl` and `git` on Windows, with no admin rights and no reboot. It is the quickest way to be ready for Session 1 (git) and it works for Sessions 2–3 as well. **It is not enough for Session 4**: OpenCode has no native Windows support (its documentation recommends WSL), so plan to have WSL (Path A) or Codespaces (Path C) working by then.
 
 1. Download and install Git for Windows from [gitforwindows.org](https://gitforwindows.org/) (default options are fine).
 2. Start → type `Git Bash` → open it. Prompt ends in `$`.
@@ -181,9 +182,6 @@ Reference: [scoop.sh](https://scoop.sh/) · [Scoop install notes](https://github
 ## 5. Your Unistra LLM API key
 
 The university runs its own LLM platform at [conversation.ia.unistra.fr](https://conversation.ia.unistra.fr/): free, hosted in Strasbourg, with an API compatible with the OpenAI format. In Session 3 you will call it from the terminal. For that you need a personal **API key** — a long string starting with `sk-` that identifies *you*.
-
-!!! warning "TODO(verify): student access"
-    The platform documentation describes login with a university account; whether **student** (not staff) accounts can generate API keys has not been confirmed with the DNUM yet. If step 5.1 shows no key section, post on the forum — it is not your mistake.
 
 ### 5.1 Generate the key
 
@@ -245,18 +243,9 @@ If instead you get `{"detail":"Your session has expired or the token is invalid.
 
 Congratulations: that was your first API call. Session 3 starts from here.
 
-## 6. The forum deliverable
-
-Post **one message** in the Session 0 thread of the course forum (link: TODO(verify)) containing:
-
-1. Your path (A/B/C/D) and, on Windows, the `winver` version.
-2. The output of the check command (A5, B3, C4 or D3).
-3. The output of `echo $UNISTRA_API_KEY | cut -c1-6` — **six characters only**. Any message containing a full `sk-...` key will be deleted and you will have to regenerate the key.
-4. If something failed: the exact error text and the step number.
-
 A script that runs all these checks and prints PASS/FAIL per item (`check-setup.sh`) will be linked here once it is ready. TODO(verify): link when Task 03 delivers it.
 
-## 7. Ten minutes in the terminal
+## 6. Ten minutes in the terminal
 
 You are going to spend the whole course in this window, so make it yours now. Type each line, look at what happens. (A fuller exercise with solutions will be on the [exercises page](exercises.md).)
 
@@ -286,10 +275,6 @@ Habits worth acquiring on day 0:
 - Text after `#` is a comment; the shell ignores it.
 
 Why the terminal at all? Because it is the interface of every server, every data pipeline, and every coding agent you are aiming to use. A chatbot tab is a demo; the terminal is where the work runs.
-
-## 8. Install clinic
-
-Optional, 30 minutes before Session 1 (TODO: date, room). Bring the laptop that failed. Typical fixes done there: BIOS virtualization, Windows features, macOS developer tools, startup-file confusion. If you are already on Codespaces and happy, you do not need to come.
 
 ## Going further (optional)
 

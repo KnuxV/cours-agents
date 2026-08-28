@@ -20,14 +20,12 @@ This is the first part of the Advanced Programming class. A later 15-hour block 
 
 | When | Session | Content | Deliverable |
 |---|---|---|---|
-| **Before Session 1** | [Session 0 — Setup](setup.md) *(homework)* | A working terminal (WSL / macOS / Codespaces) and a Unistra LLM API key | Forum post with the output of the check command |
+| **Before Session 1** | [Session 0 — Setup](setup.md) *(homework)* | A working terminal (WSL / Git Bash / macOS / Codespaces) and a Unistra LLM API key | Your terminal passes the check command |
 | TODO: date | [S1 — Git](sessions/s1.md) | Snapshots, commits, branches, GitHub. Why version control is the undo button and the audit trail of agent-written code | Your personal course repo on GitHub |
 | TODO: date | [S2 — Python tooling](sessions/s2.md) | `uv` projects and lockfiles, `argparse` (notebook → script), environment variables and secrets | A reproducible script in your repo |
 | TODO: date | [S3 — What an LLM API actually is](sessions/s3.md) | Raw `curl` calls: tokens, statelessness, constructed context, model families, **tool calling** — you *are* the harness for one round | `step1.json` → `step4` sequence committed to your repo |
 | TODO: date | [S4 — OpenCode](sessions/s4.md) | A real harness: provider config, the loop observed, permissions, `AGENTS.md`, subagents, the grill/build pattern, the A/B/C reliability experiment | `opencode.json`, `AGENTS.md`, agent definitions, spec + implementation |
 | Optional | [Replication track](replication.md) | LLM-assisted replication of a published economics paper | A short replication memo |
-
-The optional 30-minute **install clinic** before Session 1 is for anyone whose setup did not work at home. TODO: date and room.
 
 ## What you need
 
@@ -41,7 +39,7 @@ A presentation in front of the class of a coding project on a topic of your choi
 
 ## Links
 
-- Course forum: TODO(verify) — link to the Moodle/forum thread for deliverables.
-- Course repository: TODO(verify) — the fresh GitHub repo (last year's material is at [KnuxV/advanced_programming_python](https://github.com/KnuxV/advanced_programming_python)).
+- Course repository: [KnuxV/cours-agents](https://github.com/KnuxV/cours-agents) (last year's material: [KnuxV/advanced_programming_python](https://github.com/KnuxV/advanced_programming_python)).
+- Course forum: TODO(verify) — link to the Moodle/forum.
 - [Unistra AI platform](https://conversation.ia.unistra.fr/) · [Unistra API documentation](https://documentation.unistra.fr/DNUM/Intelligence_artificielle/guide_complet_IA/co/7_1API.html) (French)
 - [Exercises index](exercises.md) · [Resources](resources.md)
