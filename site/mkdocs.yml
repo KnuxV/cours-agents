@@ -1,8 +1,8 @@
 site_name: Advanced Programming for Economists
 site_description: Terminals, APIs, and coding agents — an 8h M2 course (Université de Strasbourg)
 # TODO(verify): fill in once the fresh GitHub repo exists (SPEC "Repo" — new repo, new remote).
-# repo_url: https://github.com/KnuxV/<new-repo>
-# site_url: https://knuxv.github.io/<new-repo>/
+repo_url: https://github.com/KnuxV/cours-agents
+site_url: https://Knuxv.github.io/cours-agents
 docs_dir: docs
 site_dir: _site
 
