@@ -1,0 +1,2126 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Terminals, APIs, and coding agents — an 8h M2 course (Université de Strasbourg)">
+      
+      
+      
+        <link rel="canonical" href="https://Knuxv.github.io/cours-agents/sessions/s2/">
+      
+      
+        <link rel="prev" href="../s1-collab/">
+      
+      
+        <link rel="next" href="../s3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>S2 — Python tooling - Advanced Programming for Economists</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#session-2-python-tooling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Advanced Programming for Economists" class="md-header__button md-logo" aria-label="Advanced Programming for Economists" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Advanced Programming for Economists
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              S2 — Python tooling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Advanced Programming for Economists" class="md-nav__button md-logo" aria-label="Advanced Programming for Economists" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Advanced Programming for Economists
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session 0 (homework)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Session 0 (homework)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL, explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sessions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sessions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 — Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s1-collab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1½ — Git as a collaboration tool (reading)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 — Python tooling
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 — Python tooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before class
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-it-works-on-my-machine-is-not-a-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Why: "it works on my machine" is not a result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-classic-toolkit-pip-venv-requirementstxt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The classic toolkit: pip, venv, requirements.txt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The classic toolkit: pip, venv, requirements.txt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-pip-install-and-the-one-python-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 pip install and the one-Python problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-a-virtual-environment-one-python-per-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 A virtual environment: one Python per project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-requirementstxt-the-list-you-ship" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 requirements.txt: the list you ship
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-what-is-still-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 What is still missing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-install-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Install uv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-project-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A project from scratch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. A project from scratch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-uv-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 uv init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-uv-run-the-environment-appears" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 uv run — the environment appears
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-uv-add-declare-a-dependency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 uv add — declare a dependency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-uv-sync-reproduce-it-elsewhere" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 uv sync — reproduce it elsewhere
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-commit-the-project-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Commit the project files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-from-a-notebook-cell-to-a-script-with-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. From a notebook cell to a script with arguments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. From a notebook cell to a script with arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-the-gap-this-session-closes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 The gap this session closes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-the-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 The script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-run-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Run it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-environment-variables-where-secrets-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Environment variables — where secrets live
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Environment variables — where secrets live">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-what-they-are" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 What they are
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-reading-them-from-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Reading them from Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-two-homes-for-a-secret-bashrc-or-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Two homes for a secret: ~/.bashrc or .env
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-why-the-key-never-goes-in-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Why the key never goes in the code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-bonus-polars-in-five-minutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Bonus: Polars in five minutes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-the-deliverable-checked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. The deliverable, checked
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-when-things-go-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. When things go wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 — What an LLM API is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 — OpenCode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exercises/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercises
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replication track (optional)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before class
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-it-works-on-my-machine-is-not-a-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Why: "it works on my machine" is not a result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-classic-toolkit-pip-venv-requirementstxt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The classic toolkit: pip, venv, requirements.txt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The classic toolkit: pip, venv, requirements.txt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-pip-install-and-the-one-python-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 pip install and the one-Python problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-a-virtual-environment-one-python-per-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 A virtual environment: one Python per project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-requirementstxt-the-list-you-ship" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 requirements.txt: the list you ship
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-what-is-still-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 What is still missing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-install-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Install uv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-project-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A project from scratch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. A project from scratch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-uv-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 uv init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-uv-run-the-environment-appears" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 uv run — the environment appears
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-uv-add-declare-a-dependency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 uv add — declare a dependency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-uv-sync-reproduce-it-elsewhere" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 uv sync — reproduce it elsewhere
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-commit-the-project-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Commit the project files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-from-a-notebook-cell-to-a-script-with-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. From a notebook cell to a script with arguments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. From a notebook cell to a script with arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-the-gap-this-session-closes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 The gap this session closes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-the-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 The script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-run-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Run it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-environment-variables-where-secrets-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Environment variables — where secrets live
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Environment variables — where secrets live">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-what-they-are" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 What they are
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-reading-them-from-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Reading them from Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-two-homes-for-a-secret-bashrc-or-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Two homes for a secret: ~/.bashrc or .env
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-why-the-key-never-goes-in-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Why the key never goes in the code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-bonus-polars-in-five-minutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Bonus: Polars in five minutes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-the-deliverable-checked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. The deliverable, checked
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-when-things-go-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. When things go wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="session-2-python-tooling">Session 2 — Python tooling<a class="headerlink" href="#session-2-python-tooling" title="Permanent link">&para;</a></h1>
+<p><strong>Friday 18 September 2026, 15:00–17:00, room A330 (Idem-Lab).</strong></p>
+<p>Slides: <em>to be published</em> (<code>slides/s2-tooling.md</code>). This page is the complete version.</p>
+<h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
+<p>By the end of the two hours you can:</p>
+<ol>
+<li>explain what <code>pip</code>, a virtual environment and a <code>requirements.txt</code> are — the classic toolkit you will meet in every existing project — and what they leave out;</li>
+<li>create a Python project with <code>uv</code> — pinned interpreter, declared dependencies, lockfile — and explain what each of the three files is for;</li>
+<li>turn a notebook cell with hard-coded values into a script with command-line arguments (<code>argparse</code>), run it with <code>uv run</code>, and get <code>--help</code> for free;</li>
+<li>install someone else's project in one command (<code>uv sync</code>), fork it, and extend its command line on a branch;</li>
+<li>explain what an environment variable is, store a secret for good — in <code>~/.bashrc</code> or in a <code>.env</code> file — read it from Python, and say why it never goes in code;</li>
+<li>(bonus) read a CSV with Polars and do a group-by in five lines.</li>
+</ol>
+<p><strong>Deliverable:</strong> a reproducible script committed to your course repository — <code>pyproject.toml</code>, <code>uv.lock</code>, <code>.python-version</code>, <code>report.py</code> — and <code>UNISTRA_API_KEY</code> surviving a new terminal. The second item is Session 3's prerequisite; without it, Session 3 begins with a <code>401</code>.</p>
+<h2 id="before-class">Before class<a class="headerlink" href="#before-class" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Your course repository from <a href="../s1/#6-the-deliverable-your-course-repository">Session 1</a> exists on GitHub and on your machine.</li>
+<li>Your Unistra API key is stored as an environment variable (<a href="../../setup/#5-your-unistra-llm-api-key">setup, section 5</a>). Test in a <em>new</em> terminal: <code>echo $UNISTRA_API_KEY | cut -c1-6</code> prints <code>sk-XXX</code>.</li>
+<li>Ten minutes of reading: <a href="https://docs.astral.sh/uv/guides/projects/">uv — Working on projects</a>, sections <em>Creating a new project</em> to <em>Managing dependencies</em>.</li>
+<li>Five minutes: the README of <a href="https://github.com/KnuxV/password-generator">github.com/KnuxV/password-generator</a>, the project you will fork in class.</li>
+<li>You do <strong>not</strong> need to install Python. <code>uv</code> installs the exact version the project asks for, by itself. (Section 2 uses whatever <code>python3</code> your machine already has, if any; <code>python3 --version</code> tells you.)</li>
+</ul>
+<h2 id="1-why-it-works-on-my-machine-is-not-a-result">1. Why: "it works on my machine" is not a result<a class="headerlink" href="#1-why-it-works-on-my-machine-is-not-a-result" title="Permanent link">&para;</a></h2>
+<p>Your workflow so far is Colab: open a browser, get a machine with some Python and some packages, run cells until the table appears. Which Python? Which pandas? Whatever Google installed that month. Re-run the notebook next year and the numbers may differ, or the code may not run at all — and you will not know which of the two hundred libraries changed.</p>
+<p>For a scientist that is not an inconvenience, it is a validity problem. A result nobody can reproduce, including you in six months, is a claim, not a finding. Journals and data editors now require the replication package to pin its environment (the optional <a href="../../replication/">replication track</a> is built on exactly this). Three things must be fixed for a Python project to be reproducible:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Question</th>
+<th>Answered by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The interpreter</td>
+<td>Which Python? <code>3.12</code>, not "whatever <code>python</code> is"</td>
+<td><code>.python-version</code></td>
+</tr>
+<tr>
+<td>The direct dependencies</td>
+<td>Which libraries did <em>I</em> ask for?</td>
+<td><code>pyproject.toml</code></td>
+</tr>
+<tr>
+<td>The exact resolved set</td>
+<td>Which exact versions of those, <em>and of everything they pull in</em>?</td>
+<td><code>uv.lock</code></td>
+</tr>
+</tbody>
+</table>
+<p>Python's classic answer to these questions is a trio of tools — <code>pip</code>, <code>venv</code>, <code>requirements.txt</code> — that you will meet in every project written before 2024 and in most tutorials, so section 2 shows them first. From section 3 on we use <code>uv</code>, one tool that does the same job, completely, faster, on every platform.</p>
+<h2 id="2-the-classic-toolkit-pip-venv-requirementstxt">2. The classic toolkit: <code>pip</code>, <code>venv</code>, <code>requirements.txt</code><a class="headerlink" href="#2-the-classic-toolkit-pip-venv-requirementstxt" title="Permanent link">&para;</a></h2>
+<p>Read this section on any machine; type it if <code>python3 --version</code> prints a version (WSL, Mac, Codespaces). <strong>Git Bash users: read along</strong> — there is no Python on your machine yet, and that is one of the things <code>uv</code> fixes in section 3.</p>
+<h3 id="21-pip-install-and-the-one-python-problem">2.1 <code>pip install</code> and the one-Python problem<a class="headerlink" href="#21-pip-install-and-the-one-python-problem" title="Permanent link">&para;</a></h3>
+<p>Python ships with a package installer, <strong><code>pip</code></strong>. <code>pip install polars</code> downloads polars from PyPI (the Python Package Index, the public catalogue every <code>import</code> you have ever typed came from) and copies it into the Python that ran <code>pip</code>. Colab does exactly this when a cell says <code>!pip install something</code>.</p>
+<p>On your own machine the trouble starts with the word <em>the</em>. There is one Python, and every project installs into it. Your thesis needs pandas 1.5; a tutorial you follow next week installs pandas 2.3 on top; the thesis code now breaks, and six months later you cannot say which of the two hundred packages in that Python your thesis actually used. The system Python on Ubuntu and macOS is also used by the operating system itself, which is why <code>pip install</code> there is refused outright on recent versions (<code>externally-managed-environment</code>).</p>
+<h3 id="22-a-virtual-environment-one-python-per-project">2.2 A virtual environment: one Python per project<a class="headerlink" href="#22-a-virtual-environment-one-python-per-project" title="Permanent link">&para;</a></h3>
+<p>The fix, since 2012, is the <strong>virtual environment</strong>: a folder inside the project that holds a private Python and its own packages. Make one by hand, once, to see what it is:</p>
+<div class="highlight"><span class="filename">Ubuntu window, Terminal (Mac), or Codespace terminal</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>~/venv-demo
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>~/venv-demo
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>ls<span class="w"> </span>-a
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>ls<span class="w"> </span>.venv/bin
+</code></pre></div>
+<p><code>python3 -m venv .venv</code> creates the folder <code>.venv</code> (the name is a convention). Inside, <code>bin/</code> holds a <code>python</code>, a <code>pip</code>, and a script called <code>activate</code>. Nothing is installed yet. (On WSL, if this complains about <code>ensurepip</code>, Ubuntu ships Python without that piece: <code>sudo apt install python3-venv</code>, then retry.)</p>
+<p>Now <strong>activate</strong> it:</p>
+<div class="highlight"><span class="filename">Same terminal, inside venv-demo</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>which<span class="w"> </span>python
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>pip<span class="w"> </span>install<span class="w"> </span>polars
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import polars; print(polars.__version__)"</span>
+</code></pre></div>
+<p>Three things to notice. Your prompt now starts with <code>(.venv)</code>. <code>which python</code> answers <code>/home/you/venv-demo/.venv/bin/python</code> — the private one, not <code>/usr/bin/python3</code>. And <code>pip install polars</code> therefore went into <code>.venv</code>, nowhere else. Activation is nothing magical: <code>activate</code> puts <code>.venv/bin</code> at the front of your <code>PATH</code> for this window, so that <code>python</code> and <code>pip</code> resolve to the private copies.</p>
+<p>Prove the isolation, then leave:</p>
+<div class="highlight"><span class="filename">Same terminal</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>deactivate
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>which<span class="w"> </span>python
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import polars"</span>
+</code></pre></div>
+<p>After <code>deactivate</code> the prompt is back to normal, <code>which python</code> is the system Python again (or nothing), and the import fails with <code>ModuleNotFoundError: No module named 'polars'</code>: polars exists only inside <code>venv-demo/.venv</code>. That is the whole idea — <strong>one environment per project, and the project's folder is the unit of reproducibility</strong>.</p>
+<p>For recognition only: on Windows (outside WSL) the scripts live in <code>.venv\Scripts\</code> instead of <code>.venv/bin/</code>, so tutorials say <code>.venv\Scripts\activate</code>. Same thing.</p>
+<h3 id="23-requirementstxt-the-list-you-ship">2.3 <code>requirements.txt</code>: the list you ship<a class="headerlink" href="#23-requirementstxt-the-list-you-ship" title="Permanent link">&para;</a></h3>
+<p>An environment is not shareable — it is a folder full of compiled files for <em>your</em> machine — but the <em>list</em> of what is in it is. The convention is a text file, <code>requirements.txt</code>, one package per line, produced by <code>pip freeze</code>:</p>
+<div class="highlight"><span class="filename">Same terminal, inside venv-demo</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>requirements.txt
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>cat<span class="w"> </span>requirements.txt
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>deactivate
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>polars==1.44.1
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>polars-runtime-32==1.44.1
+</code></pre></div>
+<p>Whoever receives the project runs the three-line ritual you will find in thousands of READMEs — create, activate, install from the list:</p>
+<div class="highlight"><span class="filename">The recipient&#x27;s side (do not run it now)</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</code></pre></div>
+<p>You have now seen every piece of the classic toolkit: <code>pip</code> installs, <code>venv</code> isolates, <code>requirements.txt</code> transmits.</p>
+<h3 id="24-what-is-still-missing">2.4 What is still missing<a class="headerlink" href="#24-what-is-still-missing" title="Permanent link">&para;</a></h3>
+<p>Look at the two lines of <code>requirements.txt</code> against the three-layer table of section 1:</p>
+<ul>
+<li><strong>Which Python?</strong> Not in the file. The recipient's <code>python3</code> may be 3.9 or 3.14; polars 1.44 may not even install on one of them.</li>
+<li><strong>What did <em>I</em> ask for?</strong> You asked for <code>polars</code>; <code>polars-runtime-32</code> came along with it. <code>pip freeze</code> flattens direct and indirect dependencies into one list, so a year later nobody knows which lines can be removed.</li>
+<li><strong>Is it really the same file?</strong> Version numbers, no checksums. Rare, but a package can be re-uploaded under the same version.</li>
+<li><strong>Three commands and a trap.</strong> "Did you activate?" is the most common support question in any Python course: <code>(.venv)</code> is missing from the prompt, <code>python</code> is the system one, and the error is <code>No module named polars</code> although you installed it — into the other Python.</li>
+</ul>
+<p><code>uv</code> keeps the good idea (the <code>.venv</code> folder — the same folder, with the same layout) and fixes the four gaps: the Python version is pinned in a file, your direct dependencies are declared in <code>pyproject.toml</code>, the exact resolved set with hashes is written to <code>uv.lock</code>, and activation is done for you on every command. The rest of the session is that. Clean up first:</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>~
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>rm<span class="w"> </span>-rf<span class="w"> </span>~/venv-demo
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Classic</th>
+<th><code>uv</code> (sections 3–4)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>python3 -m venv .venv</code></td>
+<td><code>uv venv</code> — or nothing: <code>uv run</code> creates it when needed</td>
+</tr>
+<tr>
+<td><code>source .venv/bin/activate</code> then <code>python x.py</code></td>
+<td><code>uv run x.py</code></td>
+</tr>
+<tr>
+<td><code>pip install polars</code></td>
+<td><code>uv add polars</code></td>
+</tr>
+<tr>
+<td><code>pip freeze &gt; requirements.txt</code></td>
+<td><code>uv.lock</code>, written automatically</td>
+</tr>
+<tr>
+<td><code>pip install -r requirements.txt</code></td>
+<td><code>uv sync</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-install-uv">3. Install <code>uv</code><a class="headerlink" href="#3-install-uv" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">WSL (Ubuntu) / Mac / Codespaces</label><label for="__tabbed_1_2">Git Bash</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><span class="filename">Ubuntu window, Terminal (Mac), or Codespace terminal</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><code>uv</code> is a Windows program here; install it from PowerShell, then use it from Git Bash.</p>
+<div class="highlight"><span class="filename">Windows PowerShell (NOT administrator)</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">ByPass</span> <span class="n">-c</span> <span class="s2">"irm https://astral.sh/uv/install.ps1 | iex"</span>
+</code></pre></div>
+<p>If you installed Scoop during setup, <code>scoop install main/uv</code> works too. TODO(verify): confirm on a Windows laptop that Git Bash finds <code>uv</code> after a new window (the installer adds it to the Windows user PATH; Git Bash inherits it).</p>
+</div>
+</div>
+</div>
+<p>The installer puts <code>uv</code> in <code>~/.local/bin</code> and adds that folder to your PATH — <strong>for future terminals</strong>. So, the ritual you learned in Session 0: close the terminal, open a new one, then:</p>
+<div class="highlight"><span class="filename">Any terminal — new window</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>uv<span class="w"> </span>--version
+</code></pre></div>
+<p>Expected: <code>uv 0.12.x</code> (any 0.12 or later is fine). Commands checked against <a href="https://docs.astral.sh/uv/getting-started/installation/">uv — Installation</a>.</p>
+<h2 id="4-a-project-from-scratch">4. A project from scratch<a class="headerlink" href="#4-a-project-from-scratch" title="Permanent link">&para;</a></h2>
+<h3 id="41-uv-init">4.1 <code>uv init</code><a class="headerlink" href="#41-uv-init" title="Permanent link">&para;</a></h3>
+<p>Go into your course repository and initialise a project <strong>in place</strong> (no folder name after <code>init</code>; the project takes the folder's name):</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>~/agent-lab
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>uv<span class="w"> </span>init<span class="w"> </span>--no-package<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>ls<span class="w"> </span>-a
+</code></pre></div>
+<p>Two flags, both deliberate:</p>
+<ul>
+<li><code>--python 3.12</code> pins the interpreter. Without it, <code>uv</code> picks the newest Python it can find — different on every laptop, and your lockfiles would disagree with your neighbour's and with Codespaces.</li>
+<li><code>--no-package</code> gives the simple layout: one <code>main.py</code> at the top. (Since uv 0.12 the default is a <code>src/</code> package layout with a build system — right for libraries, noise for us.)</li>
+</ul>
+<p>Expected files (plus your <code>.git</code>, <code>README.md</code> and <code>.gitignore</code> from Session 1):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>.python-version   pyproject.toml   main.py
+</code></pre></div>
+<ul>
+<li><code>.python-version</code> contains <code>3.12</code>. Every <code>uv</code> command in this folder uses that Python — downloading it first if needed.</li>
+<li><code>pyproject.toml</code> is the project's declaration: name, the Python requirement, and an empty <code>dependencies = []</code> list. This is the standard file every Python tool reads.</li>
+<li><code>main.py</code> is a hello-world.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title"><code>uv init</code> inside an existing git repository</p>
+<p><code>uv</code> notices the <code>.git</code> you created in Session 1 and does not create a second one. It also does not write a <code>.gitignore</code> in that case — which is why Session 1 made you write one with <code>.venv/</code> in it.</p>
+</div>
+<h3 id="42-uv-run-the-environment-appears">4.2 <code>uv run</code> — the environment appears<a class="headerlink" href="#42-uv-run-the-environment-appears" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>uv<span class="w"> </span>run<span class="w"> </span>main.py
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>ls<span class="w"> </span>-a
+</code></pre></div>
+<p>The first run prints a few lines — <code>Using CPython 3.12.x</code>, <code>Creating virtual environment at: .venv</code> — then <code>Hello from agent-lab!</code>. A new folder <code>.venv</code> exists. That is the <strong>virtual environment</strong> of section 2.2 — the very same kind of folder: <code>ls .venv/bin</code> shows the same <code>activate</code>, <code>python</code> and <code>pip</code>, and packages will land in the same place. Two differences. It holds a private Python <strong>3.12</strong>, the version pinned in <code>.python-version</code>, whatever <code>python3</code> your machine has (or has not). And you never activate it by hand: <code>uv run &lt;something&gt;</code> means "run this with the project's <code>.venv</code>", so the "did you activate?" trap of section 2.4 disappears. (If a tutorial insists, <code>source .venv/bin/activate</code> works on a <code>uv</code>-made environment too; <code>deactivate</code> leaves it.)</p>
+<p><code>.venv</code> is machine-specific and large. It is <strong>never committed</strong> — it is in your <code>.gitignore</code>, and <code>uv</code> also drops a <code>.gitignore</code> inside it as a belt-and-braces. Anyone who clones your repo recreates it in seconds from the lockfile (section 4.4).</p>
+<h3 id="43-uv-add-declare-a-dependency">4.3 <code>uv add</code> — declare a dependency<a class="headerlink" href="#43-uv-add-declare-a-dependency" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>uv<span class="w"> </span>add<span class="w"> </span>polars
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>cat<span class="w"> </span>pyproject.toml
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>ls<span class="w"> </span>-a
+</code></pre></div>
+<p>Three things happened:</p>
+<ol>
+<li><code>pyproject.toml</code> now says <code>dependencies = ["polars&gt;=1.44.1"]</code> — <em>what you asked for</em>, with a lower bound.</li>
+<li>A new file, <strong><code>uv.lock</code></strong>, lists the <em>exact</em> version of polars and of everything polars depends on, with a cryptographic hash of each downloaded file. Open it (<code>head -20 uv.lock</code>); you will never edit it by hand, but you will always commit it.</li>
+<li>Polars was installed into <code>.venv</code>.</li>
+</ol>
+<p>Check it works:</p>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import polars; print(polars.__version__)"</span>
+</code></pre></div>
+<p>Expected: <code>1.44.1</code> (or later, if you add it after this page was written). To remove a dependency: <code>uv remove polars</code>. To see the tree: <code>uv tree</code>.</p>
+<div class="admonition quote">
+<p class="admonition-title"><code>pyproject.toml</code> is the wish, <code>uv.lock</code> is the receipt</p>
+<p>The first says "I need polars, at least 1.44". The second says "on 18 September 2026 that resolved to polars 1.44.1, polars-runtime-32 1.44.1, these exact files". Both are committed; the receipt is what makes the result reproducible next year.</p>
+</div>
+<h3 id="44-uv-sync-reproduce-it-elsewhere">4.4 <code>uv sync</code> — reproduce it elsewhere<a class="headerlink" href="#44-uv-sync-reproduce-it-elsewhere" title="Permanent link">&para;</a></h3>
+<p>This is the other half of the story. On any other machine (a classmate's laptop, a Codespace, the university cluster):</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR-USERNAME/agent-lab.git
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">cd</span><span class="w"> </span>agent-lab
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>uv<span class="w"> </span>sync
+</code></pre></div>
+<p><code>uv sync</code> reads <code>.python-version</code> and <code>uv.lock</code>, fetches that exact Python if missing, and rebuilds <code>.venv</code> identically. Same numbers, guaranteed by hashes. (<code>uv run</code> does this implicitly too; <code>uv sync</code> is the explicit form you put in a README.) This is the one-line replacement for the three-line ritual of section 2.3, and it is how you will install the <a href="https://github.com/KnuxV/password-generator">password generator</a> in exercise 2.3.</p>
+<div class="admonition note">
+<p class="admonition-title">A project that only has a <code>requirements.txt</code></p>
+<p>Older projects have no <code>pyproject.toml</code> or <code>uv.lock</code>, only the frozen list. <code>uv</code> reads it: inside the cloned folder, <code>uv init --no-package --python 3.12</code> then <code>uv add -r requirements.txt</code> turns every line into a declared dependency and writes the lockfile; from then on, <code>uv run</code> and <code>uv sync</code> as usual. (There is also <code>uv pip install -r requirements.txt</code>, a drop-in for <code>pip</code> that installs into <code>.venv</code> without declaring anything — fine for a one-off, not for a project you keep.)</p>
+</div>
+<h3 id="45-commit-the-project-files">4.5 Commit the project files<a class="headerlink" href="#45-commit-the-project-files" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>git<span class="w"> </span>status
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>git<span class="w"> </span>add<span class="w"> </span>pyproject.toml<span class="w"> </span>uv.lock<span class="w"> </span>.python-version<span class="w"> </span>main.py
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Initialise uv project with polars"</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>git<span class="w"> </span>push
+</code></pre></div>
+<p><code>git status</code> must <strong>not</strong> list <code>.venv</code> — if it does, your <code>.gitignore</code> is missing the <code>.venv/</code> line; add it before committing.</p>
+<h2 id="5-from-a-notebook-cell-to-a-script-with-arguments">5. From a notebook cell to a script with arguments<a class="headerlink" href="#5-from-a-notebook-cell-to-a-script-with-arguments" title="Permanent link">&para;</a></h2>
+<h3 id="51-the-gap-this-session-closes">5.1 The gap this session closes<a class="headerlink" href="#51-the-gap-this-session-closes" title="Permanent link">&para;</a></h3>
+<p>In a notebook, a parameter is a variable you edit at the top of the cell and re-run:</p>
+<div class="highlight"><span class="filename">What it looks like in Colab</span><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">CSV_FILE</span> <span class="o">=</span> <span class="s2">"sales.csv"</span>      <span class="c1"># edit here…</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="n">TOP</span> <span class="o">=</span> <span class="mi">3</span>                     <span class="c1"># …and here, then Shift+Enter</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="n">df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">CSV_FILE</span><span class="p">)</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="n">result</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>    <span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">((</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"units"</span><span class="p">)</span> <span class="o">*</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"unit_price"</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">))</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>    <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>    <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>    <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">TOP</span><span class="p">)</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="p">)</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="n">result</span>
+</code></pre></div>
+<p>That works for one person, once. It cannot be run on ten files in a loop, scheduled every night, called by a colleague who does not open notebooks, or — in Session 4 — called by an agent that needs to <em>test</em> your code. The industry form of the same thing is a <strong>script with arguments</strong>: <code>uv run report.py sales.csv --top 3</code>. The values that used to be "edit the cell" are now typed on the command line.</p>
+<p>Get the toy data (nine rows, invented; columns <code>region, product, units, unit_price</code>):</p>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>curl<span class="w"> </span>-LO<span class="w"> </span>https://knuxv.github.io/cours-agents/files/sales.csv
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>head<span class="w"> </span>-3<span class="w"> </span>sales.csv
+</code></pre></div>
+<h3 id="52-the-script">5.2 The script<a class="headerlink" href="#52-the-script" title="Permanent link">&para;</a></h3>
+<p>Create <code>report.py</code> with the following content (<code>nano report.py</code>, paste, <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-o">O</kbd></span>, <span class="keys"><kbd class="key-enter">Enter</kbd></span>, <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-x">X</kbd></span> — or VS Code). Also downloadable: <a href="../../files/report.py">report.py</a>.</p>
+<div class="highlight"><span class="filename">report.py</span><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="sd">"""Total revenue per region from a sales CSV. Usage: uv run report.py sales.csv --top 2"""</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Revenue per region from a sales CSV."</span><span class="p">)</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"csv_file"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"path to the CSV (columns: region, product, units, unit_price)"</span><span class="p">)</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--top"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"how many regions to show (default: 3)"</span><span class="p">)</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--product"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"keep only this product (default: all)"</span><span class="p">)</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">csv_file</span><span class="p">)</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">product</span><span class="p">:</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"product"</span><span class="p">)</span> <span class="o">==</span> <span class="n">args</span><span class="o">.</span><span class="n">product</span><span class="p">)</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>        <span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">((</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"units"</span><span class="p">)</span> <span class="o">*</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"unit_price"</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">))</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>        <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)</span>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>        <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>        <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>        <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>    <span class="p">)</span>
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a>
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<p>Read it top to bottom; four ideas carry the whole of <code>argparse</code>:</p>
+<ul>
+<li><strong>A parser</strong> describes what the command accepts. The <code>description</code> shows up in <code>--help</code>.</li>
+<li><strong>A positional argument</strong> (<code>csv_file</code>) is required and identified by its position: <code>report.py sales.csv</code>.</li>
+<li><strong>An option</strong> (<code>--top</code>, <code>--product</code>) starts with <code>--</code>, is optional, and can have a <code>default</code> and a <code>type</code>. <code>type=int</code> converts the text <code>"2"</code> to the number <code>2</code> <em>and</em> rejects <code>"two"</code> with a clean error.</li>
+<li><strong><code>parse_args()</code></strong> returns an object; <code>args.top</code> is your old <code>TOP</code> variable. The rest of the function is the notebook cell, unchanged, with the two constants replaced.</li>
+</ul>
+<p>The <code>if __name__ == "__main__":</code> line means "run <code>main()</code> only when this file is executed as a script, not when it is imported". You will see it in every Python script from now on; type it, do not question it yet.</p>
+<h3 id="53-run-it">5.3 Run it<a class="headerlink" href="#53-run-it" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>uv<span class="w"> </span>run<span class="w"> </span>report.py<span class="w"> </span>sales.csv<span class="w"> </span>--top<span class="w"> </span><span class="m">2</span>
+</code></pre></div>
+<p>Expected:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>shape: (2, 2)
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>┌──────────┬─────────┐
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>│ region   ┆ revenue │
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>│ ---      ┆ ---     │
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>│ str      ┆ f64     │
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>╞══════════╪═════════╡
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>│ Bretagne ┆ 937.5   │
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>│ Alsace   ┆ 828.5   │
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>└──────────┴─────────┘
+</code></pre></div>
+<p>Now the things you got for free:</p>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>uv<span class="w"> </span>run<span class="w"> </span>report.py<span class="w"> </span>--help
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>uv<span class="w"> </span>run<span class="w"> </span>report.py<span class="w"> </span>sales.csv<span class="w"> </span>--product<span class="w"> </span>tea
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>uv<span class="w"> </span>run<span class="w"> </span>report.py
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>uv<span class="w"> </span>run<span class="w"> </span>report.py<span class="w"> </span>sales.csv<span class="w"> </span>--top<span class="w"> </span>two
+</code></pre></div>
+<ul>
+<li><code>--help</code> prints a usage message built from your <code>help=</code> strings — documentation that cannot drift from the code.</li>
+<li>The third command fails with <code>error: the following arguments are required: csv_file</code>, the fourth with <code>argument --top: invalid int value: 'two'</code>, both with exit code 2 and no Python traceback. Input validation, without writing any.</li>
+</ul>
+<p>Commit:</p>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>git<span class="w"> </span>add<span class="w"> </span>report.py<span class="w"> </span>sales.csv
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Add revenue report script with argparse"</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>git<span class="w"> </span>push
+</code></pre></div>
+<p>Deeper: <a href="https://docs.python.org/3/howto/argparse.html">Python HOWTO — Argparse Tutorial</a> (official, incremental) and last year's <a href="https://github.com/KnuxV/advanced_programming_python/blob/main/lessons/07-arguments/071-argv_argparse.md">complete class guide</a> (<code>sys.argv</code>, flags, choices, mutually exclusive groups — well past what you need this week).</p>
+<h2 id="6-environment-variables-where-secrets-live">6. Environment variables — where secrets live<a class="headerlink" href="#6-environment-variables-where-secrets-live" title="Permanent link">&para;</a></h2>
+<h3 id="61-what-they-are">6.1 What they are<a class="headerlink" href="#61-what-they-are" title="Permanent link">&para;</a></h3>
+<p>Every program you start receives a small dictionary of named values from the shell that started it: the <strong>environment</strong>. Some are set by the system (<code>HOME</code>, your home folder; <code>PATH</code>, the folders searched for commands); any you like can be added. Look at yours:</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$HOME</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$PATH</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-5
+</code></pre></div>
+<p><code>$NAME</code> reads a variable in the shell. Set one for <em>this window only</em>:</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GREETING</span><span class="o">=</span><span class="s2">"bonjour"</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$GREETING</span>
+</code></pre></div>
+<p>Open a second terminal window and run <code>echo $GREETING</code> there: empty. <code>export</code> affects the current shell and the programs it launches, nothing else. To make a variable exist in every future window, the line goes in the shell's <strong>startup file</strong> — <code>~/.bashrc</code> on WSL, Codespaces and Git Bash, <code>~/.zshrc</code> on a Mac — which is exactly what <a href="../../setup/#52-store-it-as-an-environment-variable">setup section 5.2</a> had you do for <code>UNISTRA_API_KEY</code>. Confirm it took, in a new window:</p>
+<div class="highlight"><span class="filename">Any terminal — new window</span><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$UNISTRA_API_KEY</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c1-6
+</code></pre></div>
+<p>If that prints an empty line, fix it now (wrong file, or the terminal was not reopened); Session 3 depends on it.</p>
+<h3 id="62-reading-them-from-python">6.2 Reading them from Python<a class="headerlink" href="#62-reading-them-from-python" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">whoami.py</span><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"UNISTRA_API_KEY"</span><span class="p">)</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s2">"UNISTRA_API_KEY is not set. See the setup page, section 5."</span><span class="p">)</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"key found, starts with"</span><span class="p">,</span> <span class="n">key</span><span class="p">[:</span><span class="mi">6</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>uv<span class="w"> </span>run<span class="w"> </span>whoami.py
+</code></pre></div>
+<p>Expected: <code>key found, starts with sk-XXX</code>. <code>os.environ</code> is the environment as a dictionary; <code>.get()</code> returns <code>None</code> instead of crashing when the name is absent, so the script can fail with a <em>sentence</em> rather than a <code>KeyError</code> traceback. Failing loudly and early on a missing secret is the correct behaviour — an agent reading that message knows what to do; one reading a traceback guesses.</p>
+<h3 id="63-two-homes-for-a-secret-bashrc-or-env">6.3 Two homes for a secret: <code>~/.bashrc</code> or <code>.env</code><a class="headerlink" href="#63-two-homes-for-a-secret-bashrc-or-env" title="Permanent link">&para;</a></h3>
+<p>The key has to live <em>somewhere</em> on disk, or you would type it at every run. Two places are legitimate; you have used the first, and many projects you clone will expect the second.</p>
+<p><strong>Home A — the shell's startup file.</strong> What <a href="../../setup/#52-store-it-as-an-environment-variable">setup section 5.2</a> did: one <code>export UNISTRA_API_KEY="sk-XXXX"</code> line in <code>~/.bashrc</code> (or <code>~/.zshrc</code>). Scope: <em>you</em>, on <em>this machine</em>, in every terminal and every project. Nothing to add to any repository. Right for a personal key you use everywhere — and it is what <code>curl</code> will read in Session 3, so keep it.</p>
+<p><strong>Home B — a <code>.env</code> file in the project folder.</strong> A plain text file named exactly <code>.env</code>, one <code>NAME=value</code> per line, no <code>export</code>, no spaces around <code>=</code>:</p>
+<div class="highlight"><span class="filename">.env — inside agent-lab (create it with nano or VS Code)</span><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>UNISTRA_API_KEY=sk-XXXX
+</code></pre></div>
+<p>Scope: <em>this project</em>, for <em>whoever runs it</em> — a classmate, a Codespace, a CI job, a Docker container, an agent. The project declares which variables it needs; each copy of the project supplies its own values. Python does not read <code>.env</code> by itself; the <code>python-dotenv</code> package does, and it is a dependency like any other:</p>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>uv<span class="w"> </span>add<span class="w"> </span>python-dotenv
+</code></pre></div>
+<div class="highlight"><span class="filename">whoami.py — the .env-aware version</span><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="n">load_dotenv</span><span class="p">()</span>  <span class="c1"># reads .env in the current folder, if there is one</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"UNISTRA_API_KEY"</span><span class="p">)</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s2">"UNISTRA_API_KEY is not set. See the setup page, section 5."</span><span class="p">)</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"key found, starts with"</span><span class="p">,</span> <span class="n">key</span><span class="p">[:</span><span class="mi">6</span><span class="p">])</span>
+</code></pre></div>
+<p><code>load_dotenv()</code> copies each line of <code>.env</code> into <code>os.environ</code>, and the rest of the script is unchanged: it still reads the environment, it does not know or care where the value came from. A variable that already exists in the shell <strong>wins</strong> over the file (<code>load_dotenv</code> does not override), so Home A and Home B coexist without surprise.</p>
+<p>Now the part that matters. <strong><code>.env</code> is never committed.</strong> Your <code>.gitignore</code> from Session 1 already has the line; check that Git really ignores the file, then look at <code>git status</code>:</p>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>git<span class="w"> </span>check-ignore<span class="w"> </span>-v<span class="w"> </span>.env
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>git<span class="w"> </span>status
+</code></pre></div>
+<p>Expected: <code>.gitignore:2:.env    .env</code> — the rule, its line number, the file — and a <code>git status</code> in which <code>.env</code> does <strong>not</strong> appear (<code>whoami.py</code>, <code>pyproject.toml</code> and <code>uv.lock</code> do; commit those). If <code>.env</code> shows up as untracked, add the line: <code>echo ".env" &gt;&gt; .gitignore</code>. The convention for telling others <em>which</em> variables to fill in is a second file, <code>.env.example</code>, with the names and placeholder values, which <strong>is</strong> committed:</p>
+<div class="highlight"><span class="filename">.env.example — committed</span><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>UNISTRA_API_KEY=sk-XXXX
+</code></pre></div>
+<p>Which home for the course? Keep A — Session 3's <code>curl</code> commands need the shell variable. Add B the day you share or deploy a project, and you will recognise it in every repository that ships a <code>.env.example</code>.</p>
+<h3 id="64-why-the-key-never-goes-in-the-code">6.4 Why the key never goes in the code<a class="headerlink" href="#64-why-the-key-never-goes-in-the-code" title="Permanent link">&para;</a></h3>
+<p>Three reasons, in increasing order of seriousness.</p>
+<ol>
+<li><strong>Configuration is not code.</strong> The same script runs with your key on your laptop, with a colleague's on theirs, with a test key in CI. Hard-coding it means editing the code to change who runs it. (<a href="https://12factor.net/config">The Twelve-Factor App — Config</a>, two paragraphs, is the canonical statement.)</li>
+<li><strong>Git remembers forever.</strong> You learned in Session 1 that a commit is permanent. A key pasted in <code>report.py</code>, committed, then deleted in the next commit is <em>still in the history</em>, and <code>git log -p</code> shows it to anyone with the repository. Bots scan public GitHub for <code>sk-</code> strings within minutes of a push.</li>
+<li><strong>Agents copy what they see.</strong> In Session 4 an agent will read your files to work on them. A key in the code ends up in its context, its logs, and possibly its next commit.</li>
+</ol>
+<p>So: the secret lives in the environment — put there by <code>~/.bashrc</code> or by a <code>.env</code> file that Git ignores; the code reads <code>os.environ</code>; the repository contains the <em>name</em> of the variable (in the README, or in <code>.env.example</code>), never its value. A <code>.env</code> file committed "just this once" is exactly reason 2: it is in the history for good.</p>
+<div class="admonition danger">
+<p class="admonition-title">If a key was ever committed</p>
+<p>Deleting it from the file does nothing. Regenerate the key (<a href="../../setup/#51-generate-the-key">setup 5.1</a>) so the leaked one is worthless, then fix the repository. Come and see us; rewriting history is possible but is not a beginner operation.</p>
+</div>
+<h2 id="7-bonus-polars-in-five-minutes">7. Bonus: Polars in five minutes<a class="headerlink" href="#7-bonus-polars-in-five-minutes" title="Permanent link">&para;</a></h2>
+<p>You already used it in <code>report.py</code>. Polars is a DataFrame library like pandas, written in Rust: much faster, stricter about types, and built around <strong>expressions</strong> — <code>pl.col("units") * pl.col("unit_price")</code> describes a computation, and Polars runs it in an optimised plan — instead of pandas' chained indexing. Coming from pandas, the three habits to relearn:</p>
+<table>
+<thead>
+<tr>
+<th>pandas</th>
+<th>Polars</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df[df["product"] == "tea"]</code></td>
+<td><code>df.filter(pl.col("product") == "tea")</code></td>
+</tr>
+<tr>
+<td><code>df["revenue"] = df["units"] * df["unit_price"]</code></td>
+<td><code>df.with_columns((pl.col("units") * pl.col("unit_price")).alias("revenue"))</code></td>
+</tr>
+<tr>
+<td><code>df.groupby("region")["revenue"].sum()</code></td>
+<td><code>df.group_by("region").agg(pl.col("revenue").sum())</code></td>
+</tr>
+</tbody>
+</table>
+<p>Try it live:</p>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import polars as pl; df = pl.read_csv('sales.csv'); print(df.describe())"</span>
+</code></pre></div>
+<p>Read next: <a href="https://docs.pola.rs/user-guide/migration/pandas/">Polars — Coming from pandas</a>. The <a href="#exercises">stretch exercise</a> times the two libraries on a larger file.</p>
+<h2 id="8-the-deliverable-checked">8. The deliverable, checked<a class="headerlink" href="#8-the-deliverable-checked" title="Permanent link">&para;</a></h2>
+<p>In your course repository:</p>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>git<span class="w"> </span>status<span class="w">                                   </span><span class="c1"># working tree clean, .venv not listed</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>ls<span class="w"> </span>pyproject.toml<span class="w"> </span>uv.lock<span class="w"> </span>.python-version<span class="w"> </span>report.py<span class="w"> </span>sales.csv
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>uv<span class="w"> </span>run<span class="w"> </span>report.py<span class="w"> </span>sales.csv<span class="w"> </span>--top<span class="w"> </span><span class="m">2</span><span class="w">           </span><span class="c1"># the table above</span>
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-3<span class="w">                  </span><span class="c1"># your Session 2 commits, pushed</span>
+</code></pre></div>
+<p>And in a <strong>new</strong> terminal window:</p>
+<div class="highlight"><span class="filename">Any terminal — new window</span><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>uv<span class="w"> </span>--version
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$UNISTRA_API_KEY</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c1-6
+</code></pre></div>
+<p>Both must print something. A script that runs these checks for you (<code>check-setup.sh</code>) will be linked here once ready — TODO(verify): Task 03.</p>
+<h2 id="9-when-things-go-wrong">9. When things go wrong<a class="headerlink" href="#9-when-things-go-wrong" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uv: command not found</code> right after installing</td>
+<td>PATH is read when a terminal starts</td>
+<td>Open a new terminal. Still nothing on WSL/Mac: <code>source ~/.bashrc</code> (or <code>~/.zshrc</code>)</td>
+</tr>
+<tr>
+<td><code>uv init</code> says a <code>pyproject.toml</code> already exists</td>
+<td>You ran it twice</td>
+<td>Nothing to do</td>
+</tr>
+<tr>
+<td><code>python3 -m venv</code> fails with <code>ensurepip is not available</code> (WSL)</td>
+<td>Ubuntu ships Python without <code>venv</code></td>
+<td><code>sudo apt install python3-venv</code>, retry</td>
+</tr>
+<tr>
+<td><code>pip install</code> refused: <code>externally-managed-environment</code></td>
+<td>You are installing into the system Python</td>
+<td>Activate a virtual environment first — or use <code>uv add</code></td>
+</tr>
+<tr>
+<td><code>(.venv)</code> not in the prompt, <code>No module named X</code> although you installed it</td>
+<td>Environment not activated; <code>python</code> is the system one</td>
+<td><code>source .venv/bin/activate</code> — or <code>uv run</code>, which never has this problem</td>
+</tr>
+<tr>
+<td>Your <code>uv.lock</code> differs from a classmate's for the same <code>pyproject.toml</code></td>
+<td>Different Python pinned</td>
+<td>Both check <code>cat .python-version</code>; it must say <code>3.12</code></td>
+</tr>
+<tr>
+<td><code>No module named polars</code></td>
+<td>You ran <code>python report.py</code> instead of <code>uv run report.py</code></td>
+<td>Always <code>uv run</code></td>
+</tr>
+<tr>
+<td><code>git status</code> shows hundreds of files under <code>.venv</code></td>
+<td><code>.gitignore</code> missing <code>.venv/</code></td>
+<td><code>echo ".venv/" &gt;&gt; .gitignore</code>, then <code>git status</code> again</td>
+</tr>
+<tr>
+<td><code>echo $UNISTRA_API_KEY</code> is empty in a new window</td>
+<td>Line went in the wrong startup file, or the window is not new</td>
+<td><code>echo $SHELL</code>; <code>bash</code> → <code>~/.bashrc</code>, <code>zsh</code> → <code>~/.zshrc</code>; redo <a href="../../setup/#52-store-it-as-an-environment-variable">setup 5.2</a></td>
+</tr>
+<tr>
+<td><code>.env</code> exists but Python says the variable is not set</td>
+<td><code>load_dotenv()</code> not called, or <code>.env</code> is in another folder (it reads the <em>current</em> directory)</td>
+<td><code>ls -a</code> in the folder you run from; the file is named exactly <code>.env</code></td>
+</tr>
+<tr>
+<td><code>git status</code> lists <code>.env</code></td>
+<td><code>.gitignore</code> is missing the line</td>
+<td><code>echo ".env" &gt;&gt; .gitignore</code>. If it was already committed: see the red box in section 6.4</td>
+</tr>
+<tr>
+<td><code>Failed to hardlink files; falling back to full copy</code> warning</td>
+<td>Cache and project on different drives (e.g. work kept under <code>/mnt/c</code> in WSL)</td>
+<td>Harmless. Better: keep projects in <code>~</code> — see <a href="../../wsl/#where-to-keep-your-work">where to keep your work</a></td>
+</tr>
+<tr>
+<td>Arguments with spaces or <code>*</code> behave oddly</td>
+<td>Shell quoting</td>
+<td>Quote them: <code>--product "green tea"</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="10-cheat-sheet">10. Cheat sheet<a class="headerlink" href="#10-cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uv init --no-package --python 3.12</code></td>
+<td>New project in the current folder, flat layout, Python pinned</td>
+</tr>
+<tr>
+<td><code>uv add &lt;pkg&gt;</code> / <code>uv remove &lt;pkg&gt;</code></td>
+<td>Declare / undeclare a dependency (updates <code>pyproject.toml</code> and <code>uv.lock</code>)</td>
+</tr>
+<tr>
+<td><code>uv run &lt;script.py&gt; [args]</code></td>
+<td>Run inside the project's environment (creates it if needed)</td>
+</tr>
+<tr>
+<td><code>uv sync</code></td>
+<td>Rebuild <code>.venv</code> exactly from <code>uv.lock</code></td>
+</tr>
+<tr>
+<td><code>uv tree</code></td>
+<td>Show installed packages and their dependencies</td>
+</tr>
+<tr>
+<td><code>uv python install 3.12</code></td>
+<td>Fetch a Python version (usually implicit)</td>
+</tr>
+<tr>
+<td><code>export NAME="value"</code></td>
+<td>Set a variable for this window</td>
+</tr>
+<tr>
+<td><code>echo 'export NAME="value"' &gt;&gt; ~/.bashrc</code></td>
+<td>…for every future window (<code>~/.zshrc</code> on Mac)</td>
+</tr>
+<tr>
+<td><code>echo $NAME</code> / <code>env</code></td>
+<td>Read one / all variables</td>
+</tr>
+<tr>
+<td><code>os.environ.get("NAME")</code></td>
+<td>Read it from Python (<code>None</code> if unset)</td>
+</tr>
+<tr>
+<td><code>load_dotenv()</code> (package <code>python-dotenv</code>)</td>
+<td>Also read a <code>.env</code> file in the current folder into the environment</td>
+</tr>
+<tr>
+<td><code>python3 -m venv .venv</code> / <code>source .venv/bin/activate</code> / <code>deactivate</code></td>
+<td>Classic: create / enter / leave a virtual environment by hand</td>
+</tr>
+<tr>
+<td><code>pip install -r requirements.txt</code> / <code>pip freeze &gt; requirements.txt</code></td>
+<td>Classic: install from / write the frozen list (<code>uv sync</code> / <code>uv.lock</code> do this)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercises">Exercises<a class="headerlink" href="#exercises" title="Permanent link">&para;</a></h2>
+<p>Full statements on the <a href="../../exercises/#session-2-python-tooling">exercises page</a>.</p>
+<ol>
+<li><strong>[core] A uv project from scratch</strong> — sections 4.1–4.5 in your course repo; done when a classmate can <code>git clone</code> it and <code>uv sync</code> without errors.</li>
+<li><strong>[core] Notebook → script</strong> — section 5 with <code>report.py</code>, then add a third argument of your choice (e.g. <code>--region</code> to filter by region, or <code>--csv</code> to print CSV instead of a table).</li>
+<li><strong>[core] Fork and extend the password generator</strong> — fork <a href="https://github.com/KnuxV/password-generator">KnuxV/password-generator</a>, <code>uv sync</code>, read its <code>argparse</code> command line with us, then add <code>--separator</code> and <code>--numbers</code> on two branches.</li>
+<li><strong>[home] Secret hygiene audit</strong> — a provided repository in which an API key was committed, then "removed". Find it in the history, list every place it leaked, write the two commands that would have prevented it. TODO(verify): starter repo published with the exercises of Task 03.</li>
+<li><strong>[stretch] Polars vs pandas</strong> — load a larger CSV with both, time the same group-by, and write three lines on the difference in <em>how you express</em> the computation, not just the speed.</li>
+</ol>
+<h2 id="going-further">Going further<a class="headerlink" href="#going-further" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="https://docs.astral.sh/uv/guides/projects/">uv docs — Working on projects</a> — <code>init</code>/<code>add</code>/<code>run</code>/<code>lock</code>/<code>sync</code> on one page.</li>
+<li><a href="https://docs.python.org/3/library/venv.html">Python docs — <code>venv</code></a> and <a href="https://packaging.python.org/en/latest/tutorials/installing-packages/">Installing packages with pip</a> — the classic toolkit, from the source; <a href="https://github.com/KnuxV/advanced_programming_python/blob/main/lessons/02-python-env.md">last year's lesson</a> walks through it at class pace.</li>
+<li><a href="https://docs.python.org/3/howto/argparse.html">Python HOWTO — Argparse Tutorial</a> — official, incremental, exactly the notebook→script scope.</li>
+<li><a href="https://12factor.net/config">The Twelve-Factor App — Config</a> — the two paragraphs that settle "why environment variables"; <a href="https://github.com/theskumar/python-dotenv">python-dotenv — README</a> for the <code>.env</code> conventions.</li>
+<li><a href="https://docs.pola.rs/user-guide/migration/pandas/">Polars — Coming from pandas</a> — the bridge for this audience.</li>
+<li><em>Ambitious:</em> <a href="https://missing.csail.mit.edu/2020/shell-tools/">The Missing Semester — Shell Tools and Scripting</a> — variables, <code>$()</code>, scripts, <code>~/.bashrc</code>: from "I run commands" to "I automate them".</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.tabs.link", "navigation.sections", "navigation.top", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1580 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Terminals, APIs, and coding agents — an 8h M2 course (Université de Strasbourg)">
+      
+      
+      
+        <link rel="canonical" href="https://Knuxv.github.io/cours-agents/exercises/">
+      
+      
+        <link rel="prev" href="../sessions/s4/">
+      
+      
+        <link rel="next" href="../resources/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Exercises - Advanced Programming for Economists</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#exercises" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Advanced Programming for Economists" class="md-header__button md-logo" aria-label="Advanced Programming for Economists" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Advanced Programming for Economists
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Exercises
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Advanced Programming for Economists" class="md-nav__button md-logo" aria-label="Advanced Programming for Economists" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Advanced Programming for Economists
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session 0 (homework)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Session 0 (homework)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL, explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sessions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sessions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 — Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s1-collab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1½ — Git as a collaboration tool (reading)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 — Python tooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 — What an LLM API is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 — OpenCode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercises
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercises
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#session-0-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session 0 — Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Session 0 — Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-ten-minutes-in-the-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.1 Ten minutes in the terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#session-1-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session 1 — Git
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Session 1 — Git">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-recipe-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Recipe history
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-scrabble-counter-three-merges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Scrabble counter: three merges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-your-course-repository-on-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Your course repository on GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-keep-a-trace-fork-or-second-remote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Keep a trace: fork or second remote
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#session-2-python-tooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session 2 — Python tooling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Session 2 — Python tooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-a-uv-project-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 A uv project from scratch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-notebook-script-with-argparse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Notebook → script with argparse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-fork-and-extend-the-password-generator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Fork and extend the password generator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-secret-hygiene-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Secret hygiene audit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-polars-vs-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Polars vs pandas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replication track (optional)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#session-0-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session 0 — Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Session 0 — Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-ten-minutes-in-the-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.1 Ten minutes in the terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#session-1-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session 1 — Git
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Session 1 — Git">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-recipe-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Recipe history
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-scrabble-counter-three-merges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Scrabble counter: three merges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-your-course-repository-on-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Your course repository on GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-keep-a-trace-fork-or-second-remote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Keep a trace: fork or second remote
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#session-2-python-tooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session 2 — Python tooling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Session 2 — Python tooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-a-uv-project-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 A uv project from scratch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-notebook-script-with-argparse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Notebook → script with argparse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-fork-and-extend-the-password-generator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Fork and extend the password generator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-secret-hygiene-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Secret hygiene audit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-polars-vs-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Polars vs pandas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="exercises">Exercises<a class="headerlink" href="#exercises" title="Permanent link">&para;</a></h1>
+<p>All exercises in one place. Tags: <strong>[core]</strong> everyone finishes it in class · <strong>[stretch]</strong> for students who are ahead · <strong>[home]</strong> homework. Sessions 3 and 4 will be added when those pages are published. Starter repositories and reference solutions are being prepared (Task 03); where a link is missing it is marked TODO(verify).</p>
+<table>
+<thead>
+<tr>
+<th>Session</th>
+<th>#</th>
+<th>Exercise</th>
+<th>Tag</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../setup/">S0</a></td>
+<td>0.1</td>
+<td><a href="#01-ten-minutes-in-the-terminal">Ten minutes in the terminal</a></td>
+<td>core</td>
+<td>10 min</td>
+</tr>
+<tr>
+<td><a href="../sessions/s1/">S1</a></td>
+<td>1.1</td>
+<td><a href="#11-recipe-history">Recipe history</a></td>
+<td>core</td>
+<td>25 min</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>1.2</td>
+<td><a href="#12-scrabble-counter-three-merges">Scrabble counter: three merges</a></td>
+<td>core</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>1.3</td>
+<td><a href="#13-your-course-repository-on-github">Your course repository on GitHub</a></td>
+<td>core</td>
+<td>15 min</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>1.4</td>
+<td><a href="#14-keep-a-trace-fork-or-second-remote">Keep a trace: fork or second remote</a></td>
+<td>stretch</td>
+<td>15 min</td>
+</tr>
+<tr>
+<td><a href="../sessions/s1-collab/">S1½</a></td>
+<td>1.5</td>
+<td><a href="../sessions/s1-collab/">Git as a collaboration tool</a> (reading)</td>
+<td>home</td>
+<td>40 min</td>
+</tr>
+<tr>
+<td><a href="../sessions/s2/">S2</a></td>
+<td>2.1</td>
+<td><a href="#21-a-uv-project-from-scratch">A uv project from scratch</a></td>
+<td>core</td>
+<td>20 min</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>2.2</td>
+<td><a href="#22-notebook-script-with-argparse">Notebook → script with argparse</a></td>
+<td>core</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>2.3</td>
+<td><a href="#23-fork-and-extend-the-password-generator">Fork and extend the password generator</a></td>
+<td>core</td>
+<td>40 min</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>2.4</td>
+<td><a href="#24-secret-hygiene-audit">Secret hygiene audit</a></td>
+<td>home</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>2.5</td>
+<td><a href="#25-polars-vs-pandas">Polars vs pandas</a></td>
+<td>stretch</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>—</td>
+<td><em>Published with Session 3</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>S4</td>
+<td>—</td>
+<td><em>Published with Session 4</em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="session-0-setup">Session 0 — Setup<a class="headerlink" href="#session-0-setup" title="Permanent link">&para;</a></h2>
+<h3 id="01-ten-minutes-in-the-terminal">0.1 Ten minutes in the terminal<a class="headerlink" href="#01-ten-minutes-in-the-terminal" title="Permanent link">&para;</a></h3>
+<p><strong>[core]</strong> · Goal: the six commands you will type a hundred times — <code>pwd</code>, <code>ls</code>, <code>cd</code>, <code>mkdir</code>, <code>cp</code>, <code>mv</code> — plus <code>cat</code>, <code>echo</code>, <code>rm</code>.</p>
+<ol>
+<li>Follow <a href="../setup/#6-ten-minutes-in-the-terminal">setup, section 6</a> line by line.</li>
+<li>Then, without looking: create a folder <code>sandbox</code> in your home, inside it a file <code>a.txt</code> containing the word <code>one</code>, copy it to <code>b.txt</code>, rename <code>b.txt</code> to <code>c.txt</code>, list the folder with details, and delete <code>c.txt</code>.</li>
+<li>Expected final state: <code>ls sandbox</code> prints <code>a.txt</code> only; <code>cat sandbox/a.txt</code> prints <code>one</code>.</li>
+</ol>
+<details class="note">
+<summary>Solution</summary>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir<span class="w"> </span>sandbox
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>sandbox
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"one"</span><span class="w"> </span>&gt;<span class="w"> </span>a.txt
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>cp<span class="w"> </span>a.txt<span class="w"> </span>b.txt
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>mv<span class="w"> </span>b.txt<span class="w"> </span>c.txt
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>ls<span class="w"> </span>-la
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>rm<span class="w"> </span>c.txt
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>ls
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>cat<span class="w"> </span>a.txt
+</code></pre></div>
+</details>
+<h2 id="session-1-git">Session 1 — Git<a class="headerlink" href="#session-1-git" title="Permanent link">&para;</a></h2>
+<p>Two prepared repositories on GitHub, public: <a href="https://github.com/KnuxV/recipe-history"><code>KnuxV/recipe-history</code></a> and <a href="https://github.com/KnuxV/scrabble-counter"><code>KnuxV/scrabble-counter</code></a>. You <strong>clone</strong> them (a copy on your machine) or <strong>fork</strong> them first (a copy on your GitHub, then clone that) — the difference is exercise 1.4 and the <a href="../sessions/s1-collab/#2-clone-vs-fork">Session 1½ reading</a>. Cloning is enough to do the work.</p>
+<h3 id="11-recipe-history">1.1 Recipe history<a class="headerlink" href="#11-recipe-history" title="Permanent link">&para;</a></h3>
+<p><strong>[core]</strong> · Goal: read a history you did not write — the skill you will use on agent-written commits — and meet <code>git clone</code> and <code>git remote</code>.</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>~
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/KnuxV/recipe-history.git
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">cd</span><span class="w"> </span>recipe-history
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>git<span class="w"> </span>remote<span class="w"> </span>-v
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline
+</code></pre></div>
+<p><strong>Part 0 — where did this come from?</strong> <code>git remote -v</code> prints the address the copy came from, under the name <code>origin</code>. It is the instructor's repository: you could read it (it is public), you cannot write to it. Try <code>git push</code> — Git asks for credentials or answers <code>Permission denied</code>; either way nothing leaves your machine. Your commits will live on your laptop only, which is fine for today. (Want them online? Exercise 1.4.)</p>
+<p><strong>Part 1 — read the history.</strong> Using only <code>git log</code>, <code>git log --oneline</code>, <code>git show &lt;hash&gt;</code> and <code>git diff &lt;hash1&gt; &lt;hash2&gt;</code> — do not open <code>recipe.md</code> in an editor yet:</p>
+<ol>
+<li>How many commits, and in one line each, what does every commit <em>claim</em> to do?</li>
+<li>One early commit fixes a typo. Which one, and what was the wrong value? (<code>git show</code> it; do not trust the message alone.)</li>
+<li>The serving size changes once. Did <em>every</em> ingredient scale by the same factor?</li>
+<li>Butter becomes oil in one commit. Does it touch only the ingredient line, or something else too?</li>
+</ol>
+<p><strong>Part 2 — bring back the original sugar without losing the serving suggestion.</strong> A later commit cuts the sugar for a savoury version; a serving suggestion was added <em>after</em> that. Some classmates want the sweet version back, with the suggestion kept.</p>
+<div class="highlight"><span class="filename">Any terminal, inside recipe-history</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w">                           </span><span class="c1"># find the hash of the commit just BEFORE the sugar cut</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>git<span class="w"> </span>restore<span class="w"> </span>--source<span class="o">=</span>&lt;hash&gt;<span class="w"> </span>recipe.md
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>git<span class="w"> </span>diff<span class="w">                                    </span><span class="c1"># you got more than you asked for</span>
+</code></pre></div>
+<p>Understand why, undo that (<code>git restore recipe.md</code>), then fix it properly: edit the one sugar line by hand, <code>git add</code>, <code>git commit</code> with a message that says what you did.</p>
+<details class="note">
+<summary>Solution</summary>
+<p>Part 1: eight commits (<code>git log --oneline</code>), newest first: README, serving suggestion, sugar reduction, resting step, butter→oil, scale to 8, flour typo fix, initial recipe. <code>git show</code> on the typo commit shows the flour quantity changing; on the scale-up, check whether the eggs/milk/oil lines scaled by exactly 2 like the flour — read the <code>-</code>/<code>+</code> pairs. The butter→oil commit touches the ingredient line <em>and</em> a step ("whisk in the oil").</p>
+<p>Part 2: <code>git restore --source</code> replaces the <strong>whole file</strong> with that commit's version, so the serving suggestion (a later commit) disappears from your working copy too — <code>git diff</code> shows it as removed lines. Restore works on snapshots, not lines. Correct fix:</p>
+<div class="highlight"><span class="filename">Any terminal, inside recipe-history</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>restore<span class="w"> </span>recipe.md<span class="w">                       </span><span class="c1"># drop the whole-file restore</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>nano<span class="w"> </span>recipe.md<span class="w">                              </span><span class="c1"># put the original sugar quantity back on its line only</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>diff<span class="w">                                    </span><span class="c1"># exactly one line changed</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>git<span class="w"> </span>add<span class="w"> </span>recipe.md
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Restore the original sugar quantity"</span>
+</code></pre></div>
+<p>Check yourself: if the sugar change and the serving suggestion had been in the <em>same</em> commit, no <code>restore</code> trick would have separated them — you would edit by hand from the start. That is why Session 1 insists on one logical change per commit.</p>
+</details>
+<h3 id="12-scrabble-counter-three-merges">1.2 Scrabble counter: three merges<a class="headerlink" href="#12-scrabble-counter-three-merges" title="Permanent link">&para;</a></h3>
+<p><strong>[core]</strong> · Goal: see the three outcomes of <code>git merge</code> from <a href="../sessions/s1/#5-branches-and-merges">S1 §5</a> on a real Python project, and resolve a conflict by hand.</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>~
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/KnuxV/scrabble-counter.git
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">cd</span><span class="w"> </span>scrabble-counter
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>git<span class="w"> </span>branch<span class="w"> </span>-a
+</code></pre></div>
+<p><code>git branch -a</code> lists your one local branch, <code>main</code>, and three <strong>remote-tracking</strong> branches: <code>origin/add-readme</code>, <code>origin/german</code>, <code>origin/portuguese</code>. They are Git's memory of the branches on GitHub; switching to one creates a local branch that follows it:</p>
+<div class="highlight"><span class="filename">Any terminal, inside scrabble-counter</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>switch<span class="w"> </span>add-readme
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>switch<span class="w"> </span>german
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>git<span class="w"> </span>switch<span class="w"> </span>portuguese
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>git<span class="w"> </span>switch<span class="w"> </span>main
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--all<span class="w"> </span>--graph
+</code></pre></div>
+<p>Read the graph: all three branches start from the same commit on <code>main</code>. Now merge them in this order and watch what Git says each time.</p>
+<p><strong>Merge 1 — <code>add-readme</code>.</strong> <code>main</code> has not moved since the branch was made.</p>
+<div class="highlight"><span class="filename">Any terminal, inside scrabble-counter — on main</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git<span class="w"> </span>merge<span class="w"> </span>add-readme
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph
+</code></pre></div>
+<p>Expected: <code>Fast-forward</code>. No new commit; <code>main</code> simply moved up one.</p>
+<p><strong>Merge 2 — <code>german</code>.</strong> <code>main</code> <em>has</em> moved now (the README commit), and <code>german</code> does not have it.</p>
+<div class="highlight"><span class="filename">Any terminal, inside scrabble-counter — on main</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git<span class="w"> </span>merge<span class="w"> </span>german
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph
+</code></pre></div>
+<p>Expected: an editor opens on <code>Merge branch 'german'</code> (save and quit), then <code>Merge made by the 'ort' strategy</code>. The graph shows a diamond: a merge commit with two parents. The two sides changed different lines, so Git combined them alone.</p>
+<p><strong>Merge 3 — <code>portuguese</code>.</strong> Both <code>german</code> and <code>portuguese</code> added a language <em>at the same place</em> in <code>score.py</code>, and both edited the same <code>choices=[...]</code> line.</p>
+<div class="highlight"><span class="filename">Any terminal, inside scrabble-counter — on main</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git<span class="w"> </span>merge<span class="w"> </span>portuguese
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>git<span class="w"> </span>status
+</code></pre></div>
+<p>Expected:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Auto-merging score.py
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>CONFLICT (content): Merge conflict in score.py
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Auto-merging tests/test_score.py
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Automatic merge failed; fix conflicts and then commit the result.
+</code></pre></div>
+<p><code>git status</code> says <code>both modified: score.py</code> (the tests file merged fine on its own). Open <code>score.py</code>; there are <strong>two</strong> conflict blocks. Resolve both so that the program knows <em>both</em> languages: keep the German block <em>and</em> the Portuguese block in the dictionary, and one <code>choices</code> line that lists <code>"DE"</code> and <code>"PT"</code>. Delete every <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> line. Then:</p>
+<div class="highlight"><span class="filename">Any terminal, inside scrabble-counter</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>add<span class="w"> </span>score.py
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>git<span class="w"> </span>commit<span class="w">                     </span><span class="c1"># accept the proposed message</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>python3<span class="w"> </span>score.py<span class="w"> </span>HALLO<span class="w"> </span>-l<span class="w"> </span>DE<span class="w">   </span><span class="c1"># The word 'HALLO' (DE) scores 9 points</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>python3<span class="w"> </span>score.py<span class="w"> </span>CASA<span class="w"> </span>-l<span class="w"> </span>PT<span class="w">    </span><span class="c1"># The word 'CASA' (PT) scores 5 points</span>
+</code></pre></div>
+<p>(No <code>python3</code> on your machine — typical on Git Bash? Skip the last two lines; after Session 2, <code>uv run score.py HALLO -l DE</code> works everywhere, and <code>uv run --with pytest pytest</code> runs the project's 56 tests.)</p>
+<p><strong>Done when</strong> <code>git log --oneline --graph</code> shows two merge commits and both languages score correctly. Lost? <code>git merge --abort</code> puts you back to before merge 3.</p>
+<details class="note">
+<summary>Solution — the resolved hunks</summary>
+<p>First block: the German dictionary ends with <code>'Q': 10, 'Y': 10</code> and a closing brace; the Portuguese one follows. The only thing to add by hand is the comma after the German block's closing brace:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>        <span class="s2">"DE"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>            <span class="s1">'A'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'D'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'R'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'S'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'T'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>            <span class="s1">'G'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'H'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'L'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>            <span class="s1">'B'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'M'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'W'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'Z'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>            <span class="s1">'C'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'F'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'K'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'P'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>            <span class="s1">'J'</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>            <span class="s1">'X'</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>            <span class="s1">'Q'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">:</span> <span class="mi">10</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        <span class="p">},</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>        <span class="s2">"PT"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>            <span class="s1">'A'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'S'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'M'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'R'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'T'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>            <span class="s1">'D'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'L'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'P'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>            <span class="s1">'N'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>            <span class="s1">'F'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'G'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'H'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>            <span class="s1">'J'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>            <span class="s1">'Q'</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>            <span class="s1">'X'</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">'Z'</span><span class="p">:</span> <span class="mi">8</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>        <span class="p">}</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>    <span class="p">}</span>
+</code></pre></div>
+<p>Second block, one line:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-l"</span><span class="p">,</span> <span class="s2">"--lang"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"EN"</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"EN"</span><span class="p">,</span> <span class="s2">"FR"</span><span class="p">,</span> <span class="s2">"ES"</span><span class="p">,</span> <span class="s2">"IT"</span><span class="p">,</span> <span class="s2">"DE"</span><span class="p">,</span> <span class="s2">"PT"</span><span class="p">],</span>
+</code></pre></div>
+<p>Verified: after this resolution <code>uv run --with pytest pytest</code> reports <code>56 passed</code>, and the graph reads, newest first: <code>Merge branch 'portuguese'</code> (two parents) → <code>Merge branch 'german'</code> (two parents) → <code>Add a README with usage</code> → …</p>
+</details>
+<h3 id="13-your-course-repository-on-github">1.3 Your course repository on GitHub<a class="headerlink" href="#13-your-course-repository-on-github" title="Permanent link">&para;</a></h3>
+<p><strong>[core]</strong> · The session's deliverable. Goal: a repository you own, on GitHub, that Sessions 2–4 will live in.</p>
+<p>Follow <a href="../sessions/s1/#6-the-deliverable-your-course-repository">S1 §6</a>: create <code>agent-lab</code> locally, log in with <code>gh auth login</code>, create the empty repository on GitHub, push. <strong>Done when</strong> <code>https://github.com/YOUR-USERNAME/agent-lab</code> shows your README, <code>git status</code> is clean, and <code>git remote -v</code> prints your GitHub URL twice.</p>
+<details class="note">
+<summary>Solution</summary>
+<p>The commands are in §6 verbatim. The two mistakes to check for: the repository was created on GitHub <em>with</em> a README (then <code>git pull --no-rebase origin main</code> before the push), and the push asked for a password (then <a href="../sessions/s1/#62-log-in-to-github-from-the-terminal-once">§6.2</a> was skipped).</p>
+</details>
+<h3 id="14-keep-a-trace-fork-or-second-remote">1.4 Keep a trace: fork or second remote<a class="headerlink" href="#14-keep-a-trace-fork-or-second-remote" title="Permanent link">&para;</a></h3>
+<p><strong>[stretch]</strong> · Goal: put your exercise commits on your own GitHub, and understand why the plain clone could not be pushed. Two ways; do one.</p>
+<p><strong>Way A — fork first.</strong> On <a href="https://github.com/KnuxV/scrabble-counter">github.com/KnuxV/scrabble-counter</a>, click <strong>Fork</strong> → <strong>Create fork</strong>. Clone <em>your</em> fork (<code>git clone https://github.com/YOUR-USERNAME/scrabble-counter.git</code>), redo exercise 1.2 in it, <code>git push</code>. It works: <code>origin</code> is yours. Then <code>git remote add upstream https://github.com/KnuxV/scrabble-counter.git</code> — the convention for "the original I forked from".</p>
+<p><strong>Way B — second remote on your existing clone.</strong> Create an empty repository <code>scrabble-counter</code> on your GitHub (no README). Then, in the clone from 1.2:</p>
+<div class="highlight"><span class="filename">Any terminal, inside scrabble-counter</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>mine<span class="w"> </span>https://github.com/YOUR-USERNAME/scrabble-counter.git
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>git<span class="w"> </span>remote<span class="w"> </span>-v<span class="w">                  </span><span class="c1"># origin = KnuxV (read-only for you), mine = yours</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>mine<span class="w"> </span>main
+</code></pre></div>
+<p>A repository can have as many remotes as you like: the same commits can go to GitHub <em>and</em> to a GitLab at your institution. <code>origin</code> is a habit, not a law.</p>
+<details class="note">
+<summary>Solution</summary>
+<p>Both ways end with your <code>main</code>, including the two merge commits, visible on your GitHub. Way A shows "forked from KnuxV/scrabble-counter" under the repository name; Way B does not (GitHub does not know the two are related). <code>git remote -v</code> prints two lines per remote (fetch and push); with Way B you have four lines.</p>
+</details>
+<h2 id="session-2-python-tooling">Session 2 — Python tooling<a class="headerlink" href="#session-2-python-tooling" title="Permanent link">&para;</a></h2>
+<h3 id="21-a-uv-project-from-scratch">2.1 A uv project from scratch<a class="headerlink" href="#21-a-uv-project-from-scratch" title="Permanent link">&para;</a></h3>
+<p><strong>[core]</strong> · Goal: three files that make a project reproducible, and the habit of never committing <code>.venv</code>.</p>
+<p>Follow <a href="../sessions/s2/#4-a-project-from-scratch">S2 §4</a> in your course repository. <strong>Done when</strong> a classmate can run <code>git clone &lt;your repo&gt; &amp;&amp; cd agent-lab &amp;&amp; uv sync &amp;&amp; uv run python -c "import polars"</code> without errors — swap repositories with your neighbour and check.</p>
+<details class="note">
+<summary>Solution</summary>
+<div class="highlight"><span class="filename">Any terminal, inside agent-lab</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>uv<span class="w"> </span>init<span class="w"> </span>--no-package<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>uv<span class="w"> </span>run<span class="w"> </span>main.py
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>uv<span class="w"> </span>add<span class="w"> </span>polars
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>git<span class="w"> </span>status<span class="w">                       </span><span class="c1"># .venv must NOT appear</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>git<span class="w"> </span>add<span class="w"> </span>pyproject.toml<span class="w"> </span>uv.lock<span class="w"> </span>.python-version<span class="w"> </span>main.py
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Initialise uv project with polars"</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>git<span class="w"> </span>push
+</code></pre></div>
+</details>
+<h3 id="22-notebook-script-with-argparse">2.2 Notebook → script with argparse<a class="headerlink" href="#22-notebook-script-with-argparse" title="Permanent link">&para;</a></h3>
+<p><strong>[core]</strong> · Goal: lift hard-coded values out of a notebook cell into command-line arguments.</p>
+<ol>
+<li>Do <a href="../sessions/s2/#5-from-a-notebook-cell-to-a-script-with-arguments">S2 §5</a> with <code>report.py</code> and <code>sales.csv</code>; check the four runs (<code>--top 2</code>, <code>--help</code>, missing argument, <code>--top two</code>).</li>
+<li>Add a third argument: <code>--region</code> (keep only one region) <strong>or</strong> <code>--csv</code> (a flag: print the result as CSV instead of a table — <code>result.write_csv()</code> with no path returns a string).</li>
+<li>Commit and push.</li>
+</ol>
+<p><strong>Done when</strong> <code>uv run report.py --help</code> documents three arguments and each behaves as advertised.</p>
+<details class="note">
+<summary>Solution (the <code>--csv</code> variant)</summary>
+<p>Add one line to the parser and change the <code>print</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--csv"</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">"store_true"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"print CSV instead of a table"</span><span class="p">)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="o">...</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">csv</span><span class="p">:</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">write_csv</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+<p><code>action="store_true"</code> makes <code>--csv</code> a flag: <code>args.csv</code> is <code>False</code> unless the flag is present. Check: <code>uv run report.py sales.csv --top 2 --csv</code> prints <code>region,revenue</code> followed by two lines.</p>
+</details>
+<h3 id="23-fork-and-extend-the-password-generator">2.3 Fork and extend the password generator<a class="headerlink" href="#23-fork-and-extend-the-password-generator" title="Permanent link">&para;</a></h3>
+<p><strong>[core]</strong> · Goal: install a project you did not write with one command, read a real <code>argparse</code> program, and add two options to it — one branch per option.</p>
+<p>The project is <a href="https://github.com/KnuxV/password-generator">github.com/KnuxV/password-generator</a>: a command-line tool that prints a strong password, either <strong>memorable</strong> (random English words: <code>Stubbed Congress Tiptop</code>) or <strong>random</strong> (mixed characters: <code>aB3$cD9#eF2@</code>). One dependency (<code>zxcvbn</code>, a strength estimator), a small test suite, and the three project files from <a href="../sessions/s2/#4-a-project-from-scratch">S2 §4</a>.</p>
+<p><strong>Part A — fork and install (10 min).</strong> You will push your work, so you need your own copy on GitHub: a <strong>fork</strong> (<a href="../sessions/s1-collab/#2-clone-vs-fork">S1½ §2</a>). On the repository page, click <strong>Fork</strong> → <strong>Create fork</strong>. Then clone <em>your</em> fork — in your home folder, not inside <code>agent-lab</code>:</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">cd</span><span class="w"> </span>~
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR-USERNAME/password-generator.git
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nb">cd</span><span class="w"> </span>password-generator
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>uv<span class="w"> </span>sync
+</code></pre></div>
+<p><code>uv sync</code> prints <code>Using CPython 3.12.x</code>, <code>Creating virtual environment at: .venv</code>, then <code>Installed 6 packages</code> — the exact versions from <code>uv.lock</code>. That was the installation. Now use it:</p>
+<div class="highlight"><span class="filename">Any terminal, inside password-generator</span><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>uv<span class="w"> </span>run<span class="w"> </span>strong_password.py<span class="w"> </span>--help
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>uv<span class="w"> </span>run<span class="w"> </span>strong_password.py<span class="w"> </span>-t<span class="w"> </span>memorable<span class="w"> </span>-l<span class="w"> </span><span class="m">5</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>uv<span class="w"> </span>run<span class="w"> </span>strong_password.py<span class="w"> </span>-t<span class="w"> </span>random<span class="w"> </span>-l<span class="w"> </span><span class="m">16</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>uv<span class="w"> </span>run<span class="w"> </span>strong_password.py<span class="w"> </span>-t<span class="w"> </span>words
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>uv<span class="w"> </span>run<span class="w"> </span>compute_crack_time.py
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
+</code></pre></div>
+<p>Expected: a help message with two options; a five-word password; a sixteen-character one; a refusal (<code>invalid choice: 'words' (choose from memorable, random)</code>); a comparison of the two kinds with a crack-time estimate; <code>13 passed</code>.</p>
+<p><strong>Part B — read the code (10 min, together).</strong> Open <code>strong_password.py</code> and answer, in your own words:</p>
+<ol>
+<li><code>cat pyproject.toml</code>, <code>cat .python-version</code>, <code>head -20 uv.lock</code>: which file says <em>what the project asked for</em>, which says <em>what it got</em>, which says <em>which Python</em>? Why is <code>pytest</code> under <code>[dependency-groups] dev</code> and not with <code>zxcvbn</code>?</li>
+<li>In <code>main()</code>: which argument is <strong>required</strong>, which has a <strong>default</strong>? What does <code>choices=</code> buy you (you saw it with <code>-t words</code>)? Where does <code>args.length</code> end up?</li>
+<li>Follow the value: <code>args.type</code> → <code>TypePassword(args.type)</code> → <code>StrongPassword(...)</code> → <code>generate()</code> → <code>generate_memorable()</code>. Which line joins the words with a space?</li>
+<li>Where does the word list come from, and why <code>Path(__file__).parent</code> rather than just <code>"data/eff_large_wordlist.txt"</code>? (Try: <code>cd ~</code> then <code>uv run --project password-generator password-generator/strong_password.py -t memorable</code>.)</li>
+<li>In <code>tests/test_memorable_password.py</code>, what does <code>test_has_spaces</code> assert? Keep it in mind for part C.</li>
+</ol>
+<p><strong>Part C — two options, two branches (20 min).</strong> Each option gets its own branch, merged into <code>main</code> before the next one starts (S1 §5, case 1: fast-forward).</p>
+<ol>
+<li>
+<p><code>git switch -c separator</code>. Add an option <code>-s</code> / <code>--separator</code>: what goes <em>between</em> the words of a memorable password. Allowed values: <code>-</code>, a space, <code>_</code>, <code>.</code>, <code>/</code> (<code>choices=</code>); default: a space, so that nothing changes for existing users. Three places to touch: <code>parser.add_argument(...)</code>, the <code>StrongPassword</code> constructor (a new parameter <em>with a default</em>), and the <code>" ".join(...)</code> line. Check:</p>
+<div class="highlight"><span class="filename">Any terminal, inside password-generator</span><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>uv<span class="w"> </span>run<span class="w"> </span>strong_password.py<span class="w"> </span>-t<span class="w"> </span>memorable<span class="w"> </span>-l<span class="w"> </span><span class="m">4</span><span class="w"> </span>-s<span class="w"> </span>-
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>uv<span class="w"> </span>run<span class="w"> </span>strong_password.py<span class="w"> </span>-t<span class="w"> </span>memorable<span class="w"> </span>-l<span class="w"> </span><span class="m">4</span><span class="w"> </span>--separator<span class="w"> </span><span class="s2">"_"</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>uv<span class="w"> </span>run<span class="w"> </span>strong_password.py<span class="w"> </span>-t<span class="w"> </span>memorable<span class="w"> </span>-l<span class="w"> </span><span class="m">4</span><span class="w"> </span>-s<span class="w"> </span>,
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
+</code></pre></div>
+<p>Expected: four words joined by <code>-</code> (<code>Earful-Afraid-Sapling-Helpful</code>), then by <code>_</code>, a refusal for <code>,</code>, and still <code>13 passed</code> — the default did not move. (To pass a space: <code>-s " "</code>, with the quotes — shell quoting, S2 §9.) Commit, <code>git switch main</code>, <code>git merge separator</code>.</p>
+</li>
+<li>
+<p><code>git switch -c numbers</code>. Add a <strong>flag</strong> <code>-n</code> / <code>--numbers</code> (<code>action="store_true"</code>, no value): when present, every word of a memorable password gets one random digit appended — <code>Wildlife1 Synthesis5 Useable1 Facecloth3</code>. Hint: <code>secrets.choice(DIGITS)</code> is already imported; the flag is ignored for <code>random</code> passwords, which have digits anyway. Same three places. Check <code>-l 4 -n</code>, then <code>-l 4 -s - -n</code>, then <code>uv run pytest</code>. Commit, switch to <code>main</code>, merge.</p>
+</li>
+<li>
+<p><code>git push</code>. Your fork on GitHub now carries both features on <code>main</code>.</p>
+</li>
+</ol>
+<p><strong>Done when</strong> <code>uv run strong_password.py --help</code> documents four options, <code>uv run strong_password.py -t memorable -l 4 -s - -n</code> prints something like <code>Decode9-Rebuild2-Squirt4-Paper9</code>, <code>uv run pytest</code> passes, and <code>git log --oneline</code> on GitHub shows your two commits.</p>
+<p><em>Stretch:</em> add one test per option in <code>tests/</code> (a <code>-</code> separator → <code>password.count("-") == 3</code> for four words; <code>numbers=True</code> → <code>any(c.isdigit() for c in password)</code>). Then redo part C the hard way: both branches off the <em>same</em> commit, merged one after the other — Git reports conflicts in every place both branches touched; resolve them as in S1 §5, case 3.</p>
+<details class="note">
+<summary>Solution</summary>
+<p>Both options, as they look once the two branches are merged. The constructor:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    <span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">type_p</span><span class="p">:</span> <span class="n">TypePassword</span><span class="p">,</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">,</span> <span class="n">numbers</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="p">):</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">type_p</span> <span class="o">=</span> <span class="n">type_p</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">separator</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span> <span class="o">=</span> <span class="n">numbers</span>
+</code></pre></div>
+<p><code>generate_memorable</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">secrets</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">WORD_LIST</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)]</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span><span class="p">:</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="o">+</span> <span class="n">secrets</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">DIGITS</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">]</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</code></pre></div>
+<p>The parser, before <code>args = parser.parse_args()</code>, and the call that follows it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    <span class="s2">"-s"</span><span class="p">,</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    <span class="s2">"--separator"</span><span class="p">,</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>    <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"-"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">,</span> <span class="s2">"."</span><span class="p">,</span> <span class="s2">"/"</span><span class="p">],</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    <span class="n">default</span><span class="o">=</span><span class="s2">" "</span><span class="p">,</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>    <span class="n">help</span><span class="o">=</span><span class="s2">"character between words (memorable only); default: a space"</span><span class="p">,</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="p">)</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>    <span class="s2">"-n"</span><span class="p">,</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>    <span class="s2">"--numbers"</span><span class="p">,</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>    <span class="n">action</span><span class="o">=</span><span class="s2">"store_true"</span><span class="p">,</span>
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>    <span class="n">help</span><span class="o">=</span><span class="s2">"add a digit after each word (memorable only)"</span><span class="p">,</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="p">)</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>
+<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="n">generator</span> <span class="o">=</span> <span class="n">StrongPassword</span><span class="p">(</span>
+<a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>    <span class="n">length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+<a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>    <span class="n">type_p</span><span class="o">=</span><span class="n">TypePassword</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">type</span><span class="p">),</span>
+<a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>    <span class="n">separator</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">separator</span><span class="p">,</span>
+<a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>    <span class="n">numbers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">numbers</span><span class="p">,</span>
+<a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a><span class="p">)</span>
+</code></pre></div>
+<p><code>--help</code> then lists <code>-s {-, ,_,.,/}</code> — the space in the choices makes the usage line ugly; <code>metavar="SEP"</code> on that <code>add_argument</code> tidies it. The rehearsed sequence: <code>separator</code> branch → 13 passed → fast-forward merge; <code>numbers</code> branch → 13 passed → fast-forward merge; <code>--help</code> shows four options.</p>
+</details>
+<h3 id="24-secret-hygiene-audit">2.4 Secret hygiene audit<a class="headerlink" href="#24-secret-hygiene-audit" title="Permanent link">&para;</a></h3>
+<p><strong>[home]</strong> · Goal: find a leaked secret in a repository's history and say how it should have been handled.</p>
+<p>You are given a repository in which someone committed an API key inside a script, then "removed" it in a later commit. Produce a short text file <code>audit.md</code> in your own course repo answering:</p>
+<ol>
+<li>In which commit did the key appear, and in which was it "removed"? (Hint: <code>git log -p</code>, <code>git log -S "sk-"</code>.)</li>
+<li>Is the key still recoverable from the repository? Show the command that prints it.</li>
+<li>Rewrite the offending line the right way (environment variable + <code>os.environ.get</code> + a clear failure message), and give the <code>.gitignore</code> line that protects a <code>.env</code> file.</li>
+<li>What must the owner do <em>first</em> — before touching git at all?</li>
+</ol>
+<p>TODO(verify): the starter repository will be published with the exercises of Task 03.</p>
+<details class="note">
+<summary>Solution sketch</summary>
+<p><code>git log -S "sk-" --oneline</code> lists the commits that added or removed the string; <code>git show &lt;first-hash&gt;</code> prints the key — it is fully recoverable by anyone with the repository, so the answer to 4 is <em>regenerate the key</em> (<a href="../setup/#51-generate-the-key">setup 5.1</a>). The correct line is the one in <a href="../sessions/s2/#62-reading-them-from-python">S2 §6.2</a>; the <code>.gitignore</code> line is <code>.env</code>.</p>
+</details>
+<h3 id="25-polars-vs-pandas">2.5 Polars vs pandas<a class="headerlink" href="#25-polars-vs-pandas" title="Permanent link">&para;</a></h3>
+<p><strong>[stretch]</strong> · Goal: feel the difference between expressions and chained indexing, and measure the speed.</p>
+<ol>
+<li><code>uv add pandas</code> in a scratch branch of your course repo (<code>git switch -c polars-vs-pandas</code>).</li>
+<li>Generate a larger file: 1,000,000 rows of <code>region, product, units, unit_price</code> with random values (Python's <code>random</code> module is enough), written with <code>csv</code> or Polars.</li>
+<li>Write <code>bench.py</code>: read the file and compute revenue per region with pandas, then with Polars; time each with <code>time.perf_counter()</code>.</li>
+<li>In a comment at the top of the script, three sentences on how the <em>code</em> differs, not just the timing.</li>
+</ol>
+<details class="note">
+<summary>Solution sketch</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span><span class="o">,</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span><span class="o">,</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">pdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"big.csv"</span><span class="p">)</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">pdf</span><span class="p">[</span><span class="s2">"revenue"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdf</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">*</span> <span class="n">pdf</span><span class="p">[</span><span class="s2">"unit_price"</span><span class="p">]</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">pdf</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"pandas:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">"s"</span><span class="p">)</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="n">df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"big.csv"</span><span class="p">)</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">((</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"units"</span><span class="p">)</span> <span class="o">*</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"unit_price"</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">))</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>        <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>        <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"polars:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">"s"</span><span class="p">)</span>
+</code></pre></div>
+<p>Expect Polars to be several times faster on read and group-by; the exact ratio depends on the machine. The point for the comment: pandas mutates a column in place on a named DataFrame; Polars describes the whole computation as a chain of expressions on immutable frames, which is what lets it optimise (and parallelise) the plan.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.tabs.link", "navigation.sections", "navigation.top", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1278 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Terminals, APIs, and coding agents — an 8h M2 course (Université de Strasbourg)">
+      
+      
+      
+        <link rel="canonical" href="https://Knuxv.github.io/cours-agents/sessions/s1-collab/">
+      
+      
+        <link rel="prev" href="../s1/">
+      
+      
+        <link rel="next" href="../s2/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>S1½ — Git as a collaboration tool (reading) - Advanced Programming for Economists</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#session-112-git-as-a-collaboration-tool" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Advanced Programming for Economists" class="md-header__button md-logo" aria-label="Advanced Programming for Economists" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Advanced Programming for Economists
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              S1½ — Git as a collaboration tool (reading)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Advanced Programming for Economists" class="md-nav__button md-logo" aria-label="Advanced Programming for Economists" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Advanced Programming for Economists
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session 0 (homework)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Session 0 (homework)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL, explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sessions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sessions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 — Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1½ — Git as a collaboration tool (reading)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1½ — Git as a collaboration tool (reading)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-remotes-origin-is-just-a-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Remotes: origin is just a name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-clone-vs-fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Clone vs fork
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-pull-request-how-changes-get-reviewed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The pull request: how changes get reviewed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The pull request: how changes get reviewed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-the-pr-cannot-be-merged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the PR cannot be merged
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-issues-the-to-do-list-next-to-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Issues: the to-do list next to the code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cicd-robots-that-run-on-every-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. CI/CD: robots that run on every push
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-what-this-means-for-working-with-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. What this means for working with agents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-vocabulary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Vocabulary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-hands-on-about-one-hour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional, hands-on (about one hour)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 — Python tooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 — What an LLM API is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 — OpenCode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exercises/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercises
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replication track (optional)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-remotes-origin-is-just-a-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Remotes: origin is just a name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-clone-vs-fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Clone vs fork
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-pull-request-how-changes-get-reviewed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The pull request: how changes get reviewed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The pull request: how changes get reviewed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-the-pr-cannot-be-merged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the PR cannot be merged
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-issues-the-to-do-list-next-to-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Issues: the to-do list next to the code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cicd-robots-that-run-on-every-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. CI/CD: robots that run on every push
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-what-this-means-for-working-with-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. What this means for working with agents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-vocabulary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Vocabulary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-hands-on-about-one-hour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional, hands-on (about one hour)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="session-112-git-as-a-collaboration-tool">Session 1½ — Git as a collaboration tool<a class="headerlink" href="#session-112-git-as-a-collaboration-tool" title="Permanent link">&para;</a></h1>
+<p><strong>Reading, at home, between Sessions 1 and 2. About 40 minutes. Nothing to install, nothing to hand in.</strong></p>
+<p>Session 1 taught you Git as a <em>personal</em> tool: snapshots, branches, merges, one repository on your laptop and a copy on GitHub. But Git was written so that thousands of people could work on the same code without stepping on each other, and every software team, every open-source project and — increasingly — every research group with a replication package runs on the workflow described here. There is no time to practise it in class. You do need the vocabulary and the gist: in Session 4 an agent will work on a branch of your repository and you will <em>review</em> what it did, exactly the way a colleague's contribution is reviewed. And in your first job, "open a PR" will be said to you in week one.</p>
+<p>Read it once now. Come back to it when a word on GitHub makes no sense.</p>
+<h2 id="1-remotes-origin-is-just-a-name">1. Remotes: <code>origin</code> is just a name<a class="headerlink" href="#1-remotes-origin-is-just-a-name" title="Permanent link">&para;</a></h2>
+<p>When you ran <code>git clone</code> in the exercises, Git did three things: copied the whole history, checked out the default branch (<code>main</code>), and recorded where the copy came from under the name <strong><code>origin</code></strong>. A <em>remote</em> is nothing more than a named URL that Git knows how to push to and pull from.</p>
+<div class="highlight"><span class="filename">Any terminal, inside a cloned repository</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>remote<span class="w"> </span>-v
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>origin  https://github.com/KnuxV/scrabble-counter.git (fetch)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>origin  https://github.com/KnuxV/scrabble-counter.git (push)
+</code></pre></div>
+<p>Three consequences you saw in the exercises:</p>
+<ul>
+<li><strong>Reading is not writing.</strong> A public repository can be cloned by anyone; pushing needs write permission on <em>that</em> repository. Your clone of the course exercise points at the instructor's repository, so <code>git push</code> is refused. Your commits are safe on your machine; they simply have nowhere to go yet.</li>
+<li>
+<p><strong>You can have several remotes.</strong> <code>origin</code> is a convention, not a rule. Add your own empty repository as a second remote and push there — on GitHub, on GitLab, on the university's forge, anywhere:</p>
+<div class="highlight"><span class="filename">Any terminal, inside the repository</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>mine<span class="w"> </span>https://github.com/YOUR-USERNAME/scrabble-counter.git
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>mine<span class="w"> </span>main
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>git<span class="w"> </span>remote<span class="w"> </span>-v<span class="w">          </span><span class="c1"># two remotes now</span>
+</code></pre></div>
+<p>People routinely push the same repository to GitHub <em>and</em> GitLab, or to a mirror at their institution.</p>
+</li>
+<li>
+<p><strong>Branches have a remote side.</strong> <code>git branch -a</code> lists your local branches and the <em>remote-tracking</em> ones, named <code>origin/german</code>, <code>origin/main</code>… Those are Git's memory of what the remote looked like the last time you talked to it (<code>git fetch</code> refreshes that memory without touching your files; <code>git pull</code> = fetch + merge into your current branch).</p>
+</li>
+</ul>
+<p>Reference: <a href="https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes">Pro Git — Working with Remotes</a> · <a href="https://docs.github.com/en/get-started/git-basics/about-remote-repositories">GitHub — About remote repositories</a>.</p>
+<h2 id="2-clone-vs-fork">2. Clone vs fork<a class="headerlink" href="#2-clone-vs-fork" title="Permanent link">&para;</a></h2>
+<p>Both give you a copy of someone else's repository. The difference is <em>where</em> the copy lives.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>git clone</code></th>
+<th>Fork</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it is</td>
+<td>A copy <strong>on your machine</strong></td>
+<td>A copy <strong>on GitHub, under your account</strong>, which you then clone</td>
+</tr>
+<tr>
+<td>Done with</td>
+<td>A command in the terminal</td>
+<td>The <strong>Fork</strong> button on the repository page</td>
+</tr>
+<tr>
+<td>Can you push?</td>
+<td>Only if the owner gave you write access</td>
+<td>Yes, always — it is your repository</td>
+</tr>
+<tr>
+<td>Is your work visible online?</td>
+<td>No</td>
+<td>Yes, on your fork</td>
+</tr>
+<tr>
+<td>Can you send changes back to the original?</td>
+<td>Only if you have write access</td>
+<td>Yes, through a pull request (next section)</td>
+</tr>
+<tr>
+<td>Typical use</td>
+<td>Your own repos; a colleague's repo you are a collaborator on; grabbing a project to <em>use</em> it</td>
+<td>Contributing to a project you do not own; keeping a public trace of an exercise</td>
+</tr>
+</tbody>
+</table>
+<p>A fork remembers where it came from: GitHub shows "forked from KnuxV/…" under the name. By convention, when you clone your fork, you add the original as a second remote called <strong><code>upstream</code></strong>, so you can pull the original's new commits into your fork later:</p>
+<div class="highlight"><span class="filename">Any terminal, inside your clone of the fork</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/KnuxV/scrabble-counter.git
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>fetch<span class="w"> </span>upstream
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>merge<span class="w"> </span>upstream/main<span class="w">        </span><span class="c1"># bring the original's new commits into your main</span>
+</code></pre></div>
+<p>For the course exercises: <strong>clone</strong> if you just want to do the work; <strong>fork</strong> if you want the result on your GitHub profile. Either is fine.</p>
+<p>Reference: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks">GitHub — About forks</a> · <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">Fork a repository</a> · <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork">Syncing a fork</a>.</p>
+<h2 id="3-the-pull-request-how-changes-get-reviewed">3. The pull request: how changes get reviewed<a class="headerlink" href="#3-the-pull-request-how-changes-get-reviewed" title="Permanent link">&para;</a></h2>
+<p>Here is the loop that a team of two or two thousand uses. GitHub calls it the <a href="https://docs.github.com/en/get-started/using-github/github-flow">GitHub flow</a>; GitLab calls a pull request a <em>merge request</em>; the idea is identical everywhere.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[1. Branch&lt;br/&gt;&lt;code&gt;git switch -c fix-typo&lt;/code&gt;] --&gt; B[2. Commit&lt;br/&gt;one logical change]
+    B --&gt; C[3. Push the branch&lt;br/&gt;&lt;code&gt;git push -u origin fix-typo&lt;/code&gt;]
+    C --&gt; D[4. Open a pull request&lt;br/&gt;on GitHub]
+    D --&gt; E[5. Review&lt;br/&gt;comments, requests, approval]
+    E --&gt;|changes requested| B
+    E --&gt;|approved| F[6. Merge&lt;br/&gt;the button on GitHub]
+    F --&gt; G[7. Everyone&lt;br/&gt;&lt;code&gt;git pull&lt;/code&gt;]</code></pre>
+<ol>
+<li><strong>Nobody commits to <code>main</code> directly.</strong> Work happens on a branch with a descriptive name. On serious projects <code>main</code> is <em>protected</em>: GitHub refuses pushes to it that did not come through a pull request.</li>
+<li>Commits on the branch, as in Session 1: one logical change each, imperative messages.</li>
+<li><code>git push -u origin &lt;branch&gt;</code> publishes <em>the branch</em> — <code>main</code> on the remote is untouched.</li>
+<li>A <strong>pull request</strong> (PR) is a page on GitHub that says: "please merge branch X into <code>main</code>". It shows the diff (<em>Files changed</em> tab), the commits, and a conversation. It is <em>not</em> a Git object — it lives on GitHub, not in <code>.git</code> — which is why the same thing has a different name on GitLab.</li>
+<li><strong>Review.</strong> Colleagues read the diff, leave comments on specific lines, and end with <em>Approve</em> or <em>Request changes</em>. You push more commits to the same branch; the PR updates itself. This is where quality is enforced, and it is the human skill Session 4 automates: reading a diff and deciding whether it does what was asked.</li>
+<li><strong>Merge.</strong> One button. GitHub offers three flavours — <em>merge commit</em> (what <code>git merge</code> does; keeps the branch shape), <em>squash</em> (all the branch's commits collapsed into one), <em>rebase</em> (commits replayed on top of <code>main</code>, straight line). Default to the first until you have an opinion. Then delete the branch; its commits are in <code>main</code> now.</li>
+<li>Everyone else runs <code>git pull</code> and has the change.</li>
+</ol>
+<p>A PR is also the unit of <em>conversation</em> about code: the description says what and why, the review says whether, the merge says when. Six months later, <code>git log</code> plus the PR page is how a team reconstructs a decision. Reference: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">About pull requests</a> · <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews">About pull request reviews</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Contributing to a project you do not own</p>
+<p>Same loop, with a fork in front: fork → clone your fork → branch → push to <em>your fork</em> → open the PR <em>from your fork's branch to the original's <code>main</code></em>. GitHub's <a href="https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project">Contributing to a project</a> walks through it. This is how you fix a typo in the documentation of a package you use — a real and welcome first contribution.</p>
+</div>
+<h3 id="when-the-pr-cannot-be-merged">When the PR cannot be merged<a class="headerlink" href="#when-the-pr-cannot-be-merged" title="Permanent link">&para;</a></h3>
+<p>If <code>main</code> moved since you branched and touched the same lines, GitHub shows <em>This branch has conflicts that must be resolved</em>. Nothing new: it is the conflict of <a href="../s1/#55-case-3-both-sides-changed-the-same-line-conflict">Session 1 §5.5</a>. Resolve it locally — <code>git pull origin main</code> into your branch, edit the markers, commit, push — or in GitHub's web editor for small ones. Reference: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts">About merge conflicts</a>.</p>
+<h2 id="4-issues-the-to-do-list-next-to-the-code">4. Issues: the to-do list next to the code<a class="headerlink" href="#4-issues-the-to-do-list-next-to-the-code" title="Permanent link">&para;</a></h2>
+<p>An <strong>issue</strong> is a numbered ticket on the repository: a bug report, a feature request, a question, a task. It has a title, a description, labels (<code>bug</code>, <code>documentation</code>, <code>good first issue</code>), an assignee, and a conversation. Issues and pull requests are linked: a PR whose description says <code>Fixes #12</code> closes issue 12 when it is merged, and the issue page shows which commit did it.</p>
+<p>Why it matters to you, specifically:</p>
+<ul>
+<li>It is the <strong>audit trail</strong>. "Table 3 does not reproduce with the published code" is an issue; the PR that fixes it is the fix; the link between them is the paper trail a data editor asks for. The optional <a href="../../replication/">replication track</a> expects exactly this discipline.</li>
+<li>It is how you <strong>ask a project for help</strong> without emailing a stranger: search the issues first (your problem is usually there), then open one with a minimal reproducible example.</li>
+<li>In Session 4, a spec file plays the role of an issue for an agent: a precise statement of what is wanted, written <em>before</em> the code.</li>
+</ul>
+<p>Reference: <a href="https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues">About issues</a>.</p>
+<h2 id="5-cicd-robots-that-run-on-every-push">5. CI/CD: robots that run on every push<a class="headerlink" href="#5-cicd-robots-that-run-on-every-push" title="Permanent link">&para;</a></h2>
+<p><strong>Continuous integration</strong> means: every time a commit is pushed or a PR is opened, a machine somewhere checks out the code and runs the tests, automatically, and reports a green check or a red cross on the PR. <strong>Continuous deployment</strong> goes one step further: if the checks pass on <code>main</code>, the result is published — a website, a package, a container.</p>
+<p>On GitHub this is <strong>GitHub Actions</strong>: a <em>workflow</em> is a YAML file in <code>.github/workflows/</code>, triggered by events (<code>push</code>, <code>pull_request</code>, a schedule), running <em>jobs</em> made of <em>steps</em> on a fresh virtual machine. You have already used one without knowing: this website is built and published by <a href="https://github.com/KnuxV/cours-agents/blob/main/.github/workflows/site.yml"><code>.github/workflows/site.yml</code></a> in the course repository — every push to <code>main</code> that touches <code>site/</code> runs <code>mkdocs build --strict</code>, and if that passes, deploys the result. If it fails, the push shows a red cross and the old site stays up.</p>
+<p>A minimal test workflow for a Python project, for recognition rather than for typing:</p>
+<div class="highlight"><span class="filename">.github/workflows/tests.yml</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tests</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">astral-sh/setup-uv@v6</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uv sync</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uv run pytest</span>
+</code></pre></div>
+<p>Why this is the most important section of the page for this course: Session 4 will argue that <strong>the most reliable component of an agent system is not a model, it is the test suite</strong>. CI is what gives the test suite teeth. A PR — written by a colleague or by an agent — with a red cross does not get merged; nobody has to remember to run the tests, and nobody can skip them. Reference: <a href="https://docs.github.com/en/actions/get-started/understand-github-actions">Understanding GitHub Actions</a>.</p>
+<h2 id="6-what-this-means-for-working-with-agents">6. What this means for working with agents<a class="headerlink" href="#6-what-this-means-for-working-with-agents" title="Permanent link">&para;</a></h2>
+<p>Put the pieces together and you have the working arrangement of Session 4:</p>
+<ol>
+<li>You write down what you want (a spec — the issue).</li>
+<li>The agent works <strong>on a branch</strong> of a repository whose <code>main</code> is clean (Session 1's first rule).</li>
+<li>You review <strong>the diff</strong>, not the agent's summary (Session 1's second rule) — that is the PR review.</li>
+<li><strong>Tests run automatically</strong>; a red cross is a rejection, whatever the agent says.</li>
+<li>Only then merge.</li>
+</ol>
+<p>Everything an agent does becomes a commit on a branch: reviewable, revertible, attributable. That is why this course insisted on Git before touching an API.</p>
+<h2 id="7-vocabulary">7. Vocabulary<a class="headerlink" href="#7-vocabulary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>remote</strong></td>
+<td>A named URL of another copy of the repository (<code>origin</code>, <code>upstream</code>, <code>mine</code>…)</td>
+</tr>
+<tr>
+<td><strong>origin</strong></td>
+<td>The conventional name of the remote you cloned from</td>
+</tr>
+<tr>
+<td><strong>upstream</strong></td>
+<td>The conventional name of the <em>original</em> repository, when <code>origin</code> is your fork</td>
+</tr>
+<tr>
+<td><strong>clone</strong></td>
+<td>A full local copy of a repository, with its history</td>
+</tr>
+<tr>
+<td><strong>fork</strong></td>
+<td>A copy of a repository under your own GitHub account</td>
+</tr>
+<tr>
+<td><strong>pull request (PR)</strong> / <strong>merge request (MR)</strong></td>
+<td>A request, on GitHub/GitLab, to merge one branch into another, with a diff and a review conversation</td>
+</tr>
+<tr>
+<td><strong>review</strong></td>
+<td>Reading a PR's diff and approving it or requesting changes</td>
+</tr>
+<tr>
+<td><strong>protected branch</strong></td>
+<td>A branch (usually <code>main</code>) that only accepts changes through PRs</td>
+</tr>
+<tr>
+<td><strong>issue</strong></td>
+<td>A numbered ticket: bug, task, question</td>
+</tr>
+<tr>
+<td><strong>CI / CD</strong></td>
+<td>Automatic checks on every push / automatic publication when they pass</td>
+</tr>
+<tr>
+<td><strong>workflow</strong>, <strong>Actions</strong></td>
+<td>GitHub's CI system and its YAML files in <code>.github/workflows/</code></td>
+</tr>
+<tr>
+<td><strong>fetch</strong> / <strong>pull</strong></td>
+<td>Download the remote's new commits / download and merge them</td>
+</tr>
+</tbody>
+</table>
+<h2 id="optional-hands-on-about-one-hour">Optional, hands-on (about one hour)<a class="headerlink" href="#optional-hands-on-about-one-hour" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/skills/introduction-to-github">GitHub Skills — Introduction to GitHub</a> is a repository you copy into your account; a bot then guides you through branch → commit → pull request → merge on GitHub itself, with automatic feedback at each step. It is the best available practice of sections 3 and 5, and it is free. If you do one optional thing before Session 4, do this.</p>
+<h2 id="going-further">Going further<a class="headerlink" href="#going-further" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows">Pro Git — Distributed Workflows</a> — the three team shapes (centralised, integration-manager, dictator-and-lieutenants) and why GitHub's fork-and-PR is the second.</li>
+<li><a href="https://docs.github.com/en/get-started/using-github/github-flow">GitHub flow</a> — the official one-page description of section 3.</li>
+<li><a href="https://docs.gitlab.com/user/project/merge_requests/">GitLab — Merge requests</a> — the same thing under its other name; you will meet GitLab at most French institutions.</li>
+<li><a href="https://docs.github.com/en/actions/get-started/understand-github-actions">Understanding GitHub Actions</a> — workflows, jobs, steps, runners, in one page.</li>
+<li><a href="https://cbea.ms/git-commit/">How to Write a Git Commit Message</a> — read again now that you know who reads them: the reviewer.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.tabs.link", "navigation.sections", "navigation.top", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1436 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Terminals, APIs, and coding agents — an 8h M2 course (Université de Strasbourg)">
+      
+      
+      
+        <link rel="canonical" href="https://Knuxv.github.io/cours-agents/setup/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../wsl/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Setup - Advanced Programming for Economists</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#session-0-set-up-your-machine-homework" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Advanced Programming for Economists" class="md-header__button md-logo" aria-label="Advanced Programming for Economists" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Advanced Programming for Economists
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Advanced Programming for Economists" class="md-nav__button md-logo" aria-label="Advanced Programming for Economists" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Advanced Programming for Economists
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session 0 (homework)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Session 0 (homework)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0-which-path-is-yours" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Which path is yours?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-a-windows-wsl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path A — Windows (WSL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Path A — Windows (WSL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A1. Install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-open-the-terminal-run-the-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2. Open the terminal, run the check
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-b-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path B — Mac
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Path B — Mac">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b1-open-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1. Open Terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b2-trigger-the-one-time-developer-tools-download-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2. Trigger the one-time developer-tools download now
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b3-the-check-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B3. The check command
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-c-github-codespaces-the-lifeboat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path C — GitHub Codespaces (the lifeboat)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-d-git-bash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path D — Git Bash
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-your-unistra-llm-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Your Unistra LLM API key
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Your Unistra LLM API key">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-generate-the-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Generate the key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-store-it-as-an-environment-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Store it as an environment variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-test-it-in-a-new-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Test it — in a new window
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ten-minutes-in-the-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Ten minutes in the terminal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL, explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sessions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sessions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 — Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s1-collab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1½ — Git as a collaboration tool (reading)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 — Python tooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 — What an LLM API is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 — OpenCode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercises
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replication track (optional)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0-which-path-is-yours" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Which path is yours?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-a-windows-wsl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path A — Windows (WSL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Path A — Windows (WSL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A1. Install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-open-the-terminal-run-the-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2. Open the terminal, run the check
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-b-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path B — Mac
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Path B — Mac">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b1-open-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1. Open Terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b2-trigger-the-one-time-developer-tools-download-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2. Trigger the one-time developer-tools download now
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b3-the-check-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B3. The check command
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-c-github-codespaces-the-lifeboat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path C — GitHub Codespaces (the lifeboat)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-d-git-bash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path D — Git Bash
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-your-unistra-llm-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Your Unistra LLM API key
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Your Unistra LLM API key">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-generate-the-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Generate the key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-store-it-as-an-environment-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Store it as an environment variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-test-it-in-a-new-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Test it — in a new window
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ten-minutes-in-the-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Ten minutes in the terminal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="session-0-set-up-your-machine-homework">Session 0 — Set up your machine (homework)<a class="headerlink" href="#session-0-set-up-your-machine-homework" title="Permanent link">&para;</a></h1>
+<p>Do this <strong>before Session 1 (Monday 14 September 2026)</strong>, at home, when you have time and a stable connection. It takes 20–40 minutes if all goes well, and it is the one thing that can make Session 1 miserable if it does not. Budget for it.</p>
+<p><strong>At the end you will have:</strong></p>
+<ol>
+<li>a terminal that runs Linux-style commands (<code>ls</code>, <code>curl</code>, <code>git</code>…);</li>
+<li>a personal API key for the university's LLM platform, stored as an environment variable.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">How to read this page</p>
+<ul>
+<li>Every grey box is something to type. Use the copy button at its right edge, paste into the window named in the box title, press <span class="keys"><kbd class="key-enter">Enter</kbd></span>.</li>
+<li>A <strong>terminal</strong> is a window where you type commands. The <strong>prompt</strong> is the text it shows while waiting for you (it ends with <code>$</code> on Linux/Mac). You never type the prompt.</li>
+<li>When something fails, keep the <em>exact</em> error message (screenshot or copy-paste) and bring it to Session 1. "It doesn't work" cannot be debugged; <code>0x80370102</code> can.</li>
+</ul>
+</div>
+<h2 id="0-which-path-is-yours">0. Which path is yours?<a class="headerlink" href="#0-which-path-is-yours" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Your laptop</th>
+<th>Follow</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows 10 / 11, you can install software (admin rights)</td>
+<td><a href="#path-a-windows-wsl">Path A — WSL</a> (then read <a href="../wsl/">WSL, explained</a>)</td>
+<td>20–30 min + a reboot</td>
+</tr>
+<tr>
+<td>Mac</td>
+<td><a href="#path-b-mac">Path B — Terminal</a></td>
+<td>5–15 min</td>
+</tr>
+<tr>
+<td>Windows <strong>without</strong> admin rights (managed laptop), or WSL failed</td>
+<td><a href="#path-c-github-codespaces-the-lifeboat">Path C — GitHub Codespaces</a></td>
+<td>10 min, needs a GitHub account</td>
+</tr>
+<tr>
+<td>Windows, quickest way to a working <code>git</code> + <code>bash</code> for Session 1</td>
+<td><a href="#path-d-git-bash">Path D — Git Bash</a></td>
+<td>10 min</td>
+</tr>
+</tbody>
+</table>
+<p>Windows users: Path D (Git Bash) is the fastest way to be ready for Session 1 (git), and you can do it even if WSL is giving you trouble. Path A (WSL) is what you will need from Session 4 on, so start it early. Doing both is fine.</p>
+<p>Everyone then does <a href="#5-your-unistra-llm-api-key">section 5 (API key)</a> and <a href="#6-ten-minutes-in-the-terminal">section 6 (ten minutes in the terminal)</a>.</p>
+<p>Codespaces is a real option, not a shameful one: it gives you the same Ubuntu terminal in a browser tab. If your laptop is locked down, go straight there.</p>
+<h2 id="path-a-windows-wsl">Path A — Windows (WSL)<a class="headerlink" href="#path-a-windows-wsl" title="Permanent link">&para;</a></h2>
+<p>WSL (<em>Windows Subsystem for Linux</em>) installs a small, complete Linux — Ubuntu — inside Windows. You will only ever see it as a terminal window. We use it because the tools of this course (<code>git</code>, <code>curl</code>, <code>uv</code>, the agent harness of Session 4) and every server, cloud machine and data pipeline you will meet run Linux; inside WSL you type exactly the same commands as your Mac classmates, and what you learn transfers as is. The full story — what it is, the two file systems you now have, how to manage it — is on <a href="../wsl/">WSL, explained</a>. Read it once the install is done.</p>
+<h3 id="a1-install">A1. Install<a class="headerlink" href="#a1-install" title="Permanent link">&para;</a></h3>
+<p>Before you start: press <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-shift">Shift</kbd><span>+</span><kbd class="key-escape">Esc</kbd></span> (Task Manager) → <strong>Performance</strong> → <strong>CPU</strong> and check that it says <strong>Virtualization: Enabled</strong>. If it says <em>Disabled</em>, read <a href="../wsl/#virtualization-must-be-enabled">this first</a>.</p>
+<ol>
+<li>Click Start, type <code>PowerShell</code>, <strong>right-click</strong> <em>Windows PowerShell</em> → <strong>Run as administrator</strong>.</li>
+<li>Paste, press <span class="keys"><kbd class="key-enter">Enter</kbd></span>:</li>
+</ol>
+<div class="highlight"><span class="filename">Windows PowerShell (Administrator)</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">wsl</span> <span class="p">-</span><span class="n">-install</span>
+</code></pre></div>
+<ol>
+<li><strong>Reboot</strong> when asked. After the reboot an <strong>Ubuntu</strong> window opens by itself, finishes installing, and asks for:<ul>
+<li>a <strong>username</strong>: short, lowercase, no spaces (it is not your Windows login);</li>
+<li>a <strong>password</strong>, twice: <strong>nothing appears while you type</strong> — no dots, no stars. That is normal.</li>
+</ul>
+</li>
+</ol>
+<h3 id="a2-open-the-terminal-run-the-check">A2. Open the terminal, run the check<a class="headerlink" href="#a2-open-the-terminal-run-the-check" title="Permanent link">&para;</a></h3>
+<p>From now on: Start → type <code>Ubuntu</code> → open. The window shows a prompt ending in <code>$</code>. That is your terminal for the whole course.</p>
+<div class="highlight"><span class="filename">Ubuntu window (WSL) — the window whose prompt ends in $</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uname<span class="w"> </span>-a<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>--version<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
+</code></pre></div>
+<p>Expected output (details will differ):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Linux DESKTOP-XXXX 5.15.167.4-microsoft-standard-WSL2 #1 SMP ... x86_64 GNU/Linux
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13 ...
+</code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">It must be run in the Ubuntu window, not in PowerShell</p>
+<p>In PowerShell the same line fails with <code>uname : The term 'uname' is not recognized</code>. That is not a WSL error — you are in the wrong window. Open <strong>Ubuntu</strong> from the Start menu.</p>
+</div>
+<p>Something failed? See <a href="../wsl/#when-it-fails">When it fails</a> on the WSL page. Meanwhile, <a href="#path-d-git-bash">Path D</a> gets you through Session 1.</p>
+<h2 id="path-b-mac">Path B — Mac<a class="headerlink" href="#path-b-mac" title="Permanent link">&para;</a></h2>
+<p>Nothing to install. macOS ships with <code>curl</code>, <code>uname</code> and <code>git</code>.</p>
+<h3 id="b1-open-terminal">B1. Open Terminal<a class="headerlink" href="#b1-open-terminal" title="Permanent link">&para;</a></h3>
+<p>Press <span class="keys"><kbd class="key-command">Cmd</kbd><span>+</span><kbd class="key-space">Space</kbd></span>, type <code>Terminal</code>, press <span class="keys"><kbd class="key-enter">Enter</kbd></span>. You see a prompt ending in <code>%</code> or <code>$</code>.</p>
+<h3 id="b2-trigger-the-one-time-developer-tools-download-now">B2. Trigger the one-time developer-tools download <em>now</em><a class="headerlink" href="#b2-trigger-the-one-time-developer-tools-download-now" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">Terminal (Mac)</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>--version
+</code></pre></div>
+<p>The <strong>first time</strong>, macOS pops up a window asking to install the <em>Command Line Developer Tools</em>. Click <strong>Install</strong> and wait (5–10 minutes, a few GB). Do this at home: if you skip it, it eats the first ten minutes of Session 1. Then run <code>git --version</code> again; it prints something like <code>git version 2.39.5 (Apple Git-154)</code>.</p>
+<h3 id="b3-the-check-command">B3. The check command<a class="headerlink" href="#b3-the-check-command" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">Terminal (Mac)</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>uname<span class="w"> </span>-a<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>--version<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>--version
+</code></pre></div>
+<p>Expected output (details will differ):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Darwin MacBook-Air.local 24.5.0 Darwin Kernel Version 24.5.0 ... arm64
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>curl 8.7.1 (x86_64-apple-darwin24.0) libcurl/8.7.1 ...
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>git version 2.39.5 (Apple Git-154)
+</code></pre></div>
+<h2 id="path-c-github-codespaces-the-lifeboat">Path C — GitHub Codespaces (the lifeboat)<a class="headerlink" href="#path-c-github-codespaces-the-lifeboat" title="Permanent link">&para;</a></h2>
+<p>A Codespace is a small Ubuntu machine in GitHub's cloud, with a terminal in your browser. The free plan gives every GitHub account <strong>120 core-hours per month</strong> (a 2-core machine = 60 hours) — far more than this course needs. Use it if your laptop is managed, if WSL failed, or as the day-of backup when something breaks during class.</p>
+<ol>
+<li>Create a <a href="https://github.com/signup">GitHub account</a> if you do not have one (you will need it in Session 1 anyway).</li>
+<li>Go to <a href="https://github.com/codespaces">github.com/codespaces</a>. In <em>Explore quick start templates</em>, click <strong>See all</strong>, then <strong>Use this template</strong> under <strong>Blank</strong>.</li>
+<li>A Visual Studio Code editor opens in the browser. Open the terminal panel: menu ☰ → <strong>Terminal</strong> → <strong>New Terminal</strong> (or press <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-grave">`</kbd></span>).</li>
+<li>You are in an Ubuntu terminal, prompt ending in <code>$</code>. Run the check command:</li>
+</ol>
+<div class="highlight"><span class="filename">Codespace terminal (browser)</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>uname<span class="w"> </span>-a<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>--version<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
+</code></pre></div>
+<p>Things to know:</p>
+<ul>
+<li>A codespace <strong>stops after 30 minutes of inactivity</strong> by default and keeps your files; it is <strong>deleted after 30 days</strong> unused. TODO(verify): confirm the current defaults on the <a href="https://docs.github.com/en/billing/concepts/product-billing/github-codespaces">Codespaces billing page</a> before the first class.</li>
+<li>Environment variables you <code>export</code> (section 5) are lost when the codespace restarts unless you put them in <code>~/.bashrc</code> — section 5 does exactly that.</li>
+<li>Students may get extra quota through the <a href="https://education.github.com/pack">GitHub Student Developer Pack</a>. TODO(verify): the exact Codespaces bonus.</li>
+</ul>
+<p>Reference: <a href="https://docs.github.com/en/codespaces/getting-started/quickstart">Codespaces quickstart</a> · <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template">Creating a codespace from a template</a>.</p>
+<h2 id="path-d-git-bash">Path D — Git Bash<a class="headerlink" href="#path-d-git-bash" title="Permanent link">&para;</a></h2>
+<p>Git Bash gives a <code>bash</code> shell with <code>curl</code> and <code>git</code> on Windows, with no admin rights and no reboot. It is the quickest way to be ready for Session 1 (git) and it works for Sessions 2–3 as well. <strong>It is not enough for Session 4</strong>: OpenCode has no native Windows support (its documentation recommends WSL), so plan to have WSL (Path A) or Codespaces (Path C) working by then.</p>
+<ol>
+<li>Download and install Git for Windows from <a href="https://gitforwindows.org/">gitforwindows.org</a> (default options are fine).</li>
+<li>Start → type <code>Git Bash</code> → open it. Prompt ends in <code>$</code>.</li>
+<li>Check:</li>
+</ol>
+<div class="highlight"><span class="filename">Git Bash</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>uname<span class="w"> </span>-a<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>--version<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
+</code></pre></div>
+<p>Expected first line starts with <code>MINGW64_NT-10.0 ...</code>.</p>
+<p>Optional — <strong>Scoop</strong>, a package installer that needs no admin rights (for <code>jq</code>, <code>uv</code> and other tools we will use). In a <em>normal</em> (non-administrator) PowerShell window:</p>
+<div class="highlight"><span class="filename">Windows PowerShell (NOT administrator)</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">Set-ExecutionPolicy</span> <span class="n">-ExecutionPolicy</span> <span class="n">RemoteSigned</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">irm </span><span class="n">get</span><span class="p">.</span><span class="n">scoop</span><span class="p">.</span><span class="n">sh</span> <span class="p">|</span> <span class="nb">iex</span>
+</code></pre></div>
+<p>Reference: <a href="https://scoop.sh/">scoop.sh</a> · <a href="https://github.com/ScoopInstaller/Install">Scoop install notes</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">PowerShell alone can call the API, but it is not our terminal</p>
+<p>Windows 10/11 ship <code>curl.exe</code>, so a raw API call from PowerShell is possible in an emergency (<code>curl.exe</code>, not <code>curl</code>, which PowerShell silently replaces with another command). Nothing else in the course assumes PowerShell.</p>
+</div>
+<h2 id="5-your-unistra-llm-api-key">5. Your Unistra LLM API key<a class="headerlink" href="#5-your-unistra-llm-api-key" title="Permanent link">&para;</a></h2>
+<p>The university runs its own LLM platform at <a href="https://conversation.ia.unistra.fr/">conversation.ia.unistra.fr</a>: free, hosted in Strasbourg, with an API compatible with the OpenAI format. In Session 3 you will call it from the terminal. For that you need a personal <strong>API key</strong> — a long string starting with <code>sk-</code> that identifies <em>you</em>.</p>
+<h3 id="51-generate-the-key">5.1 Generate the key<a class="headerlink" href="#51-generate-the-key" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Log in at <a href="https://conversation.ia.unistra.fr/">conversation.ia.unistra.fr</a> with your university account.</li>
+<li>Click your <strong>profile</strong> (bottom left) → <strong>Réglages</strong> (Settings) → <strong>Compte</strong> (Account).</li>
+<li>Under <em>Clés API</em>: <strong>Afficher</strong> (show) or <strong>Générer une nouvelle clé</strong> (generate a new key). Click the eye icon to reveal it, then the copy button.</li>
+</ol>
+<p>Treat the key like a password. Never paste it in a file you share, in a chat, in the forum, or in code. If it leaks, come back here and generate a new one (TODO(verify): whether regenerating invalidates the old key on the Unistra platform — it does on the underlying software, Open WebUI).</p>
+<p>Reference: <a href="https://documentation.unistra.fr/DNUM/Intelligence_artificielle/guide_complet_IA/co/7_1API.html">Unistra — Utiliser l'API</a> (French).</p>
+<h3 id="52-store-it-as-an-environment-variable">5.2 Store it as an environment variable<a class="headerlink" href="#52-store-it-as-an-environment-variable" title="Permanent link">&para;</a></h3>
+<p>An <strong>environment variable</strong> is a named value your terminal keeps for the programs it launches. We store the key in one, so that commands can use <code>$UNISTRA_API_KEY</code> and the key itself never appears in a script. The variable must be defined in your shell's <em>startup file</em>, otherwise it disappears when you close the window. That file depends on your platform:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">WSL (Ubuntu) / Codespaces / Git Bash</label><label for="__tabbed_1_2">Mac</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><span class="filename">Ubuntu window, Codespace terminal, or Git Bash</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">'export UNISTRA_API_KEY="sk-XXXX"'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>macOS's default shell is <code>zsh</code>, whose startup file is <code>~/.zshrc</code>, not <code>~/.bashrc</code>.</p>
+<div class="highlight"><span class="filename">Terminal (Mac)</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">'export UNISTRA_API_KEY="sk-XXXX"'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">source</span><span class="w"> </span>~/.zshrc
+</code></pre></div>
+<p>If <code>echo $SHELL</code> prints <code>/bin/bash</code> instead of <code>/bin/zsh</code>, use the WSL tab's commands instead.</p>
+</div>
+</div>
+</div>
+<p>Replace <code>sk-XXXX</code> with your real key <strong>before</strong> pressing <span class="keys"><kbd class="key-enter">Enter</kbd></span>, keeping the quotes. The <code>&gt;&gt;</code> appends one line to the startup file; <code>source</code> reloads it in the current window.</p>
+<h3 id="53-test-it-in-a-new-window">5.3 Test it — in a <em>new</em> window<a class="headerlink" href="#53-test-it-in-a-new-window" title="Permanent link">&para;</a></h3>
+<p>Close the terminal, open a new one (this is the real test: does the key survive?), then:</p>
+<div class="highlight"><span class="filename">Any terminal — new window</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$UNISTRA_API_KEY</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c1-6
+</code></pre></div>
+<p>Expected: <code>sk-XXX</code> — the first six characters of your key, nothing more. If you see an empty line, the export went into the wrong file: check <code>echo $SHELL</code> and redo 5.2 in the other tab.</p>
+<p>Now one real call to the platform, which lists the available models:</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>https://conversation.ia.unistra.fr/api/models<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Authorization: Bearer </span><span class="nv">$UNISTRA_API_KEY</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">200</span>
+</code></pre></div>
+<p>Expected (truncated on purpose): a block of JSON starting with</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>{"data":[{"id":"bge-m3","object":"model","created":1677610602,"owned_by":"openai", ...
+</code></pre></div>
+<p>If instead you get <code>{"detail":"Your session has expired or the token is invalid. Please sign in again."}</code>, the key is missing or wrong in this window — the platform says "session expired" for both cases. Redo 5.2 and 5.3.</p>
+<p>Congratulations: that was your first API call. Session 3 starts from here.</p>
+<p>A script that runs all these checks and prints PASS/FAIL per item (<code>check-setup.sh</code>) will be linked here once it is ready. TODO(verify): link when Task 03 delivers it.</p>
+<h2 id="6-ten-minutes-in-the-terminal">6. Ten minutes in the terminal<a class="headerlink" href="#6-ten-minutes-in-the-terminal" title="Permanent link">&para;</a></h2>
+<p>You are going to spend the whole course in this window, so make it yours now. Type each line, look at what happens. (A fuller exercise with solutions will be on the <a href="../exercises/">exercises page</a>.)</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nb">pwd</span><span class="w">                      </span><span class="c1"># print working directory: where am I?</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ls<span class="w">                       </span><span class="c1"># list what is here</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>ls<span class="w"> </span>-la<span class="w">                   </span><span class="c1"># ... including hidden files, with details</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>mkdir<span class="w"> </span>cours-agents<span class="w">       </span><span class="c1"># make a directory (folder)</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nb">cd</span><span class="w"> </span>cours-agents<span class="w">          </span><span class="c1"># change into it</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="nb">pwd</span><span class="w">                      </span><span class="c1"># you moved</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"hello"</span><span class="w"> </span>&gt;<span class="w"> </span>note.txt<span class="w">  </span><span class="c1"># write the word hello into a new file</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>cat<span class="w"> </span>note.txt<span class="w">             </span><span class="c1"># print the file</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>cp<span class="w"> </span>note.txt<span class="w"> </span>copy.txt<span class="w">     </span><span class="c1"># copy</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>mv<span class="w"> </span>copy.txt<span class="w"> </span>renamed.txt<span class="w">  </span><span class="c1"># move = rename</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>ls
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>rm<span class="w"> </span>renamed.txt<span class="w">           </span><span class="c1"># remove (no trash, no undo)</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="nb">cd</span><span class="w"> </span>..<span class="w">                    </span><span class="c1"># go up one level</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>ls
+</code></pre></div>
+<p>Habits worth acquiring on day 0:</p>
+<ul>
+<li><span class="keys"><kbd class="key-tab">Tab</kbd></span> completes file and command names; press it twice to see options. Nobody types full paths.</li>
+<li><span class="keys"><kbd class="key-arrow-up">Up</kbd></span> recalls the previous command.</li>
+<li><span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-c">C</kbd></span> interrupts a command that hangs. <code>clear</code> empties the screen. <code>q</code> quits most pagers (like <code>less</code> or <code>git log</code>).</li>
+<li><code>--help</code> after a command (e.g. <code>ls --help</code>) or <code>man ls</code> (quit with <code>q</code>) shows its manual.</li>
+<li>Text after <code>#</code> is a comment; the shell ignores it.</li>
+</ul>
+<p>Why the terminal at all? Because it is the interface of every server, every data pipeline, and every coding agent you are aiming to use. A chatbot tab is a demo; the terminal is where the work runs.</p>
+<h2 id="going-further-optional">Going further (optional)<a class="headerlink" href="#going-further-optional" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="https://missing.csail.mit.edu/">The Missing Semester of Your CS Education (MIT)</a> — lectures 1 and 2 (the shell, shell tools): the best two hours of terminal onboarding available, free videos and notes.</li>
+<li><a href="https://swcarpentry.github.io/shell-novice/">Software Carpentry — The Unix Shell</a> — written for researchers who have never opened a terminal.</li>
+<li><a href="https://learn.microsoft.com/en-us/windows/wsl/setup/environment">Microsoft — Best practices for a WSL development environment</a> — Windows Terminal, where to keep files, VS Code integration.</li>
+<li><a href="https://docs.github.com/en/codespaces/getting-started/quickstart">GitHub Codespaces quickstart</a>.</li>
+<li><a href="https://ohshitgit.com/">Julia Evans — Oh shit, git!</a> — for after Session 1, but a taste of the tone: things will go wrong and there is always a way out.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.tabs.link", "navigation.sections", "navigation.top", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
