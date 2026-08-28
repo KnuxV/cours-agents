@@ -117,9 +117,17 @@ The first line refreshes the catalogue; the second installs `jq`, a small tool w
 
 ## Editing files
 
-Two options, keep both:
+Three options; keep the first and one of the other two:
 
-- **`nano`**, a minimal editor inside the terminal: `nano note.txt`, type, ++ctrl+o++ then ++enter++ to save, ++ctrl+x++ to leave. Good for one-line changes (like your `~/.bashrc`).
+- **`nano`**, a minimal editor inside the terminal, always present: `nano note.txt`, type, ++ctrl+o++ then ++enter++ to save, ++ctrl+x++ to leave. Its shortcuts are odd, but it is on every Linux machine you will ever log into, so know these three keys.
+- **`micro`**, the same idea with the shortcuts you already know — ++ctrl+s++ save, ++ctrl+q++ quit, ++ctrl+z++ undo, ++ctrl+c++ / ++ctrl+v++ copy and paste, ++ctrl+f++ find, mouse and ++shift++-arrows to select. Install it once, then use `micro` wherever this site says `nano`:
+
+    ```bash title="Ubuntu window (WSL)"
+    sudo apt update && sudo apt install -y micro
+    micro note.txt
+    ```
+
+    (Ubuntu's package is version 2.0.13; the project lives at [github.com/micro-editor/micro](https://github.com/micro-editor/micro). On a Mac: `brew install micro`.)
 - **VS Code**, a real editor: install [VS Code](https://code.visualstudio.com/download) *on Windows*, then inside it install the extension named **WSL** (by Microsoft). From then on, typing `code .` in an Ubuntu terminal opens the current Linux folder in VS Code, with a built-in Ubuntu terminal at the bottom. Reference: [Get started using VS Code with WSL](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode).
 
 ## Managing WSL itself (from PowerShell)
