@@ -53,7 +53,9 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Session 0 — Setup (homework): setup.md
+  - Session 0 (homework):
+      - Setup: setup.md
+      - WSL, explained: wsl.md
   - Sessions:
       - S1 — Git: sessions/s1.md
       - S2 — Python tooling: sessions/s2.md

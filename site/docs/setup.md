@@ -16,7 +16,7 @@ Do this **before Session 1 (Monday 14 September 2026)**, at home, when you have 
 
 | Your laptop | Follow | Time |
 |---|---|---|
-| Windows 10 / 11, you can install software (admin rights) | [Path A — WSL](#path-a-windows-wsl) | 20–30 min + a reboot |
+| Windows 10 / 11, you can install software (admin rights) | [Path A — WSL](#path-a-windows-wsl) (then read [WSL, explained](wsl.md)) | 20–30 min + a reboot |
 | Mac | [Path B — Terminal](#path-b-mac) | 5–15 min |
 | Windows **without** admin rights (managed laptop), or WSL failed | [Path C — GitHub Codespaces](#path-c-github-codespaces-the-lifeboat) | 10 min, needs a GitHub account |
 | Windows, quickest way to a working `git` + `bash` for Session 1 | [Path D — Git Bash](#path-d-git-bash) | 10 min |
@@ -29,43 +29,26 @@ Codespaces is a real option, not a shameful one: it gives you the same Ubuntu te
 
 ## Path A — Windows (WSL)
 
-WSL (*Windows Subsystem for Linux*) runs a real Ubuntu Linux inside Windows. Everything in this course works identically on WSL and on a Mac, which is why we use it rather than PowerShell.
+WSL (*Windows Subsystem for Linux*) installs a small, complete Linux — Ubuntu — inside Windows. You will only ever see it as a terminal window. We use it because the tools of this course (`git`, `curl`, `uv`, the agent harness of Session 4) and every server, cloud machine and data pipeline you will meet run Linux; inside WSL you type exactly the same commands as your Mac classmates, and what you learn transfers as is. The full story — what it is, the two file systems you now have, how to manage it — is on [WSL, explained](wsl.md). Read it once the install is done.
 
-### A1. Check your Windows version
+### A1. Install
 
-Press ++win+r++, type `winver`, press ++enter++. You need **Windows 11**, or **Windows 10 version 2004 or later (build 19041+)**. Older builds fail silently. Note the version — it matters if something fails later.
+Before you start: press ++ctrl+shift+esc++ (Task Manager) → **Performance** → **CPU** and check that it says **Virtualization: Enabled**. If it says *Disabled*, read [this first](wsl.md#virtualization-must-be-enabled).
 
-### A2. Check that virtualization is enabled — *do this first*
-
-WSL needs hardware virtualization. This is the #1 cause of failure on student laptops, and the fix (a BIOS setting) cannot be done remotely.
-
-1. Press ++ctrl+shift+esc++ to open Task Manager.
-2. Click **Performance** → **CPU**.
-3. In the bottom right, read the line **Virtualization: Enabled / Disabled**.
-
-If it says **Disabled**: it must be enabled in your BIOS/UEFI settings (the menu name varies: "Intel VT-x", "AMD-V", "SVM Mode", "Virtualization Technology"). If you are not comfortable doing that, **stop here and use [Path D](#path-d-git-bash) or [Path C](#path-c-github-codespaces-the-lifeboat) for now**; bring the laptop to Session 1 and we will look at it together.
-
-### A3. Install WSL
-
-1. Click Start, type `PowerShell`, **right-click** *Windows PowerShell* → **Run as administrator**. Accept the prompt.
-2. Paste this and press ++enter++:
+1. Click Start, type `PowerShell`, **right-click** *Windows PowerShell* → **Run as administrator**.
+2. Paste, press ++enter++:
 
 ```powershell title="Windows PowerShell (Administrator)"
 wsl --install
 ```
 
-3. Wait. It downloads a few hundred MB and installs Ubuntu. When asked, **reboot** your computer.
+3. **Reboot** when asked. After the reboot an **Ubuntu** window opens by itself, finishes installing, and asks for:
+    - a **username**: short, lowercase, no spaces (it is not your Windows login);
+    - a **password**, twice: **nothing appears while you type** — no dots, no stars. That is normal.
 
-### A4. First launch: create your Linux user
+### A2. Open the terminal, run the check
 
-After the reboot, an **Ubuntu** window opens on its own (if it does not: Start → type `Ubuntu` → open it). It finishes installing, then asks:
-
-- **Enter new UNIX username:** choose a short lowercase name without spaces (e.g. your first name). This is not your Windows login.
-- **New password:** type one and press ++enter++. **Nothing appears while you type** — no dots, no stars. That is normal. Type it again when asked.
-
-You now see a prompt ending in `$`. This window is your terminal for the whole course.
-
-### A5. The check command
+From now on: Start → type `Ubuntu` → open. The window shows a prompt ending in `$`. That is your terminal for the whole course.
 
 ```bash title="Ubuntu window (WSL) — the window whose prompt ends in $"
 uname -a && curl --version | head -1
@@ -81,26 +64,7 @@ curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13 ...
 !!! danger "It must be run in the Ubuntu window, not in PowerShell"
     In PowerShell the same line fails with `uname : The term 'uname' is not recognized`. That is not a WSL error — you are in the wrong window. Open **Ubuntu** from the Start menu.
 
-### A6. Two habits that save hours later
-
-- **Open the terminal via Windows Terminal** (Start → `Terminal`; on Windows 10 install it from the Microsoft Store). It has tabs and proper copy/paste; pick *Ubuntu* from the dropdown arrow next to the `+` tab.
-- **Keep your files on the Linux side.** Your Linux home folder is `~` (type `cd ~`). Do not work in `/mnt/c/Users/...` (your Windows disk seen from Linux): it is much slower and `git` behaves oddly there. To open your Linux home folder in Windows Explorer, type `explorer.exe .` in the terminal.
-
-### A7. If it fails
-
-| What you see | Meaning | What to do |
-|---|---|---|
-| `0x80370102` | Virtualization is off (BIOS) or the *Virtual Machine Platform* Windows feature is disabled | Redo A2. If Task Manager says *Enabled*, open Start → *Turn Windows features on or off* → tick **Virtual Machine Platform** and **Windows Subsystem for Linux** → reboot. |
-| `0x8007019e` | The WSL optional component is not enabled | Same as above: tick both features, reboot, run `wsl --install` again. |
-| `0x80070003` | The distribution must be installed on the system drive (`C:`) | Free up space on `C:`, or use Path C/D for now. |
-| Download stuck at `0.0%` | Store download blocked (VPN, proxy, network) | `wsl --install --web-download -d Ubuntu` in admin PowerShell. |
-| After install, "no installed distributions" (typical on a fresh Windows 11 24H2) | WSL is there but Ubuntu is not | `wsl --install -d Ubuntu` in admin PowerShell. |
-| Old Windows 10 build (< 19041) | `wsl --install` does nothing useful | Update Windows, or use [Path C](#path-c-github-codespaces-the-lifeboat). |
-| Anything else | | Run `wsl --update` in admin PowerShell, reboot, retry. Keep the exact message for Session 1. |
-
-Known non-starters: WSL 2 cannot run inside a VirtualBox VM; some corporate VPNs break WSL networking (disconnect the VPN to test).
-
-Reference: [Microsoft — Install WSL](https://learn.microsoft.com/en-us/windows/wsl/install) · [Troubleshooting](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting) · [Best practices for a WSL dev environment](https://learn.microsoft.com/en-us/windows/wsl/setup/environment).
+Something failed? See [When it fails](wsl.md#when-it-fails) on the WSL page. Meanwhile, [Path D](#path-d-git-bash) gets you through Session 1.
 
 ## Path B — Mac
 

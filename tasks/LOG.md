@@ -58,3 +58,9 @@ Instructor decisions applied (these deviate from SPEC Session 0 on purpose; SPEC
 - Repo pushed as `KnuxV/cours-agents`: `repo_url`/`site_url` set in `mkdocs.yml`, index links the repo. Pages source (`gh-pages`) still to be enabled after the first workflow run.
 
 Remaining TODO(verify) on the site: forum link (index), Codespaces idle/deletion defaults, GitHub Education bonus, key regeneration = rotation, `check-setup.sh` link. Plain `TODO:` for session dates and exam rubric.
+
+### Task 02 s0 — dates + WSL page (2026-08-28)
+
+- Session dates/room taken from `~/Documents/plan-2026-autumn/overview.md` ("Adv programming & dataviz (M2 DS2E)", 4 × 2h, A330 Idem-Lab): S1 Mon 14 Sep 14–16, S2 Fri 18 Sep 15–17, S3 Fri 25 Sep 14–16, S4 Fri 16 Oct 13–15. Setup deadline = before 14 Sep. Needs human check: the plan has 4 slots for this course (the instructor said "8 classes" — read as 8 hours); the 6 Thursday slots are the other course (GL, M2 TDL) and were not used.
+- New page `site/docs/wsl.md` (nav: Session 0 → "WSL, explained"): what WSL is, why the course uses it, vocabulary + "which window am I in", opening/closing, **the two file systems** (slashes, case sensitivity, `~` vs `C:\Users`, the `/mnt/c` and `\\wsl$` bridges, `explorer.exe .`, where to keep work), installing with `apt`, editing (`nano`, VS Code + WSL extension), managing WSL from PowerShell, virtualization check, troubleshooting table (moved here from setup.md). Facts checked against MS Learn *Working across file systems* and *VS Code with WSL* pages; the rest is from `research/s0-setup.md`.
+- `setup.md` Path A cut to the why + `wsl --install` + first launch + open Ubuntu + check command, linking to the WSL page for everything else.
