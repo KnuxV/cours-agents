@@ -101,3 +101,5 @@ Run restricted by the instructor to the git and tooling classes, **site only —
 5. The S1 page sends S1 users to `nano`/VS Code without a dedicated editor section; if a Windows-VS-Code-with-WSL walkthrough is wanted, `wsl.md#editing-files` is where it lives.
 6. `site/docs/files/` now holds student-facing starter files (practice site, csv, script). AGENTS.md lists `exercises/` for exercise material; these were placed under the site so they are downloadable by URL from the published page. Task 03 may prefer to move/duplicate them under `exercises/s1/` and `exercises/s2/` — if so, update the `curl` URLs in s1 §4.1 and s2 §4.1.
 7. Pages are long (≈4k and 3k words). SPEC/Task 02 say "site prose complete sentences" and "the site holds the prose", so this is intended; the decks must be the terse counterpart.
+
+- 2026-08-28, instructor review: S1 §8 "When things go wrong" removed (cheat sheet is now §8); the PAT fallback is one sentence in §6.1. The Git Bash CRLF note and the `Updates were rejected` recipe went with it.
