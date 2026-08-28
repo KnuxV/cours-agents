@@ -43,7 +43,11 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.highlight:
@@ -58,6 +62,7 @@ nav:
       - WSL, explained: wsl.md
   - Sessions:
       - S1 — Git: sessions/s1.md
+      - S1½ — Git as a collaboration tool (reading): sessions/s1-collab.md
       - S2 — Python tooling: sessions/s2.md
       - S3 — What an LLM API is: sessions/s3.md
       - S4 — OpenCode: sessions/s4.md
