@@ -18,13 +18,15 @@ This is the first part of the Advanced Programming class. A later 15-hour block 
 
 ## Schedule
 
+All sessions take place in room **A330 (Idem-Lab)**.
+
 | When | Session | Content | Deliverable |
 |---|---|---|---|
-| **Before Session 1** | [Session 0 — Setup](setup.md) *(homework)* | A working terminal (WSL / Git Bash / macOS / Codespaces) and a Unistra LLM API key | Your terminal passes the check command |
-| TODO: date | [S1 — Git](sessions/s1.md) | Snapshots, commits, branches, GitHub. Why version control is the undo button and the audit trail of agent-written code | Your personal course repo on GitHub |
-| TODO: date | [S2 — Python tooling](sessions/s2.md) | `uv` projects and lockfiles, `argparse` (notebook → script), environment variables and secrets | A reproducible script in your repo |
-| TODO: date | [S3 — What an LLM API actually is](sessions/s3.md) | Raw `curl` calls: tokens, statelessness, constructed context, model families, **tool calling** — you *are* the harness for one round | `step1.json` → `step4` sequence committed to your repo |
-| TODO: date | [S4 — OpenCode](sessions/s4.md) | A real harness: provider config, the loop observed, permissions, `AGENTS.md`, subagents, the grill/build pattern, the A/B/C reliability experiment | `opencode.json`, `AGENTS.md`, agent definitions, spec + implementation |
+| **Before Mon 14 Sep** | [Session 0 — Setup](setup.md) *(homework)* | A working terminal (WSL / Git Bash / macOS / Codespaces) and a Unistra LLM API key | Your terminal passes the check command |
+| **Mon 14 Sep 2026**, 14:00–16:00 | [S1 — Git](sessions/s1.md) | Snapshots, commits, branches, GitHub. Why version control is the undo button and the audit trail of agent-written code | Your personal course repo on GitHub |
+| **Fri 18 Sep 2026**, 15:00–17:00 | [S2 — Python tooling](sessions/s2.md) | `uv` projects and lockfiles, `argparse` (notebook → script), environment variables and secrets | A reproducible script in your repo |
+| **Fri 25 Sep 2026**, 14:00–16:00 | [S3 — What an LLM API actually is](sessions/s3.md) | Raw `curl` calls: tokens, statelessness, constructed context, model families, **tool calling** — you *are* the harness for one round | `step1.json` → `step4` sequence committed to your repo |
+| **Fri 16 Oct 2026**, 13:00–15:00 | [S4 — OpenCode](sessions/s4.md) | A real harness: provider config, the loop observed, permissions, `AGENTS.md`, subagents, the grill/build pattern, the A/B/C reliability experiment | `opencode.json`, `AGENTS.md`, agent definitions, spec + implementation |
 | Optional | [Replication track](replication.md) | LLM-assisted replication of a published economics paper | A short replication memo |
 
 ## What you need

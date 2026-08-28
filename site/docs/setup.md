@@ -1,6 +1,6 @@
 # Session 0 — Set up your machine (homework)
 
-Do this **before Session 1**, at home, when you have time and a stable connection. It takes 20–40 minutes if all goes well, and it is the one thing that can make Session 1 miserable if it does not. Budget for it.
+Do this **before Session 1 (Monday 14 September 2026)**, at home, when you have time and a stable connection. It takes 20–40 minutes if all goes well, and it is the one thing that can make Session 1 miserable if it does not. Budget for it.
 
 **At the end you will have:**
 
