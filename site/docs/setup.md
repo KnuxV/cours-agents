@@ -1,0 +1,300 @@
+# Session 0 — Set up your machine (homework)
+
+Do this **before Session 1**, at home, when you have time and a stable connection. It takes 20–40 minutes if all goes well, and it is the one thing that can make Session 1 miserable if it does not. Budget for it.
+
+**At the end you will have:**
+
+1. a terminal that runs Linux-style commands (`ls`, `curl`, `git`…);
+2. a personal API key for the university's LLM platform, stored as an environment variable;
+3. a post on the course forum with the output of one check command (never your key).
+
+!!! tip "How to read this page"
+    - Every grey box is something to type. Use the copy button at its right edge, paste into the window named in the box title, press ++enter++.
+    - A **terminal** is a window where you type commands. The **prompt** is the text it shows while waiting for you (it ends with `$` on Linux/Mac). You never type the prompt.
+    - When something fails, copy the *exact* error message into the forum thread. "It doesn't work" cannot be debugged; `0x80370102` can.
+
+## 0. Which path is yours?
+
+| Your laptop | Follow | Time |
+|---|---|---|
+| Windows 10 / 11, you can install software (admin rights) | [Path A — WSL](#path-a-windows-wsl) | 20–30 min + a reboot |
+| Mac | [Path B — Terminal](#path-b-mac) | 5–15 min |
+| Windows **without** admin rights (managed laptop), or WSL failed and the clinic is too far away | [Path C — GitHub Codespaces](#path-c-github-codespaces-the-lifeboat) | 10 min, needs a GitHub account |
+| Windows, last resort for Sessions 1–3 only | [Path D — Git Bash](#path-d-git-bash-sessions-13-only) | 10 min |
+
+Everyone then does [section 5 (API key)](#5-your-unistra-llm-api-key) and [section 6 (forum post)](#6-the-forum-deliverable).
+
+Codespaces is a real option, not a shameful one: it gives you the same Ubuntu terminal in a browser tab. If your laptop is locked down, go straight there.
+
+## Path A — Windows (WSL)
+
+WSL (*Windows Subsystem for Linux*) runs a real Ubuntu Linux inside Windows. Everything in this course works identically on WSL and on a Mac, which is why we use it rather than PowerShell.
+
+### A1. Check your Windows version
+
+Press ++win+r++, type `winver`, press ++enter++. You need **Windows 11**, or **Windows 10 version 2004 or later (build 19041+)**. Older builds fail silently. Note the version — you will post it with your deliverable.
+
+### A2. Check that virtualization is enabled — *do this first*
+
+WSL needs hardware virtualization. This is the #1 cause of failure on student laptops, and the fix (a BIOS setting) cannot be done over the forum.
+
+1. Press ++ctrl+shift+esc++ to open Task Manager.
+2. Click **Performance** → **CPU**.
+3. In the bottom right, read the line **Virtualization: Enabled / Disabled**.
+
+If it says **Disabled**: it must be enabled in your BIOS/UEFI settings (the menu name varies: "Intel VT-x", "AMD-V", "SVM Mode", "Virtualization Technology"). If you are not comfortable doing that, **stop here, use [Path C](#path-c-github-codespaces-the-lifeboat) for now, and come to the install clinic** with your laptop.
+
+### A3. Install WSL
+
+1. Click Start, type `PowerShell`, **right-click** *Windows PowerShell* → **Run as administrator**. Accept the prompt.
+2. Paste this and press ++enter++:
+
+```powershell title="Windows PowerShell (Administrator)"
+wsl --install
+```
+
+3. Wait. It downloads a few hundred MB and installs Ubuntu. When asked, **reboot** your computer.
+
+### A4. First launch: create your Linux user
+
+After the reboot, an **Ubuntu** window opens on its own (if it does not: Start → type `Ubuntu` → open it). It finishes installing, then asks:
+
+- **Enter new UNIX username:** choose a short lowercase name without spaces (e.g. your first name). This is not your Windows login.
+- **New password:** type one and press ++enter++. **Nothing appears while you type** — no dots, no stars. That is normal. Type it again when asked.
+
+You now see a prompt ending in `$`. This window is your terminal for the whole course.
+
+### A5. The check command
+
+```bash title="Ubuntu window (WSL) — the window whose prompt ends in $"
+uname -a && curl --version | head -1
+```
+
+Expected output (details will differ):
+
+```text
+Linux DESKTOP-XXXX 5.15.167.4-microsoft-standard-WSL2 #1 SMP ... x86_64 GNU/Linux
+curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13 ...
+```
+
+!!! danger "It must be run in the Ubuntu window, not in PowerShell"
+    In PowerShell the same line fails with `uname : The term 'uname' is not recognized`. That is not a WSL error — you are in the wrong window. Open **Ubuntu** from the Start menu.
+
+### A6. Two habits that save hours later
+
+- **Open the terminal via Windows Terminal** (Start → `Terminal`; on Windows 10 install it from the Microsoft Store). It has tabs and proper copy/paste; pick *Ubuntu* from the dropdown arrow next to the `+` tab.
+- **Keep your files on the Linux side.** Your Linux home folder is `~` (type `cd ~`). Do not work in `/mnt/c/Users/...` (your Windows disk seen from Linux): it is much slower and `git` behaves oddly there. To open your Linux home folder in Windows Explorer, type `explorer.exe .` in the terminal.
+
+### A7. If it fails
+
+| What you see | Meaning | What to do |
+|---|---|---|
+| `0x80370102` | Virtualization is off (BIOS) or the *Virtual Machine Platform* Windows feature is disabled | Redo A2. If Task Manager says *Enabled*, open Start → *Turn Windows features on or off* → tick **Virtual Machine Platform** and **Windows Subsystem for Linux** → reboot. |
+| `0x8007019e` | The WSL optional component is not enabled | Same as above: tick both features, reboot, run `wsl --install` again. |
+| `0x80070003` | The distribution must be installed on the system drive (`C:`) | Free up space on `C:` or come to the clinic. |
+| Download stuck at `0.0%` | Store download blocked (VPN, proxy, network) | `wsl --install --web-download -d Ubuntu` in admin PowerShell. |
+| After install, "no installed distributions" (typical on a fresh Windows 11 24H2) | WSL is there but Ubuntu is not | `wsl --install -d Ubuntu` in admin PowerShell. |
+| Old Windows 10 build (< 19041) | `wsl --install` does nothing useful | Update Windows, or use [Path C](#path-c-github-codespaces-the-lifeboat). |
+| Anything else | | Run `wsl --update` in admin PowerShell, reboot, retry. Then post the exact message on the forum. |
+
+Known non-starters: WSL 2 cannot run inside a VirtualBox VM; some corporate VPNs break WSL networking (disconnect the VPN to test).
+
+Reference: [Microsoft — Install WSL](https://learn.microsoft.com/en-us/windows/wsl/install) · [Troubleshooting](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting) · [Best practices for a WSL dev environment](https://learn.microsoft.com/en-us/windows/wsl/setup/environment).
+
+## Path B — Mac
+
+Nothing to install. macOS ships with `curl`, `uname` and `git`.
+
+### B1. Open Terminal
+
+Press ++cmd+space++, type `Terminal`, press ++enter++. You see a prompt ending in `%` or `$`.
+
+### B2. Trigger the one-time developer-tools download *now*
+
+```bash title="Terminal (Mac)"
+git --version
+```
+
+The **first time**, macOS pops up a window asking to install the *Command Line Developer Tools*. Click **Install** and wait (5–10 minutes, a few GB). Do this at home: if you skip it, it eats the first ten minutes of Session 1. Then run `git --version` again; it prints something like `git version 2.39.5 (Apple Git-154)`.
+
+### B3. The check command
+
+```bash title="Terminal (Mac)"
+uname -a && curl --version | head -1 && git --version
+```
+
+Expected output (details will differ):
+
+```text
+Darwin MacBook-Air.local 24.5.0 Darwin Kernel Version 24.5.0 ... arm64
+curl 8.7.1 (x86_64-apple-darwin24.0) libcurl/8.7.1 ...
+git version 2.39.5 (Apple Git-154)
+```
+
+## Path C — GitHub Codespaces (the lifeboat)
+
+A Codespace is a small Ubuntu machine in GitHub's cloud, with a terminal in your browser. The free plan gives every GitHub account **120 core-hours per month** (a 2-core machine = 60 hours) — far more than this course needs. Use it if your laptop is managed, if WSL failed, or as the day-of backup when something breaks during class.
+
+1. Create a [GitHub account](https://github.com/signup) if you do not have one (you will need it in Session 1 anyway).
+2. Go to [github.com/codespaces](https://github.com/codespaces). In *Explore quick start templates*, click **See all**, then **Use this template** under **Blank**.
+3. A Visual Studio Code editor opens in the browser. Open the terminal panel: menu ☰ → **Terminal** → **New Terminal** (or press ++ctrl+grave++).
+4. You are in an Ubuntu terminal, prompt ending in `$`. Run the check command:
+
+```bash title="Codespace terminal (browser)"
+uname -a && curl --version | head -1
+```
+
+Things to know:
+
+- A codespace **stops after 30 minutes of inactivity** by default and keeps your files; it is **deleted after 30 days** unused. TODO(verify): confirm the current defaults on the [Codespaces billing page](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces) before the first class.
+- Environment variables you `export` (section 5) are lost when the codespace restarts unless you put them in `~/.bashrc` — section 5 does exactly that.
+- Students may get extra quota through the [GitHub Student Developer Pack](https://education.github.com/pack). TODO(verify): the exact Codespaces bonus.
+
+Reference: [Codespaces quickstart](https://docs.github.com/en/codespaces/getting-started/quickstart) · [Creating a codespace from a template](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template).
+
+## Path D — Git Bash (Sessions 1–3 only)
+
+Git Bash gives a `bash` shell with `curl` and `git` on Windows, with no admin rights. It is enough for Sessions 1–3. **It is not enough for Session 4**: OpenCode has no native Windows support (its documentation recommends WSL), so a Git Bash user must switch to WSL or Codespaces before Session 4. Prefer Path C over this one.
+
+1. Download and install Git for Windows from [gitforwindows.org](https://gitforwindows.org/) (default options are fine).
+2. Start → type `Git Bash` → open it. Prompt ends in `$`.
+3. Check:
+
+```bash title="Git Bash"
+uname -a && curl --version | head -1
+```
+
+Expected first line starts with `MINGW64_NT-10.0 ...`.
+
+Optional — **Scoop**, a package installer that needs no admin rights (for `jq`, `uv` and other tools we will use). In a *normal* (non-administrator) PowerShell window:
+
+```powershell title="Windows PowerShell (NOT administrator)"
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+irm get.scoop.sh | iex
+```
+
+Reference: [scoop.sh](https://scoop.sh/) · [Scoop install notes](https://github.com/ScoopInstaller/Install).
+
+!!! note "PowerShell alone can call the API, but it is not our terminal"
+    Windows 10/11 ship `curl.exe`, so a raw API call from PowerShell is possible in an emergency (`curl.exe`, not `curl`, which PowerShell silently replaces with another command). Nothing else in the course assumes PowerShell.
+
+## 5. Your Unistra LLM API key
+
+The university runs its own LLM platform at [conversation.ia.unistra.fr](https://conversation.ia.unistra.fr/): free, hosted in Strasbourg, with an API compatible with the OpenAI format. In Session 3 you will call it from the terminal. For that you need a personal **API key** — a long string starting with `sk-` that identifies *you*.
+
+!!! warning "TODO(verify): student access"
+    The platform documentation describes login with a university account; whether **student** (not staff) accounts can generate API keys has not been confirmed with the DNUM yet. If step 5.1 shows no key section, post on the forum — it is not your mistake.
+
+### 5.1 Generate the key
+
+1. Log in at [conversation.ia.unistra.fr](https://conversation.ia.unistra.fr/) with your university account.
+2. Click your **profile** (bottom left) → **Réglages** (Settings) → **Compte** (Account).
+3. Under *Clés API*: **Afficher** (show) or **Générer une nouvelle clé** (generate a new key). Click the eye icon to reveal it, then the copy button.
+
+Treat the key like a password. Never paste it in a file you share, in a chat, in the forum, or in code. If it leaks, come back here and generate a new one (TODO(verify): whether regenerating invalidates the old key on the Unistra platform — it does on the underlying software, Open WebUI).
+
+Reference: [Unistra — Utiliser l'API](https://documentation.unistra.fr/DNUM/Intelligence_artificielle/guide_complet_IA/co/7_1API.html) (French).
+
+### 5.2 Store it as an environment variable
+
+An **environment variable** is a named value your terminal keeps for the programs it launches. We store the key in one, so that commands can use `$UNISTRA_API_KEY` and the key itself never appears in a script. The variable must be defined in your shell's *startup file*, otherwise it disappears when you close the window. That file depends on your platform:
+
+=== "WSL (Ubuntu) / Codespaces / Git Bash"
+
+    ```bash title="Ubuntu window, Codespace terminal, or Git Bash"
+    echo 'export UNISTRA_API_KEY="sk-XXXX"' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+
+=== "Mac"
+
+    macOS's default shell is `zsh`, whose startup file is `~/.zshrc`, not `~/.bashrc`.
+
+    ```bash title="Terminal (Mac)"
+    echo 'export UNISTRA_API_KEY="sk-XXXX"' >> ~/.zshrc
+    source ~/.zshrc
+    ```
+
+    If `echo $SHELL` prints `/bin/bash` instead of `/bin/zsh`, use the WSL tab's commands instead.
+
+Replace `sk-XXXX` with your real key **before** pressing ++enter++, keeping the quotes. The `>>` appends one line to the startup file; `source` reloads it in the current window.
+
+### 5.3 Test it — in a *new* window
+
+Close the terminal, open a new one (this is the real test: does the key survive?), then:
+
+```bash title="Any terminal — new window"
+echo $UNISTRA_API_KEY | cut -c1-6
+```
+
+Expected: `sk-XXX` — the first six characters of your key, nothing more. If you see an empty line, the export went into the wrong file: check `echo $SHELL` and redo 5.2 in the other tab.
+
+Now one real call to the platform, which lists the available models:
+
+```bash title="Any terminal"
+curl -s https://conversation.ia.unistra.fr/api/models -H "Authorization: Bearer $UNISTRA_API_KEY" | head -c 200
+```
+
+Expected (truncated on purpose): a block of JSON starting with
+
+```text
+{"data":[{"id":"bge-m3","object":"model","created":1677610602,"owned_by":"openai", ...
+```
+
+If instead you get `{"detail":"Your session has expired or the token is invalid. Please sign in again."}`, the key is missing or wrong in this window — the platform says "session expired" for both cases. Redo 5.2 and 5.3.
+
+Congratulations: that was your first API call. Session 3 starts from here.
+
+## 6. The forum deliverable
+
+Post **one message** in the Session 0 thread of the course forum (link: TODO(verify)) containing:
+
+1. Your path (A/B/C/D) and, on Windows, the `winver` version.
+2. The output of the check command (A5, B3, C4 or D3).
+3. The output of `echo $UNISTRA_API_KEY | cut -c1-6` — **six characters only**. Any message containing a full `sk-...` key will be deleted and you will have to regenerate the key.
+4. If something failed: the exact error text and the step number.
+
+A script that runs all these checks and prints PASS/FAIL per item (`check-setup.sh`) will be linked here once it is ready. TODO(verify): link when Task 03 delivers it.
+
+## 7. Ten minutes in the terminal
+
+You are going to spend the whole course in this window, so make it yours now. Type each line, look at what happens. (A fuller exercise with solutions will be on the [exercises page](exercises.md).)
+
+```bash title="Any terminal"
+pwd                      # print working directory: where am I?
+ls                       # list what is here
+ls -la                   # ... including hidden files, with details
+mkdir cours-agents       # make a directory (folder)
+cd cours-agents          # change into it
+pwd                      # you moved
+echo "hello" > note.txt  # write the word hello into a new file
+cat note.txt             # print the file
+cp note.txt copy.txt     # copy
+mv copy.txt renamed.txt  # move = rename
+ls
+rm renamed.txt           # remove (no trash, no undo)
+cd ..                    # go up one level
+ls
+```
+
+Habits worth acquiring on day 0:
+
+- ++tab++ completes file and command names; press it twice to see options. Nobody types full paths.
+- ++up++ recalls the previous command.
+- ++ctrl+c++ interrupts a command that hangs. `clear` empties the screen. `q` quits most pagers (like `less` or `git log`).
+- `--help` after a command (e.g. `ls --help`) or `man ls` (quit with `q`) shows its manual.
+- Text after `#` is a comment; the shell ignores it.
+
+Why the terminal at all? Because it is the interface of every server, every data pipeline, and every coding agent you are aiming to use. A chatbot tab is a demo; the terminal is where the work runs.
+
+## 8. Install clinic
+
+Optional, 30 minutes before Session 1 (TODO: date, room). Bring the laptop that failed. Typical fixes done there: BIOS virtualization, Windows features, macOS developer tools, startup-file confusion. If you are already on Codespaces and happy, you do not need to come.
+
+## Going further (optional)
+
+1. [The Missing Semester of Your CS Education (MIT)](https://missing.csail.mit.edu/) — lectures 1 and 2 (the shell, shell tools): the best two hours of terminal onboarding available, free videos and notes.
+2. [Software Carpentry — The Unix Shell](https://swcarpentry.github.io/shell-novice/) — written for researchers who have never opened a terminal.
+3. [Microsoft — Best practices for a WSL development environment](https://learn.microsoft.com/en-us/windows/wsl/setup/environment) — Windows Terminal, where to keep files, VS Code integration.
+4. [GitHub Codespaces quickstart](https://docs.github.com/en/codespaces/getting-started/quickstart).
+5. [Julia Evans — Oh shit, git!](https://ohshitgit.com/) — for after Session 1, but a taste of the tone: things will go wrong and there is always a way out.

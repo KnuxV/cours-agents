@@ -1,0 +1,52 @@
+# Builds the MkDocs site on every push to main and publishes it to the gh-pages branch.
+# Based on the workflow recommended by mkdocs-material
+# (https://squidfunk.github.io/mkdocs-material/publishing-your-site/), with pinned versions.
+# After the first run: repo Settings → Pages → Source = "Deploy from a branch" → gh-pages.
+name: site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure git credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Weekly cache key
+        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: ~/.cache
+          restore-keys: |
+            mkdocs-material-
+
+      - name: Install (pinned)
+        run: pip install -r site/requirements.txt
+
+      - name: Build strict
+        working-directory: site
+        run: mkdocs build --strict
+
+      - name: Deploy to gh-pages
+        working-directory: site
+        run: mkdocs gh-deploy --force

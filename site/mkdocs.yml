@@ -1,0 +1,65 @@
+site_name: Advanced Programming for Economists
+site_description: Terminals, APIs, and coding agents — an 8h M2 course (Université de Strasbourg)
+# TODO(verify): fill in once the fresh GitHub repo exists (SPEC "Repo" — new repo, new remote).
+# repo_url: https://github.com/KnuxV/<new-repo>
+# site_url: https://knuxv.github.io/<new-repo>/
+docs_dir: docs
+site_dir: _site
+
+validation:
+  anchors: warn
+  links:
+    absolute_links: warn
+    unrecognized_links: warn
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - content.code.copy
+    - content.tabs.link
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+
+nav:
+  - Home: index.md
+  - Session 0 — Setup (homework): setup.md
+  - Sessions:
+      - S1 — Git: sessions/s1.md
+      - S2 — Python tooling: sessions/s2.md
+      - S3 — What an LLM API is: sessions/s3.md
+      - S4 — OpenCode: sessions/s4.md
+  - Exercises: exercises.md
+  - Resources: resources.md
+  - Replication track (optional): replication.md

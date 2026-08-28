@@ -1,0 +1,2 @@
+# Pinned for reproducible builds (Task 02: "pin versions"). Bump deliberately.
+mkdocs-material==9.7.7
