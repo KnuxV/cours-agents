@@ -18,7 +18,7 @@ If you have used Google Colab: Colab is a Linux machine in Google's cloud that y
 ## Why we use it
 
 - **Every server is Linux.** The machines that run websites, data pipelines, model training and the coding agents you will use in Session 4 all run Linux and are driven through a terminal. Learning it on your own laptop is learning the real thing.
-- **The tools of this course are made for it.** `git`, `curl`, `uv`, and OpenCode are designed for Unix-style shells. OpenCode (Session 4) does not run natively on Windows at all.
+- **The tools of this course are made for it.** `git`, `curl`, `uv`, and the agent harness pi are designed for Unix-style shells (on Windows, pi runs through Git Bash — a small Unix-style shell — for exactly that reason).
 - **Same commands as your Mac and Linux classmates.** macOS is Unix underneath, so inside WSL you type exactly what they type. One set of instructions for the whole room.
 - Windows has its own command language, PowerShell. It is a fine tool, but a different one; nothing in this course uses it beyond the WSL install itself.
 
@@ -113,7 +113,7 @@ sudo apt update
 sudo apt install -y jq
 ```
 
-The first line refreshes the catalogue; the second installs `jq`, a small tool we will use in Session 3 to read JSON. Some tools ship their own one-line installer instead (`uv` in Session 2, OpenCode in Session 4) — those are `curl ... | sh` commands you will copy from the session pages.
+The first line refreshes the catalogue; the second installs `jq`, a small tool we will use in Session 3 to read JSON. Some tools ship their own one-line installer instead (`uv` in Session 2, pi in Session 4) — those are `curl ... | sh` commands you will copy from the session pages.
 
 ## Editing files
 

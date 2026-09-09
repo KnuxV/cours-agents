@@ -22,7 +22,7 @@ Do this **before Session 1 (Monday 14 September 2026)**, at home, when you have 
 | Windows, quickest way to a working `git` + `bash` for Session 1 | [Path D — Git Bash](#path-d-git-bash) | 10 min |
 | Linux — your own laptop, or a **university desktop** (no admin rights) | [Path E — Linux](#path-e-linux) | 5 min |
 
-Windows users: Path D (Git Bash) is the fastest way to be ready for Session 1 (git), and you can do it even if WSL is giving you trouble. Path A (WSL) is what you will need from Session 4 on, so start it early. Doing both is fine.
+Windows users: Path D (Git Bash) is the fastest way to be ready for Session 1 (git), and you can do it even if WSL is giving you trouble. Path A (WSL) is the terminal we recommend for the rest of the course — it is the real Linux every server runs — so start it early. Doing both is fine.
 
 Everyone then does [section 5 (API key)](#5-your-unistra-llm-api-key) and [section 6 (ten minutes in the terminal)](#6-ten-minutes-in-the-terminal).
 
@@ -122,7 +122,7 @@ Reference: [Codespaces quickstart](https://docs.github.com/en/codespaces/getting
 
 ## Path D — Git Bash
 
-Git Bash gives a `bash` shell with `curl` and `git` on Windows, with no admin rights and no reboot. It is the quickest way to be ready for Session 1 (git) and it works for Sessions 2–3 as well. **It is not enough for Session 4**: OpenCode has no native Windows support (its documentation recommends WSL), so plan to have WSL (Path A) or Codespaces (Path C) working by then.
+Git Bash gives a `bash` shell with `curl` and `git` on Windows, with no admin rights and no reboot. It is the quickest way to be ready for Session 1 (git) and it works for Sessions 2–3 as well. The agent harness of Session 4, [pi](https://pi.dev), runs on Windows *through* Git Bash, so this path can carry you through the whole course; WSL (Path A) stays the recommended terminal, and Codespaces (Path C) the backup.
 
 1. Download and install Git for Windows from [gitforwindows.org](https://gitforwindows.org/) (default options are fine).
 2. Start → type `Git Bash` → open it. Prompt ends in `$`.

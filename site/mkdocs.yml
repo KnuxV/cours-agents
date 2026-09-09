@@ -65,7 +65,7 @@ nav:
       - S1½ — Git as a collaboration tool (reading): sessions/s1-collab.md
       - S2 — Python tooling: sessions/s2.md
       - S3 — What an LLM API is: sessions/s3.md
-      - S4 — OpenCode: sessions/s4.md
+      - S4 — pi: sessions/s4.md
   - Exercises: exercises.md
   - Resources: resources.md
   - Replication track (optional): replication.md
