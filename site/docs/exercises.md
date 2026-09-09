@@ -5,11 +5,10 @@ All exercises in one place. Tags: **[core]** everyone finishes it in class · **
 | Session | # | Exercise | Tag | Time |
 |---|---|---|---|---|
 | [S0](setup.md) | 0.1 | [Ten minutes in the terminal](#01-ten-minutes-in-the-terminal) | core | 10 min |
-| [S1](sessions/s1.md) | 1.1 | [Recipe history](#11-recipe-history) | core | 25 min |
-| S1 | 1.2 | [Scrabble counter: three merges](#12-scrabble-counter-three-merges) | core | 30 min |
-| S1 | 1.3 | [Your course repository on GitHub](#13-your-course-repository-on-github) | core | 15 min |
-| S1 | 1.4 | [Keep a trace: fork or second remote](#14-keep-a-trace-fork-or-second-remote) | stretch | 15 min |
-| [S1½](sessions/s1-collab.md) | 1.5 | [Git as a collaboration tool](sessions/s1-collab.md) (reading) | home | 40 min |
+| [S1](sessions/s1.md) | 1.1 | [Your course repository on GitHub](#11-your-course-repository-on-github) | core | 20 min |
+| S1 | 1.2 | [Recipe history](#12-recipe-history) | core | 25 min |
+| S1 | 1.3 | [Branches: fast-forward, merge commit, conflict](#13-branches-fast-forward-merge-commit-conflict) | core | 25 min |
+| [S1½](sessions/s1-collab.md) | — | [Git as a collaboration tool](sessions/s1-collab.md) (reading) | home | 40 min |
 | [S2](sessions/s2.md) | 2.1 | [A uv project from scratch](#21-a-uv-project-from-scratch) | core | 20 min |
 | S2 | 2.2 | [Notebook → script with argparse](#22-notebook-script-with-argparse) | core | 30 min |
 | S2 | 2.3 | [Fork and extend the password generator](#23-fork-and-extend-the-password-generator) | core | 40 min |
@@ -24,7 +23,7 @@ All exercises in one place. Tags: **[core]** everyone finishes it in class · **
 
 **[core]** · Goal: the six commands you will type a hundred times — `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv` — plus `cat`, `echo`, `rm`.
 
-1. Follow [setup, section 6](setup.md#6-ten-minutes-in-the-terminal) line by line.
+1. Follow [setup, section 7](setup.md#7-ten-minutes-in-the-terminal) line by line.
 2. Then, without looking: create a folder `sandbox` in your home, inside it a file `a.txt` containing the word `one`, copy it to `b.txt`, rename `b.txt` to `c.txt`, list the folder with details, and delete `c.txt`.
 3. Expected final state: `ls sandbox` prints `a.txt` only; `cat sandbox/a.txt` prints `one`.
 
@@ -44,9 +43,37 @@ All exercises in one place. Tags: **[core]** everyone finishes it in class · **
 
 ## Session 1 — Git
 
-Two prepared repositories on GitHub, public: [`KnuxV/recipe-history`](https://github.com/KnuxV/recipe-history) and [`KnuxV/scrabble-counter`](https://github.com/KnuxV/scrabble-counter). You **clone** them (a copy on your machine) or **fork** them first (a copy on your GitHub, then clone that) — the difference is exercise 1.4 and the [Session 1½ reading](sessions/s1-collab.md#2-clone-vs-fork). Cloning is enough to do the work.
+Three exercises, in this order. 1.1 is the session's deliverable and the repository the other two build on. Then, at home, the [Session 1½ reading](sessions/s1-collab.md).
 
-### 1.1 Recipe history
+### 1.1 Your course repository on GitHub
+
+**[core]** · Goal: a repository you own, on GitHub, with a few commits of your own work in it. Sessions 2–4 happen inside it.
+
+1. Follow [S1 §6](sessions/s1.md#6-the-deliverable-your-course-repository): create `agent-lab` in your home folder, `git init`, first commit, `gh auth login`, create the empty repository on GitHub, `git remote add origin`, `git push -u origin main`.
+2. Put something of yours in it — anything you wrote and own: a Python script from last year, a notebook exported as `.py`, notes for another course, an essay. Copy the file(s) into `agent-lab`, then make **at least three commits**, one per change (add a file, edit a line, add another file). Look at `git status` and `git diff` before each commit.
+3. `git push`. Refresh the GitHub page: your files and your commits are there (**Commits** link, top of the file list).
+
+**Done when** `https://github.com/YOUR-USERNAME/agent-lab` shows your files and at least four commits, `git status` says `working tree clean`, and `git log --oneline` on your machine lists the same commits as the GitHub page.
+
+??? note "Solution"
+    ```bash title="Any terminal"
+    cd ~/agent-lab                                   # created in §6.1, pushed in §6.3
+    cp ~/Downloads/my_script.py .                    # whatever you own; any path
+    git add my_script.py
+    git commit -m "Add last year's plotting script"
+    nano my_script.py                                # change one line, save
+    git add my_script.py
+    git commit -m "Rename the output file"
+    echo "Ideas for the exam project" > ideas.md
+    git add ideas.md
+    git commit -m "Start a list of project ideas"
+    git push
+    git log --oneline
+    ```
+
+    The two mistakes to check for: the repository was created on GitHub *with* a README (then `git pull --no-rebase origin main` before the first push), and the push asked for a password (then [§6.2](sessions/s1.md#62-log-in-to-github-from-the-terminal-once) was skipped).
+
+### 1.2 Recipe history
 
 **[core]** · Goal: read a history you did not write — the skill you will use on agent-written commits — and meet `git clone` and `git remote`.
 
@@ -58,7 +85,7 @@ git remote -v
 git log --oneline
 ```
 
-**Part 0 — where did this come from?** `git remote -v` prints the address the copy came from, under the name `origin`. It is the instructor's repository: you could read it (it is public), you cannot write to it. Try `git push` — Git asks for credentials or answers `Permission denied`; either way nothing leaves your machine. Your commits will live on your laptop only, which is fine for today. (Want them online? Exercise 1.4.)
+**Part 0 — where did this come from?** `git remote -v` prints the address the copy came from, under the name `origin`. It is the instructor's repository: you could read it (it is public), you cannot write to it. Try `git push` — Git asks for credentials or answers `Permission denied`; either way nothing leaves your machine. Your commits will live on your machine only, which is fine for this exercise. (Compare with 1.1, where `origin` is yours.)
 
 **Part 1 — read the history.** Using only `git log`, `git log --oneline`, `git show <hash>` and `git diff <hash1> <hash2>` — do not open `recipe.md` in an editor yet:
 
@@ -92,138 +119,115 @@ Understand why, undo that (`git restore recipe.md`), then fix it properly: edit 
 
     Check yourself: if the sugar change and the serving suggestion had been in the *same* commit, no `restore` trick would have separated them — you would edit by hand from the start. That is why Session 1 insists on one logical change per commit.
 
-### 1.2 Scrabble counter: three merges
+### 1.3 Branches: fast-forward, merge commit, conflict
 
-**[core]** · Goal: see the three outcomes of `git merge` from [S1 §5](sessions/s1.md#5-branches-and-merges) on a real Python project, and resolve a conflict by hand.
+**[core]** · Goal: see for yourself the rule of [S1 §5](sessions/s1.md#5-branches-and-merges) — *fast-forward if `main` has not moved, merge commit if it has* — in your own repository. Part C (the conflict) is **[stretch]**.
 
-```bash title="Any terminal"
-cd ~
-git clone https://github.com/KnuxV/scrabble-counter.git
-cd scrabble-counter
-git log --oneline
-git branch -a
-```
+Work inside `agent-lab` from 1.1, starting on `main` with a clean `git status`. Run `git log --oneline --all --graph` after every commit and every merge, and look at the drawing.
 
-`git branch -a` lists your one local branch, `main`, and three **remote-tracking** branches: `origin/add-readme`, `origin/german`, `origin/portuguese`. They are Git's memory of the branches on GitHub; switching to one creates a local branch that follows it:
+**Part A — `main` does not move: fast-forward.**
 
-```bash title="Any terminal, inside scrabble-counter"
-git switch add-readme
-git switch german
-git switch portuguese
+```bash title="Any terminal, inside agent-lab — on main"
+git switch -c add-notes
+echo "# Notes" > notes.md
+echo "- Session 1: git" >> notes.md
+git add notes.md
+git commit -m "Add a notes file"
 git switch main
 git log --oneline --all --graph
-```
-
-Read the graph: all three branches start from the same commit on `main`. Now merge them in this order and watch what Git says each time.
-
-**Merge 1 — `add-readme`.** `main` has not moved since the branch was made.
-
-```bash title="Any terminal, inside scrabble-counter — on main"
-git merge add-readme
+git merge add-notes
 git log --oneline --graph
+git branch -d add-notes
 ```
 
-Expected: `Fast-forward`. No new commit; `main` simply moved up one.
+Expected from `git merge`: `Fast-forward`, then a straight line in the graph — no new commit, `main` simply moved up to the branch's commit.
 
-**Merge 2 — `german`.** `main` *has* moved now (the README commit), and `german` does not have it.
+**Part B — `main` moves meanwhile: merge commit.** Same again, but before merging, make a commit *on `main`* that touches a different file.
 
-```bash title="Any terminal, inside scrabble-counter — on main"
-git merge german
+```bash title="Any terminal, inside agent-lab — on main"
+git switch -c longer-readme
+echo "" >> README.md
+echo "This repository holds my work for the course." >> README.md
+git add README.md
+git commit -m "Describe the repository in the README"
+git switch main
+echo "- [ ] finish Session 1 exercises" > todo.md
+git add todo.md
+git commit -m "Add a todo list"
+git log --oneline --all --graph
+git merge longer-readme
 git log --oneline --graph
+git branch -d longer-readme
 ```
 
-Expected: an editor opens on `Merge branch 'german'` (save and quit), then `Merge made by the 'ort' strategy`. The graph shows a diamond: a merge commit with two parents. The two sides changed different lines, so Git combined them alone.
+Expected: the graph *before* the merge shows the fork (two commits side by side under the same parent); `git merge` opens an editor with the message `Merge branch 'longer-readme'` — save and quit (nano: ++ctrl+x++, ++y++, ++enter++) — and prints `Merge made by the 'ort' strategy`; the graph *after* shows a diamond, and the merge commit has two parents. Both changes are on `main`: `cat README.md` and `ls`.
 
-**Merge 3 — `portuguese`.** Both `german` and `portuguese` added a language *at the same place* in `score.py`, and both edited the same `choices=[...]` line.
+**Part C — same line on both sides: conflict [stretch].** Change the *first line* of `README.md` on a branch, then differently on `main`, then merge.
 
-```bash title="Any terminal, inside scrabble-counter — on main"
-git merge portuguese
+```bash title="Any terminal, inside agent-lab — on main"
+git switch -c title-v1
+nano README.md          # change the first line (the title) to something else, save
+git commit -am "Reword the title"
+git switch main
+nano README.md          # change the first line to something DIFFERENT, save
+git commit -am "Put my name in the title"
+git merge title-v1
 git status
 ```
 
-Expected:
+Expected: `CONFLICT (content): Merge conflict in README.md` and `both modified: README.md`. Open `README.md`: the two versions of the title sit between `<<<<<<< HEAD`, `=======` and `>>>>>>> title-v1`. Edit it to the single title you want, delete the three marker lines, then `git add README.md`, `git commit` (accept the message), `git branch -d title-v1`. `git merge --abort` throws the attempt away if you get lost.
 
-```text
-Auto-merging score.py
-CONFLICT (content): Merge conflict in score.py
-Auto-merging tests/test_score.py
-Automatic merge failed; fix conflicts and then commit the result.
-```
-
-`git status` says `both modified: score.py` (the tests file merged fine on its own). Open `score.py`; there are **two** conflict blocks. Resolve both so that the program knows *both* languages: keep the German block *and* the Portuguese block in the dictionary, and one `choices` line that lists `"DE"` and `"PT"`. Delete every `<<<<<<<`, `=======`, `>>>>>>>` line. Then:
-
-```bash title="Any terminal, inside scrabble-counter"
-git add score.py
-git commit                     # accept the proposed message
-git log --oneline --graph
-python3 score.py HALLO -l DE   # The word 'HALLO' (DE) scores 9 points
-python3 score.py CASA -l PT    # The word 'CASA' (PT) scores 5 points
-```
-
-(No `python3` on your machine — typical on Git Bash? Skip the last two lines; after Session 2, `uv run score.py HALLO -l DE` works everywhere, and `uv run --with pytest pytest` runs the project's 56 tests.)
-
-**Done when** `git log --oneline --graph` shows two merge commits and both languages score correctly. Lost? `git merge --abort` puts you back to before merge 3.
-
-??? note "Solution — the resolved hunks"
-    First block: the German dictionary ends with `'Q': 10, 'Y': 10` and a closing brace; the Portuguese one follows. The only thing to add by hand is the comma after the German block's closing brace:
-
-    ```python
-            "DE": {
-                'A': 1, 'D': 1, 'E': 1, 'I': 1, 'N': 1, 'R': 1, 'S': 1, 'T': 1, 'U': 1,
-                'G': 2, 'H': 2, 'L': 2, 'O': 2,
-                'B': 3, 'M': 3, 'W': 3, 'Z': 3,
-                'C': 4, 'F': 4, 'K': 4, 'P': 4,
-                'J': 6, 'V': 6,
-                'X': 8,
-                'Q': 10, 'Y': 10
-            },
-            "PT": {
-                'A': 1, 'E': 1, 'I': 1, 'O': 1, 'S': 1, 'U': 1, 'M': 1, 'R': 1, 'T': 1,
-                'D': 2, 'L': 2, 'C': 2, 'P': 2,
-                'N': 3, 'B': 3,
-                'F': 4, 'G': 4, 'H': 4, 'V': 4,
-                'J': 5,
-                'Q': 6,
-                'X': 8, 'Z': 8
-            }
-        }
-    ```
-
-    Second block, one line:
-
-    ```python
-        parser.add_argument("-l", "--lang", default="EN", choices=["EN", "FR", "ES", "IT", "DE", "PT"],
-    ```
-
-    Verified: after this resolution `uv run --with pytest pytest` reports `56 passed`, and the graph reads, newest first: `Merge branch 'portuguese'` (two parents) → `Merge branch 'german'` (two parents) → `Add a README with usage` → …
-
-### 1.3 Your course repository on GitHub
-
-**[core]** · The session's deliverable. Goal: a repository you own, on GitHub, that Sessions 2–4 will live in.
-
-Follow [S1 §6](sessions/s1.md#6-the-deliverable-your-course-repository): create `agent-lab` locally, log in with `gh auth login`, create the empty repository on GitHub, push. **Done when** `https://github.com/YOUR-USERNAME/agent-lab` shows your README, `git status` is clean, and `git remote -v` prints your GitHub URL twice.
+Finish with `git push` — GitHub shows every commit, merge commits included.
 
 ??? note "Solution"
-    The commands are in §6 verbatim. The two mistakes to check for: the repository was created on GitHub *with* a README (then `git pull --no-rebase origin main` before the push), and the push asked for a password (then [§6.2](sessions/s1.md#62-log-in-to-github-from-the-terminal-once) was skipped).
+    Rehearsed output of the three parts (hashes will differ):
 
-### 1.4 Keep a trace: fork or second remote
+    ```text
+    # Part A, before the merge
+    * 69c60e5 Add a notes file
+    * 9068f52 Initial commit
+    # git merge add-notes
+    Updating 9068f52..69c60e5
+    Fast-forward
+     notes.md | 2 ++
+     1 file changed, 2 insertions(+)
 
-**[stretch]** · Goal: put your exercise commits on your own GitHub, and understand why the plain clone could not be pushed. Two ways; do one.
+    # Part B, before the merge
+    * fb3e302 Describe the repository in the README
+    | * 216353c Add a todo list
+    |/
+    * 69c60e5 Add a notes file
+    # git merge longer-readme
+    Merge made by the 'ort' strategy.
+     README.md | 2 ++
+    # after
+    *   00e8d36 Merge branch 'longer-readme'
+    |\
+    | * fb3e302 Describe the repository in the README
+    * | 216353c Add a todo list
+    |/
+    * 69c60e5 Add a notes file
 
-**Way A — fork first.** On [github.com/KnuxV/scrabble-counter](https://github.com/KnuxV/scrabble-counter), click **Fork** → **Create fork**. Clone *your* fork (`git clone https://github.com/YOUR-USERNAME/scrabble-counter.git`), redo exercise 1.2 in it, `git push`. It works: `origin` is yours. Then `git remote add upstream https://github.com/KnuxV/scrabble-counter.git` — the convention for "the original I forked from".
+    # Part C
+    Auto-merging README.md
+    CONFLICT (content): Merge conflict in README.md
+    Automatic merge failed; fix conflicts and then commit the result.
+    ```
 
-**Way B — second remote on your existing clone.** Create an empty repository `scrabble-counter` on your GitHub (no README). Then, in the clone from 1.2:
+    In Part C the file looks like this until you edit it:
 
-```bash title="Any terminal, inside scrabble-counter"
-git remote add mine https://github.com/YOUR-USERNAME/scrabble-counter.git
-git remote -v                  # origin = KnuxV (read-only for you), mine = yours
-git push -u mine main
-```
+    ```text
+    <<<<<<< HEAD
+    # agent-lab — Kevin, M2 2026
+    =======
+    # agent-lab — my course repository
+    >>>>>>> title-v1
+    Your Name — M2, 2026
+    ```
 
-A repository can have as many remotes as you like: the same commits can go to GitHub *and* to a GitLab at your institution. `origin` is a habit, not a law.
+    Keep one title (or write a third), delete the marker lines, `git add README.md`, `git commit`. The graph then shows a second diamond on top of the first. `-am` in Part C stages every *tracked* file and commits in one go; it does not add new files, which is why Parts A and B use `git add` explicitly.
 
-??? note "Solution"
-    Both ways end with your `main`, including the two merge commits, visible on your GitHub. Way A shows "forked from KnuxV/scrabble-counter" under the repository name; Way B does not (GitHub does not know the two are related). `git remote -v` prints two lines per remote (fetch and push); with Way B you have four lines.
+Practising branches online: [Learn Git Branching](https://learngitbranching.js.org/), *Main* → *Introduction Sequence*, levels 1–4 (commits, branches, merge, rebase — skip rebase) animate exactly Parts A and B. [Oh My Git!](https://ohmygit.org/) is a free game that does the same with a drag-and-drop graph.
 
 ## Session 2 — Python tooling
 
