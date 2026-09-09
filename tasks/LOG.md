@@ -170,3 +170,17 @@ Context from the instructor: the same material is taught in a linguistic-informa
 2. The Unistra endpoint through pi's `openai-completions` API with the 80B coder: untested. `compat` flags in `models.json` may be needed (e.g. `supportsUsageInStreaming`).
 3. `research/s4-opencode.md` is now off-spec; a `research/s4-pi.md` note is the natural next task.
 4. Remaining S2–S4 Linux tabs are still owed (instructor: "later").
+
+### S0 SSH section + S1 exercises simplified (2026-09-09, instructor review)
+
+- **Setup §6 "SSH keys for GitHub and GitLab"** (new, before the terminal section, which is now §7; `exercises.md` 0.1 anchor updated): `ls ~/.ssh`, `ssh-keygen -t ed25519 -C`, show/copy the public key in three tabs (`cat` / `pbcopy` / `clip`, from GitHub's docs), add on GitHub (profile photo → Settings → *SSH and GPG keys* → *New SSH key*, Title / Key type / Key) and on GitLab (avatar → *Edit profile* → *Access* → *SSH keys* → *Add new key*; menu paths quoted from docs.github.com and docs.gitlab.com, fetched today), test with `ssh -T git@github.com` / `git@gitlab.com`, then the `git@github.com:` address form. No rationale on the page, per instruction.
+- **S1 exercises rebuilt, three in class**: 1.1 [core] *Your course repository on GitHub* (S1 §6, then ≥3 commits of files the student owns, push; was 1.3); 1.2 [core] *Recipe history* (unchanged, renumbered); 1.3 [core] *Branches: fast-forward, merge commit, conflict* — done in `agent-lab`: Part A fast-forward (`add-notes`), Part B merge commit (`longer-readme` vs a `todo.md` commit on `main`), Part C [stretch] conflict on the README title. Rehearsed end to end in a throwaway repo; the solution quotes the real outputs (`Fast-forward`, `Merge made by the 'ort' strategy`, `CONFLICT (content)`, the marker block). **Removed**: *Scrabble counter: three merges* and the fork/second-remote stretch. The reading is listed without a number. Online practice pointers added after 1.3: Learn Git Branching (Introduction Sequence levels 1–4) and Oh My Git!.
+- `s1.md`: §5.5 now points to 1.3 Part C; the Exercises list matches. `s1-collab.md` still uses `KnuxV/scrabble-counter` URLs as *illustrations* of remotes/forks (the repo stays public on GitHub); left as is.
+
+**Verification:** `mkdocs build --strict` exit 0; anchors `#6-ssh-keys-for-github-and-gitlab`, `#7-ten-minutes-in-the-terminal`, `#13-branches-fast-forward-merge-commit-conflict` present in the built HTML.
+
+**UNVERIFIED / needs human review**
+1. `ssh -T git@github.com` success text and the first-connection `yes` prompt are from memory of the standard messages (not run from a fresh key in this session).
+2. Whether the university has its own GitLab students should use (page says "gitlab.com or an institution's GitLab", same menus).
+3. `git commit -am` in 1.3 Part C assumes the README is already tracked (true after §6.1).
+4. Time budget: 1.1 (20) + 1.2 (25) + 1.3 (25) ≈ 70 min alongside §4–5 live; Part C is stretch to absorb overruns.
