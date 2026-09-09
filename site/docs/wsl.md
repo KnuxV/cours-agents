@@ -19,7 +19,7 @@ If you have used Google Colab: Colab is a Linux machine in Google's cloud that y
 
 - **Every server is Linux.** The machines that run websites, data pipelines, model training and the coding agents you will use in Session 4 all run Linux and are driven through a terminal. Learning it on your own laptop is learning the real thing.
 - **The tools of this course are made for it.** `git`, `curl`, `uv`, and OpenCode are designed for Unix-style shells. OpenCode (Session 4) does not run natively on Windows at all.
-- **Same commands as your Mac classmates.** macOS is Unix underneath, so inside WSL you type exactly what they type. One set of instructions for the whole room.
+- **Same commands as your Mac and Linux classmates.** macOS is Unix underneath, so inside WSL you type exactly what they type. One set of instructions for the whole room.
 - Windows has its own command language, PowerShell. It is a fine tool, but a different one; nothing in this course uses it beyond the WSL install itself.
 
 ## Vocabulary

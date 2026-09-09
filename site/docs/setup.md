@@ -4,7 +4,7 @@ Do this **before Session 1 (Monday 14 September 2026)**, at home, when you have 
 
 **At the end you will have:**
 
-1. a terminal that runs Linux-style commands (`ls`, `curl`, `git`…);
+1. a terminal that runs Linux-style commands (`ls`, `curl`, `git`…) — on your own laptop, or on one of the university's Linux desktops;
 2. a personal API key for the university's LLM platform, stored as an environment variable.
 
 !!! tip "How to read this page"
@@ -20,12 +20,15 @@ Do this **before Session 1 (Monday 14 September 2026)**, at home, when you have 
 | Mac | [Path B — Terminal](#path-b-mac) | 5–15 min |
 | Windows **without** admin rights (managed laptop), or WSL failed | [Path C — GitHub Codespaces](#path-c-github-codespaces-the-lifeboat) | 10 min, needs a GitHub account |
 | Windows, quickest way to a working `git` + `bash` for Session 1 | [Path D — Git Bash](#path-d-git-bash) | 10 min |
+| Linux — your own laptop, or a **university desktop** (no admin rights) | [Path E — Linux](#path-e-linux) | 5 min |
 
 Windows users: Path D (Git Bash) is the fastest way to be ready for Session 1 (git), and you can do it even if WSL is giving you trouble. Path A (WSL) is what you will need from Session 4 on, so start it early. Doing both is fine.
 
 Everyone then does [section 5 (API key)](#5-your-unistra-llm-api-key) and [section 6 (ten minutes in the terminal)](#6-ten-minutes-in-the-terminal).
 
 Codespaces is a real option, not a shameful one: it gives you the same Ubuntu terminal in a browser tab. If your laptop is locked down, go straight there.
+
+If you work on both a laptop and a university desktop, do the path for each: the API key (section 5) is stored per machine.
 
 ## Path A — Windows (WSL)
 
@@ -143,6 +146,35 @@ Reference: [scoop.sh](https://scoop.sh/) · [Scoop install notes](https://github
 !!! note "PowerShell alone can call the API, but it is not our terminal"
     Windows 10/11 ship `curl.exe`, so a raw API call from PowerShell is possible in an emergency (`curl.exe`, not `curl`, which PowerShell silently replaces with another command). Nothing else in the course assumes PowerShell.
 
+## Path E — Linux
+
+Nothing to install. A Linux machine already has the terminal this course is written for; `curl` and `git` are there on the university desktops, and on most laptop distributions.
+
+### E1. Open the terminal
+
+Press ++ctrl+alt+t++, or search for *Terminal* in the applications menu. The prompt ends in `$`.
+
+### E2. The check command
+
+```bash title="Terminal (Linux)"
+uname -a && curl --version | head -1 && git --version
+```
+
+Expected output (details will differ):
+
+```text
+Linux pc-a330-12 6.8.0-45-generic #45-Ubuntu SMP ... x86_64 GNU/Linux
+curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13 ...
+git version 2.43.0
+```
+
+On your **own** laptop, if `git` or `curl` says `command not found`, install it with your distribution's package manager (Ubuntu/Debian: `sudo apt install git curl`; Fedora: `sudo dnf install git curl`; Arch: `sudo pacman -S git curl`).
+
+!!! note "University desktops: no `sudo`, and that is fine"
+    On the desktops in A330 you are not the administrator: any command starting with `sudo` (the Ubuntu "install this system-wide" prefix you will see in the WSL tabs) is refused. You never need it in this course. Everything we add later — `uv` in Session 2, the GitHub CLI in Session 1, the agent harness in Session 4 — has a one-line install that puts the program in your own home folder (`~/.local/bin`), and each page gives that version in a **Linux** tab. When a page only shows a `sudo apt install` line, ask us.
+
+    Your shell should be `bash`; check with `echo $SHELL`. If it prints something ending in `zsh`, use the Mac tab wherever a page shows one. TODO(verify): whether the home folder on the university desktops follows you from one machine to another (network home) — until confirmed, push your work to GitHub at the end of each session, which Session 1 teaches anyway.
+
 ## 5. Your Unistra LLM API key
 
 The university runs its own LLM platform at [conversation.ia.unistra.fr](https://conversation.ia.unistra.fr/): free, hosted in Strasbourg, with an API compatible with the OpenAI format. In Session 3 you will call it from the terminal. For that you need a personal **API key** — a long string starting with `sk-` that identifies *you*.
@@ -161,9 +193,9 @@ Reference: [Unistra — Utiliser l'API](https://documentation.unistra.fr/DNUM/In
 
 An **environment variable** is a named value your terminal keeps for the programs it launches. We store the key in one, so that commands can use `$UNISTRA_API_KEY` and the key itself never appears in a script. The variable must be defined in your shell's *startup file*, otherwise it disappears when you close the window. That file depends on your platform:
 
-=== "WSL (Ubuntu) / Codespaces / Git Bash"
+=== "WSL (Ubuntu) / Linux / Codespaces / Git Bash"
 
-    ```bash title="Ubuntu window, Codespace terminal, or Git Bash"
+    ```bash title="Ubuntu window, Linux terminal, Codespace terminal, or Git Bash"
     echo 'export UNISTRA_API_KEY="sk-XXXX"' >> ~/.bashrc
     source ~/.bashrc
     ```
@@ -177,7 +209,7 @@ An **environment variable** is a named value your terminal keeps for the program
     source ~/.zshrc
     ```
 
-    If `echo $SHELL` prints `/bin/bash` instead of `/bin/zsh`, use the WSL tab's commands instead.
+    If `echo $SHELL` prints `/bin/bash` instead of `/bin/zsh`, use the WSL tab's commands instead. (Linux users whose shell is `zsh`: this tab is yours.)
 
 Replace `sk-XXXX` with your real key **before** pressing ++enter++, keeping the quotes. The `>>` appends one line to the startup file; `source` reloads it in the current window.
 
