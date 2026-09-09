@@ -24,7 +24,7 @@ Do this **before Session 1 (Monday 14 September 2026)**, at home, when you have 
 
 Windows users: Path D (Git Bash) is the fastest way to be ready for Session 1 (git), and you can do it even if WSL is giving you trouble. Path A (WSL) is the terminal we recommend for the rest of the course — it is the real Linux every server runs — so start it early. Doing both is fine.
 
-Everyone then does [section 5 (API key)](#5-your-unistra-llm-api-key) and [section 6 (ten minutes in the terminal)](#6-ten-minutes-in-the-terminal).
+Everyone then does [section 5 (API key)](#5-your-unistra-llm-api-key), [section 6 (SSH keys)](#6-ssh-keys-for-github-and-gitlab) and [section 7 (ten minutes in the terminal)](#7-ten-minutes-in-the-terminal).
 
 Codespaces is a real option, not a shameful one: it gives you the same Ubuntu terminal in a browser tab. If your laptop is locked down, go straight there.
 
@@ -241,7 +241,85 @@ Congratulations: that was your first API call. Session 3 starts from here.
 
 A script that runs all these checks and prints PASS/FAIL per item (`check-setup.sh`) will be linked here once it is ready. TODO(verify): link when Task 03 delivers it.
 
-## 6. Ten minutes in the terminal
+## 6. SSH keys for GitHub and GitLab
+
+An SSH key is a pair of files in `~/.ssh`: a private one (`id_ed25519`, never leaves your machine) and a public one (`id_ed25519.pub`, the one you paste into websites). Once per machine.
+
+### 6.1 Do you already have one?
+
+```bash title="Any terminal"
+ls ~/.ssh
+```
+
+If `id_ed25519.pub` is in the list, skip to 6.3.
+
+### 6.2 Create one
+
+```bash title="Any terminal"
+ssh-keygen -t ed25519 -C "you@etu.unistra.fr"
+```
+
+Press ++enter++ three times: default location, then an empty passphrase twice (or type one and remember it; nothing appears while you type).
+
+### 6.3 Show the public key and copy it
+
+=== "WSL (Ubuntu) / Linux / Codespaces"
+
+    ```bash title="Ubuntu window, Linux terminal, or Codespace terminal"
+    cat ~/.ssh/id_ed25519.pub
+    ```
+
+    Select the whole line the terminal prints and copy it (++ctrl+shift+c++ in most terminals, or right-click → Copy).
+
+=== "Mac"
+
+    ```bash title="Terminal (Mac)"
+    pbcopy < ~/.ssh/id_ed25519.pub
+    ```
+
+    The key is now in your clipboard (`cat ~/.ssh/id_ed25519.pub` shows it).
+
+=== "Git Bash"
+
+    ```bash title="Git Bash"
+    clip < ~/.ssh/id_ed25519.pub
+    ```
+
+    The key is now in your clipboard (`cat ~/.ssh/id_ed25519.pub` shows it).
+
+The line starts with `ssh-ed25519`, continues with a block of letters and digits, and ends with your email. Only the `.pub` file is ever pasted anywhere.
+
+### 6.4 Add it to GitHub
+
+1. On [github.com](https://github.com/), click your **profile photo** (top right) → **Settings**.
+2. Left sidebar, under *Access*: **SSH and GPG keys** → **New SSH key**.
+3. **Title**: a name for this machine (`uni desktop`, `laptop`). **Key type**: *Authentication Key*. **Key**: paste the line from 6.3.
+4. **Add SSH key**. GitHub may ask for your password.
+
+Reference: [Adding a new SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+
+### 6.5 Add it to GitLab
+
+Same idea on [gitlab.com](https://gitlab.com/) or on an institution's GitLab:
+
+1. Click your **avatar** (top right) → **Edit profile**.
+2. Left sidebar: **Access** → **SSH keys** → **Add new key**.
+3. **Key**: paste the line from 6.3. **Title**: a name for this machine. Leave *Usage type* and *Expiration date* as they are.
+4. **Add key**.
+
+Reference: [GitLab — Use SSH keys to communicate with GitLab](https://docs.gitlab.com/user/ssh/).
+
+### 6.6 Test
+
+```bash title="Any terminal"
+ssh -T git@github.com
+```
+
+The first time, SSH asks `Are you sure you want to continue connecting (yes/no/[fingerprint])?` — type `yes`. Expected: `Hi YOUR-USERNAME! You've successfully authenticated, but GitHub does not provide shell access.` For GitLab, `ssh -T git@gitlab.com` answers `Welcome to GitLab, @YOUR-USERNAME!`.
+
+From then on, use the **SSH** address of a repository instead of the HTTPS one: `git@github.com:YOUR-USERNAME/agent-lab.git` in `git clone` and `git remote add`. Git will not ask for a password again on this machine.
+
+## 7. Ten minutes in the terminal
 
 You are going to spend the whole course in this window, so make it yours now. Type each line, look at what happens. (A fuller exercise with solutions will be on the [exercises page](exercises.md).)
 
