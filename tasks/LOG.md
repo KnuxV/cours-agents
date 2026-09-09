@@ -138,3 +138,21 @@ Instructor requests applied on `site/docs/sessions/s2.md` and `site/docs/exercis
 2. Time budget: S2 core exercises are now 2.1 (20) + 2.2 (30) + 2.3 (40) = 90 min in a 2h session that also has the §2 and §5 live walkthroughs. Suggestion: drop step 2 of 2.2 (the third argument — 2.3 covers it twice) or make §2 read-only in class.
 3. §2.1 states that `pip install` into the system Python is refused with `externally-managed-environment` on recent Ubuntu/macOS Pythons — true for Ubuntu ≥ 23.04 and Homebrew Python; not re-tested on a Mac in this session.
 4. The `--help` output with a space in `choices` renders as `{-, ,_,.,/}`; the solution mentions `metavar="SEP"` as the fix rather than changing the spec.
+
+### Part 1 — course rename + Linux (no-sudo) path for S0/S1 (2026-09-09, instructor review)
+
+Context from the instructor: the same material is taught in a linguistic-informatics (NLP) master and in an economics master, so the "for Economists" framing is out; and NLP students work half on their own laptops (Windows/Mac), half on the university's Linux desktops in A330, which have `git` but **no `sudo`**. Scope: Session 0 and Session 1 only for now.
+
+- **Rename**: site title is now **"Meta-programming"** (`mkdocs.yml` `site_name`, `index.md` H1, the `agent-lab` README line in S1 §6.1). Subtitle "Terminals, APIs, and coding agents" unchanged. Index "What you need" mentions Linux laptops and the university desktops; the replication-track row says "a published paper that ships a replication package" instead of "economics paper". `SPEC.md` and `AGENTS.md` still carry the old title and the "(WSL/Mac Terminal/Git Bash)" prefix rule — not edited (rule 8); instructor to update.
+- **Setup page**: new row in the "Which path is yours?" table and a new **Path E — Linux** (open the terminal, check command, distro package hints for own laptops, a note explaining that `sudo` is refused on the desktops and never needed — every later tool installs into `~/.local/bin`, and pages give a Linux tab). §5.2 tab renamed "WSL (Ubuntu) / Linux / Codespaces / Git Bash". One-liner telling laptop+desktop users to do the setup on both (the key is per machine).
+- **S1 page**: Linux tab in "Before class" (git present on the desktops), in §4.1 (`xdg-open index.html`, with the browser's ++ctrl+o++ as fallback), and in §6.2 — a **no-sudo `gh` install**: version from the GitHub releases API, tarball unpacked into `~/.local` with `--strip-components=1`, `~/.local/bin` appended to `PATH` in `~/.bashrc`. Rehearsed twice in a throwaway `$HOME` on this machine (gh 2.100.0, 2026-09-03 release): `gh --version` resolves from `~/.local/bin`. §3 title now lists Linux.
+- `wsl.md`: "Same commands as your Mac and Linux classmates".
+
+**Verification:** `uvx --from mkdocs-material==9.7.7 mkdocs build --strict` exit 0, 0 warnings; `#path-e-linux` anchor present in the built HTML.
+
+**UNVERIFIED / needs human review**
+1. TODO(verify) on the page: whether the home folder on the A330 desktops is a network home that follows the student between machines. Until known, the page tells them to push at the end of each session.
+2. The desktops' default shell is assumed to be `bash` (page says to check `echo $SHELL`); the expected `uname -a` output for Path E is illustrative, not captured on a real desktop.
+3. `gh auth login` on the desktops needs a browser on the same machine to open `github.com/login/device` — fine on a desktop with a GUI, but not rehearsed there. The PAT fallback sentence in §6.2 still applies.
+4. Sessions 2–4 still have only WSL/Mac/Git Bash/Codespaces tabs (S2 §2 `uv` tab title, S4 OpenCode install); the instructor said "part 1 only for now". `uv` and OpenCode both install via `curl | sh` into the home folder, so the Linux tab there should be a title change plus a no-`sudo` note.
+5. `research/`, `SPEC.md`, `AGENTS.md` keep the economics framing.
