@@ -156,3 +156,17 @@ Context from the instructor: the same material is taught in a linguistic-informa
 3. `gh auth login` on the desktops needs a browser on the same machine to open `github.com/login/device` — fine on a desktop with a GUI, but not rehearsed there. The PAT fallback sentence in §6.2 still applies.
 4. Sessions 2–4 still have only WSL/Mac/Git Bash/Codespaces tabs (S2 §2 `uv` tab title, S4 OpenCode install); the instructor said "part 1 only for now". `uv` and OpenCode both install via `curl | sh` into the home folder, so the Linux tab there should be a title change plus a no-`sudo` note.
 5. `research/`, `SPEC.md`, `AGENTS.md` keep the economics framing.
+
+### SPEC/AGENTS update + harness switch OpenCode → pi (2026-09-09, instructor decision)
+
+- **SPEC.md**: title "Meta-programming: terminals, APIs, and coding agents"; audience = NLP master + economics master on the same material, no discipline assumed; infrastructure = own laptops (Windows/macOS/Linux) or the A330 Linux desktops with no `sudo` (all tools must install into `~/.local/bin`); Session 0 gets a Linux bullet; the §3.1 tokens aside is now written for both rooms; new "Harness" paragraph recording the decision; **Session 4 rewritten for pi** (install `curl -fsSL https://pi.dev/install.sh | sh`, `~/.pi/agent/models.json` custom provider with `"api": "openai-completions"` and `"apiKey": "$UNISTRA_API_KEY"`, permissions as a `tool_call` extension the students write, subagents as a second `pi -p` process, deliverable = `AGENTS.md` + `.pi/` + spec + implementation); Known risks updated.
+- **AGENTS.md**: title, two-audience note, `s4-pi.md`, `models.json` in resources, rule 3 now lists Linux and forbids `sudo` on the Linux path.
+- **Site**: nav "S4 — pi"; index (harness = pi, deliverable column); setup Path D no longer says Git Bash is not enough for Session 4 (pi runs on Windows through Git Bash, per its `docs/windows.md`); WSL page wording; S4 stub title. No OpenCode mention left in student-facing pages. `research/` and `tasks/01–03.md` keep their OpenCode content as history.
+
+**Facts checked this session (pi 0.85.1 installed locally via mise):** `pi --help` output; `https://pi.dev/install.sh` returns 200 (`application/x-sh`); the script requires Node ≥ 22.19.0 and offers a standalone Node install into a managed home directory when missing (read in the script — `install_node_npm_interactive`); `docs/models.md` `models.json` example (`providers` object, `baseUrl`, `api`, `models[].contextWindow/maxTokens`); `docs/custom-provider.md` (`"apiKey": "$ENV_VAR"` interpolation); `docs/extensions.md` (`tool_call` handler returning `{ block: true, reason }`, `ctx.ui.confirm`, examples `permission-gate.ts` and `subagent/`; project-local `.pi/extensions/` loads only after the project is trusted); `docs/windows.md` (Git Bash used by default on Windows).
+
+**UNVERIFIED / needs human review**
+1. pi install not rehearsed on a clean machine, on Git Bash, or on a no-`sudo` desktop (standalone Node path). Rehearse before writing the S4 page.
+2. The Unistra endpoint through pi's `openai-completions` API with the 80B coder: untested. `compat` flags in `models.json` may be needed (e.g. `supportsUsageInStreaming`).
+3. `research/s4-opencode.md` is now off-spec; a `research/s4-pi.md` note is the natural next task.
+4. Remaining S2–S4 Linux tabs are still owed (instructor: "later").
