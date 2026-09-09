@@ -1,21 +1,21 @@
 # AGENTS.md — Course-building repo
 
 ## What this repo is
-Source of truth for an 8h course "Advanced Programming for Economists: terminals, APIs, and coding agents". `SPEC.md` is the contract. Everything produced must trace back to a section of the spec.
+Source of truth for an 8h course "Meta-programming: terminals, APIs, and coding agents", taught with the same material in an NLP master and an economics master. `SPEC.md` is the contract. Everything produced must trace back to a section of the spec. The Session 4 harness is **pi** (pi.dev), not OpenCode.
 
 ## Repo layout (do not invent new top-level folders)
 - `SPEC.md` — course specification. Read it fully before any task.
 - `tasks/` — task definitions for agents. One task at a time.
 - `research/` — output of the research task: notes, source lists, deeper-dive material.
 - `site/` — MkDocs static site (published to GitHub Pages).
-- `slides/` — presenterm decks, one file per session: `s1-git.md`, `s2-tooling.md`, `s3-api.md`, `s4-opencode.md`.
+- `slides/` — presenterm decks, one file per session: `s1-git.md`, `s2-tooling.md`, `s3-api.md`, `s4-pi.md`.
 - `exercises/` — one folder per session, numbered exercises with solutions in `solutions/` subfolders.
-- `resources/` — ready-to-use configs and payloads (opencode.json for Unistra, curl request.json files, install scripts).
+- `resources/` — ready-to-use configs and payloads (pi `models.json` for Unistra, curl request.json files, install scripts).
 
 ## Standing rules
 1. Read `SPEC.md` and the relevant `tasks/*.md` before writing anything. If the task file and SPEC.md conflict, stop and report the conflict; do not resolve it silently.
 2. If a required fact is unknown (a URL, a flag, an API behavior), say UNVERIFIED in the output rather than guessing. Never invent URLs, package names, or command flags.
-3. Audience calibration: students have never used a terminal. Every command shown must be copy-pasteable and prefixed with where to run it (WSL/Mac Terminal/Git Bash). No unexplained jargon on first use.
+3. Audience calibration: students have never used a terminal. Every command shown must be copy-pasteable and prefixed with where to run it (WSL / Mac Terminal / Linux / Git Bash / Codespaces). No unexplained jargon on first use. Platform tabs must include **Linux**, and nothing on the Linux path may require `sudo` (university desktops): installs go to `~/.local/bin`. Course prose must not assume one discipline (NLP and economics students read the same pages).
 4. Language: course materials in English; occasional French asides are fine. Slides terse; site prose complete sentences.
 5. All secrets via environment variables. Never write a real API key anywhere, including examples — use `sk-XXXX` placeholders.
 6. Verification before done:
