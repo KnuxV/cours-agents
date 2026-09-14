@@ -185,6 +185,20 @@ Context from the instructor: the same material is taught in a linguistic-informa
 3. `git commit -am` in 1.3 Part C assumes the README is already tracked (true after §6.1).
 4. Time budget: 1.1 (20) + 1.2 (25) + 1.3 (25) ≈ 70 min alongside §4–5 live; Part C is stretch to absorb overruns.
 
+### README, S1 motivation research, S0 intro deck (2026-09-14, instructor review after the first NLP run of S1)
+
+- **`README.md`** (new): title, then the site URL `https://knuxv.github.io/cours-agents/` as the first line, one-sentence layout note.
+- **`research/s1-git-motivation.md`** (new, 163 lines): how the reference courses sell Git before commands (SWC, Pro Git, Missing Semester, GitHub Skills, Evans/Sylor-Miller, Learn Git Branching, Happy Git, Bryan 2018), reusable dated stats (kernel 7.2: 2,652 developers, 16,418 commits, ≈10.7 commits/hour; Octoverse 2025; Torvalds 2005 LKML + first commit; PhD Comics #1531; Gentzkow & Shapiro 2014 ch. 3 quotes), anecdote triage (Toy Story 2 and GitLab 2017 are **backup** stories; Heartbleed is the `git log` story), how courses introduce branches conceptually (Pro Git §3.2 hotfix story, GitHub Flow, SWC drops branching for novices), three minute-by-minute 2h structures with a branch-demo slot, risks. Instructor decision pending: pick A/B/C for the economics room (note recommends A).
+- **`slides/s0-intro.md`** (new, 11 slides + title): course opener for the economics room — thesis (HTTP call in a loop), the 8 hours table, where it sits / exam, why the terminal (×2), honest expectations (Excel / Power BI), the bar (practice not mastery), Windows three doors, getting unstuck (AI help authorised), site URL, today's plan. Speaker notes carry the framing not said on slides. Dates/room deliberately not on a slide (site is the reference).
+- Instructor decision recorded (not yet applied to the site): the economics S1 keeps the terminal but shrinks Git to the loop `status/add/commit/log` + push/pull to the personal repo; branches are concept + instructor demo only (main = production, branch = safe copy, merge back); VS Code Source Control panel as a viewer only; exercise 1.3 not run in that room.
+
+**Verification:** `presenterm` 0.16.1 installed via `cargo install presenterm` (`~/.cargo/bin`). No `--validate` flag exists; `-E` (HTML export) processed all 12 slides and wrote the file, run through a pty helper that answers the terminal queries presenterm blocks on (`scratchpad/ptyrun.py`, not in the repo). One real error caught and fixed: `<!-- speaker_note: … -->` is parsed as YAML, so a `: ` inside a note breaks the deck — notes must not contain colon-space.
+
+**UNVERIFIED / needs human review**
+1. `--validate-overflows` ran into presentation mode without reporting; overflow not confirmed at other terminal sizes than 120×40.
+2. In the research note: Missing Semester video length, the Kaggle 2017 58 % figure (secondary source only), Bryan 2018 paper body (quotes taken from Happy Git ch. 1 instead).
+3. S0 deck dates: none shown; add a dates slide if this room shares the site's timetable.
+
 ### Task 02 Goal B — Session 1 Git deck (2026-09-14)
 
 - Produced `slides/s1-git.md`, 34 slides including the title, covering SPEC Session 1 and the Session 0 terminal recap. Used `research/s1-git.md`, the recommended structure A from `research/s1-git-motivation.md`, and the collaboration research to route further CI/CD material to the existing reading.
@@ -222,3 +236,9 @@ Context from the instructor: the same material is taught in a linguistic-informa
 
 - Split the approved deck into an introductory presentation commit, a coloured-diff improvement, and a closing-URLs addition. Task-log entries are committed separately. Preserved pre-existing uncommitted files and the earlier README/S0/research log entry. No push requested or performed.
 - Verification: each staged patch passed `git diff --cached --check`; the final committed deck matches the approved working file. Rendering validation is recorded above. No new UNVERIFIED items.
+
+### Tasks 01–02 — commit remaining course material (2026-09-14)
+
+- Committed the existing README, S0 introductory deck, and three research notes in separate topic commits. Preserved their content and existing VERIFIED/UNVERIFIED distinctions; this commit pass is not a fresh source audit. Included the earlier pending instructor-review log entry.
+- S0 presenterm HTML export passed for all 12 slides; output at `/tmp/s0-intro-preview.html`. Staged whitespace checks passed. Research limitations and human-review items remain as documented in the notes.
+- `sage_endsley.html` contained only a Cloudflare challenge page, not research content. Moved it to `/tmp/cours-agents-download.kwL8Js/sage_endsley.html` as a recoverable temporary backup, outside the repository. No push performed.
