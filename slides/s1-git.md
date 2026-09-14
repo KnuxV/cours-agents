@@ -288,4 +288,8 @@ Why we use Git
 
 One script or a large project: the same ideas.
 
+Repository: https://github.com/KnuxV/cours-agents
+
+Course website: https://knuxv.github.io/cours-agents/
+
 <!-- speaker_note: 0:21–0:22. End the explanation here. Practical work comes separately, with the course site as reference. No terminal demonstration while this deck is displayed. -->
