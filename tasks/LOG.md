@@ -184,3 +184,41 @@ Context from the instructor: the same material is taught in a linguistic-informa
 2. Whether the university has its own GitLab students should use (page says "gitlab.com or an institution's GitLab", same menus).
 3. `git commit -am` in 1.3 Part C assumes the README is already tracked (true after §6.1).
 4. Time budget: 1.1 (20) + 1.2 (25) + 1.3 (25) ≈ 70 min alongside §4–5 live; Part C is stretch to absorb overruns.
+
+### Task 02 Goal B — Session 1 Git deck (2026-09-14)
+
+- Produced `slides/s1-git.md`, 34 slides including the title, covering SPEC Session 1 and the Session 0 terminal recap. Used `research/s1-git.md`, the recommended structure A from `research/s1-git-motivation.md`, and the collaboration research to route further CI/CD material to the existing reading.
+- Two-hour timing notes include student practice and authentication time. One `agent-lab` repository carries students through terminal basics, init/status/add/commit/log/diff, three checkpoints, recovery, GitHub account creation and publication, pull, clone, and a ten-minute instructor branch/fast-forward demonstration. Each demo has a SETUP/LANDING pair. Both masters share the same prose; every runnable block identifies WSL / Mac Terminal / Linux / Git Bash / Codespaces. No installation or sudo is required by the deck. Source links, teaching prompts, and fallback guidance are in speaker notes.
+- Scope is this deck only, not completion of all Task 02 deliverables. Existing S0 slides, site, research, SPEC, and numbered task definitions were preserved. No remote repository was created or changed during verification.
+
+**Verification:** presenterm 0.16.1 has no `--validate` flag. `presenterm --export-html slides/s1-git.md --output /tmp/s1-git-preview.html` processed all 34 slides successfully. `presenterm --validate-overflows slides/s1-git.md` loaded successfully at 120 columns × 40 rows, with no overflow error, then exited normally on `q`; both commands ran through terminal-query-answering PTY helpers. The installed presenterm implementation validates the whole presentation before showing its title. Git workflow rehearsal passed with `bash /tmp/rehearse-s1-git.sh` in an isolated temporary directory, using a local bare remote and a second clone to simulate the browser commit. Assertions checked selected versus untracked files, staged/unstaged diffs, three commits, exact recovery, remote updates, clone history, branch-specific file visibility, fast-forward integration, and final push. Temporary rehearsal artifacts are under `/tmp/s1-git-rehearsal.fMWL4U/`. `git diff --check` passed. No site files changed, so no MkDocs build was needed.
+
+**UNVERIFIED / human review:**
+1. The visible `TODO(verify) — UNVERIFIED` marker covers fresh-machine GitHub authentication across classroom platforms, especially SSH on university desktops and Codespaces access to a separate personal repository. Local transport tests do not verify GitHub login or browser controls. Rehearse that path before teaching; blocked students retain their local commits and publication remains pending.
+2. Confirm the two-hour pace with the class. The deck budgets GitHub access time and keeps branches instructor-only; the site still offers a broader branch/conflict exercise sequence.
+3. Overflow was checked at 120×40 only. Use that terminal size or rehearse the actual projector setup. The HTML preview and verification helpers are temporary local artifacts, not published course resources.
+
+### Task 02 Goal B — S1 rewritten as an explanatory introduction (2026-09-14)
+
+- Replaced `slides/s1-git.md` at the instructor's request with 19 slides including the title, intended immediately after S0. Approximately 22 minutes of speaking, adjustable within 15–30 minutes. This supersedes the previous two-hour deck format; the practical part of SPEC Session 1 remains separate. No commands, live demos, audience questions, or student activities. S0 is unchanged.
+- Uses the research's familiar filename example, collaboration motivation, Linux project scale, snapshots, and agent-review argument. Sequence covers USB copies, Google Drive, dependent project files, large projects, repository, commit, staging, diff, recovery, branch, merge, conflict, Git/GitHub, clone/push/pull, and agents. Sparse slides; short keyword/sentence speaker notes with timing. Linux scale is expressed as broad orders of magnitude rather than changing release counts.
+- The Drive comparison explicitly acknowledges existing version history. Checked Google's [file-version documentation](https://support.google.com/drive/answer/2409045); source also recorded in speaker notes. Git's advantage is explained through deliberate project checkpoints and parallel development, without portraying it as a replacement for every shared-document or backup tool.
+
+**Verification:** presenterm 0.16.1 HTML export processed all 19 slides; preview at `/tmp/s1-git-preview.html`. `presenterm --validate-overflows slides/s1-git.md` passed at 120×40 through the existing PTY helper. No runnable examples remain, so no Git exercise rehearsal was needed. No site changes. `git diff --check` passed.
+
+**UNVERIFIED / human review:** no setup/API claims or TODO(verify) markers remain in this conceptual deck. Speaking duration and projector readability need instructor rehearsal; overflow was checked at 120×40 only. Existing authentication uncertainties still apply to the separate practical session, not this presentation.
+
+### Task 02 — S1 slide 11, simple coloured diff (2026-09-14)
+
+- Replaced the before/after table with a `diff` block changing a meeting from Monday to Tuesday, plus a removed/added legend and short presenter notes (SPEC Session 1, diff).
+- Verification: presenterm HTML export passed for all 19 slides. Exported spans confirm the removed line is red (`#f2777a`) and the added line green (`#99cc99`). `git diff --check` passed. No UNVERIFIED facts; projector readability remains for instructor review.
+
+### Task 02 — S1 closing-slide URLs (2026-09-14)
+
+- Added the repository and static course website as visible full URLs on the final slide (SPEC Session 1). Addresses checked against `git remote -v` and `README.md`.
+- Verification: presenterm HTML export passed for all 19 slides; `git diff --check` passed. No new UNVERIFIED items. Human review remains projector readability at the chosen font size.
+
+### Task 02 — atomic S1 commits for classroom examples (2026-09-14)
+
+- Split the approved deck into an introductory presentation commit, a coloured-diff improvement, and a closing-URLs addition. Task-log entries are committed separately. Preserved pre-existing uncommitted files and the earlier README/S0/research log entry. No push requested or performed.
+- Verification: each staged patch passed `git diff --cached --check`; the final committed deck matches the approved working file. Rendering validation is recorded above. No new UNVERIFIED items.
