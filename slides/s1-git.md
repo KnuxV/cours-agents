@@ -150,13 +150,14 @@ See exactly what changed
 
 A **diff** shows the difference between versions.
 
-| Before | After |
-|---|---|
-| Missing answers count as zero. | Missing answers are excluded. |
+```diff
+-The meeting is on Monday.
++The meeting is on Tuesday.
+```
 
-Commit message: **“Correct how we handle missing answers.”**
+Red / `-` = removed. Green / `+` = added.
 
-<!-- speaker_note: 0:11–0:12. Illustrative rule, not a statistical recommendation. Small textual change, potentially large effect on results. Diff shows what; message explains why. Git compares code line by line. A saved history can still contain mistakes. -->
+<!-- speaker_note: 0:11–0:12. Same sentence; one day changed. Red removes the old line. Green adds the new line. Git shows a replacement as removal plus addition. Works with ordinary text as well as code. -->
 
 <!-- end_slide -->
 
