@@ -2,6 +2,9 @@
 
 **Terminals, APIs, and coding agents** — 8 hours (4 × 2h) plus an optional research mini-module. M2, Université de Strasbourg.
 
+!!! tip "Class of Friday 18 September"
+    Everything for today is on one page: **[▶ Today — start here](today.md)**.
+
 ## The idea of the course
 
 An "AI coding agent" is not magic. It is an HTTP call in a loop, wrapped in engineering decisions: what goes in the context, which tools it may call, what it is allowed to do without asking, and how its work gets verified.
@@ -20,14 +23,14 @@ This is the first part of the Advanced Programming class. A later 15-hour block 
 
 All sessions take place in room **A330 (Idem-Lab)**.
 
-| When | Session | Content | Deliverable |
-|---|---|---|---|
-| **Before Mon 14 Sep** | [Session 0 — Setup](setup.md) *(homework)* | A working terminal (WSL / Git Bash / macOS / Linux / Codespaces) and a Unistra LLM API key | Your terminal passes the check command |
-| **Mon 14 Sep 2026**, 14:00–16:00 | [S1 — Git](sessions/s1.md) | Snapshots, commits, branches, GitHub. Why version control is the undo button and the audit trail of agent-written code | Your personal course repo on GitHub |
-| **Fri 18 Sep 2026**, 15:00–17:00 | [S2 — Python tooling](sessions/s2.md) | `uv` projects and lockfiles, `argparse` (notebook → script), environment variables and secrets | A reproducible script in your repo |
-| **Fri 25 Sep 2026**, 14:00–16:00 | [S3 — What an LLM API actually is](sessions/s3.md) | Raw `curl` calls: tokens, statelessness, constructed context, model families, **tool calling** — you *are* the harness for one round | `step1.json` → `step4` sequence committed to your repo |
-| **Fri 16 Oct 2026**, 13:00–15:00 | [S4 — pi](sessions/s4.md) | A real harness: provider config, the loop observed, permissions you write yourself, `AGENTS.md`, subagents, the grill/build pattern, the A/B/C reliability experiment | `AGENTS.md`, `.pi/` extensions and agent definitions, spec + implementation |
-| Optional | [Replication track](replication.md) | LLM-assisted replication of a published paper that ships a replication package | A short replication memo |
+| When | Session | Content | Exercises | Deliverable |
+|---|---|---|---|---|
+| **Before Mon 14 Sep** | [Session 0 — Setup](setup.md) *(homework)* | A working terminal (WSL / Git Bash / macOS / Linux / Codespaces) and a Unistra LLM API key | [0.1](exercises/s0.md) | Your terminal passes the check command |
+| **Mon 14 Sep 2026**, 14:00–16:00 | [S1 — Git](sessions/s1.md) | Snapshots, commits, branches, GitHub. Why version control is the undo button and the audit trail of agent-written code | [1.1–1.3](exercises/s1.md) | Your personal course repo on GitHub |
+| **Fri 18 Sep 2026**, 15:00–17:00 | [S2 — Python tooling](sessions/s2.md) | `uv` projects and lockfiles, `argparse` (notebook → script), environment variables and secrets | [2.1–2.5](exercises/s2.md) | A reproducible script in your repo |
+| **Fri 25 Sep 2026**, 14:00–16:00 | [S3 — What an LLM API actually is](sessions/s3.md) | Raw `curl` calls: tokens, statelessness, constructed context, model families, **tool calling** — you *are* the harness for one round | *with the session* | `step1.json` → `step4` sequence committed to your repo |
+| **Fri 16 Oct 2026**, 13:00–15:00 | [S4 — pi](sessions/s4.md) | A real harness: provider config, the loop observed, permissions you write yourself, `AGENTS.md`, subagents, the grill/build pattern, the A/B/C reliability experiment | *with the session* | `AGENTS.md`, `.pi/` extensions and agent definitions, spec + implementation |
+| Optional | [Replication track](replication.md) | LLM-assisted replication of a published paper that ships a replication package | — | A short replication memo |
 
 ## What you need
 
@@ -44,4 +47,4 @@ A presentation in front of the class of a coding project on a topic of your choi
 - Course repository: [KnuxV/cours-agents](https://github.com/KnuxV/cours-agents) (last year's material: [KnuxV/advanced_programming_python](https://github.com/KnuxV/advanced_programming_python)).
 - Course forum: TODO(verify) — link to the Moodle/forum.
 - [Unistra AI platform](https://conversation.ia.unistra.fr/) · [Unistra API documentation](https://documentation.unistra.fr/DNUM/Intelligence_artificielle/guide_complet_IA/co/7_1API.html) (French)
-- [Exercises index](exercises.md) · [Resources](resources.md)
+- [pi — install the agent and the course tutor](pi.md) · [Exercises](exercises/index.md) · [Resources](resources.md)

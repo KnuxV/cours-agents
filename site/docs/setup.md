@@ -321,7 +321,7 @@ From then on, use the **SSH** address of a repository instead of the HTTPS one: 
 
 ## 7. Ten minutes in the terminal
 
-You are going to spend the whole course in this window, so make it yours now. Type each line, look at what happens. (A fuller exercise with solutions will be on the [exercises page](exercises.md).)
+You are going to spend the whole course in this window, so make it yours now. Type each line, look at what happens. (A fuller exercise with solutions will be on the [exercises page](exercises/s0.md).)
 
 ```bash title="Any terminal"
 pwd                      # print working directory: where am I?

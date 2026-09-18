@@ -53,19 +53,32 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path: [".."]
+      check_paths: true
   - pymdownx.keys
 
 nav:
   - Home: index.md
-  - Session 0 (homework):
-      - Setup: setup.md
-      - WSL, explained: wsl.md
-  - Sessions:
-      - S1 — Git: sessions/s1.md
-      - S1½ — Git as a collaboration tool (reading): sessions/s1-collab.md
-      - S2 — Python tooling: sessions/s2.md
-      - S3 — What an LLM API is: sessions/s3.md
-      - S4 — pi: sessions/s4.md
-  - Exercises: exercises.md
+  - Session 0 — Setup (homework):
+      - Lesson — Setup: setup.md
+      - Lesson — WSL, explained: wsl.md
+      - ✏️ Exercises 0.1: exercises/s0.md
+  - Session 1 — Git:
+      - Lesson — Git: sessions/s1.md
+      - Reading — Git as a collaboration tool (S1½): sessions/s1-collab.md
+      - ✏️ Exercises 1.1–1.3: exercises/s1.md
+  - Session 2 — Python tooling:
+      - Lesson — Python tooling: sessions/s2.md
+      - ✏️ Exercises 2.1–2.5: exercises/s2.md
+  - Session 3 — What an LLM API is:
+      - Lesson — What an LLM API is: sessions/s3.md
+  - Session 4 — pi:
+      - Lesson — pi: sessions/s4.md
+  - ▶ Today — Fri 18 Sep:
+      - Start here — plan for today: today.md
+      - pi — install, API connection, tutor: pi.md
+      - ✏️ Scrabble (today's exercise A): exercises/scrabble.md
+  - ✏️ All exercises: exercises/index.md
   - Resources: resources.md
   - Replication track (optional): replication.md
