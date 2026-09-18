@@ -1,0 +1,1902 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Terminals, APIs, and coding agents — an 8h M2 course (Université de Strasbourg)">
+      
+      
+      
+        <link rel="canonical" href="https://Knuxv.github.io/cours-agents/pi/">
+      
+      
+        <link rel="prev" href="../today/">
+      
+      
+        <link rel="next" href="../exercises/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>pi — install, API connection, tutor - Meta-programming</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pi-install-the-agent-connect-it-to-the-universitys-models" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Meta-programming" class="md-header__button md-logo" aria-label="Meta-programming" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Meta-programming
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              pi — install, API connection, tutor
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Meta-programming" class="md-nav__button md-logo" aria-label="Meta-programming" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Meta-programming
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/KnuxV/cours-agents" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session 0 — Setup (homework)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Session 0 — Setup (homework)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lesson — Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lesson — WSL, explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/terminal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ 0.1 Ten minutes in the terminal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session 1 — Git
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Session 1 — Git
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lesson — Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s1-collab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reading — Git as a collaboration tool (S1½)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/recipe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ 1.1 Recipe history
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/scrabble/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ 1.2 Scrabble — merge and conflict
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/collab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ 1.3 Collaboration in teams of two
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/scrabble-three-merges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ Extra — three merges in a row
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session 2 — Python tooling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Session 2 — Python tooling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lesson — Python tooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/uv-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ 2.1 A uv project from scratch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/argparse-script/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ 2.2 Notebook → script with argparse
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/password-generator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ 2.3 Password generator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/secret-audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ 2.4 Secret hygiene audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/polars-pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ 2.5 Polars vs pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session 3 — What an LLM API is
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Session 3 — What an LLM API is
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lesson — What an LLM API is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session 4 — pi
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Session 4 — pi
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/s4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lesson — pi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ▶ Today — Fri 18 Sep
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ▶ Today — Fri 18 Sep
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../today/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start here — plan for today
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    pi — install, API connection, tutor
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    pi — install, API connection, tutor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-check-that-your-key-is-there" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Check that your key is there
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-install-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Install pi
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-connect-pi-to-the-universitys-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Connect pi to the university's models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-first-conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A first conversation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-the-course-tutor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. The course tutor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. The course tutor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-install-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Install it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-use-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Use it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-when-things-go-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. When things go wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ✏️ All exercises
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replication track (optional)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-check-that-your-key-is-there" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Check that your key is there
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-install-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Install pi
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-connect-pi-to-the-universitys-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Connect pi to the university's models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-first-conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A first conversation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-the-course-tutor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. The course tutor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. The course tutor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-install-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Install it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-use-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Use it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-when-things-go-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. When things go wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="pi-install-the-agent-connect-it-to-the-universitys-models">pi — install the agent, connect it to the university's models<a class="headerlink" href="#pi-install-the-agent-connect-it-to-the-universitys-models" title="Permanent link">&para;</a></h1>
+<p><a href="https://pi.dev">pi</a> is a <strong>coding agent</strong>: a program in your terminal that sends your request to a language model, lets the model read files and run commands in the current folder, and loops until the task is done. Session 4 takes it apart. This page gets it running early, connected to the university's own models, with a <strong>course tutor</strong> that helps you through the exercises without doing them for you.</p>
+<p>It takes 10–15 minutes. <strong>At the end you will have:</strong></p>
+<ol>
+<li><code>pi</code> installed in your home folder (no administrator rights needed);</li>
+<li>pi talking to the university's LLM platform with the API key you already have — nothing to buy, nothing leaves Strasbourg;</li>
+<li>the <code>tutor</code> skill (English) and its twin <code>tuteur</code> (français).</li>
+</ol>
+<p><strong>Before you start:</strong> you need the API key from <a href="../setup/#5-your-unistra-llm-api-key">Session 0, section 5</a>, stored in the environment variable <code>UNISTRA_API_KEY</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">An agent acts, it does not just talk</p>
+<p>pi can create, change and delete files in the folder where you start it, and run commands there. Start it inside a <strong>git repository</strong> with a clean <code>git status</code> (your <code>agent-lab</code>): whatever it does, <code>git diff</code> shows it and <code>git restore</code> undoes it. That is the reason Session 1 came first. The tutor of section 5 runs in a read-only mode where it cannot change anything.</p>
+</div>
+<h2 id="1-check-that-your-key-is-there">1. Check that your key is there<a class="headerlink" href="#1-check-that-your-key-is-there" title="Permanent link">&para;</a></h2>
+<div class="highlight"><span class="filename">Any terminal — new window</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$UNISTRA_API_KEY</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c1-6
+</code></pre></div>
+<p>Expected: <code>sk-</code> followed by three characters. An empty line means the key is not stored on <em>this</em> machine: redo <a href="../setup/#52-store-it-as-an-environment-variable">setup 5.2</a>, open a new terminal, and check again.</p>
+<h2 id="2-install-pi">2. Install pi<a class="headerlink" href="#2-install-pi" title="Permanent link">&para;</a></h2>
+<p>pi is written in JavaScript and needs <strong>Node.js</strong> (version 22.19 or later) to run — Node.js is to JavaScript what <code>python</code> is to Python. On WSL, Linux and Mac the installer fetches a private copy of Node.js into your home folder when you have none. On Git Bash you install Node.js yourself first.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">WSL (Ubuntu) / Linux</label><label for="__tabbed_1_2">Mac</label><label for="__tabbed_1_3">Git Bash</label><label for="__tabbed_1_4">Codespaces</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>This is also the tab for the <strong>university desktops</strong>: nothing here asks for <code>sudo</code>.</p>
+<div class="highlight"><span class="filename">Ubuntu window (WSL) or Terminal (Linux)</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://pi.dev/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div>
+<p>The installer asks up to three questions. Answer all three with <span class="keys"><kbd class="key-y">Y</kbd></span> (then <span class="keys"><kbd class="key-enter">Enter</kbd></span> for the first and the last):</p>
+<ol>
+<li><code>Pi needs Node.js 22.19.0 or newer and npm. Install them now with standalone Node.js? [Y/n]</code> — yes. It downloads Node.js into <code>~/.local/share/pi-node</code> (about 350 MB with pi; one or two minutes).</li>
+<li><code>Choose an action: y Install Pi (default)</code> — press <span class="keys"><kbd class="key-y">Y</kbd></span>.</li>
+<li><code>Add … to your PATH in ~/.bashrc now? [Y/n]</code> — yes. This is the same mechanism as your API key: a line added to your shell's startup file, read by every <em>new</em> terminal.</li>
+</ol>
+<p>If the first question mentions <code>apt</code> instead of <code>standalone Node.js</code>, your Ubuntu is recent enough to provide Node.js itself; it then asks for your Ubuntu password (WSL or your own laptop only). Rehearsed on a Linux machine with no Node.js and no <code>sudo</code>, 17 September 2026. TODO(verify): the same run on a university desktop in A330 and on a fresh WSL Ubuntu.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><span class="filename">Terminal (Mac)</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://pi.dev/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div>
+<p>Same questions as in the WSL tab; answer yes to each. If you have <a href="https://brew.sh/">Homebrew</a>, the installer uses it to install Node.js; otherwise it downloads a private copy into your home folder. The PATH line goes into <code>~/.zshrc</code>. TODO(verify): not rehearsed on a Mac.</p>
+</div>
+<div class="tabbed-block">
+<p>The installer cannot fetch Node.js on Windows, so install it first. Without administrator rights, use Scoop (from <a href="../setup/#path-d-git-bash">setup, Path D</a>):</p>
+<div class="highlight"><span class="filename">Windows PowerShell (NOT administrator)</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">scoop</span> <span class="n">install</span> <span class="n">nodejs-lts</span>
+</code></pre></div>
+<p>With administrator rights, the Windows installer (<code>.msi</code>, the <strong>LTS</strong> version) from <a href="https://nodejs.org/en/download">nodejs.org</a> does the same; default options are fine.</p>
+<p>Then <strong>close Git Bash, open a new one</strong>, and:</p>
+<div class="highlight"><span class="filename">Git Bash — new window</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>node<span class="w"> </span>--version
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>--ignore-scripts<span class="w"> </span>@earendil-works/pi-coding-agent
+</code></pre></div>
+<p>Expected from the first line: <code>v22.19.0</code> or later. The second is the installation itself: <code>npm</code> is to Node.js what <code>pip</code> is to Python, and <code>-g</code> installs the program for your user rather than for one project. pi then runs the model's commands through Git Bash. TODO(verify): this path follows pi's documentation (Quickstart and Windows pages) but has not been rehearsed on a Windows laptop; if it fails in class, use WSL or Codespaces.</p>
+</div>
+<div class="tabbed-block">
+<p>A codespace already has Node.js. Check the version, then install:</p>
+<div class="highlight"><span class="filename">Codespace terminal</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>node<span class="w"> </span>--version
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>--ignore-scripts<span class="w"> </span>@earendil-works/pi-coding-agent
+</code></pre></div>
+<p>If <code>node --version</code> prints something older than <code>v22.19.0</code>, use the WSL tab's <code>curl</code> line instead. TODO(verify): Node.js version of the default codespace image.</p>
+</div>
+</div>
+</div>
+<p>Then the usual ritual — close the terminal, open a new one:</p>
+<div class="highlight"><span class="filename">Any terminal — new window</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pi<span class="w"> </span>--version
+</code></pre></div>
+<p>Expected: <code>0.85.1</code> or later. <code>pi: command not found</code>? See <a href="#6-when-things-go-wrong">When things go wrong</a>.</p>
+<p>Reference: <a href="https://pi.dev/docs/latest/quickstart">pi — Quickstart</a> · <a href="https://pi.dev/docs/latest/windows">pi on Windows</a>.</p>
+<h2 id="3-connect-pi-to-the-universitys-models">3. Connect pi to the university's models<a class="headerlink" href="#3-connect-pi-to-the-universitys-models" title="Permanent link">&para;</a></h2>
+<p>Out of the box pi knows the commercial providers (Anthropic, OpenAI, Google…), which all need a paid key. The university's platform speaks the same protocol as OpenAI's, so pi can use it; it only needs to be told <em>where</em> it is. That goes in one file, <code>~/.pi/agent/models.json</code>:</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.pi/agent
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/KnuxV/cours-agents/main/resources/pi/models.json<span class="w"> </span>-o<span class="w"> </span>~/.pi/agent/models.json
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>cat<span class="w"> </span>~/.pi/agent/models.json
+</code></pre></div>
+<p>The last line prints what you just downloaded:</p>
+<div class="highlight"><span class="filename">~/.pi/agent/models.json</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">"providers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">"unistra"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">      </span><span class="nt">"baseUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://conversation.ia.unistra.fr/api"</span><span class="p">,</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">      </span><span class="nt">"api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openai-completions"</span><span class="p">,</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">      </span><span class="nt">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$UNISTRA_API_KEY"</span><span class="p">,</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">      </span><span class="nt">"models"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"coder"</span><span class="p">,</span><span class="w"> </span><span class="nt">"contextWindow"</span><span class="p">:</span><span class="w"> </span><span class="mi">262144</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qwen3"</span><span class="p">,</span><span class="w"> </span><span class="nt">"contextWindow"</span><span class="p">:</span><span class="w"> </span><span class="mi">262144</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gemma"</span><span class="p">,</span><span class="w"> </span><span class="nt">"contextWindow"</span><span class="p">:</span><span class="w"> </span><span class="mi">262144</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gpt-oss"</span><span class="p">,</span><span class="w"> </span><span class="nt">"contextWindow"</span><span class="p">:</span><span class="w"> </span><span class="mi">131072</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mistral-small"</span><span class="p">,</span><span class="w"> </span><span class="nt">"contextWindow"</span><span class="p">:</span><span class="w"> </span><span class="mi">128000</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ministral"</span><span class="p">,</span><span class="w"> </span><span class="nt">"contextWindow"</span><span class="p">:</span><span class="w"> </span><span class="mi">32768</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="p">}</span>
+</code></pre></div>
+<p>Read it; by Session 3 every field will be familiar.</p>
+<ul>
+<li><code>baseUrl</code> — the address of the platform. It is the one you called with <code>curl</code> at the end of Session 0.</li>
+<li><code>api</code> — the protocol to speak: OpenAI's "chat completions" format.</li>
+<li><code>apiKey</code> — <strong>not your key</strong>: the <em>name</em> of the environment variable that holds it. pi replaces <code>$UNISTRA_API_KEY</code> by its value at the moment it calls the platform. The key itself is written in no configuration file, so this file can be shared, committed, or shown on a projector.</li>
+<li><code>models</code> — the models the platform serves, and for each its <strong>context window</strong>: how much text (counted in <em>tokens</em>, pieces of words) it can take in at once. <code>coder</code> is an 80-billion-parameter model specialised in programming, and the first in the list, so pi uses it by default.</li>
+</ul>
+<p>Now test, from the outside in:</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pi<span class="w"> </span>--list-models
+</code></pre></div>
+<p>Expected: a table of six lines starting with <code>unistra   coder   262.1K</code>. If you read <code>No models available. Use /login…</code> instead, pi found the file but not the key: go back to section 1. Then one real request:</p>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>pi<span class="w"> </span>-p<span class="w"> </span><span class="s2">"Reply with one word: pong"</span>
+</code></pre></div>
+<p>Expected, after a second or two: <code>pong</code>. <code>-p</code> means <em>print</em>: one question, one answer, no conversation. That request travelled from your terminal to a machine room in Strasbourg and back, and cost nothing.</p>
+<h2 id="4-a-first-conversation">4. A first conversation<a class="headerlink" href="#4-a-first-conversation" title="Permanent link">&para;</a></h2>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">cd</span><span class="w"> </span>~/agent-lab
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>git<span class="w"> </span>status
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>pi
+</code></pre></div>
+<p><code>git status</code> first: it should say <code>working tree clean</code>, so that anything the agent changes stands out afterwards. pi opens a text box at the bottom of the terminal; the line under it shows the folder, and the model in use (<code>coder</code>). Try:</p>
+<div class="highlight"><span class="filename">Inside pi</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>What is in this folder? Do not change anything.
+</code></pre></div>
+<p>Watch what happens before the answer: lines such as <code>ls</code> or <code>read README.md</code> scroll by. Those are <strong>tool calls</strong>: the model asked pi to look at your files, pi did it and sent the result back, and only then did the model answer. That loop is the subject of Sessions 3 and 4.</p>
+<table>
+<thead>
+<tr>
+<th>Type this</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>your request, then <span class="keys"><kbd class="key-enter">Enter</kbd></span></td>
+<td>talk to the model</td>
+</tr>
+<tr>
+<td><code>!git status</code></td>
+<td>run a command yourself <strong>and show its output to the model</strong></td>
+</tr>
+<tr>
+<td><code>@</code></td>
+<td>pick a file to mention in your message</td>
+</tr>
+<tr>
+<td><code>/model</code></td>
+<td>choose another model from the list</td>
+</tr>
+<tr>
+<td><code>/new</code></td>
+<td>start a fresh conversation (the model forgets the previous one)</td>
+</tr>
+<tr>
+<td><span class="keys"><kbd class="key-escape">Esc</kbd></span></td>
+<td>interrupt the model while it is working</td>
+</tr>
+<tr>
+<td><code>/quit</code>, or <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-c">C</kbd></span> twice</td>
+<td>leave pi</td>
+</tr>
+</tbody>
+</table>
+<p>Back in the terminal, <code>git status</code> and <code>git diff</code> tell you whether anything changed.</p>
+<h2 id="5-the-course-tutor">5. The course tutor<a class="headerlink" href="#5-the-course-tutor" title="Permanent link">&para;</a></h2>
+<p>A <strong>skill</strong> is a text file of instructions that pi hands to the model when the subject comes up. The course ships two — the same tutor in two languages:</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Language</th>
+<th>Call it with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tutor</code></td>
+<td>English</td>
+<td><code>/skill:tutor</code></td>
+</tr>
+<tr>
+<td><code>tuteur</code></td>
+<td>français</td>
+<td><code>/skill:tuteur</code></td>
+</tr>
+</tbody>
+</table>
+<p>The tutor knows the exercises of Sessions 1 and 2 (Python environments with <code>pip</code>, <code>venv</code> and <code>uv</code>; branches and merges; GitHub remotes, forks and pull requests), their "Done when", and where students usually trip. Its instructions are the opposite of a chatbot's: <strong>you drive</strong>. You type every command and write every line; it looks at your files, explains what is on your screen, and gives <strong>one hint at a time</strong> — first a question, then the concept and the section to reread, then the shape of the command, and the exact answer only once you have tried.</p>
+<h3 id="51-install-it">5.1 Install it<a class="headerlink" href="#51-install-it" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">Any terminal</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>pi<span class="w"> </span>install<span class="w"> </span>git:github.com/KnuxV/cours-agents
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>pi<span class="w"> </span>list
+</code></pre></div>
+<p>pi clones the course repository into <code>~/.pi/agent/git/</code> and loads the skills it contains. <code>pi list</code> should show <code>git:github.com/KnuxV/cours-agents</code>. When the tutor is improved during the course, <code>pi update --extensions</code> fetches the new version.</p>
+<h3 id="52-use-it">5.2 Use it<a class="headerlink" href="#52-use-it" title="Permanent link">&para;</a></h3>
+<p>Start pi in <strong>read-only mode</strong>, from the folder of the exercise:</p>
+<div class="highlight"><span class="filename">Any terminal, inside the exercise&#x27;s folder</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>pi<span class="w"> </span>--tools<span class="w"> </span>read,grep,find,ls
+</code></pre></div>
+<p><code>--tools</code> is the list of what the model may do. With these four it can read and search your files, and nothing else: no editing, no commands. Then call the tutor and say where you are:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">English</label><label for="__tabbed_2_2">Français</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><span class="filename">Inside pi</span><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>/skill:tutor I am on exercise 2.1. git status shows hundreds of files under .venv.
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><span class="filename">Dans pi</span><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>/skill:tuteur Je suis sur l'exercice 2.1. git status affiche des centaines de fichiers dans .venv.
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>It will often ask you to run something and show it the result. That is what the <code>!</code> prefix is for: <code>!git status</code> runs the command and puts the output in the conversation, so that both of you read the same screen.</p>
+<p>Three habits that make it useful:</p>
+<ol>
+<li><strong>Give it the exact text.</strong> Paste the error message, or rerun the command with <code>!</code>. "It doesn't work" cannot be debugged, by a human or by a model.</li>
+<li><strong>Try each hint, and show what came back.</strong> The tutor climbs one step per answer. Insisting only moves it up one step; what unlocks the exact answer is an attempt, even a failed one, pasted into the conversation. A failed attempt is information, and it is usually where the explanation you needed starts.</li>
+<li><strong>End on the check.</strong> The exercise is finished when its "Done when" passes and you can say in one sentence what the problem was — not when the tutor says so.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">It is a model, not the teacher</p>
+<p>The tutor can be wrong, and a mid-size model sometimes forgets its instructions in a long conversation: if it starts handing out full solutions or rambling, <code>/new</code> and call the skill again. When it contradicts the course pages, the course pages win — and tell us, so that we fix the skill.</p>
+</div>
+<p>The skill is a plain text file, and reading it is a good preview of Session 4: <a href="https://github.com/KnuxV/cours-agents/blob/main/resources/pi/skills/tutor/SKILL.md"><code>tutor/SKILL.md</code></a> · <a href="https://github.com/KnuxV/cours-agents/blob/main/resources/pi/skills/tuteur/SKILL.md"><code>tuteur/SKILL.md</code></a>.</p>
+<h2 id="6-when-things-go-wrong">6. When things go wrong<a class="headerlink" href="#6-when-things-go-wrong" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pi: command not found</code> right after installing</td>
+<td>PATH is read when a terminal starts</td>
+<td>Open a new terminal. Still nothing: <code>tail -3 ~/.bashrc</code> (<code>~/.zshrc</code> on Mac) should show a line under <code># Pi</code>; if not, rerun the installer and answer yes to the PATH question</td>
+</tr>
+<tr>
+<td>Installer: <code>Unsupported operating system for automatic Node.js install</code></td>
+<td>You are in Git Bash</td>
+<td>Follow the Git Bash tab: Node.js first, then <code>npm install</code></td>
+</tr>
+<tr>
+<td>Installer: <code>Pi requires Node.js 22.19.0 or newer. Found v18…</code></td>
+<td>An older Node.js is already installed</td>
+<td>Own laptop: update Node.js (<a href="https://nodejs.org/en/download">nodejs.org</a>). Otherwise come and see us</td>
+</tr>
+<tr>
+<td><code>No models available. Use /login…</code></td>
+<td><code>UNISTRA_API_KEY</code> is not set in this window</td>
+<td>Section 1</td>
+</tr>
+<tr>
+<td><code>pi --list-models</code> complains about <code>models.json</code></td>
+<td>The download was cut, or the file was edited into invalid JSON</td>
+<td>Rerun the <code>curl</code> line of section 3</td>
+</tr>
+<tr>
+<td><code>401 status code (no body)</code></td>
+<td>The variable is set, but the key in it is wrong or was regenerated</td>
+<td><a href="../setup/#51-generate-the-key">Setup 5.1</a>: copy the key again, fix the line in <code>~/.bashrc</code>, new terminal</td>
+</tr>
+<tr>
+<td>pi starts on a model that is not <code>coder</code>, or asks you to log in</td>
+<td>Another provider's key exists on your machine</td>
+<td><code>/model</code>, choose <code>coder</code>, then <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-s">S</kbd></span> in that list to make it the default</td>
+</tr>
+<tr>
+<td><code>/skill:tutor</code> is not offered when you type <code>/</code></td>
+<td>The package is not installed, or pi was already running when you installed it</td>
+<td><code>pi list</code>; then restart pi, or <code>/reload</code></td>
+</tr>
+<tr>
+<td><code>pi install</code> fails with a git error</td>
+<td>No network, or <code>git</code> missing</td>
+<td><code>git --version</code>; retry on another network (eduroam sometimes blocks less than a phone hotspot, sometimes more)</td>
+</tr>
+<tr>
+<td>The tutor answers in the wrong language</td>
+<td>The model picked the other skill</td>
+<td>Call the one you want explicitly: <code>/skill:tutor</code> or <code>/skill:tuteur</code></td>
+</tr>
+<tr>
+<td>Answers stop mid-sentence or turn incoherent after a long session</td>
+<td>The conversation has filled the model's context window</td>
+<td><code>/new</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="going-further-optional">Going further (optional)<a class="headerlink" href="#going-further-optional" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>A key that is not even in <code>~/.bashrc</code>.</strong> In <code>models.json</code>, an <code>apiKey</code> that starts with <code>!</code> is a <em>command</em> whose output is the key, which lets a password manager hold it: <code>"!security find-generic-password -ws unistra"</code> on a Mac (Keychain), <code>"!secret-tool lookup application pi provider unistra"</code> on a Linux desktop (GNOME Keyring). The environment variable is what the course uses; this is what you would do on a machine you share.</li>
+<li><strong>Uninstall.</strong> <code>npm uninstall -g @earendil-works/pi-coding-agent</code> removes the program; your settings and conversations stay in <code>~/.pi/agent/</code> until you delete that folder. The private Node.js, if the installer fetched one, is the folder <code>~/.local/share/pi-node</code>.</li>
+<li>pi's own documentation is installed with it; ask pi: <code>pi -p "Where is your documentation folder? List its files."</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.tabs.link", "navigation.sections", "navigation.top", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
