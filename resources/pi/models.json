@@ -1,0 +1,17 @@
+{
+  "providers": {
+    "unistra": {
+      "baseUrl": "https://conversation.ia.unistra.fr/api",
+      "api": "openai-completions",
+      "apiKey": "$UNISTRA_API_KEY",
+      "models": [
+        { "id": "coder", "contextWindow": 262144 },
+        { "id": "qwen3", "contextWindow": 262144 },
+        { "id": "gemma", "contextWindow": 262144 },
+        { "id": "gpt-oss", "contextWindow": 131072 },
+        { "id": "mistral-small", "contextWindow": 128000 },
+        { "id": "ministral", "contextWindow": 32768 }
+      ]
+    }
+  }
+}

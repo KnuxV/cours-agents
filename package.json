@@ -1,0 +1,10 @@
+{
+  "name": "cours-agents",
+  "version": "1.0.0",
+  "private": true,
+  "description": "pi package for the Meta-programming course: the tutor / tuteur skills. Students install it with: pi install git:github.com/KnuxV/cours-agents",
+  "keywords": ["pi-package"],
+  "pi": {
+    "skills": ["./resources/pi/skills"]
+  }
+}
