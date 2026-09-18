@@ -242,3 +242,55 @@ Context from the instructor: the same material is taught in a linguistic-informa
 - Committed the existing README, S0 introductory deck, and three research notes in separate topic commits. Preserved their content and existing VERIFIED/UNVERIFIED distinctions; this commit pass is not a fresh source audit. Included the earlier pending instructor-review log entry.
 - S0 presenterm HTML export passed for all 12 slides; output at `/tmp/s0-intro-preview.html`. Staged whitespace checks passed. Research limitations and human-review items remain as documented in the notes.
 - `sage_endsley.html` contained only a Cloudflare challenge page, not research content. Moved it to `/tmp/cours-agents-download.kwL8Js/sage_endsley.html` as a recoverable temporary backup, outside the repository. No push performed.
+
+### pi install tutorial, Unistra provider config, tutor / tuteur skills (2026-09-17, instructor request before S2; SPEC Session 4.1, Sessions 1–2)
+
+- **`site/docs/pi.md`** (new, in the nav after Session 0): install pi per platform (WSL/Linux incl. no-`sudo` desktops, Mac, Git Bash, Codespaces), connect it to the Unistra platform with the existing `$UNISTRA_API_KEY`, first conversation, the course tutor, troubleshooting table. `site/mkdocs.yml`: nav entry, and `pymdownx.snippets` (`base_path: [".."]`) so the page shows `resources/pi/models.json` itself rather than a copy. Link added on the home page.
+- **`resources/pi/models.json`** (new): provider `unistra`, `openai-completions`, `"apiKey": "$UNISTRA_API_KEY"`, six chat models with the served context windows from `research/s3-api.md`. The instructor's own setup reads the key from the GNOME keyring (`"!secret-tool lookup …"`); the page mentions that form under *Going further* only.
+- **`resources/pi/skills/tutor/`** (English) and **`tuteur/`** (French), sharing `tutor/references/` (`python-envs.md`, `git-branching.md`, `github-collaboration.md`: course conventions, exercises with their "Done when", usual stumbles). Design: the student drives (types every command; shows output with pi's `!command`), one rung of a four-rung hint ladder per reply, the exact answer only after an attempt at the command shape; setup breakage starts at rung 3. Recommended launch is read-only: `pi --tools read,grep,find,ls`.
+- **`package.json`** (new, repo root): makes the repository a pi package (`pi.skills` → `resources/pi/skills`), so students run `pi install git:github.com/KnuxV/cours-agents` and later `pi update --extensions`. **Both this command and the `models.json` download need these files on `main` of the public repo: push before class.**
+
+**Verification (pi 0.85.1, live Unistra endpoint, 2026-09-17):**
+- `models.json`: `pi --list-models` lists the six models in an isolated config dir (`PI_CODING_AGENT_DIR`); `pi -p` answers through `unistra/coder`; with nothing else configured plain `pi` selects `unistra/coder`. Unset key → `No models available. Use /login…`; wrong key → `401 status code (no body)` (both quoted in the page).
+- Installer: `https://pi.dev/install.sh` run through a pty in an empty `HOME` with no `node`/`npm`/`pi` on `PATH` and no `sudo`: three prompts (standalone Node → install → PATH line in `~/.bashrc`), Node v22.23.2 into `~/.local/share/pi-node`, `pi --version` → 0.85.1 from that copy; about 350 MB.
+- Package install: local path, and a git URL against a local `git daemon` serving a clone with these files (`pi install`, `pi list`, both `SKILL.md` discovered under `~/.pi/agent/git/…`).
+- Skills, `coder`, tools `read,grep,find,ls`: French request about `No module named polars` → loaded `tuteur`, read `../tutor/references/python-envs.md`, explained the error, asked a rung-1 question. English four-turn pressure test ("just give me the command" ×3, then a failed attempt) → rungs 1, 2, 3, then the exact command only after the attempt. A first wording ("or when the student asks a second time") gave the answer on turn 2 and was tightened.
+- `mkdocs build --strict` passes (via `uv run --with mkdocs-material==9.7.7`).
+
+**SPEC conflict to report (SPEC not edited):** SPEC 4.1 says the installer offers a standalone Node on Git Bash too. It does not: `install.sh` supports automatic Node only for `Darwin` and `Linux` (`detect_node_binary_platform`), and prints `Unsupported operating system for automatic Node.js install` elsewhere. The page sends Git Bash students to `scoop install nodejs-lts` (or the nodejs.org `.msi`) and then pi's documented `npm install -g --ignore-scripts @earendil-works/pi-coding-agent`.
+
+**UNVERIFIED / needs human review**
+1. Git Bash path end to end on a Windows laptop (Scoop Node, npm global bin on PATH in Git Bash, pi TUI in mintty). Mac path. Fresh WSL Ubuntu and an A330 desktop (the rehearsal simulated the no-Node, no-`sudo` case on Arch; disk quota on the university home folders vs. 350 MB is unknown). Node version of the default Codespaces image.
+2. `pi install git:github.com/KnuxV/cours-agents` against GitHub itself (tested against a local git server only), and the raw `models.json` URL: both exist only after the push.
+3. Tutor behaviour was tested on two scenarios with `coder`; long sessions and the other models are untested. The skill text is the only barrier if a student launches pi without `--tools read,grep,find,ls`.
+4. `coder` now returns `reasoning_content` (seen in a raw curl call); `models.json` does not set `"reasoning": true`. pi works as is; whether thinking levels should be exposed is for Session 4.
+5. `package.json` is a new top-level file in a Python/MkDocs repo; a separate small repository for the skills would avoid it if preferred.
+
+### Site navigation: exercises separated from lessons (2026-09-18, instructor request before S2)
+
+- `site/docs/exercises.md` split into `site/docs/exercises/index.md` (the table; URL `/exercises/` unchanged), `s0.md`, `s1.md`, `s2.md`. Statements and solutions are unchanged; exercise headings moved up one level so each page's table of contents lists its exercises; anchors (`#21-a-uv-project-from-scratch`…) keep the same slugs, on the new pages.
+- `mkdocs.yml` nav regrouped **by session**: each session is a sidebar section holding `Lesson — …` entries and one `✏️ Exercises n.n–n.n` entry (S1 also has `Reading — …`); `✏️ All exercises` stays at top level. S3/S4 have a lesson entry only until their exercises exist.
+- Home page schedule has an **Exercises** column; S1 and S2 lesson pages open with an "Exercises for this session" box; inbound links in `setup.md`, `s1.md`, `s2.md`, `index.md` repointed.
+
+**Verification:** `mkdocs build --strict` exit 0, 0 warnings (anchors validated); sidebar labels read back from the built HTML. Not looked at in a browser.
+
+**Needs human review:** old deep links `/exercises/#21-…` (if shared with students on Monday) now land on the index table rather than on the exercise; the table links on.
+
+### "Today" page for the class of 18 September (2026-09-18, instructor request one hour before class)
+
+Instructor's plan for this room: install pi, connect the Unistra key, get and run the tutor, then three exercises done autonomously with the lesson pages and the tutor. Session pages untouched.
+
+- **`site/docs/today.md`** (new): Part 1 in four checked steps (API key → setup §5; install pi → pi §2; `models.json` → pi §3; `pi install git:…` and `pi --tools read,grep,find,ls` + `/skill:tutor|tuteur`), Part 2 = how to work (statement → lesson → tutor → hand) and three exercises, each with statement link, lesson sections to lean on, and the folder to start pi in: A recipe history (1.2), B scrabble counter, C password generator (2.3, with `uv` install and GitHub login as prerequisites). Order is easiest first; the instructor listed scrabble before recipe — swap the two blocks if wanted.
+- **`site/docs/exercises/scrabble.md`** (new): the "Scrabble counter: three merges" statement removed on 2026-09-09, recovered from commit 822f574; final checks now use `uv run score.py …` and `uv run --with pytest pytest`. Row added to the exercises index.
+- **Nav**: new section `▶ Today — Fri 18 Sep` after Session 4 (plan, `pi.md` moved there from its top-level slot, scrabble page). Exercises A and C stay in their session sections (a page listed twice in the MkDocs nav is attached to its last entry only, which would have pulled them out of their sessions). Home page opens with a "Class of Friday 18 September" box.
+- **Tutor references** (`git-branching.md`, shared by `tutor` and `tuteur`; one line in each `SKILL.md`): entries for the scrabble counter (the two conflict places, expected outputs, `merge --abort`) and recipe history (the `restore --source` whole-file trap and the intended fix).
+
+**Verification:** `mkdocs build --strict` exit 0, 0 warnings. Scrabble rehearsed in a throwaway clone of the GitHub repo: fast-forward, merge commit, `CONFLICT` in `score.py` only; `uv run score.py HALLO -l DE` → 9 points. Tutor, local package in an isolated `PI_CODING_AGENT_DIR`, `coder`, read-only tools, repo left in the conflicted state, prompt "Just tell me what to type": refused, explained the markers, asked what each side of the two blocks contains (8 s).
+
+**UNVERIFIED:** everything that needs the push (`models.json` raw URL, `pi install git:github.com/KnuxV/cours-agents`, the Pages build with `pymdownx.snippets`); pages not looked at in a browser; 115 min of content for a 120 min class.
+
+### Today page: GitLab scrabble exercise first (2026-09-18, instructor decision, 14:30)
+
+- Exercise A is now the instructor's simpler repository `gitlab.unistra.fr/cours_git/exercise_scrabble` (public, anonymous HTTPS clone tested): `exercises/scrabble.md` rewritten around it (clone and visit both branches, merge 1 = merge commit, merge 2 = `CONFLICT (add/add)` in `scrabble_score.py` with two blocks, resolution = one function with both parameters, Part 4 stretch = the README's dictionary feature on a branch of one's own). The GitHub three-merges exercise stays on the same page as "Going further" [stretch]. Order on `today.md`: A scrabble, B recipe history, C password generator; `uv` install became Step 5 of Part 1 (the scrabble checks use `uv run`). Tutor reference updated (real branch names, the two blocks, expected numbers 14 / 19 / 28 / 57).
+- **Verification:** both merges rehearsed in a throwaway clone; the solution on the page is the code that was run (`14, 19, 28, 57`), committed as the merge resolution; `PYTHON` is in `dico.txt`; `mkdocs build --strict` exit 0.
+- **For the instructor, in the GitLab repo (not editable from here):** the README names the branches `letter-multi` and `word-multiplier`; the real ones are `letter-multipliers` and `word-multipliers` (the site page warns about it). In `letter-multipliers`, the comment says "triple letter on Y (position 2)"; position 2 of PYTHON is T. The first merge is a merge commit, not a fast-forward, so an editor opens.
