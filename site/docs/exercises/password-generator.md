@@ -1,53 +1,8 @@
-# Session 2 — Exercises
+# 2.3 — Fork and extend the password generator
 
-The lesson these exercises belong to: [Session 2 — Python tooling](../sessions/s2.md). Every session's exercises: [all exercises](index.md).
+Lesson: [Session 2 — Python tooling](../sessions/s2.md) · [All exercises](index.md)
 
-Tags: **[core]** everyone finishes it in class · **[stretch]** for students who are ahead · **[home]** homework.
-
-## 2.1 A uv project from scratch
-
-**[core]** · Goal: three files that make a project reproducible, and the habit of never committing `.venv`.
-
-Follow [S2 §4](../sessions/s2.md#4-a-project-from-scratch) in your course repository. **Done when** a classmate can run `git clone <your repo> && cd agent-lab && uv sync && uv run python -c "import polars"` without errors — swap repositories with your neighbour and check.
-
-??? note "Solution"
-    ```bash title="Any terminal, inside agent-lab"
-    uv init --no-package --python 3.12
-    uv run main.py
-    uv add polars
-    git status                       # .venv must NOT appear
-    git add pyproject.toml uv.lock .python-version main.py
-    git commit -m "Initialise uv project with polars"
-    git push
-    ```
-
-## 2.2 Notebook → script with argparse
-
-**[core]** · Goal: lift hard-coded values out of a notebook cell into command-line arguments.
-
-1. Do [S2 §5](../sessions/s2.md#5-from-a-notebook-cell-to-a-script-with-arguments) with `report.py` and `sales.csv`; check the four runs (`--top 2`, `--help`, missing argument, `--top two`).
-2. Add a third argument: `--region` (keep only one region) **or** `--csv` (a flag: print the result as CSV instead of a table — `result.write_csv()` with no path returns a string).
-3. Commit and push.
-
-**Done when** `uv run report.py --help` documents three arguments and each behaves as advertised.
-
-??? note "Solution (the `--csv` variant)"
-    Add one line to the parser and change the `print`:
-
-    ```python
-    parser.add_argument("--csv", action="store_true", help="print CSV instead of a table")
-    ...
-    if args.csv:
-        print(result.write_csv(), end="")
-    else:
-        print(result)
-    ```
-
-    `action="store_true"` makes `--csv` a flag: `args.csv` is `False` unless the flag is present. Check: `uv run report.py sales.csv --top 2 --csv` prints `region,revenue` followed by two lines.
-
-## 2.3 Fork and extend the password generator
-
-**[core]** · Goal: install a project you did not write with one command, read a real `argparse` program, and add two options to it — one branch per option.
+**Goal:** install a project you did not write with one command, read a real `argparse` program, and add two options to it — one branch per option.
 
 The project is [github.com/KnuxV/password-generator](https://github.com/KnuxV/password-generator): a command-line tool that prints a strong password, either **memorable** (random English words: `Stubbed Congress Tiptop`) or **random** (mixed characters: `aB3$cD9#eF2@`). One dependency (`zxcvbn`, a strength estimator), a small test suite, and the three project files from [S2 §4](../sessions/s2.md#4-a-project-from-scratch).
 
@@ -151,48 +106,3 @@ Expected: a help message with two options; a five-word password; a sixteen-chara
     ```
 
     `--help` then lists `-s {-, ,_,.,/}` — the space in the choices makes the usage line ugly; `metavar="SEP"` on that `add_argument` tidies it. The rehearsed sequence: `separator` branch → 13 passed → fast-forward merge; `numbers` branch → 13 passed → fast-forward merge; `--help` shows four options.
-
-## 2.4 Secret hygiene audit
-
-**[home]** · Goal: find a leaked secret in a repository's history and say how it should have been handled.
-
-You are given a repository in which someone committed an API key inside a script, then "removed" it in a later commit. Produce a short text file `audit.md` in your own course repo answering:
-
-1. In which commit did the key appear, and in which was it "removed"? (Hint: `git log -p`, `git log -S "sk-"`.)
-2. Is the key still recoverable from the repository? Show the command that prints it.
-3. Rewrite the offending line the right way (environment variable + `os.environ.get` + a clear failure message), and give the `.gitignore` line that protects a `.env` file.
-4. What must the owner do *first* — before touching git at all?
-
-TODO(verify): the starter repository will be published with the exercises of Task 03.
-
-??? note "Solution sketch"
-    `git log -S "sk-" --oneline` lists the commits that added or removed the string; `git show <first-hash>` prints the key — it is fully recoverable by anyone with the repository, so the answer to 4 is *regenerate the key* ([setup 5.1](../setup.md#51-generate-the-key)). The correct line is the one in [S2 §6.2](../sessions/s2.md#62-reading-them-from-python); the `.gitignore` line is `.env`.
-
-## 2.5 Polars vs pandas
-
-**[stretch]** · Goal: feel the difference between expressions and chained indexing, and measure the speed.
-
-1. `uv add pandas` in a scratch branch of your course repo (`git switch -c polars-vs-pandas`).
-2. Generate a larger file: 1,000,000 rows of `region, product, units, unit_price` with random values (Python's `random` module is enough), written with `csv` or Polars.
-3. Write `bench.py`: read the file and compute revenue per region with pandas, then with Polars; time each with `time.perf_counter()`.
-4. In a comment at the top of the script, three sentences on how the *code* differs, not just the timing.
-
-??? note "Solution sketch"
-    ```python
-    import time, pandas as pd, polars as pl
-
-    t = time.perf_counter()
-    pdf = pd.read_csv("big.csv")
-    pdf["revenue"] = pdf["units"] * pdf["unit_price"]
-    print(pdf.groupby("region")["revenue"].sum().sort_values(ascending=False).head(3))
-    print("pandas:", round(time.perf_counter() - t, 2), "s")
-
-    t = time.perf_counter()
-    df = pl.read_csv("big.csv")
-    print(df.with_columns((pl.col("units") * pl.col("unit_price")).alias("revenue"))
-            .group_by("region").agg(pl.col("revenue").sum())
-            .sort("revenue", descending=True).head(3))
-    print("polars:", round(time.perf_counter() - t, 2), "s")
-    ```
-
-    Expect Polars to be several times faster on read and group-by; the exact ratio depends on the machine. The point for the comment: pandas mutates a column in place on a named DataFrame; Polars describes the whole computation as a chain of expressions on immutable frames, which is what lets it optimise (and parallelise) the plan.

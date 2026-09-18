@@ -5,11 +5,11 @@
 | | What | Time |
 |---|---|---|
 | Part 1 | [Set up pi and the tutor](#part-1-set-up-pi-and-the-tutor) — steps 1 to 5 | 30 min |
-| Part 2 | [Exercise A — Scrabble score](#exercise-a-scrabble-score) (two merges, one conflict) | 25 min |
-| | [Exercise B — Recipe history](#exercise-b-recipe-history) (read a history, undo one change) | 25 min |
-| | [Exercise C — Password generator](#exercise-c-password-generator) (`uv`, `argparse`, one branch per feature) | 40 min |
+| Part 2 | [Exercise 1 — Recipe history](#exercise-1-recipe-history) (read a history, undo one change) | 25 min |
+| | [Exercise 2 — Scrabble](#exercise-2-scrabble) (two merges, one conflict) | 25 min |
+| | [Exercise 3 — Collaboration](#exercise-3-collaboration) (teams of two: fork, pull request, conflict) | 40 min |
 
-Not finished at 17:00? Exercise C is finished at home. Everything here stays online.
+Not finished at 17:00? Everything here stays online, and the tutor works at home too.
 
 ## Part 1 — Set up pi and the tutor
 
@@ -67,13 +67,13 @@ pi --tools read,grep,find,ls
 === "English"
 
     ```text title="Inside pi"
-    /skill:tutor I am on the scrabble exercise. git merge word-multipliers says CONFLICT and I do not know what to do.
+    /skill:tutor I am on the recipe history exercise, question 2. I do not understand what git show prints.
     ```
 
 === "Français"
 
     ```text title="Dans pi"
-    /skill:tuteur Je suis sur l'exercice scrabble. git merge word-multipliers affiche CONFLICT et je ne sais pas quoi faire.
+    /skill:tuteur Je suis sur l'exercice recipe history, question 2. Je ne comprends pas ce qu'affiche git show.
     ```
 
 Check: it answers with a question or a hint, not with the solution.
@@ -102,31 +102,32 @@ How to work today:
 
 You type every command yourself. The solutions are on the exercise pages, folded; open them when you are done, or after a real attempt.
 
-### Exercise A — Scrabble score
-
-Two developers each added a feature to a small Scrabble score calculator, on two branches. Merge both into `main`: the first merge goes through, the second stops on a conflict that you resolve by hand.
-
-- **Statement:** [Scrabble — merge two features, resolve a conflict](exercises/scrabble.md)
-- **Lesson to lean on:** [Session 1, section 5 — Branches and merges](sessions/s1.md#5-branches-and-merges), especially [5.5, the conflict](sessions/s1.md#55-case-3-both-sides-changed-the-same-line-conflict)
-- **Tutor:** start pi inside `~/exercise_scrabble`
-- **Ahead of the others?** The same page ends with [three merges in a row](exercises/scrabble.md#going-further-three-merges-in-a-row) on a larger project.
-
-### Exercise B — Recipe history
+### Exercise 1 — Recipe history
 
 Clone a small repository with eight commits, read its history, and bring back one line from the past.
 
-- **Statement:** [Exercise 1.2 — Recipe history](exercises/s1.md#12-recipe-history)
+- **Statement:** [1.1 — Recipe history](exercises/recipe.md)
 - **Lesson to lean on:** [Session 1, sections 4.5–4.6](sessions/s1.md#45-git-log-git-show-read-the-history) (`log`, `diff`, `show`, `restore`) · [cheat sheet](sessions/s1.md#7-cheat-sheet)
 - **Tutor:** start pi inside `~/recipe-history`
 
-### Exercise C — Password generator
+### Exercise 2 — Scrabble
 
-Install a Python project you did not write with one command, read its command line, and add two options to it, one branch per option.
+Two developers each added a feature to a small Scrabble score calculator, on two branches. Merge both into `main`: the first merge goes through, the second stops on a conflict that you resolve by hand.
 
-- **Before you start:** you need a GitHub account you can push to from the terminal ([Session 1, section 6.2](sessions/s1.md#62-log-in-to-github-from-the-terminal-once)).
-- **Statement:** [Exercise 2.3 — Fork and extend the password generator](exercises/s2.md#23-fork-and-extend-the-password-generator)
-- **Lessons to lean on:** [Session 2, section 4](sessions/s2.md#4-a-project-from-scratch) (what `uv sync` and `uv run` do) · [Session 2, section 5](sessions/s2.md#5-from-a-notebook-cell-to-a-script-with-arguments) (`argparse`) · [Session 1, section 5](sessions/s1.md#5-branches-and-merges) (branches)
-- **Tutor:** start pi inside `~/password-generator`
+- **Statement:** [1.2 — Scrabble: two features, one conflict](exercises/scrabble.md)
+- **Lesson to lean on:** [Session 1, section 5 — Branches and merges](sessions/s1.md#5-branches-and-merges), especially [5.5, the conflict](sessions/s1.md#55-case-3-both-sides-changed-the-same-line-conflict)
+- **Tutor:** start pi inside `~/exercise_scrabble`
+
+### Exercise 3 — Collaboration
+
+**In teams of two.** One of you creates a repository on GitHub, the other forks it; you both change the same small program at the same time, and you merge your work through a pull request, conflict included.
+
+- **Before you start:** each of you needs a GitHub account you can push to from the terminal ([Session 1, section 6.2](sessions/s1.md#62-log-in-to-github-from-the-terminal-once)).
+- **Statement:** [1.3 — Collaboration: two people, one repository](exercises/collab.md)
+- **Lesson to lean on:** [Session 1½ — Git as a collaboration tool](sessions/s1-collab.md), sections 1 to 3 (remotes, clone vs fork, pull requests)
+- **Tutor:** each of you starts pi inside your own `~/flashcards-…` folder
+
+Ahead of the others? [Three merges in a row](exercises/scrabble-three-merges.md), or Phase 4 of exercise 3.
 
 ## If something breaks
 

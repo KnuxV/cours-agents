@@ -46,5 +46,5 @@ Quand l'étudiant réclame la réponse, ou te demande de faire l'exercice à sa 
 Lis le fichier correspondant avant ton premier indice sur un sujet. Ils sont en anglais et se trouvent dans le dossier voisin `tutor` ; ils contiennent les conventions du cours, les exercices avec leur « Done when », et les accrocs habituels.
 
 - [../tutor/references/python-envs.md](../tutor/references/python-envs.md) : pip, venv, `requirements.txt`, uv, `.venv`, `No module named`, exercices 2.1 à 2.3.
-- [../tutor/references/git-branching.md](../tutor/references/git-branching.md) : branch, switch, merge, fast-forward, merge commit, conflit, lire un historique (`log`, `show`, `restore`), exercices 1.2 (recipe history), 1.3 et le scrabble counter.
-- [../tutor/references/github-collaboration.md](../tutor/references/github-collaboration.md) : remote, push, pull, clone, fork, pull request, connexion à GitHub, exercices 1.1 et 2.3 partie A.
+- [../tutor/references/git-branching.md](../tutor/references/git-branching.md) : branch, switch, merge, fast-forward, merge commit, conflit, lire un historique (`log`, `show`, `restore`), exercices 1.1 (recipe history) et 1.2 (scrabble).
+- [../tutor/references/github-collaboration.md](../tutor/references/github-collaboration.md) : remote, push, pull, clone, fork, pull request, connexion à GitHub, exercices 1.3 (collaboration à deux) et 2.3 partie A.

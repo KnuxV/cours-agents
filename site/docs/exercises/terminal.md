@@ -1,12 +1,8 @@
-# Session 0 — Exercises
+# 0.1 — Ten minutes in the terminal
 
-The lesson these exercises belong to: [Session 0 — Setup](../setup.md). Every session's exercises: [all exercises](index.md).
+Lesson: [Session 0 — Setup](../setup.md) · [All exercises](index.md)
 
-Tags: **[core]** everyone finishes it in class · **[stretch]** for students who are ahead · **[home]** homework.
-
-## 0.1 Ten minutes in the terminal
-
-**[core]** · Goal: the six commands you will type a hundred times — `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv` — plus `cat`, `echo`, `rm`.
+**Goal:** the six commands you will type a hundred times — `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv` — plus `cat`, `echo`, `rm`.
 
 1. Follow [setup, section 7](../setup.md#7-ten-minutes-in-the-terminal) line by line.
 2. Then, without looking: create a folder `sandbox` in your home, inside it a file `a.txt` containing the word `one`, copy it to `b.txt`, rename `b.txt` to `c.txt`, list the folder with details, and delete `c.txt`.

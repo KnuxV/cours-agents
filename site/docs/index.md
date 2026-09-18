@@ -25,9 +25,9 @@ All sessions take place in room **A330 (Idem-Lab)**.
 
 | When | Session | Content | Exercises | Deliverable |
 |---|---|---|---|---|
-| **Before Mon 14 Sep** | [Session 0 — Setup](setup.md) *(homework)* | A working terminal (WSL / Git Bash / macOS / Linux / Codespaces) and a Unistra LLM API key | [0.1](exercises/s0.md) | Your terminal passes the check command |
-| **Mon 14 Sep 2026**, 14:00–16:00 | [S1 — Git](sessions/s1.md) | Snapshots, commits, branches, GitHub. Why version control is the undo button and the audit trail of agent-written code | [1.1–1.3](exercises/s1.md) | Your personal course repo on GitHub |
-| **Fri 18 Sep 2026**, 15:00–17:00 | [S2 — Python tooling](sessions/s2.md) | `uv` projects and lockfiles, `argparse` (notebook → script), environment variables and secrets | [2.1–2.5](exercises/s2.md) | A reproducible script in your repo |
+| **Before Mon 14 Sep** | [Session 0 — Setup](setup.md) *(homework)* | A working terminal (WSL / Git Bash / macOS / Linux / Codespaces) and a Unistra LLM API key | [0.1](exercises/terminal.md) | Your terminal passes the check command |
+| **Mon 14 Sep 2026**, 14:00–16:00 | [S1 — Git](sessions/s1.md) | Snapshots, commits, branches, GitHub. Why version control is the undo button and the audit trail of agent-written code | [1.1](exercises/recipe.md) · [1.2](exercises/scrabble.md) · [1.3](exercises/collab.md) | Your personal course repo on GitHub |
+| **Fri 18 Sep 2026**, 15:00–17:00 | [S2 — Python tooling](sessions/s2.md) | `uv` projects and lockfiles, `argparse` (notebook → script), environment variables and secrets | [2.1–2.5](exercises/index.md) | A reproducible script in your repo |
 | **Fri 25 Sep 2026**, 14:00–16:00 | [S3 — What an LLM API actually is](sessions/s3.md) | Raw `curl` calls: tokens, statelessness, constructed context, model families, **tool calling** — you *are* the harness for one round | *with the session* | `step1.json` → `step4` sequence committed to your repo |
 | **Fri 16 Oct 2026**, 13:00–15:00 | [S4 — pi](sessions/s4.md) | A real harness: provider config, the loop observed, permissions you write yourself, `AGENTS.md`, subagents, the grill/build pattern, the A/B/C reliability experiment | *with the session* | `AGENTS.md`, `.pi/` extensions and agent definitions, spec + implementation |
 | Optional | [Replication track](replication.md) | LLM-assisted replication of a published paper that ships a replication package | — | A short replication memo |

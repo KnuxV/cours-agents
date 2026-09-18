@@ -46,5 +46,5 @@ When the student asks for the answer, or asks you to do the exercise for them, s
 Read the matching file before your first hint on a topic. They hold the course's conventions, the exercises with their "Done when", and the usual stumbles.
 
 - [references/python-envs.md](references/python-envs.md): pip, venv, `requirements.txt`, uv, `.venv`, `No module named`, exercises 2.1 to 2.3.
-- [references/git-branching.md](references/git-branching.md): branch, switch, merge, fast-forward, merge commit, conflict, reading a history (`log`, `show`, `restore`), exercises 1.2 (recipe history), 1.3 and the scrabble counter.
-- [references/github-collaboration.md](references/github-collaboration.md): remote, push, pull, clone, fork, pull request, GitHub login, exercises 1.1 and 2.3 part A.
+- [references/git-branching.md](references/git-branching.md): branch, switch, merge, fast-forward, merge commit, conflict, reading a history (`log`, `show`, `restore`), exercises 1.1 (recipe history) and 1.2 (scrabble).
+- [references/github-collaboration.md](references/github-collaboration.md): remote, push, pull, clone, fork, pull request, GitHub login, exercises 1.3 (collaboration in teams of two) and 2.3 part A.
