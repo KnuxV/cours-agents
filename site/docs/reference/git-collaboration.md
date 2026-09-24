@@ -1,6 +1,6 @@
-# Session 1½ — Git as a collaboration tool
+# Git as a collaboration tool
 
-**Reading, at home, between Sessions 1 and 2. About 40 minutes. Nothing to install, nothing to hand in.**
+**Reference, and the companion reading to [Session 1 — Git](../sessions/s1.md): do it at home once Session 1 is behind you. About 40 minutes. Nothing to install, nothing to hand in.**
 
 Session 1 taught you Git as a *personal* tool: snapshots, branches, merges, one repository on your laptop and a copy on GitHub. But Git was written so that thousands of people could work on the same code without stepping on each other, and every software team, every open-source project and — increasingly — every research group with a replication package runs on the workflow described here. There is no time to practise it in class. You do need the vocabulary and the gist: in Session 4 an agent will work on a branch of your repository and you will *review* what it did, exactly the way a colleague's contribution is reviewed. And in your first job, "open a PR" will be said to you in week one.
 
@@ -91,7 +91,7 @@ A PR is also the unit of *conversation* about code: the description says what an
 
 ### When the PR cannot be merged
 
-If `main` moved since you branched and touched the same lines, GitHub shows *This branch has conflicts that must be resolved*. Nothing new: it is the conflict of [Session 1 §5.5](s1.md#55-case-3-both-sides-changed-the-same-line-conflict). Resolve it locally — `git pull origin main` into your branch, edit the markers, commit, push — or in GitHub's web editor for small ones. Reference: [About merge conflicts](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts).
+If `main` moved since you branched and touched the same lines, GitHub shows *This branch has conflicts that must be resolved*. Nothing new: it is the conflict of [Session 1 §5.5](../sessions/s1.md#55-case-3-both-sides-changed-the-same-line-conflict). Resolve it locally — `git pull origin main` into your branch, edit the markers, commit, push — or in GitHub's web editor for small ones. Reference: [About merge conflicts](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts).
 
 ## 4. Issues: the to-do list next to the code
 

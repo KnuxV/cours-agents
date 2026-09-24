@@ -6,7 +6,7 @@ Lesson: [Session 2 — Python tooling](../sessions/s2.md) · [All exercises](ind
 
 The project is [github.com/KnuxV/password-generator](https://github.com/KnuxV/password-generator): a command-line tool that prints a strong password, either **memorable** (random English words: `Stubbed Congress Tiptop`) or **random** (mixed characters: `aB3$cD9#eF2@`). One dependency (`zxcvbn`, a strength estimator), a small test suite, and the three project files from [S2 §4](../sessions/s2.md#4-a-project-from-scratch).
 
-**Part A — fork and install (10 min).** You will push your work, so you need your own copy on GitHub: a **fork** ([S1½ §2](../sessions/s1-collab.md#2-clone-vs-fork)). On the repository page, click **Fork** → **Create fork**. Then clone *your* fork — in your home folder, not inside `agent-lab`:
+**Part A — fork and install (10 min).** You will push your work, so you need your own copy on GitHub: a **fork** ([Git as a collaboration tool, §2](../reference/git-collaboration.md#2-clone-vs-fork)). On the repository page, click **Fork** → **Create fork**. Then clone *your* fork — in your home folder, not inside `agent-lab`:
 
 ```bash title="Any terminal"
 cd ~

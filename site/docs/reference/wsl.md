@@ -1,6 +1,6 @@
 # WSL, explained
 
-This page is for Windows users who followed [Path A](setup.md#path-a-windows-wsl). It explains what you installed, why, and the one thing that confuses everybody in the first weeks: you now have **two file systems**.
+This page is for Windows users who followed [Path A](../setup.md#path-a-windows-wsl) of [Session 0](../setup.md). It explains what you installed, why, and the one thing that confuses everybody in the first weeks: you now have **two file systems**. It is reference material: read it once, then come back to it whenever a path or a window stops making sense.
 
 ## What WSL actually is
 
@@ -150,7 +150,7 @@ WSL runs Ubuntu as a lightweight virtual machine, which needs a CPU feature that
 1. Press ++ctrl+shift+esc++ (Task Manager) → **Performance** → **CPU**.
 2. Bottom right: **Virtualization: Enabled** or **Disabled**.
 
-If **Disabled**: reboot into the BIOS/UEFI settings (usually a key like ++f2++, ++f10++, ++del++ or ++esc++ during startup — the exact key depends on the brand) and enable the option called *Intel VT-x*, *AMD-V*, *SVM Mode* or *Virtualization Technology*. If that is not something you want to do alone, bring the laptop to Session 1 and use [Git Bash](setup.md#path-d-git-bash) or [Codespaces](setup.md#path-c-github-codespaces-the-lifeboat) meanwhile.
+If **Disabled**: reboot into the BIOS/UEFI settings (usually a key like ++f2++, ++f10++, ++del++ or ++esc++ during startup — the exact key depends on the brand) and enable the option called *Intel VT-x*, *AMD-V*, *SVM Mode* or *Virtualization Technology*. If that is not something you want to do alone, bring the laptop to Session 1 and use [Git Bash](../setup.md#path-d-git-bash) or [Codespaces](../setup.md#path-c-github-codespaces-the-lifeboat) meanwhile.
 
 ## When it fails
 

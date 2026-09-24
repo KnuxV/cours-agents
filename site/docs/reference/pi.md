@@ -8,7 +8,7 @@ It takes 10–15 minutes. **At the end you will have:**
 2. pi talking to the university's LLM platform with the API key you already have — nothing to buy, nothing leaves Strasbourg;
 3. the `tutor` skill (English) and its twin `tuteur` (français).
 
-**Before you start:** you need the API key from [Session 0, section 5](setup.md#5-your-unistra-llm-api-key), stored in the environment variable `UNISTRA_API_KEY`.
+**Before you start:** you need the API key from [Session 0, section 5](../setup.md#5-your-unistra-llm-api-key), stored in the environment variable `UNISTRA_API_KEY`.
 
 !!! warning "An agent acts, it does not just talk"
     pi can create, change and delete files in the folder where you start it, and run commands there. Start it inside a **git repository** with a clean `git status` (your `agent-lab`): whatever it does, `git diff` shows it and `git restore` undoes it. That is the reason Session 1 came first. The tutor of section 5 runs in a read-only mode where it cannot change anything.
@@ -19,7 +19,7 @@ It takes 10–15 minutes. **At the end you will have:**
 echo $UNISTRA_API_KEY | cut -c1-6
 ```
 
-Expected: `sk-` followed by three characters. An empty line means the key is not stored on *this* machine: redo [setup 5.2](setup.md#52-store-it-as-an-environment-variable), open a new terminal, and check again.
+Expected: `sk-` followed by three characters. An empty line means the key is not stored on *this* machine: redo [setup 5.2](../setup.md#52-store-it-as-an-environment-variable), open a new terminal, and check again.
 
 ## 2. Install pi
 
@@ -51,7 +51,7 @@ pi is written in JavaScript and needs **Node.js** (version 22.19 or later) to ru
 
 === "Git Bash"
 
-    The installer cannot fetch Node.js on Windows, so install it first. Without administrator rights, use Scoop (from [setup, Path D](setup.md#path-d-git-bash)):
+    The installer cannot fetch Node.js on Windows, so install it first. Without administrator rights, use Scoop (from [setup, Path D](../setup.md#path-d-git-bash)):
 
     ```powershell title="Windows PowerShell (NOT administrator)"
     scoop install nodejs-lts
@@ -218,7 +218,7 @@ The skill is a plain text file, and reading it is a good preview of Session 4: [
 | Installer: `Pi requires Node.js 22.19.0 or newer. Found v18…` | An older Node.js is already installed | Own laptop: update Node.js ([nodejs.org](https://nodejs.org/en/download)). Otherwise come and see us |
 | `No models available. Use /login…` | `UNISTRA_API_KEY` is not set in this window | Section 1 |
 | `pi --list-models` complains about `models.json` | The download was cut, or the file was edited into invalid JSON | Rerun the `curl` line of section 3 |
-| `401 status code (no body)` | The variable is set, but the key in it is wrong or was regenerated | [Setup 5.1](setup.md#51-generate-the-key): copy the key again, fix the line in `~/.bashrc`, new terminal |
+| `401 status code (no body)` | The variable is set, but the key in it is wrong or was regenerated | [Setup 5.1](../setup.md#51-generate-the-key): copy the key again, fix the line in `~/.bashrc`, new terminal |
 | pi starts on a model that is not `coder`, or asks you to log in | Another provider's key exists on your machine | `/model`, choose `coder`, then ++ctrl+s++ in that list to make it the default |
 | `/skill:tutor` is not offered when you type `/` | The package is not installed, or pi was already running when you installed it | `pi list`; then restart pi, or `/reload` |
 | `pi install` fails with a git error | No network, or `git` missing | `git --version`; retry on another network (eduroam sometimes blocks less than a phone hotspot, sometimes more) |

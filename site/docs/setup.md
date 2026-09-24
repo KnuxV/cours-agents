@@ -1,6 +1,6 @@
 # Session 0 — Set up your machine (homework)
 
-Do this **before Session 1 (Monday 14 September 2026)**, at home, when you have time and a stable connection. It takes 20–40 minutes if all goes well, and it is the one thing that can make Session 1 miserable if it does not. Budget for it.
+Do this **before the first class**, at home, when you have time and a stable connection. It takes 20–40 minutes if all goes well, and it is the one thing that can make Session 1 miserable if it does not. Budget for it.
 
 **At the end you will have:**
 
@@ -16,7 +16,7 @@ Do this **before Session 1 (Monday 14 September 2026)**, at home, when you have 
 
 | Your laptop | Follow | Time |
 |---|---|---|
-| Windows 10 / 11, you can install software (admin rights) | [Path A — WSL](#path-a-windows-wsl) (then read [WSL, explained](wsl.md)) | 20–30 min + a reboot |
+| Windows 10 / 11, you can install software (admin rights) | [Path A — WSL](#path-a-windows-wsl) (then read [WSL, explained](reference/wsl.md)) | 20–30 min + a reboot |
 | Mac | [Path B — Terminal](#path-b-mac) | 5–15 min |
 | Windows **without** admin rights (managed laptop), or WSL failed | [Path C — GitHub Codespaces](#path-c-github-codespaces-the-lifeboat) | 10 min, needs a GitHub account |
 | Windows, quickest way to a working `git` + `bash` for Session 1 | [Path D — Git Bash](#path-d-git-bash) | 10 min |
@@ -24,7 +24,7 @@ Do this **before Session 1 (Monday 14 September 2026)**, at home, when you have 
 
 Windows users: Path D (Git Bash) is the fastest way to be ready for Session 1 (git), and you can do it even if WSL is giving you trouble. Path A (WSL) is the terminal we recommend for the rest of the course — it is the real Linux every server runs — so start it early. Doing both is fine.
 
-Everyone then does [section 5 (API key)](#5-your-unistra-llm-api-key), [section 6 (SSH keys)](#6-ssh-keys-for-github-and-gitlab) and [section 7 (ten minutes in the terminal)](#7-ten-minutes-in-the-terminal).
+Everyone then does [section 5 (API key)](#5-your-unistra-llm-api-key), [section 6 (SSH keys)](#6-ssh-keys-for-github-and-gitlab) and [section 7 (ten minutes in the terminal)](#7-ten-minutes-in-the-terminal), whose exercise is [✏️ 0.1 Ten minutes in the terminal](exercises/terminal.md).
 
 Codespaces is a real option, not a shameful one: it gives you the same Ubuntu terminal in a browser tab. If your laptop is locked down, go straight there.
 
@@ -32,11 +32,11 @@ If you work on both a laptop and a university desktop, do the path for each: the
 
 ## Path A — Windows (WSL)
 
-WSL (*Windows Subsystem for Linux*) installs a small, complete Linux — Ubuntu — inside Windows. You will only ever see it as a terminal window. We use it because the tools of this course (`git`, `curl`, `uv`, the agent harness of Session 4) and every server, cloud machine and data pipeline you will meet run Linux; inside WSL you type exactly the same commands as your Mac classmates, and what you learn transfers as is. The full story — what it is, the two file systems you now have, how to manage it — is on [WSL, explained](wsl.md). Read it once the install is done.
+WSL (*Windows Subsystem for Linux*) installs a small, complete Linux — Ubuntu — inside Windows. You will only ever see it as a terminal window. We use it because the tools of this course (`git`, `curl`, `uv`, the agent harness of Session 4) and every server, cloud machine and data pipeline you will meet run Linux; inside WSL you type exactly the same commands as your Mac classmates, and what you learn transfers as is. The full story — what it is, the two file systems you now have, how to manage it — is on [WSL, explained](reference/wsl.md). Read it once the install is done.
 
 ### A1. Install
 
-Before you start: press ++ctrl+shift+esc++ (Task Manager) → **Performance** → **CPU** and check that it says **Virtualization: Enabled**. If it says *Disabled*, read [this first](wsl.md#virtualization-must-be-enabled).
+Before you start: press ++ctrl+shift+esc++ (Task Manager) → **Performance** → **CPU** and check that it says **Virtualization: Enabled**. If it says *Disabled*, read [this first](reference/wsl.md#virtualization-must-be-enabled).
 
 1. Click Start, type `PowerShell`, **right-click** *Windows PowerShell* → **Run as administrator**.
 2. Paste, press ++enter++:
@@ -67,7 +67,7 @@ curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13 ...
 !!! danger "It must be run in the Ubuntu window, not in PowerShell"
     In PowerShell the same line fails with `uname : The term 'uname' is not recognized`. That is not a WSL error — you are in the wrong window. Open **Ubuntu** from the Start menu.
 
-Something failed? See [When it fails](wsl.md#when-it-fails) on the WSL page. Meanwhile, [Path D](#path-d-git-bash) gets you through Session 1.
+Something failed? See [When it fails](reference/wsl.md#when-it-fails) on the WSL page. Meanwhile, [Path D](#path-d-git-bash) gets you through Session 1.
 
 ## Path B — Mac
 

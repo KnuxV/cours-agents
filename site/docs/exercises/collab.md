@@ -1,6 +1,6 @@
 # 1.3 — Collaboration: two people, one repository
 
-Lesson: [Session 1½ — Git as a collaboration tool](../sessions/s1-collab.md) (clone vs fork, pull requests) · [All exercises](index.md)
+Lesson: [Session 1 — Git](../sessions/s1.md) · Reading: [Git as a collaboration tool](../reference/git-collaboration.md) (clone vs fork, pull requests) · [All exercises](index.md)
 
 **Goal:** work the way every software team works. Two people change the same program at the same time, one through a **fork** and a **pull request**, and the two of you resolve the conflict that follows.
 
