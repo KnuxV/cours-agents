@@ -1,0 +1,10 @@
+region,product,units,unit_price
+Alsace,coffee,120,3.5
+Alsace,tea,80,2.8
+Alsace,cocoa,45,4.1
+Lorraine,coffee,95,3.5
+Lorraine,tea,130,2.8
+Lorraine,cocoa,30,4.1
+Bretagne,coffee,60,3.5
+Bretagne,tea,150,2.8
+Bretagne,cocoa,75,4.1
