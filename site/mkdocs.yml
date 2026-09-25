@@ -84,7 +84,9 @@ nav:
           - Lesson — Git: sessions/s1.md
           - Class plan — tutor, then three exercises: sessions/practice-git.md
       - Session 2 — Python tooling: sessions/s2.md
-      - Session 3 — What an LLM API is: sessions/s3.md
+      - Session 3 — What an LLM API is:
+          - Lesson — What an LLM API is: sessions/s3.md
+          - Class plan — meet the agent: sessions/practice-agents.md
       - Session 4 — pi, a real harness: sessions/s4.md
       - Optional — Replication track: replication.md
   - ✏️ Exercises:
@@ -102,6 +104,8 @@ nav:
           - 2.3 Password generator: exercises/password-generator.md
           - 2.4 Secret hygiene audit: exercises/secret-audit.md
           - 2.5 Polars vs pandas: exercises/polars-pandas.md
+      - Agents:
+          - 3.1 Agent lab — six tasks against a dataset: exercises/agent-lab.md
   - Reference:
       - reference/index.md
       - Machines and terminals:

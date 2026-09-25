@@ -43,6 +43,14 @@ Lesson: [Session 1 — Git](../sessions/s1.md) · reading: [Git as a collaborati
 
 Lesson: [Session 2 — Python tooling](../sessions/s2.md).
 
-## Sessions 3 and 4
+## Agents
+
+| # | Exercise | What you practise | Time |
+|---|---|---|---|
+| 3.1 | [Agent lab: six tasks against a dataset](agent-lab.md) | running a coding agent on real data — and catching it when it is wrong | 2 h, in six pieces |
+
+Class plan: [meet the agent](../sessions/practice-agents.md) · setup: [pi — install, connect, tutor](../reference/pi.md).
+
+## Still to come
 
 Published with the sessions themselves: the `curl` sequence of [Session 3](../sessions/s3.md), and the harness experiment of [Session 4](../sessions/s4.md).

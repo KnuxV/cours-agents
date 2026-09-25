@@ -37,7 +37,8 @@ Why "it works on my machine" is not a result. `pip` and virtual environments, th
 Raw `curl` calls against the university's endpoint: tokens as the unit of account, statelessness, context as something *constructed*, model families, and **tool calling** — for one round, you are the harness.
 
 - Lesson: [Session 3 — What an LLM API actually is](s3.md)
-- Needs first: Session 2's environment variable.
+- Class plan: [meet the agent — four dials on pi](practice-agents.md), the hands-on hour, with [exercise 3.1](../exercises/agent-lab.md) after it.
+- Needs first: Session 2's environment variable, and [pi installed and connected](../reference/pi.md).
 - Deliverable: a `step1.json` → `step4` sequence committed to your repository.
 
 ## Session 4 — pi, a real harness
