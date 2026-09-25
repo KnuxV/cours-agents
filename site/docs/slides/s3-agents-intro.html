@@ -156,6 +156,11 @@
   td:first-child { color: var(--ink); font-weight: 500; }
   td.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; color: var(--accent); }
 
+  kbd {
+    font-family: "IBM Plex Mono", monospace; font-size: .82em;
+    border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px;
+    padding: 1px 5px; background: var(--surface-2); color: var(--ink);
+  }
   .tablewrap { overflow-x: auto; }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3.5vw, 54px); }
   .cols h3 {
@@ -603,13 +608,14 @@ when something that failed now passes.
         <div><ul>
           <li>get the course files</li>
           <li>a lab that git can undo</li>
-          <li><strong>1 ·</strong> synthetic data</li>
+          <li><strong>1 ·</strong> first contact</li>
+          <li><strong>2 ·</strong> synthetic data</li>
         </ul></div>
         <div><ul>
-          <li><strong>2 ·</strong> an analysis</li>
-          <li><strong>3 ·</strong> a small dashboard</li>
-          <li><strong>4 ·</strong> tests, written by someone else</li>
-          <li><strong>5 ·</strong> a referee · <strong>6 ·</strong> we break it</li>
+          <li><strong>3 ·</strong> an analysis</li>
+          <li><strong>4 ·</strong> a small dashboard</li>
+          <li><strong>5 ·</strong> tests, written by someone else</li>
+          <li><strong>6 ·</strong> a referee · <strong>7 ·</strong> search</li>
         </ul></div>
       </div>
       <p class="punch">Rule for the hour: never start an agent in your home folder. Only inside a git repository you can throw away.</p>
@@ -647,9 +653,27 @@ git add -A && git commit -m "lab setup"</span></pre>
       <p class="punch">That commit is your undo button for the next forty minutes.</p>
     </section>
 
-    <section class="slide" hidden data-clock="H+11" data-title="1 · Synthetic data"
-      data-note="First contact with the loop. Watch the tool calls scroll — write, then bash, then read. Point out that it ran its own code and read its own error if it made one. Then commit, out loud, together.">
+    <section class="slide" hidden data-clock="H+10" data-title="1 · First contact"
+      data-note="Everyone types the same harmless thing at the same time, and watches the tool calls scroll past — ls, maybe read. That is the loop from the slides, running on their own machine, and it is worth thirty seconds of silence while they look at it. Change nothing is in the prompt on purpose — say why. Then /session, so they have seen the token counter once; most of them never will again otherwise. Ctrl+T collapses thinking blocks — coder never emits any, so switch to gpt-oss with /model if you want them to see one fold away.">
       <p class="kicker">1 · the loop, observed</p>
+      <h2>First contact</h2>
+      <pre><span class="k">pi</span></pre>
+      <pre>What is in this folder? Change nothing.</pre>
+      <p>Watch the lines that scroll past <em>before</em> the answer: <code>ls</code>, maybe <code>read</code>. It asked, pi did it, pi sent the result back. That is the diagram, on your machine.</p>
+      <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><code>/session</code></td><td>the token count so far — the invoice, live</td></tr>
+          <tr><td><kbd>ctrl</kbd>+<kbd>t</kbd></td><td>collapse or expand the model's reasoning, when it shows any</td></tr>
+          <tr><td><code>/new</code> · <kbd>esc</kbd></td><td>start a fresh conversation · interrupt it mid-thought</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="slide" hidden data-clock="H+14" data-title="2 · Synthetic data"
+      data-note="First contact with the loop. Watch the tool calls scroll — write, then bash, then read. Point out that it ran its own code and read its own error if it made one. Then commit, out loud, together.">
+      <p class="kicker">2 · your first build</p>
       <h2>Synthetic data</h2>
       <pre><span class="k">pi</span></pre>
       <pre>Write make_survey.py, using only the Python standard library, that
@@ -659,9 +683,9 @@ and experience, with noise. Then run it and show me the first 3 rows.</pre>
       <p class="punch">Watch the lines before the answer: <code>write</code>, then <code>bash</code>, then <code>read</code>. That is the diagram, running. Then: <code>!git add -A && git commit -m "data"</code></p>
     </section>
 
-    <section class="slide" hidden data-clock="H+17" data-title="2 · The analysis"
+    <section class="slide" hidden data-clock="H+19" data-title="3 · The analysis"
       data-note="First skill in anger. Before the prompt, open .agents/skills/data-check/SKILL.md on the projector and read three lines of it — they should see that it is just instructions, written by a human, in a file. Then watch the agent print df.columns before using anything, because the skill told it to.">
-      <p class="kicker">2 · the skills dial</p>
+      <p class="kicker">3 · the skills dial</p>
       <h2>The analysis</h2>
       <pre>/skill:data-check
 What is the income gap between master and high school, by region?
@@ -670,9 +694,9 @@ Save the table to out/gap_by_region.csv</pre>
       <p class="punch">Same model, same question, different procedure. That is the whole of what a skill is.</p>
     </section>
 
-    <section class="slide" hidden data-clock="H+23" data-title="3 · A small dashboard"
+    <section class="slide" hidden data-clock="H+25" data-title="4 · A small dashboard"
       data-note="The figure-style skill carries the house rules — labelled axes with units, n stated, sorted bars, saved to out/ at 150 dpi. Compare with what it produced in step 2 without a skill if you have a spare minute; the difference is the argument for writing skills at all.">
-      <p class="kicker">3 · a second skill</p>
+      <p class="kicker">4 · a second skill</p>
       <h2>A small dashboard</h2>
       <pre>/skill:figure-style
 Three figures from survey.csv: income by education, income by region,
@@ -681,9 +705,9 @@ out/report.md with one sentence under each figure.</pre>
       <p class="punch">Labelled axes with units, the n stated, bars sorted by value — because a file said so, not because you asked nicely.</p>
     </section>
 
-    <section class="slide" hidden data-clock="H+29" data-title="4 · Tests, by someone else"
+    <section class="slide" hidden data-clock="H+30" data-title="5 · Tests, by someone else"
       data-note="The sycophancy cure, made concrete. The second pi never saw the first one defend its code, so it has nothing to be loyal to — and --tools without edit means it physically cannot make a failing test pass by changing the program. Say both halves.">
-      <p class="kicker">4 · a fresh context</p>
+      <p class="kicker">5 · a fresh context</p>
       <h2>Tests, written by someone else</h2>
       <pre><span class="d"># a SECOND terminal, same folder, brand new conversation</span>
 <span class="k">cd ~/agent-lab && pi --tools read,bash,write</span>
@@ -694,9 +718,9 @@ Do not modify make_survey.py.</pre>
       <p class="punch">A fresh context is the cheapest cure for sycophancy there is. It costs one terminal.</p>
     </section>
 
-    <section class="slide" hidden data-clock="H+35" data-title="5 · The referee"
+    <section class="slide" hidden data-clock="H+36" data-title="6 · The referee"
       data-note="Third instance, read-only, paid to find fault. It checks every number in report.md against the CSV and the code that produced it. A number with no line of code behind it is a FAIL. This is the seed of the whole structure argument — separate contexts, opposing incentives, no shared loyalty.">
-      <p class="kicker">5 · separation of powers</p>
+      <p class="kicker">6 · separation of powers</p>
       <h2>The referee</h2>
       <pre><span class="d"># a THIRD terminal — it may read, and nothing else</span>
 <span class="k">cd ~/agent-lab && pi --tools read,grep,find,ls</span>
@@ -706,9 +730,9 @@ Do not modify make_survey.py.</pre>
       <p class="punch">Three processes, one model, opposing incentives. Reliability comes from the structure, not from a bigger model.</p>
     </section>
 
-    <section class="slide" hidden data-clock="H+40" data-title="6 · Search, as a tool"
+    <section class="slide" hidden data-clock="H+41" data-title="7 · Search, as a tool"
       data-note="The tool nobody thinks about, and the one that makes agents usable at all. It does not read your project — it greps it, reads three files, and answers. Say what that buys — a repository of 400 files does not fit in any context window, but a search result does. Then the honest part about the web — pi has no web search built in; it is a tool you add, through an extension or an MCP server, and the same rule applies: it does not know, it goes and looks.">
-      <p class="kicker">6 · the tool nobody thinks about</p>
+      <p class="kicker">7 · the tool nobody thinks about</p>
       <h2>Search, as a tool</h2>
       <pre>Which script writes to out/, and where does the 0.11 figure
 in report.md come from? Do not change anything.</pre>
@@ -716,7 +740,7 @@ in report.md come from? Do not change anything.</pre>
       <p class="punch">A repository of four hundred files fits in no context window. A search result does. That is why search is the tool that makes the rest possible.</p>
     </section>
 
-    <section class="slide" hidden data-clock="H+44" data-title="What you just did"
+    <section class="slide" hidden data-clock="H+45" data-title="What you just did"
       data-note="Close the loop with the dials slide — they have now turned all four on one project. The last line is the one to leave in the room before the exercises.">
       <h2>What you just did</h2>
       <div class="tablewrap">
@@ -770,7 +794,7 @@ Do not modify passgen.py.</pre>
     <span class="clock" id="clock">0:00</span>
     <span class="title" id="title">Today</span>
     <button id="prev" type="button" aria-label="Previous slide">←</button>
-    <span class="pos" id="pos">1 / 36</span>
+    <span class="pos" id="pos">1 / 37</span>
     <button id="next" type="button" aria-label="Next slide">→</button>
     <button id="themeBtn" type="button">light · t</button>
     <button id="noteBtn" type="button">notes · n</button>
