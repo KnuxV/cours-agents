@@ -730,14 +730,16 @@ Do not modify make_survey.py.</pre>
       <p class="punch">Three processes, one model, opposing incentives. Reliability comes from the structure, not from a bigger model.</p>
     </section>
 
-    <section class="slide" hidden data-clock="H+41" data-title="7 · Search, as a tool"
-      data-note="The tool nobody thinks about, and the one that makes agents usable at all. It does not read your project — it greps it, reads three files, and answers. Say what that buys — a repository of 400 files does not fit in any context window, but a search result does. Then the honest part about the web — pi has no web search built in; it is a tool you add, through an extension or an MCP server, and the same rule applies: it does not know, it goes and looks.">
-      <p class="kicker">7 · the tool nobody thinks about</p>
-      <h2>Search, as a tool</h2>
-      <pre>Which script writes to out/, and where does the 0.11 figure
-in report.md come from? Do not change anything.</pre>
-      <p>Watch it: <code>grep</code>, then <code>find</code>, then <code>read</code> on two files. It did not load your project — it <strong>searched</strong> it, and read the three places that mattered.</p>
-      <p class="punch">A repository of four hundred files fits in no context window. A search result does. That is why search is the tool that makes the rest possible.</p>
+    <section class="slide" hidden data-clock="H+41" data-title="7 · Can it search the web?"
+      data-note="The honest answer is no, and then yes. The model has no internet and its knowledge stopped on a date it will not tell you reliably. pi ships no web-search tool either — but it has bash, and bash has curl, so an agent can fetch a page and answer from it instead of from memory. Watch the tool call — bash, then read. Say what real search looks like — an MCP server or an extension you add, which is what the frontier harnesses ship with. And connect it to the exercise — this is how they check argparse against the actual documentation rather than against a recollection of it. If the university network blocks the fetch, that is itself the lesson — the tool is only as good as the machine it runs on.">
+      <p class="kicker">7 · the knowledge cutoff</p>
+      <h2>Can it search the web?</h2>
+      <p>No. The model has no internet, and its knowledge stopped on a date. pi ships no web-search tool either.</p>
+      <p>But it has <code>bash</code>. And <code>bash</code> has <code>curl</code>:</p>
+      <pre>Use curl to fetch https://docs.python.org/3/library/argparse.html
+and tell me how to give an option a default value. Quote the page.</pre>
+      <p>Watch it: <code>bash</code>, then <code>read</code>. It answered from a page it fetched thirty seconds ago, not from memory.</p>
+      <p class="punch">Real web search is a tool you add — an MCP server, an extension. The difference between a model that remembers and an agent that goes and looks is one tool.</p>
     </section>
 
     <section class="slide" hidden data-clock="H+45" data-title="What you just did"
