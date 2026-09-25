@@ -323,29 +323,42 @@ Content-Type: application/json</span></pre>
     </section>
 
     <section class="slide" hidden data-clock="0:16" data-title="Send it yourself"
-      data-note="Have them type it. The file is on the site under resources. No tools, no agent, no loop — one question, one answer. Expect the 401 — it says your session has expired, which means the key is missing in THIS terminal, not that they must log into the website. python3 -m json.tool because jq is not installed everywhere.">
+      data-note="Have them type it. The file is in the course repo under resources/api. No tools, no agent, no loop — one question, one answer. Expect the 401 — it says your session has expired, which means the key is missing in THIS terminal, not that they must log into the website. python3 -m json.tool is the pretty-printer that ships with Python itself; jq does the same job but is not installed everywhere.">
       <h2>Send it yourself</h2>
+      <pre><span class="d">// question.json — the whole request</span>
+{
+  "model": "coder",
+  "messages": [
+    {"role": <span class="k">"system"</span>, "content": "Answer in one short sentence."},
+    {"role": <span class="k">"user"</span>,   "content": "What is a token, for a language model?"}
+  ],
+  "temperature": 0
+}</pre>
       <pre>curl -s https://conversation.ia.unistra.fr/api/chat/completions \
   -H <span class="k">"Authorization: Bearer $UNISTRA_API_KEY"</span> \
   -H "Content-Type: application/json" \
   -d <span class="k">@question.json</span> | python3 -m json.tool</pre>
-      <p>One question. One answer. No agent, no tools, no loop — the whole of what a chatbot does, in one line of terminal.</p>
-      <p class="punch">Your key never appears in the file. <code>$UNISTRA_API_KEY</code> is read from your environment at the moment of the call.</p>
+      <p class="punch">Your key is never in the file. <code>$UNISTRA_API_KEY</code> is read from your environment at the moment of the call.</p>
     </section>
 
     <section class="slide" hidden data-clock="0:19" data-title="What comes back"
-      data-note="Point at usage — the invoice, on every call. And note what is missing — no memory, no session id, nothing that ties this answer to the next request. The model in this example could not have counted files. Hold that thought for four slides.">
+      data-note="Same question, its answer. The wording will differ on the day — the shape will not. Point at usage, the invoice on every call, and at what is missing — no session id, no memory, nothing tying this reply to the next request. Note too that the model could not have counted anything here; it can only write. Hold that thought for four slides.">
       <h2>What comes back</h2>
       <pre>{
-  <span class="k">"choices"</span>: [{"message": {"role": "assistant",
-                          "content": "A token is a piece of a word..."}}],
-  <span class="k">"usage"</span>: {"prompt_tokens": 38, "completion_tokens": 14,
-            "total_tokens": 52}
+  <span class="k">"choices"</span>: [{
+    "index": 0,
+    "message": {
+      "role": "assistant",
+      "content": <span class="k">"A token is a piece of a word — the unit a language
+                  model reads and writes."</span>
+    },
+    "finish_reason": "stop"
+  }],
+  "model": "coder",
+  <span class="k">"usage"</span>: {"prompt_tokens": 38, "completion_tokens": 19,
+            "total_tokens": 57}
 }</pre>
-      <ul>
-        <li>the answer is <strong>one field of a JSON document</strong> — the rest is packaging</li>
-        <li>no session id, no memory, nothing tying this reply to your next request</li>
-      </ul>
+      <p class="punch">The answer is one field of a JSON document. No session id, no memory, nothing tying this reply to your next request.</p>
     </section>
 
     <section class="slide" hidden data-clock="0:21" data-title="Input tokens, output tokens"
