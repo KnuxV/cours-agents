@@ -365,3 +365,59 @@ Driven by two instructor reports: students find the site hard to navigate and ex
 - **Overlap to resolve before both land:** the planned `s2.md` §5.4–5.6 (script → module → import) overlaps `reference/modules-and-packages.md` §1–3. `REPORT.md` §5.5 proposes the division — session page keeps the two-file experiment and the four words, reference page takes `sys.path`, packages, `python -m`, installability — and gives the anchor to link to.
 
 **Verification:** every command and output block in the ported pages was run on this machine (uv 0.12.10, CPython 3.12.14, pytest 9.1.1, pdoc 16.0.0, mypy), including real failure output, `--help` screens, exit codes and all 13 exercise answers; all 48 external links returned 200; in-page and cross-page anchors validated programmatically. **UNVERIFIED:** `mkdocs build --strict` has not been run on these pages (they are outside `site/` and in no nav — the move must run it); two proposed CI workflows have never executed on GitHub; Linux only, no Git Bash / Mac / WSL / Codespaces rehearsal; two GitLab practice repos from last year not opened. Details in `research/old-site-port/REPORT.md`.
+
+### "Meet the agent" — 2h class for the economics cohort (2026-09-25, same day, ~2h before the class)
+
+Instructor request, no task file: a 30-min talk on AI in software development and data analysis, a 45-min guided hands-on in pi, and take-home exercises, for economics M2 students who have done Sessions 1 and 2 but **not** Session 3. Planned from three delegated searches (pi 0.87.1 feature set, concept-teaching plan, exercise design), then written against the pi docs shipped in the local install and against `research/s3-api.md`'s live endpoint tests.
+
+**Produced**
+
+- `slides/s3-agents-intro.md` — 19-slide presenterm deck in English, ~30 min, timed speaker notes with two CUT marks. Beats: chatbot vs agent → model → tokens → API → context and the re-send → context window and context rot → tools → `tool_calls` as *a request, not an action* → the loop → chatbot/workflow/agent → skills → the four dials → where it breaks on data → good/bad → hand over. Every JSON block is real output from the Unistra endpoint as recorded in `research/s3-api.md`.
+- `site/docs/sessions/practice-agents.md` — the student-facing class plan, structured as **four dials** (model, context, tools, skills), ending with two agents in two terminals (author + read-only referee).
+- `site/docs/exercises/agent-lab.md` — exercise 3.1, six take-home tasks (A rebuild, B the moved column, C dirty data with a student-written assertion check, D a regression graded against the known DGP, E the statistic that should not exist, F your own skill plus the referee).
+- `resources/agent-lab/` — `make_survey.py` (stdlib only, 1000 rows, DGP in the docstring, **run and verified** on CPython 3.12.14), `AGENTS.md.example`, and two skills, `data-check` and `referee`.
+- `research/s3-eco-runsheet.md` — the instructor's run-sheet: a 10-minute rehearsal checklist, minute-by-minute timing, the exact prompts, the line to say at each step, cut order, the questions to expect, and "verify before quoting" sources.
+- Nav, `sessions/index.md`, `sessions/s3.md` and `exercises/index.md` updated to link the two new pages.
+
+**Divergence from SPEC, recorded not resolved** — this class is neither SPEC's Session 3 (raw `curl`) nor its Session 4 (full pi). It teaches Session 3's mechanics at talking speed and does a reduced Session 4 hands-on (no permission-gate extension, no subagent extension, no A/B/C empirical exercise). Nothing was removed from the spec; the ordering decision for this one cohort is the instructor's and is stated at the top of the run-sheet.
+
+**Verification** — `mkdocs build --strict` exit 0, no warnings, snippets inlined (`make_survey.py`, both `SKILL.md`, `AGENTS.md.example`). `make_survey.py` executed, 1000 rows, header checked. Deck checked for the `speaker_note` YAML trap (no `": "` in any note); **`presenterm --validate` does not exist in 0.16.1 and `--validate-snippets` fails identically on this deck and on the known-good `s2-tooling.md` because there is no tty** — so the deck has *not* been rendered. Open it once before class.
+
+**UNVERIFIED — the three things the instructor must check in the 10 minutes before the room fills**
+
+1. No `UNISTRA_API_KEY` in this session's shell, so **nothing was run against the endpoint today**. All model behaviour below is from the 2026-08-28 notes.
+2. Whether pi renders `gpt-oss`'s reasoning as a collapsible thinking block through the `openai-completions` API. The "reasoning on/off, show/hide" step of the hands-on depends on it; a fallback framing (show the token bill instead) is in the run-sheet. `coder` is non-thinking only, so `/thinking` may offer nothing on it.
+3. Whether `coder` writes a working `make_survey.py` on the first try today, and whether it survives thirty simultaneous students or falls back to Ministral 3B.
+
+Also unverified: ++shift+tab++ / ++ctrl+t++ / ++ctrl+s++ thinking keybindings (documented in the installed 0.87.1 `docs/keybindings.md`, never pressed); the `plan-mode` example extension (never installed — the run-sheet gives the no-install substitute, a read-only pi writing `PLAN.md`); and the four "verify before quoting" sources in §4 of the run-sheet, which were found by delegated search and not read here.
+
+**Needs human review** — the deck's tone for an economics room (the principal-agent slide is deliberately one sentence); whether 45 minutes is enough for eight hands-on sections (cut order is section 8, then section 6); and whether exercise 3.1 belongs under "Agents" in the exercises tab or under Session 4 once that session exists.
+
+### Same-day rework of the economics class — HTML deck replaces presenterm (2026-09-25, instructor-driven, in the two hours before the class)
+
+The instructor chose the artifact-style HTML page over the presenterm deck, then reshaped it live. Final deck: **36 slides**, `slides/s3-agents-intro.html` (also served by the site at `site/docs/slides/s3-agents-intro.html` → `/slides/s3-agents-intro.html`, linked from `README.md`).
+
+**What changed from the first version**
+
+- **The API section was slowed from 2 slides to 6** at the instructor's request: the counter and the endpoint · the request field by field · the three roles (`system` / `user` / `assistant`) · **send it yourself** with a real `curl` · the response · **input vs output tokens** (new — input is re-billed every turn, output costs more per token).
+- **`resources/api/`** — `question.json`, `question-2turns.json` and a README with the exact curl piped through `python3 -m json.tool`. Endpoint, header and response shape from `research/s3-api.md` (live 2026-08-28); the payloads themselves have **not** been sent (no key in this session's shell).
+- **Context window slide** now compares ministral 32k · Unistra `coder` 262k · **GPT-5.5 / Claude Opus 5 at 1M**, with a words column (~¾ word per token), plus context rot and the habit — `/session` to see the number, `/compact`, `/new`. Frontier figures: OpenAI's model docs (GPT-5.5 1M, 5.6 family 1.05M) and the `claude-api` skill's model table.
+- **The loop slide was corrected after the instructor challenged it.** It does not run until the answer is good; it runs until the model stops asking for tools — and the model stops when *it* judges the job done. Hence: "everything reliable sits outside the loop."
+- **New slides:** other tools (pi's seven built-ins, what you can add, and why twenty tools is worse than seven) · a workflow worth writing (the 800-answer classifier, with why it beats an agent) · a skill in full (a real `SKILL.md` plus the three mechanism lines) · search as a tool (grep/find, and why search is what makes a 400-file repo tractable; pi has **no built-in web search** — it is an extension or MCP).
+- **Four dials** now show real commands, and state that tools are fixed at launch while the other three change mid-session. **"Three things people call AI"** got concrete examples. **"The honest list" → "Limitations"**, with **sycophancy** named.
+- **Cut:** "Where it breaks — data work", "Now we break it" (the column drill — it survives as take-home exercise B), exercise 2.
+- **The hands-on is now 10 slides** (`H+00`…`H+44`): clone the course repo → a git-backed lab with the skills copied in → synthetic data → analysis with `data-check` → a dashboard with `figure-style` → **tests from a second, fresh pi** with `tests-first` and no edit tool → a **read-only referee** → search → recap. The sycophancy cure is stated as a procedure: a fresh context costs one terminal.
+- **One exercise, in two parts:** the password generator (memorable vs random, chosen through `argparse`; the agent explains, the student types; same question asked of the agent and of the official docs), then tests written by a fresh pi from the brief and compared with tests written by the agent that wrote the code.
+- **Deck mechanics:** arrow keys / space, `n` for speaker notes, `t` (or the bar button) forces light or dark for a projector, click any code block to copy it, per-slide target clock in the bar, position remembered across a reload.
+
+**Skills, consolidated** in `resources/skills/`: `data-check`, `referee` (moved from `resources/agent-lab/skills/`, snippet paths updated), plus new `tests-first`, `figure-style`, `explain-the-error`.
+
+**Verification** — `mkdocs build --strict` exit 0, no warnings, with the deck served as a static file. `make_survey.py` runs (1000 rows). All JSON payloads parse. The `preset` extension was confirmed to load and register `--preset` in an isolated `PI_CODING_AGENT_DIR` (offered as an option, not adopted).
+
+**UNVERIFIED / decided live by the instructor**
+
+- **The thinking dial does not exist on the university models.** ++shift+tab++ and `/thinking` refuse on every one of them (pi only offers levels a model declares, and a bare `models.json` entry declares none); ++ctrl+t++ works. The hands-on teaches the refusal. An untested route to re-enabling it on `gpt-oss`: `"reasoning": true` in its `models.json` entry.
+- Nothing in this pass was run against the Unistra endpoint. The whole hands-on — including whether `coder` writes a working generator, respects `AGENTS.md`, or holds up under thirty simultaneous students — is unrehearsed.
+- The deck has been read in a browser but not paged through end to end on a projector.
+- `slides/s3-agents-intro.md` (the 19-slide presenterm version) is **stale**: it predates the API expansion, the corrections and the new hands-on. Keep it as the offline fallback only if it is brought back into line, or delete it.
+- `site/docs/sessions/practice-agents.md` and `exercises/agent-lab.md` still describe the older shape of the hour (the column drill live, six take-home tasks). They are coherent as take-home material but no longer mirror the deck.
