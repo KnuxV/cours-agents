@@ -1,0 +1,14 @@
+{
+  "model": "coder",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a teaching assistant for a master's course. Answer in one short sentence, in plain English."
+    },
+    {
+      "role": "user",
+      "content": "What is a token, for a language model?"
+    }
+  ],
+  "temperature": 0
+}

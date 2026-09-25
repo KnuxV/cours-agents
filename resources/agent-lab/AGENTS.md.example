@@ -1,0 +1,9 @@
+# Project rules
+
+This is a small data-analysis project. The dataset is `survey.csv`.
+
+- Before using any column of a data file, print `df.columns` and the first three rows, and use the names that come back.
+- Every number that appears in an answer must come from code that was actually run in this session. Show the command and its output.
+- Never delete or overwrite `survey.csv` or `make_survey.py`. Write new files under `out/`.
+- After a change that works, run `git add -A && git commit -m "<what changed>"`.
+- When you are unsure what is being asked, ask one question instead of guessing.
