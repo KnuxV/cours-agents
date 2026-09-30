@@ -1,7 +1,7 @@
 # Testing lab — doctest, assert, pytest
 
 The code for the testing class: four examples you run during the talk, one demo pipeline, two exercises.
-The slides are `slides/testing-pytest.html` in the course repo; the written lesson is the site page *Testing your code with pytest*.
+The slides are online at https://knuxv.github.io/cours-agents/slides/testing-pytest.html (source: `slides/testing-pytest.html` in the course repo); the written lesson is the site page *Testing your code with pytest*.
 
 ## Get it
 

@@ -249,6 +249,10 @@
   .slide a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
   .slide a:hover { text-decoration-thickness: 2px; }
   td a { white-space: nowrap; }
+  .links { margin-top: clamp(18px, 3vh, 36px); }
+  .links p { display: grid; grid-template-columns: 5.5em auto; justify-content: start; align-items: baseline; gap: 1em;
+    margin: 0 0 .3em; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: clamp(14px, 1.3vw, 20px); max-width: none; }
+  .links span { color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: .72em; }
   .callout {
     border: 1px solid var(--warn); border-left-width: 4px; border-radius: 10px;
     background: var(--surface); padding: clamp(10px, 1.4vw, 18px) clamp(14px, 1.8vw, 24px);
@@ -271,6 +275,10 @@
       <h2>Tester son code : <em>doctest, assert, pytest</em></h2>
       <p class="lede">Comment savoir que votre script fait ce que vous croyez — aujourd'hui, et après chaque modification.</p>
       <p class="punch">Un test, c'est une phrase « je m'attends à ceci » qu'une machine revérifie en une demi-seconde.</p>
+      <div class="links">
+        <p><span>Dépôt</span><a href="https://github.com/KnuxV/cours-agents" target="_blank" rel="noopener">github.com/KnuxV/cours-agents</a></p>
+        <p><span>Site</span><a href="https://knuxv.github.io/cours-agents/" target="_blank" rel="noopener">knuxv.github.io/cours-agents</a></p>
+      </div>
     </section>
 
     <section class="slide" hidden data-clock="0:01" data-title="Au programme"
