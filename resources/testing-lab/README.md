@@ -24,7 +24,7 @@ If `git pull` refuses and mentions *stash*, you changed files inside the course 
 
 | Folder | What it shows | Run (from inside the folder) |
 |---|---|---|
-| `1-doctest/` | Examples inside a docstring that Python checks | `uv run python text_tools.py -v` or `uv run python -m doctest -v text_tools.py` |
+| `1-doctest/` | Examples inside a docstring that Python checks; `vocabulary.py` writes them with `in` and `>` instead of an exact value | `uv run python text_tools.py -v` or `uv run python -m doctest -v text_tools.py`; same for `vocabulary.py` |
 | `2-assert/` | Plain `assert`: stops at the first failure (on purpose) | `uv run python check_text_tools.py` |
 | `3-pytest/` | `tests/` folder, parametrize, `pytest.raises`, `pytest.approx`, a fixture, `tmp_path`, a mock (`monkeypatch`) | `uv run pytest -v` |
 | `4-pipeline/` | The demo: a four-step pipeline, three weekly CSV files, data checks, unit tests, a regression test | see below |

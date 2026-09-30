@@ -265,6 +265,7 @@
   @media (max-width: 620px) { .callout { grid-template-columns: 1fr; } }
   .cols pre { margin-bottom: 0; }
   .cols pre + pre { margin-top: 10px; }
+  .cols pre + p { margin-top: 14px; }
   .cols + pre { margin-top: clamp(12px, 2vh, 20px); }
 </style>
 </head>
@@ -502,7 +503,34 @@ Test passed.</span></pre>
       <p class="punch">L'exemple d'abord, le code ensuite.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:20" data-title="doctest : pour quoi faire"
+    <section class="slide" hidden data-clock="0:20" data-title="Pas seulement =="
+      data-note="Deuxième fichier du dossier : vocabulary.py. doctest compare ce qui s'affiche ; un exemple peut donc être une question dont la réponse affichée est True. Utile quand plusieurs réponses sont acceptables (deux mots de même longueur) ou pour les flottants (on vérifie un encadrement, pas 0.6666666666666666). Le prix : si ça casse, le message dit Expected True, Got False — on ne voit plus la valeur obtenue. Montrer en remplaçant max par min dans longest_word si le temps le permet : les deux exemples de longest_word échouent, Expected True, Got False.">
+      <p class="kicker">1 — doctest · à vous</p>
+      <h2>Pas seulement <em>==</em></h2>
+      <p class="lede">Un exemple peut être une <strong>question</strong> sur le résultat : il affiche <code>True</code>.</p>
+      <div class="cols">
+        <div>
+          <pre><span class="d"># vocabulary.py (extraits)</span>
+<span class="k">&gt;&gt;&gt; "chat" in tokenize("Le chat dort.")</span>
+True
+<span class="k">&gt;&gt;&gt; len(longest_word("il dort profondément")) &gt; 5</span>
+True
+<span class="k">&gt;&gt;&gt; longest_word("le chat dort") in ["chat", "dort"]</span>
+True
+<span class="k">&gt;&gt;&gt; 0 &lt; type_token_ratio(["le", "chat", "le"]) &lt;= 1</span>
+True</pre>
+        </div>
+        <div>
+          <pre class="out"><span class="k">uv run python vocabulary.py -v</span>
+<span class="d">...</span>
+<span class="g">7 passed and 0 failed.</span></pre>
+          <p><strong>Utile quand</strong> plusieurs réponses sont acceptables, ou pour un flottant.</p>
+          <p><strong>Le prix</strong> : en cas d'échec, <code>Expected True</code> / <code>Got False</code> — la valeur n'est plus affichée.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" hidden data-clock="0:21" data-title="doctest : pour quoi faire"
       data-note="doctest est parfait pour documenter, mauvais comme suite de tests. pytest sait aussi les lancer (--doctest-modules), donc on ne perd rien.">
       <p class="kicker">1 — doctest</p>
       <h2>Pour quoi faire</h2>
@@ -528,14 +556,15 @@ Test passed.</span></pre>
     </section>
 
     <section class="slide" hidden data-clock="0:22" data-title="2 — assert"
-      data-note="assert est un mot-clé de Python, pas une fonction. Le message après la virgule est optionnel mais aide beaucoup.">
+      data-note="assert est un mot-clé de Python, pas une fonction. Après assert, n'importe quelle condition : ==, in, &gt;, &lt;=, not... comme dans les doctests de vocabulary.py. Le message après la virgule est optionnel ; il ne s'affiche que si la condition est fausse.">
       <p class="kicker">2 — assert</p>
       <h2><code>assert</code>, la brique de base</h2>
       <pre><span class="k">assert count_words("le chat dort") == 3</span>
 <span class="d"># vrai : il ne se passe rien</span>
 
-<span class="k">assert count_words("") == 0, "un texte vide a zéro mot"</span>
-<span class="d"># faux : AssertionError: un texte vide a zéro mot</span></pre>
+<span class="k">assert "chat" in normalize("  Le Chat Noir "), "le mot a disparu"</span>
+<span class="d"># vrai aussi : pas besoin de ==, toute condition vraie ou fausse convient
+# si c'était faux : AssertionError: le mot a disparu</span></pre>
       <p><code>assert</code> + une condition + (optionnel) un message.</p>
       <p class="punch">Tout pytest repose là-dessus. Il n'y a rien d'autre à apprendre pour écrire un test.</p>
     </section>
