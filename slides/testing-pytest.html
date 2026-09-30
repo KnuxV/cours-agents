@@ -263,6 +263,8 @@
   .callout pre { margin: 0; }
   @media (max-width: 620px) { .callout { grid-template-columns: 1fr; } }
   .cols pre { margin-bottom: 0; }
+  .cols pre + pre { margin-top: 10px; }
+  .cols + pre { margin-top: clamp(12px, 2vh, 20px); }
 </style>
 </head>
 <body>
@@ -433,30 +435,39 @@ def count_words(text: str) -> int:
     </section>
 
     <section class="slide" hidden data-clock="0:14" data-title="Lancer les doctests"
-      data-note="Tout le monde lance. Sans -v, un doctest qui passe n'affiche rien du tout — le silence est la bonne nouvelle. Montrer la version -v pour voir qu'il s'est bien passé quelque chose.">
+      data-note="Tout le monde lance l'une des deux. Option 1 : le bloc if __name__ == &quot;__main__&quot; ne s'exécute que quand on lance le fichier lui-même, pas quand un autre fichier l'importe (pytest l'importera plus tard) ; doctest.testmod() teste le fichier courant et lit -v sur la ligne de commande. Option 2 : rien à ajouter, marche sur n'importe quel fichier. Sans -v, un doctest qui passe n'affiche rien — le silence est la bonne nouvelle.">
       <p class="kicker">1 — doctest · à vous</p>
-      <h2>Lancer les exemples</h2>
-      <pre><span class="k">cd ~/testing-lab/1-doctest
-uv run python -m doctest -v text_tools.py</span></pre>
-      <pre class="out">Trying:
-    count_words("le chat dort")
-Expecting:
-    3
-<span class="g">ok</span>
-<span class="d">...</span>
-4 tests in 3 items.
+      <h2>Lancer les exemples : deux façons</h2>
+      <pre><span class="k">cd ~/testing-lab/1-doctest</span></pre>
+      <div class="cols">
+        <div>
+          <h3>1 · Depuis le script</h3>
+          <pre><span class="d"># en bas de text_tools.py</span>
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()</pre>
+          <pre><span class="k">uv run python text_tools.py -v</span></pre>
+        </div>
+        <div>
+          <h3>2 · Sans rien ajouter</h3>
+          <pre><span class="k">uv run python -m doctest -v text_tools.py</span></pre>
+          <p>Marche sur n'importe quel fichier <code>.py</code>.</p>
+        </div>
+      </div>
+      <pre class="out">4 tests in 3 items.
 <span class="g">4 passed and 0 failed.
-Test passed.</span></pre>
-      <p class="punch">Sans <code>-v</code>, rien ne s'affiche quand tout passe. Le silence, c'est la bonne nouvelle.</p>
+Test passed.</span>
+<span class="d"># sans -v : rien ne s'affiche quand tout passe. Le silence, c'est la bonne nouvelle.</span></pre>
     </section>
 
     <section class="slide" hidden data-clock="0:16" data-title="Quand un exemple est faux"
-      data-note="Faire la modif en direct : remplacer le 3 par 4 dans le premier exemple, relancer. Puis remettre 3. Expected / Got : c'est la forme de tous les messages de test de la séance. Si la sortie ne change pas après la modif (bytecode en cache si on relance dans la même seconde) : rm -rf __pycache__ et relancer.">
+      data-note="Faire la modif en direct : remplacer le 3 par 4 dans le premier exemple, relancer. Puis remettre 3. Expected / Got : c'est la forme de tous les messages de test de la séance. La sortie montrée est celle de python -m doctest ; lancé comme script, la seule différence est __main__.count_words au lieu de text_tools.count_words (et le chemin complet du fichier). Si la sortie ne change pas après la modif (bytecode en cache si on relance dans la même seconde) : rm -rf __pycache__ et relancer.">
       <p class="kicker">1 — doctest · à vous</p>
       <h2>Quand un exemple est faux</h2>
-      <p>Remplacez le <code>3</code> du premier exemple par <code>4</code>, relancez (sans <code>-v</code>) :</p>
+      <p>Remplacez le <code>3</code> du premier exemple par <code>4</code>, relancez l'une ou l'autre commande, sans <code>-v</code> :</p>
       <pre class="out">**********************************************************************
-File "text_tools.py", line 10, in text_tools.count_words
+File "text_tools.py", line 12, in text_tools.count_words
 Failed example:
     count_words("le chat dort")
 <span class="k">Expected:
