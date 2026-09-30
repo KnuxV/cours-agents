@@ -16,6 +16,12 @@ Nothing here has to be read in order. Use the search box at the top of the page 
 |---|---|---|
 | [Git as a collaboration tool](git-collaboration.md) | Remotes, clone vs fork, pull requests, issues, CI/CD, and what all of it means when an agent writes the code | after [Session 1 — Git](../sessions/s1.md) |
 
+## Python and quality
+
+| Page | What it answers | Introduced in |
+|---|---|---|
+| [Testing your code with pytest](testing.md) | Why test, the kinds of tests, doctest, `assert`, pytest, parametrize, fixtures, mocking, checking data files, coverage, tests in CI, and why the test suite is the reliable part of an agent system | [Testing with pytest](../sessions/testing.md) |
+
 ## Agents and tools
 
 | Page | What it answers | Introduced in |

@@ -87,6 +87,9 @@ nav:
       - Session 3 — What an LLM API is:
           - Lesson — What an LLM API is: sessions/s3.md
           - Class plan — meet the agent: sessions/practice-agents.md
+      - Testing with pytest:
+          - Class plan — testing with pytest: sessions/testing.md
+          - Lesson — testing your code: reference/testing.md
       - Session 4 — pi, a real harness: sessions/s4.md
       - Optional — Replication track: replication.md
   - ✏️ Exercises:
@@ -106,12 +109,17 @@ nav:
           - 2.5 Polars vs pandas: exercises/polars-pandas.md
       - Agents:
           - 3.1 Agent lab — six tasks against a dataset: exercises/agent-lab.md
+      - Testing:
+          - T.1 Fix the code: exercises/testing-fix.md
+          - T.2 Test first — parse_number: exercises/testing-tdd.md
   - Reference:
       - reference/index.md
       - Machines and terminals:
           - WSL, explained: reference/wsl.md
       - Git:
           - Git as a collaboration tool: reference/git-collaboration.md
+      - Python and quality:
+          - Testing your code with pytest: reference/testing.md
       - Agents and tools:
           - pi — install, connect, tutor: reference/pi.md
       - Files and configs: resources.md

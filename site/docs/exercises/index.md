@@ -51,6 +51,15 @@ Lesson: [Session 2 — Python tooling](../sessions/s2.md).
 
 Class plan: [meet the agent](../sessions/practice-agents.md) · setup: [pi — install, connect, tutor](../reference/pi.md).
 
+## Testing
+
+| # | Exercise | What you practise | Time |
+|---|---|---|---|
+| T.1 | [Fix the code](testing-fix.md) | reading pytest's failures until they point at the bug; the bug no test catches | 15 min + bonus |
+| T.2 | [Test first: `parse_number`](testing-tdd.md) | red, green, clean — one test at a time, and deciding when a function is good enough | 15 min + home |
+
+Lesson: [Testing your code with pytest](../reference/testing.md) · class plan: [testing with pytest](../sessions/testing.md). The solutions are on the `solutions` branch of the course repository, not folded into the pages.
+
 ## Still to come
 
 Published with the sessions themselves: the `curl` sequence of [Session 3](../sessions/s3.md), and the harness experiment of [Session 4](../sessions/s4.md).

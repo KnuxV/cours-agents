@@ -41,6 +41,15 @@ Raw `curl` calls against the university's endpoint: tokens as the unit of accoun
 - Needs first: Session 2's environment variable, and [pi installed and connected](../reference/pi.md).
 - Deliverable: a `step1.json` → `step4` sequence committed to your repository.
 
+## Testing with pytest
+
+How do you know your script does what you think — today, and after every change? doctest, `assert`, then pytest; a small data pipeline that gives a wrong result without any error, and the tests that make it visible.
+
+- Class plan: [Testing with pytest](testing.md) · slides (French): [Tester son code](../slides/testing-pytest.html){target="_blank"}
+- Lesson: [Testing your code with pytest](../reference/testing.md)
+- Exercises: [T.1 Fix the code](../exercises/testing-fix.md) · [T.2 Test first](../exercises/testing-tdd.md)
+- Needs first: `uv` ([Session 2](s2.md)).
+
 ## Session 4 — pi, a real harness
 
 The same loop, automated by a real agent harness: provider configuration, permissions you write yourself, `AGENTS.md`, tests as the anchor, subagents and the grill/build pattern.
