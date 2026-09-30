@@ -1,8 +1,9 @@
-"""Vocabulary helpers, with doctests that check a property instead of an exact value.
+"""Vocabulary helpers, with doctests that check an exact value, then a property.
 
-A doctest compares what Python prints. An example does not have to print the
-answer itself: it can print True, if it is a question about the answer —
-with `in`, `not in`, `>`, `<=`...
+A doctest compares what Python prints. The first example of each function
+prints the answer itself, as in text_tools.py. The next ones do not: they
+print True, because they are questions about the answer — with `in`,
+`not in`, `>`, `<=`...
 
 Run the examples, either way:
     uv run python vocabulary.py -v
@@ -13,6 +14,8 @@ Run the examples, either way:
 def tokenize(text: str) -> list[str]:
     """Split a text into lowercase words, without the punctuation around them.
 
+    >>> tokenize("Le chat dort.")
+    ['le', 'chat', 'dort']
     >>> "chat" in tokenize("Le chat dort.")
     True
     >>> "Le" in tokenize("Le chat dort.")
@@ -27,6 +30,8 @@ def tokenize(text: str) -> list[str]:
 def longest_word(text: str) -> str:
     """The longest word of a text. When several are equally long, any of them.
 
+    >>> longest_word("il dort profondément")
+    'profondément'
     >>> len(longest_word("il dort profondément")) > 5
     True
     >>> longest_word("le chat dort") in ["chat", "dort"]
@@ -38,6 +43,8 @@ def longest_word(text: str) -> str:
 def type_token_ratio(tokens: list[str]) -> float:
     """Share of distinct words: 1.0 means no word is repeated.
 
+    >>> type_token_ratio(["le", "chat", "le", "chien"])
+    0.75
     >>> 0 < type_token_ratio(["le", "chat", "le"]) <= 1
     True
     >>> type_token_ratio(["le", "chat", "le"]) < type_token_ratio(["le", "chat"])
