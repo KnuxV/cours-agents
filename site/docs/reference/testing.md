@@ -92,13 +92,30 @@ If `git pull` refuses and mentions *stash*, run `git stash -u` then `git pull` a
 --8<-- "resources/testing-lab/1-doctest/text_tools.py"
 ```
 
-Each line starting with `>>>` is a call; the line below it is the answer you expect, written exactly as the console would print it. Run the examples:
+Each line starting with `>>>` is a call; the line below it is the answer you expect, written exactly as the console would print it. There are two ways to run the examples.
+
+**From the script itself.** The block at the end of the file runs the examples when you launch the file:
+
+```python
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+```
+
+`__name__` is `"__main__"` only when the file is the one you launched; when another file imports it — pytest will, in section 5 — the block is skipped. `doctest.testmod()` checks the examples of the current file.
+
+```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces — inside ~/testing-lab/1-doctest"
+uv run python text_tools.py -v
+```
+
+**Without adding anything.** The `doctest` module can be run on any file, block or no block:
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces — inside ~/testing-lab/1-doctest"
 uv run python -m doctest -v text_tools.py
 ```
 
-With `-v` (verbose), doctest lists every example it tried and ends with:
+With `-v` (verbose), either command lists every example it tried and ends with:
 
 ```text
 4 tests in 3 items.
@@ -108,11 +125,11 @@ Test passed.
 
 Three examples in `count_words` and one in `normalize` make four tests; the three "items" are the module and its two functions. Without `-v`, a passing run prints **nothing at all** — silence means success.
 
-Now break it on purpose: change the first expected answer from `3` to `4` and run again, without `-v`:
+Now break it on purpose: change the first expected answer from `3` to `4` and run either command again, without `-v`. With `python -m doctest`:
 
 ```text
 **********************************************************************
-File "text_tools.py", line 10, in text_tools.count_words
+File "text_tools.py", line 12, in text_tools.count_words
 Failed example:
     count_words("le chat dort")
 Expected:
@@ -125,7 +142,7 @@ Got:
 ***Test Failed*** 1 failures.
 ```
 
-(Python prints the full path to the file on the `File` line; it is shortened here.) The report names the line, the call, what you wrote and what the code actually returned. Put the `3` back.
+(Python prints the full path to the file on the `File` line; it is shortened here. Run as a script, the only other difference is that the function is called `__main__.count_words`.) The report names the line, the call, what you wrote and what the code actually returned. Put the `3` back.
 
 **When to use doctest.** For short examples that *are* documentation: someone reading the docstring learns how to call the function, and the example cannot silently go out of date, because it is checked.
 
@@ -716,7 +733,7 @@ The usual advice is a pyramid: many unit tests, fewer integration tests, very fe
 | `fixture 'sales_csv' not found` | The fixture is in another test file | Move it to `conftest.py` (§9) |
 | A test passes alone, fails with the others | Shared state between tests | No module-level mutable data; use a fixture (§7, §9) |
 | `assert 0.30000000000000004 == 0.3` | Comparing floats with `==` | `pytest.approx` (§6.1) |
-| `python -m doctest` prints nothing | All examples passed — silence is success | Add `-v` to see the list (§4) |
+| `python text_tools.py` or `python -m doctest` prints nothing | All examples passed — silence is success | Add `-v` to see the list (§4) |
 | A test needs the network or an API key | The code under test calls the outside world directly | Put the call in one small function and replace it with `monkeypatch` (§10) |
 | A data check fails on one file | The file is not what the code expects | Decide whether it is a code problem or a data problem; refuse the file rather than loosen the check (§12) |
 | `pytest: command not found` | You typed `pytest`, not `uv run pytest` | `uv run pytest` — or `uv add --dev pytest` first |
@@ -730,6 +747,7 @@ The usual advice is a pyramid: many unit tests, fewer integration tests, very fe
 | Command / line | What it does |
 |---|---|
 | `uv run python -m doctest -v file.py` | Run the `>>>` examples in the docstrings of `file.py` |
+| `if __name__ == "__main__": doctest.testmod()` | The same, from inside the file: `uv run python file.py -v` |
 | `uv run pytest --doctest-modules` | Let pytest run the doctests too |
 | `uv add --dev pytest` | pytest as a development dependency of the project |
 | `uv run pytest` | Run every test it can find |

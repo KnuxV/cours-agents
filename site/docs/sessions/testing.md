@@ -59,7 +59,8 @@ git pull
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces"
 cd ~/testing-lab/1-doctest
-uv run python -m doctest -v text_tools.py      # 4 passed and 0 failed
+uv run python text_tools.py -v                 # 4 passed and 0 failed
+uv run python -m doctest -v text_tools.py      # the same, without the block at the end of the file
 
 cd ~/testing-lab/2-assert
 uv run python check_text_tools.py              # stops at the 3rd check, on purpose
