@@ -8,11 +8,13 @@ The slides are `slides/testing-pytest.html` in the course repo; the written less
 ```bash
 # WSL / Mac Terminal / Linux / Git Bash / Codespaces
 cd ~
-git clone https://github.com/KnuxV/cours-agents.git     # already cloned? run: git -C ~/cours-agents pull
+git clone https://github.com/KnuxV/cours-agents.git     # already cloned? instead: cd ~/cours-agents && git pull
 cp -r ~/cours-agents/resources/testing-lab ~/testing-lab
 cd ~/testing-lab
 uv sync
 ```
+
+If `git pull` refuses and mentions *stash*, you changed files inside the course repository: run `git stash -u` then `git pull` again (`git stash pop` brings your changes back).
 
 `uv sync` creates `.venv/` and installs pandas and pytest into it. No `sudo`, nothing outside the folder.
 
