@@ -246,6 +246,9 @@
   pre.diagram .g { color: var(--pass); }
   pre.diagram .r { color: var(--fail); }
   sup { font-size: .6em; }
+  .slide a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .slide a:hover { text-decoration-thickness: 2px; }
+  td a { white-space: nowrap; }
   .callout {
     border: 1px solid var(--warn); border-left-width: 4px; border-radius: 10px;
     background: var(--surface); padding: clamp(10px, 1.4vw, 18px) clamp(14px, 1.8vw, 24px);
@@ -330,15 +333,15 @@ git pull</span></pre>
       <h2>Un caractère suffit</h2>
       <div class="tablewrap">
       <table>
-        <thead><tr><th>Erreur</th><th>Conséquence</th></tr></thead>
+        <thead><tr><th>Erreur</th><th>Conséquence</th><th>Source</th></tr></thead>
         <tbody>
-          <tr><td>un <code>+</code> au lieu d'un <code>-</code></td><td>cinq articles de biologie structurale rétractés (Science, 2006)</td></tr>
-          <tr><td>deux unités mélangées entre deux équipes</td><td>la sonde Mars Climate Orbiter perdue (1999)</td></tr>
-          <tr><td>une plage de cellules Excel trop courte</td><td>5 pays sur 20 oubliés dans une moyenne très citée en économie (Reinhart–Rogoff, 2010)</td></tr>
+          <tr><td>un <code>+</code> au lieu d'un <code>-</code></td><td>cinq articles de biologie structurale rétractés</td><td><a href="https://doi.org/10.1126/science.314.5807.1856" target="_blank" rel="noopener">Science, 2006</a></td></tr>
+          <tr><td>deux unités mélangées entre deux équipes</td><td>la sonde Mars Climate Orbiter perdue (livres-force au lieu de newtons)</td><td><a href="https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf" target="_blank" rel="noopener">rapport NASA, 1999</a></td></tr>
+          <tr><td>une plage de cellules Excel trop courte</td><td>5 pays sur 20 oubliés dans une moyenne très citée en économie (Reinhart–Rogoff, 2010)</td><td><a href="https://peri.umass.edu/publication/does-high-public-debt-consistently-stifle-economic-growth-a-critique-of-reinhart-and-rogoff/" target="_blank" rel="noopener">Herndon, Ash &amp; Pollin, 2013</a></td></tr>
         </tbody>
       </table>
       </div>
-      <p class="punch">« <em>Everyone</em> makes mistakes, and in research the results can be catastrophic. » — The Turing Way</p>
+      <p class="punch">« <em>Everyone</em> makes mistakes, and in research the results can be catastrophic. » — <a href="https://book.the-turing-way.org/reproducible-research/testing" target="_blank" rel="noopener">The Turing Way</a></p>
     </section>
 
     <section class="slide" hidden data-clock="0:07" data-title="Pas le temps de tester ?"
