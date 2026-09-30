@@ -80,13 +80,13 @@ The examples in this section and the next ones come from the course's testing la
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces"
 cd ~
-git clone https://github.com/KnuxV/cours-agents.git     # already cloned? run: git -C ~/cours-agents pull
+git clone https://github.com/KnuxV/cours-agents.git     # already cloned? instead: cd ~/cours-agents && git pull
 cp -r ~/cours-agents/resources/testing-lab ~/testing-lab
 cd ~/testing-lab
 uv sync
 ```
 
-`uv sync` creates a `.venv/` folder inside `testing-lab` and installs pandas and pytest into it. Nothing is installed outside the folder. If you have no git, [testing-lab.zip](../files/testing-lab.zip) contains the same folder: unzip it in your home folder, then `cd ~/testing-lab` and `uv sync`. Always `cd` into one of the numbered folders before running anything.
+If `git pull` refuses and mentions *stash*, run `git stash -u` then `git pull` again ([details](../sessions/testing.md#before-the-class-starts-get-the-code)). `uv sync` creates a `.venv/` folder inside `testing-lab` and installs pandas and pytest into it. Nothing is installed outside the folder. If you have no git, [testing-lab.zip](../files/testing-lab.zip) contains the same folder: unzip it in your home folder, then `cd ~/testing-lab` and `uv sync`. Always `cd` into one of the numbered folders before running anything.
 
 ```python title="1-doctest/text_tools.py" linenums="1"
 --8<-- "resources/testing-lab/1-doctest/text_tools.py"

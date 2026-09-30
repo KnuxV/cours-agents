@@ -19,7 +19,22 @@ cd ~/testing-lab
 uv sync
 ```
 
-If you already cloned the course repository in an earlier class, replace the `git clone` line with `git -C ~/cours-agents pull`, which downloads what changed since.
+If you already cloned the course repository in an earlier class, do not clone it again. Replace the first two lines with these, which download what changed since:
+
+```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces"
+cd ~/cours-agents
+git pull
+```
+
+!!! warning "`git pull` refuses, and the message mentions *stash*"
+    You changed or added files inside the course repository, and git will not overwrite them. Put them aside, then pull again:
+
+    ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces — inside ~/cours-agents"
+    git stash -u
+    git pull
+    ```
+
+    `git stash -u` puts every change aside, new files included. Nothing is lost: `git stash pop` brings it back.
 
 `uv sync` creates a `.venv/` folder inside `testing-lab` and installs pandas and pytest into it. Nothing is installed anywhere else, and nothing needs `sudo`.
 

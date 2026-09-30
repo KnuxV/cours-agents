@@ -246,6 +246,16 @@
   pre.diagram .g { color: var(--pass); }
   pre.diagram .r { color: var(--fail); }
   sup { font-size: .6em; }
+  .callout {
+    border: 1px solid var(--warn); border-left-width: 4px; border-radius: 10px;
+    background: var(--surface); padding: clamp(10px, 1.4vw, 18px) clamp(14px, 1.8vw, 24px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+  }
+  .callout { display: grid; grid-template-columns: 1fr auto; gap: clamp(12px, 2vw, 28px); align-items: center; }
+  .callout p { max-width: none; margin-bottom: .35em; }
+  .callout pre { margin: 0; }
+  @media (max-width: 620px) { .callout { grid-template-columns: 1fr; } }
+  .cols pre { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -272,17 +282,33 @@
     </section>
 
     <section class="slide" hidden data-clock="0:02" data-title="Récupérer le code"
-      data-note="On le fait tout de suite pour que les problèmes de réseau ou d'install arrivent maintenant et pas pendant la démo. Ceux qui ont déjà cloné le dépôt (séance agents) font git pull. On copie le dossier hors du dépôt pour qu'ils puissent le modifier librement. Si uv manque : page Session 2 du site.">
-      <p class="kicker">Tout de suite</p>
+      data-note="On le fait tout de suite pour que les problèmes de réseau ou d'install arrivent maintenant et pas pendant la démo. Ceux qui ont cloné le dépôt à la séance agents vont dedans et font git pull. S'ils ont modifié des fichiers du dépôt, git refuse (le message contient « stash ») : git stash -u met leurs modifs de côté, fichiers nouveaux compris, puis git pull passe. Rien n'est perdu : git stash pop les remet. On copie ensuite le dossier hors du dépôt pour qu'ils puissent le modifier librement. Si uv manque : page Session 2 du site.">
+      <p class="kicker">Tout de suite · WSL · Mac · Linux · Git Bash</p>
       <h2>Récupérer le code</h2>
-      <p>WSL · Terminal Mac · Linux · Git Bash · Codespaces :</p>
-      <pre><span class="k">cd ~
-git clone https://github.com/KnuxV/cours-agents.git
-cp -r ~/cours-agents/resources/testing-lab ~/testing-lab
+      <div class="cols">
+        <div>
+          <h3>Première fois</h3>
+          <pre><span class="k">cd ~
+git clone https://github.com/KnuxV/cours-agents.git</span></pre>
+        </div>
+        <div>
+          <h3>Déjà cloné (séance agents)</h3>
+          <pre><span class="k">cd ~/cours-agents
+git pull</span></pre>
+        </div>
+      </div>
+      <p>Puis, dans les deux cas :</p>
+      <pre><span class="k">cp -r ~/cours-agents/resources/testing-lab ~/testing-lab
 cd ~/testing-lab
 uv sync</span></pre>
-      <p>Déjà cloné ? <code>git -C ~/cours-agents pull</code> à la place de la 2<sup>e</sup> ligne.</p>
-      <p class="punch"><code>uv sync</code> installe pandas et pytest dans <code>.venv/</code>. Pas de <code>sudo</code>, rien en dehors du dossier.</p>
+      <div class="callout">
+        <div>
+          <p><strong><code>git pull</code> refuse</strong> et parle de <em>stash</em> ? Vous avez modifié des fichiers du dépôt : mettez-les de côté, puis recommencez.</p>
+          <p>Rien n'est perdu : <code>git stash pop</code> les remet.</p>
+        </div>
+        <pre><span class="k">git stash -u
+git pull</span></pre>
+      </div>
     </section>
 
     <section class="slide" hidden data-clock="0:04" data-title="Ça tourne, donc c'est juste ?"
