@@ -260,6 +260,7 @@
   }
   .callout { display: grid; grid-template-columns: 1fr auto; gap: clamp(12px, 2vw, 28px); align-items: center; }
   .callout p { max-width: none; margin-bottom: .35em; }
+  .callout { margin-bottom: clamp(12px, 2vh, 20px); }
   .callout pre { margin: 0; }
   @media (max-width: 620px) { .callout { grid-template-columns: 1fr; } }
   .cols pre { margin-bottom: 0; }
@@ -461,25 +462,47 @@ Test passed.</span>
 <span class="d"># sans -v : rien ne s'affiche quand tout passe. Le silence, c'est la bonne nouvelle.</span></pre>
     </section>
 
-    <section class="slide" hidden data-clock="0:16" data-title="Quand un exemple est faux"
-      data-note="Faire la modif en direct : remplacer le 3 par 4 dans le premier exemple, relancer. Puis remettre 3. Expected / Got : c'est la forme de tous les messages de test de la séance. La sortie montrée est celle de python -m doctest ; lancé comme script, la seule différence est __main__.count_words au lieu de text_tools.count_words (et le chemin complet du fichier). Si la sortie ne change pas après la modif (bytecode en cache si on relance dans la même seconde) : rm -rf __pycache__ et relancer.">
+    <section class="slide" hidden data-clock="0:16" data-title="Un exemple qui échoue"
+      data-note="On décide que l'apostrophe sépare deux mots : « je m'appelle Kevin » = je / m / appelle / Kevin = 4. On l'écrit d'abord comme exemple, avant de toucher au code. Il échoue : Expected 4, Got 3, parce que split() ne coupe que sur les espaces. Expected / Got : c'est la forme de tous les messages d'échec de la séance. La sortie montrée est celle de python -m doctest ; lancé comme script, la seule différence est __main__.count_words (et le chemin complet du fichier). Si la sortie ne change pas après la modif (bytecode en cache si on relance dans la même seconde) : rm -rf __pycache__ et relancer.">
       <p class="kicker">1 — doctest · à vous</p>
-      <h2>Quand un exemple est faux</h2>
-      <p>Remplacez le <code>3</code> du premier exemple par <code>4</code>, relancez l'une ou l'autre commande, sans <code>-v</code> :</p>
-      <pre class="out">**********************************************************************
-File "text_tools.py", line 12, in text_tools.count_words
+      <h2>Un exemple qui <em>échoue</em></h2>
+      <p>On veut que l'apostrophe sépare deux mots. Ajoutez cet exemple dans la docstring de <code>count_words</code>, sous les autres :</p>
+      <pre>    <span class="k">&gt;&gt;&gt; count_words("je m'appelle Kevin")
+    4</span></pre>
+      <pre class="out"><span class="d"># relancez, sans -v</span>
+File "text_tools.py", line 18, in text_tools.count_words
 Failed example:
-    count_words("le chat dort")
+    count_words("je m'appelle Kevin")
 <span class="k">Expected:
     4</span>
 <span class="r">Got:
     3</span>
-**********************************************************************
 <span class="r">***Test Failed*** 1 failures.</span></pre>
-      <p class="punch">Attendu, obtenu. Tous les messages d'échec d'aujourd'hui auront cette forme. (Remettez le 3.)</p>
+      <p class="punch">L'exemple dit ce qu'on veut. Le code, pas encore.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:19" data-title="doctest : pour quoi faire"
+    <section class="slide" hidden data-clock="0:18" data-title="Corriger le code"
+      data-note="Une ligne : remplacer l'apostrophe par une espace avant de couper. Relancer : silence sans -v, 5 passed avec -v. Bonus : l'apostrophe typographique ’ (U+2019), celle de Word et de la plupart des sites, est un autre caractère que ' — l'exemple échoue à nouveau (Got 3). Solution : .replace(&quot;’&quot;, &quot; &quot;) en plus. Point linguistique : le texte réel contient les deux. On a écrit l'exemple avant le code : c'est la méthode de l'exercice 2 (TDD).">
+      <p class="kicker">1 — doctest · à vous</p>
+      <h2>Corriger le code</h2>
+      <pre>def count_words(text: str) -&gt; int:
+    <span class="d">...</span>
+    return len(text<span class="k">.replace("'", " ")</span>.split())</pre>
+      <pre class="out"><span class="k">uv run python text_tools.py -v</span>
+<span class="d">...</span>
+<span class="g">5 passed and 0 failed.
+Test passed.</span></pre>
+      <div class="callout">
+        <div>
+          <p><strong>Bonus</strong> — l'apostrophe typographique <code>’</code> (Word, le web) : ajoutez l'exemple, voyez-le échouer, corrigez.</p>
+        </div>
+        <pre>&gt;&gt;&gt; count_words("je m’appelle Kevin")
+4</pre>
+      </div>
+      <p class="punch">L'exemple d'abord, le code ensuite.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:20" data-title="doctest : pour quoi faire"
       data-note="doctest est parfait pour documenter, mauvais comme suite de tests. pytest sait aussi les lancer (--doctest-modules), donc on ne perd rien.">
       <p class="kicker">1 — doctest</p>
       <h2>Pour quoi faire</h2>
@@ -670,7 +693,7 @@ E     ? ++       +
     </section>
 
     <section class="slide" hidden data-clock="0:45" data-title="parametrize"
-      data-note="Chaque ligne de la liste devient un test séparé, avec son propre nom dans le rapport -v. Les deux derniers cas documentent des choix : l'apostrophe ne coupe pas, « ! » compte comme un mot.">
+      data-note="Chaque ligne de la liste devient un test séparé, avec son propre nom dans le rapport -v. Les deux derniers cas documentent des choix : l'apostrophe ne coupe pas, « ! » compte comme un mot. Dans 1-doctest on a fait le choix inverse pour l'apostrophe : les deux se défendent, c'est le test qui écrit lequel on a pris.">
       <p class="kicker">3 — pytest</p>
       <h2>Un test, plusieurs valeurs</h2>
       <pre>import pytest

@@ -15,7 +15,6 @@ def count_words(text: str) -> int:
     2
     >>> count_words("")
     0
-    >>> count_words("Je m")
     """
     return len(text.split())
 
