@@ -421,3 +421,26 @@ The instructor chose the artifact-style HTML page over the presenterm deck, then
 - The deck has been read in a browser but not paged through end to end on a projector.
 - `slides/s3-agents-intro.md` (the 19-slide presenterm version) is **stale**: it predates the API expansion, the corrections and the new hands-on. Keep it as the offline fallback only if it is brought back into line, or delete it.
 - `site/docs/sessions/practice-agents.md` and `exercises/agent-lab.md` still describe the older shape of the hour (the column drill live, six take-home tasks). They are coherent as take-home material but no longer mirror the deck.
+
+### Testing with pytest — 2h class for the NLP cohort (2026-10-01, instructor-driven, the day before the class)
+
+Instructor request, no task file: a class on testing Python code — doctest, then `assert`, then pytest (unit tests mainly, fixtures and mocking briefly, the `tests/` folder as good practice), a pipeline demo run by everyone during the talk, and two exercises (fix the code; test-driven development). Slides in French as an HTML deck, the site in English, solutions on a `solutions` branch.
+
+**Divergence from SPEC, recorded not resolved** — this class is not one of SPEC's four sessions. Its closest anchor is SPEC 4.3 ("Testing as the anchor … the most reliable component of an agent system is not a model — it is the test suite"), which it teaches on its own, before Session 4. Nothing in `SPEC.md` was changed. **Solutions live on a `solutions` branch**, at the instructor's request, not in `exercises/<session>/solutions/` as AGENTS.md's layout says.
+
+**Produced**
+
+- `resources/testing-lab/` — one uv project (pandas; pytest as a dev dependency; `--tb=short`), six folders: `1-doctest`, `2-assert`, `3-pytest` (parametrize, `raises`, `approx`, a conftest fixture, `tmp_path`, a `monkeypatch` mock of the Unistra API call), `4-pipeline` (the demo), `exo1-fix`, `exo2-tdd`. README with the demo steps and the list of planted data problems.
+- **The demo story**: a colleague sends one CSV of product reviews per week; `pipeline.py` = `load → clean → add_n_tokens → summarise` (per language: count, mean rating, mean words). `week1.csv` is clean; `week2.csv` runs without error but is wrong (`FR`/`Fr`/`fr `/`EN`, two empty texts, five ratings out of 10); `week3.csv` crashes (`;` separator, `note` column → `KeyError: 'text'`). `tests/test_data.py` checks every `data/*.csv` through a fixture with `params`; `tests/test_clean.py` fails until two lines are added to `clean()`; the ratings and separator are refused as data problems (`data/rejected/`); `test_week1_summary_has_not_changed` is the regression test.
+- `slides/testing-pytest.html` (+ copy in `site/docs/slides/`) — 46 slides in French with speaker notes and target clock, same engine as the s3 deck, own `localStorage` keys (`tst-`) so the two decks do not share a position.
+- Site: `sessions/testing.md` (class plan, all demo commands), `reference/testing.md` (the ported `research/old-site-port/reference/testing.md`, plus kinds of tests, doctest, mocking, testing code vs checking data), `exercises/testing-fix.md` (T.1), `exercises/testing-tdd.md` (T.2), `files/testing-lab.zip` (from `git archive`), nav + three index pages.
+- `solutions` branch — `exo1-fix` fixed plus the missing test, `exo2-tdd` solved step by step, `4-pipeline` in its end-of-demo state.
+
+**Verification** — every folder run on CPython 3.12.14, pytest 9.1.1, pandas from `uv.lock`: `3-pytest` 15 passed with `UNISTRA_API_KEY` unset; `4-pipeline` 6 failed / 14 passed / 4 skipped as shipped, 2 failed after the `clean()` fix, 14 passed after moving week 2 and 3 to `data/rejected/`; `exo1-fix` 8 failed / 3 passed as shipped, 12 passed with the solution; `exo2-tdd` 1 failed as shipped, 14 passed with the solution. The `uv init --no-package` + `touch conftest.py` recipe was run (without `conftest.py`: collection error; with: pass). Every terminal output on a slide was produced by these runs (paths shortened). Deck rendered headless in Chromium at 1440×900; HTML tags balanced. Facts on the "why test" slides checked against primary sources by a delegated fetch: The Turing Way *Code Testing* quotes (sign error, metres/feet, "because you are short on time", the regression-test definition, the list of test kinds); Mars Climate Orbiter was really pound-force·s vs newton·s (said in the notes); Reinhart–Rogoff from Herndon, Ash & Pollin 2013, PERI WP 322 (rows 30–44 instead of 30–49).
+
+**UNVERIFIED / needs human review**
+
+- The lab was only run on Linux. Not rehearsed on WSL, macOS, Git Bash or the A330 desktops; `uv sync` downloads pandas (~12 MB) — thirty students at once on the room's network is untested.
+- `labeler.py`'s real call to the Unistra API was never executed (no key in this shell); only the mocked tests ran. The payload shape matches `resources/api/question.json`.
+- The deck has not been paged through on a projector; timing (2h for 46 slides + demo + two exercises) is an estimate. Cut order: "Et avec les agents", "Ce qu'on a fait", then the `raises/approx` slide.
+- The `solutions` branch must be pushed for students to switch to it — and anyone can switch to it before the class.
