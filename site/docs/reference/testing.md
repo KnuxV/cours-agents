@@ -180,7 +180,7 @@ Run again: nothing is printed, and with `-v` the report ends with `5 passed and 
 uv run python vocabulary.py -v
 ```
 
-The report ends with `7 tests in 4 items.` and `7 passed and 0 failed.` This works around two of the limits above: when several answers are acceptable (`"chat"` and `"dort"` are equally long, so `longest_word` may return either), and for floats (`0 < ratio <= 1` does not depend on how `0.6666666666666666` is printed). The price shows when an example fails: doctest can only say `Expected: True`, `Got: False`, and no longer shows the value the function returned. Replace `max` with `min` in `longest_word` to see it.
+Each function starts with an ordinary example that prints the exact answer, so you can see what it does; the question-style examples come after. The report ends with `10 tests in 4 items.` and `10 passed and 0 failed.` This works around two of the limits above: when several answers are acceptable (`"chat"` and `"dort"` are equally long, so `longest_word` may return either), and for floats (`0 < ratio <= 1` does not depend on how `0.6666666666666666` is printed). The price shows when an example fails: doctest can only say `Expected: True`, `Got: False`, and no longer shows the value the function returned. Replace `max` with `min` in `longest_word` to see it.
 
 pytest can run doctests alongside your other tests:
 

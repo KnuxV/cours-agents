@@ -504,13 +504,15 @@ Test passed.</span></pre>
     </section>
 
     <section class="slide" hidden data-clock="0:20" data-title="Pas seulement =="
-      data-note="Deuxième fichier du dossier : vocabulary.py. doctest compare ce qui s'affiche ; un exemple peut donc être une question dont la réponse affichée est True. Utile quand plusieurs réponses sont acceptables (deux mots de même longueur) ou pour les flottants (on vérifie un encadrement, pas 0.6666666666666666). Le prix : si ça casse, le message dit Expected True, Got False — on ne voit plus la valeur obtenue. Montrer en remplaçant max par min dans longest_word si le temps le permet : les deux exemples de longest_word échouent, Expected True, Got False.">
+      data-note="Deuxième fichier du dossier : vocabulary.py. Chaque fonction commence par un exemple classique (la valeur exacte, pour comprendre ce qu'elle fait), puis des exemples-questions. doctest compare ce qui s'affiche ; un exemple peut donc être une question dont la réponse affichée est True. Utile quand plusieurs réponses sont acceptables (deux mots de même longueur) ou pour les flottants (on vérifie un encadrement, pas 0.6666666666666666). Le prix : si ça casse, le message dit Expected True, Got False — on ne voit plus la valeur obtenue. Montrer en remplaçant max par min dans longest_word si le temps le permet : les deux exemples de longest_word échouent, Expected True, Got False.">
       <p class="kicker">1 — doctest · à vous</p>
       <h2>Pas seulement <em>==</em></h2>
       <p class="lede">Un exemple peut être une <strong>question</strong> sur le résultat : il affiche <code>True</code>.</p>
       <div class="cols">
         <div>
           <pre><span class="d"># vocabulary.py (extraits)</span>
+&gt;&gt;&gt; tokenize("Le chat dort.")
+['le', 'chat', 'dort']
 <span class="k">&gt;&gt;&gt; "chat" in tokenize("Le chat dort.")</span>
 True
 <span class="k">&gt;&gt;&gt; len(longest_word("il dort profondément")) &gt; 5</span>
@@ -523,7 +525,7 @@ True</pre>
         <div>
           <pre class="out"><span class="k">uv run python vocabulary.py -v</span>
 <span class="d">...</span>
-<span class="g">7 passed and 0 failed.</span></pre>
+<span class="g">10 passed and 0 failed.</span></pre>
           <p><strong>Utile quand</strong> plusieurs réponses sont acceptables, ou pour un flottant.</p>
           <p><strong>Le prix</strong> : en cas d'échec, <code>Expected True</code> / <code>Got False</code> — la valeur n'est plus affichée.</p>
         </div>
