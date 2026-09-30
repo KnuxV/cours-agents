@@ -413,7 +413,7 @@ Test passed.</span></pre>
     </section>
 
     <section class="slide" hidden data-clock="0:16" data-title="Quand un exemple est faux"
-      data-note="Faire la modif en direct : remplacer le 3 par 4 dans le premier exemple, relancer. Puis remettre 3. Expected / Got : c'est la forme de tous les messages de test de la séance.">
+      data-note="Faire la modif en direct : remplacer le 3 par 4 dans le premier exemple, relancer. Puis remettre 3. Expected / Got : c'est la forme de tous les messages de test de la séance. Si la sortie ne change pas après la modif (bytecode en cache si on relance dans la même seconde) : rm -rf __pycache__ et relancer.">
       <p class="kicker">1 — doctest · à vous</p>
       <h2>Quand un exemple est faux</h2>
       <p>Remplacez le <code>3</code> du premier exemple par <code>4</code>, relancez (sans <code>-v</code>) :</p>
