@@ -170,6 +170,18 @@ Run again: nothing is printed, and with `-v` the report ends with `5 passed and 
 - floats — `0.1 * 3` prints `0.30000000000000004`, and a rounding change breaks the example (section 6.1);
 - DataFrames and other large objects — how they print depends on the library version and the width of the display.
 
+**Not only `==`: examples that ask a question.** Because doctest compares what is *printed*, an example does not have to print the answer itself. It can print `True`, if it is a question about the answer — with `in`, `not in`, `>`, `<=`. The second file of the folder, `vocabulary.py`, is written that way:
+
+```python title="1-doctest/vocabulary.py" linenums="1"
+--8<-- "resources/testing-lab/1-doctest/vocabulary.py"
+```
+
+```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces — inside ~/testing-lab/1-doctest"
+uv run python vocabulary.py -v
+```
+
+The report ends with `7 tests in 4 items.` and `7 passed and 0 failed.` This works around two of the limits above: when several answers are acceptable (`"chat"` and `"dort"` are equally long, so `longest_word` may return either), and for floats (`0 < ratio <= 1` does not depend on how `0.6666666666666666` is printed). The price shows when an example fails: doctest can only say `Expected: True`, `Got: False`, and no longer shows the value the function returned. Replace `max` with `min` in `longest_word` to see it.
+
 pytest can run doctests alongside your other tests:
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces — inside ~/testing-lab/1-doctest"
@@ -177,12 +189,13 @@ uv run pytest --doctest-modules
 ```
 
 ```text
-text_tools.py ..                                                         [100%]
+text_tools.py ..                                                         [ 40%]
+vocabulary.py ...                                                        [100%]
 
-============================== 2 passed in 0.01s ===============================
+============================== 5 passed in 0.01s ===============================
 ```
 
-pytest counts one test per function that has examples, hence 2.
+pytest counts one test per function that has examples: two in `text_tools.py`, three in `vocabulary.py`.
 
 ## 5. Your first test
 

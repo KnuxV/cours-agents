@@ -61,6 +61,7 @@ git pull
 cd ~/testing-lab/1-doctest
 uv run python text_tools.py -v                 # 4 passed and 0 failed
 uv run python -m doctest -v text_tools.py      # the same, without the block at the end of the file
+uv run python vocabulary.py -v                 # 7 passed: examples written with in and >, not ==
 
 cd ~/testing-lab/2-assert
 uv run python check_text_tools.py              # stops at the 3rd check, on purpose
