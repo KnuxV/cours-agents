@@ -9,5 +9,5 @@ watch it fail, write just enough code to make it pass, then the next test.
 """
 
 
-def parse_number(text):
+def parse_number(text: str) -> float:
     raise NotImplementedError

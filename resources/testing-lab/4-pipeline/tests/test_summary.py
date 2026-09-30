@@ -7,7 +7,7 @@ from pipeline import add_n_tokens, clean, load, summarise
 HERE = Path(__file__).parent
 
 
-def test_summarise_by_hand():
+def test_summarise_by_hand() -> None:
     reviews = pd.DataFrame(
         {
             "review_id": [1, 2, 3],
@@ -22,7 +22,7 @@ def test_summarise_by_hand():
     assert summary.loc["en", "mean_tokens"] == 6
 
 
-def test_week1_summary_has_not_changed():
+def test_week1_summary_has_not_changed() -> None:
     """Regression test: week 1's report was checked by hand once and saved.
 
     To save it again (only after checking the new numbers by hand):

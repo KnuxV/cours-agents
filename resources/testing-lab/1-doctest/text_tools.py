@@ -4,7 +4,7 @@ Run the examples:   uv run python -m doctest -v text_tools.py
 """
 
 
-def count_words(text):
+def count_words(text: str) -> int:
     """Count the words in a text (words are separated by whitespace).
 
     >>> count_words("le chat dort")
@@ -17,7 +17,7 @@ def count_words(text):
     return len(text.split())
 
 
-def normalize(text):
+def normalize(text: str) -> str:
     """Lowercase a text and remove the spaces around it.
 
     >>> normalize("  Le Chat ")

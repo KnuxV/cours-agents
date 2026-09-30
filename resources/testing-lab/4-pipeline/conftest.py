@@ -4,7 +4,7 @@ import pytest
 
 
 @pytest.fixture
-def small_reviews():
+def small_reviews() -> pd.DataFrame:
     """Five reviews written by hand, with the problems we have met in real files."""
     return pd.DataFrame(
         {

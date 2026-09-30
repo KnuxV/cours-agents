@@ -362,16 +362,17 @@ git pull</span></pre>
     </section>
 
     <section class="slide" hidden data-clock="0:08" data-title="Un test, c'est quoi ?"
-      data-note="Tout le reste de la séance est une variation sur ces trois lignes. Attendu contre obtenu.">
+      data-note="Tout le reste de la séance est une variation sur ces lignes. La comparaison == donne True ou False ; assert ne fait rien sur True et lève AssertionError sur False. Attendu contre obtenu. Les annotations (text: str, -> int) disent ce que la fonction prend et rend : on les met partout aujourd'hui.">
       <p class="kicker">0 — Définition</p>
       <h2>Un test, c'est quoi ?</h2>
       <p class="lede">Du code qui exécute votre code et compare <strong>ce qu'on attend</strong> à <strong>ce qu'on obtient</strong>.</p>
       <pre><span class="d"># le code</span>
-def count_words(text):
+def count_words(text: str) -> int:
     return len(text.split())
 
-<span class="d"># le test</span>
-<span class="k">assert count_words("le chat dort") == 3</span></pre>
+<span class="d"># deux tests</span>
+<span class="k">assert count_words("le chat dort") == 3</span>    <span class="d"># 3 == 3 →</span> <span class="g">True</span>  <span class="d">: rien ne se passe</span>
+<span class="k">assert count_words("le chat dort") == 4</span>    <span class="d"># 3 == 4 →</span> <span class="r">False</span> <span class="d">: AssertionError</span></pre>
       <p class="punch">Si c'est vrai : rien. Si c'est faux : une erreur qui dit où.</p>
     </section>
 
@@ -417,7 +418,7 @@ def count_words(text):
       data-note="Ouvrir 1-doctest/text_tools.py dans l'éditeur. Les lignes >>> sont exactement ce qu'on taperait dans l'interpréteur Python, et la ligne suivante ce qu'il répondrait.">
       <p class="kicker">1 — doctest</p>
       <h2>La docstring qui <em>se vérifie</em></h2>
-      <pre>def count_words(text):
+      <pre>def count_words(text: str) -> int:
     """Count the words in a text (separated by whitespace).
 
 <span class="k">    &gt;&gt;&gt; count_words("le chat dort")
@@ -549,7 +550,7 @@ False</span></pre>
     ├── <b>test_</b>text_tools.py
     └── <b>test_</b>labeler.py</pre>
       <ul>
-        <li>fichiers <code>test_*.py</code>, fonctions <code>def test_...():</code> — c'est comme ça que pytest les trouve</li>
+        <li>fichiers <code>test_*.py</code>, fonctions <code>def test_...() -> None:</code> — c'est comme ça que pytest les trouve</li>
         <li>pytest s'installe comme dépendance <strong>de développement</strong> : <code>uv add --dev pytest</code></li>
       </ul>
       <p class="punch">Sans <code>conftest.py</code> : <code>ModuleNotFoundError</code>. L'erreur que tout le monde rencontre une fois.</p>
@@ -563,15 +564,15 @@ False</span></pre>
 from text_tools import count_words, normalize
 
 
-<span class="k">def test_count_words_simple_sentence():</span>
+<span class="k">def test_count_words_simple_sentence() -> None:</span>
     assert count_words("le chat dort") == 3
 
 
-<span class="k">def test_count_words_empty_text():</span>
+<span class="k">def test_count_words_empty_text() -> None:</span>
     assert count_words("") == 0
 
 
-<span class="k">def test_normalize_strips_and_lowercases():</span>
+<span class="k">def test_normalize_strips_and_lowercases() -> None:</span>
     assert normalize("  Le Chat ") == "le chat"</pre>
       <p class="punch">Des fonctions ordinaires, des <code>assert</code> ordinaires. pytest fait le reste.</p>
     </section>
@@ -631,10 +632,10 @@ E     ? ++       +
       data-note="Trois règles. Le nom est la première chose qu'on lit quand ça échoue : test_1 ne dit rien, test_count_words_empty_text dit tout. Tests indépendants : pytest peut en lancer un seul, dans n'importe quel ordre.">
       <p class="kicker">3 — pytest · bonnes pratiques</p>
       <h2>Un bon test</h2>
-      <pre><span class="k">def test_normalize_strips_and_lowercases():</span>   <span class="d"># 1. un nom qui dit ce qu'on vérifie</span>
-    text = "  Le Chat "                        <span class="d"># 2. préparer</span>
-    result = normalize(text)                   <span class="d">#    agir</span>
-    assert result == "le chat"                 <span class="d">#    vérifier</span></pre>
+      <pre><span class="k">def test_normalize_strips_and_lowercases() -> None:</span>  <span class="d"># 1. un nom qui dit ce qu'on vérifie</span>
+    text = "  Le Chat "                              <span class="d"># 2. préparer</span>
+    result = normalize(text)                         <span class="d">#    agir</span>
+    assert result == "le chat"                       <span class="d">#    vérifier</span></pre>
       <ul>
         <li><strong>un nom qui parle</strong> : c'est ce qu'on lit quand ça échoue</li>
         <li><strong>une seule raison d'échouer</strong> par test</li>
@@ -673,7 +674,7 @@ E     ? ++       +
         ("Bonjour, le monde !", 4),  # un choix : "!" compte comme un mot
     ],
 )</span>
-def test_count_words(text, expected):
+def test_count_words(text: str, expected: int) -> None:
     assert count_words(text) == expected</pre>
       <pre class="out">tests/test_text_tools.py::test_count_words[le chat dort-3] <span class="g">PASSED</span>
 tests/test_text_tools.py::test_count_words[  le   chat  -2] <span class="g">PASSED</span>
@@ -685,13 +686,13 @@ tests/test_text_tools.py::test_count_words[  le   chat  -2] <span class="g">PASS
       <p class="kicker">3 — pytest</p>
       <h2>Erreurs attendues, nombres à virgule</h2>
       <pre><span class="d"># une entrée invalide doit être refusée</span>
-def test_type_token_ratio_refuses_empty_list():
+def test_type_token_ratio_refuses_empty_list() -> None:
     <span class="k">with pytest.raises(ValueError):</span>
         type_token_ratio([])
 
 
 <span class="d"># ne jamais comparer des flottants avec == tout seul</span>
-def test_type_token_ratio_with_repetitions():
+def test_type_token_ratio_with_repetitions() -> None:
     assert type_token_ratio(["a", "b", "a"]) == <span class="k">pytest.approx(0.667, abs=0.001)</span></pre>
       <p class="punch"><code>raises</code> échoue si l'erreur <em>n'arrive pas</em>. <code>approx</code> tolère une petite différence.</p>
     </section>
@@ -702,14 +703,14 @@ def test_type_token_ratio_with_repetitions():
       <h2>Fixtures : préparer une fois</h2>
       <pre><span class="d"># conftest.py</span>
 <span class="k">@pytest.fixture</span>
-def tokens():
+def tokens() -> list[str]:
     return ["le", "chat", "voit", "le", "chien"]
 
 <span class="d"># tests/test_text_tools.py</span>
-def test_type_token_ratio_on_fixture(<span class="k">tokens</span>):
+def test_type_token_ratio_on_fixture(<span class="k">tokens</span>: list[str]) -> None:
     assert type_token_ratio(tokens) == pytest.approx(4 / 5)
 
-def test_count_words_in_file(<span class="k">tmp_path</span>):      <span class="d"># fournie par pytest</span>
+def test_count_words_in_file(<span class="k">tmp_path</span>: Path) -> None:  <span class="d"># fournie par pytest</span>
     corpus = tmp_path / "corpus.txt"
     corpus.write_text("le chat dort\nle chien aussi\n", encoding="utf-8")
     assert count_words_in_file(corpus) == 6</pre>
@@ -721,9 +722,13 @@ def test_count_words_in_file(<span class="k">tmp_path</span>):      <span class=
       <p class="kicker">3 — pytest · en bref</p>
       <h2>Mock : remplacer ce qu'on ne teste pas</h2>
       <p><code>label_review()</code> demande au LLM d'Unistra si un avis est positif, puis lit sa réponse.</p>
-      <pre>import labeler
+      <pre>import pytest
 
-def test_answer_with_capital_and_full_stop(<span class="k">monkeypatch</span>):
+import labeler
+
+def test_answer_with_capital_and_full_stop(
+    <span class="k">monkeypatch</span>: pytest.MonkeyPatch,
+) -> None:
     <span class="k">monkeypatch.setattr(labeler, "ask_llm", lambda prompt: "Negative.")</span>
     assert labeler.label_review("Arrivé cassé") == "neg"</pre>
       <p>Pendant ce test, <code>ask_llm</code> est une fausse fonction qui répond toujours <code>"Negative."</code>.</p>
@@ -830,16 +835,16 @@ fr            1          9.0          4.0</pre>
       <p class="kicker">4 — Démo · étape 4</p>
       <h2>Contrôler chaque fichier</h2>
       <pre><span class="d"># tests/test_data.py (extrait)</span>
-DATA_FILES = sorted(Path(...).glob("*.csv"))       <span class="d"># tous les CSV de data/</span>
+DATA_FILES: list[Path] = sorted(Path(...).glob("*.csv"))   <span class="d"># tous les CSV de data/</span>
 
 <span class="k">@pytest.fixture(params=DATA_FILES, ids=lambda path: path.name)</span>
-def raw(request):
+def raw(request: pytest.FixtureRequest) -> pd.DataFrame:
     return load(request.param)
 
-def test_expected_columns(raw):
+def test_expected_columns(raw: pd.DataFrame) -> None:
     assert list(raw.columns) == ["review_id", "product", "lang", "rating", "text"]
 
-def test_languages_are_fr_or_en(reviews):
+def test_languages_are_fr_or_en(reviews: pd.DataFrame) -> None:
     unknown = sorted(set(reviews["lang"]) - {"fr", "en"})
     assert unknown == []</pre>
       <pre><span class="k">uv run pytest tests/test_data.py -v</span></pre>
@@ -904,7 +909,7 @@ test_no_missing_or_empty_text[week2.csv]
       data-note="Tout le monde ajoute les deux lignes dans pipeline.py (fonction clean, avant le return). Relancer test_clean : vert. Puis tout le dossier : test_week1_summary_has_not_changed reste vert — le test de régression prouve qu'on n'a rien cassé pour la semaine 1.">
       <p class="kicker">4 — Démo · étape 6</p>
       <h2>Corriger <code>clean()</code></h2>
-      <pre>def clean(reviews):
+      <pre>def clean(reviews: pd.DataFrame) -> pd.DataFrame:
     reviews = reviews.copy()
     reviews["text"] = reviews["text"].str.strip()
 <span class="k">    reviews["lang"] = reviews["lang"].str.strip().str.lower()

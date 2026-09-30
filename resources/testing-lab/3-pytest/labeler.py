@@ -10,7 +10,7 @@ import urllib.request
 API_URL = "https://conversation.ia.unistra.fr/api/chat/completions"
 
 
-def ask_llm(prompt):
+def ask_llm(prompt: str) -> str:
     """Send one prompt to the Unistra API and return the text of the answer."""
     payload = {"model": "coder", "messages": [{"role": "user", "content": prompt}]}
     request = urllib.request.Request(
@@ -25,7 +25,7 @@ def ask_llm(prompt):
         return json.load(response)["choices"][0]["message"]["content"]
 
 
-def label_review(text):
+def label_review(text: str) -> str:
     """Return "pos", "neg" or "unknown" for one review."""
     answer = ask_llm(f"Is this review positive or negative? Answer with one word.\n\n{text}")
     word = answer.strip().strip(".!").lower()

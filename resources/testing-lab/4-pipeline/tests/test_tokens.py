@@ -12,6 +12,6 @@ from pipeline import add_n_tokens
         ("Super !", 2),  # a choice we made: "!" counts as a token
     ],
 )
-def test_add_n_tokens(text, expected):
+def test_add_n_tokens(text: str, expected: int) -> None:
     reviews = pd.DataFrame({"text": [text]})
     assert add_n_tokens(reviews)["n_tokens"].tolist() == [expected]

@@ -2,23 +2,23 @@
 from pathlib import Path
 
 
-def count_words(text):
+def count_words(text: str) -> int:
     """Count the words in a text (words are separated by whitespace)."""
     return len(text.split())
 
 
-def normalize(text):
+def normalize(text: str) -> str:
     """Lowercase a text and remove the spaces around it."""
     return text.strip().lower()
 
 
-def type_token_ratio(tokens):
+def type_token_ratio(tokens: list[str]) -> float:
     """Share of distinct words: 1.0 means no word is repeated."""
     if not tokens:
         raise ValueError("cannot compute a ratio on an empty list")
     return len(set(tokens)) / len(tokens)
 
 
-def count_words_in_file(path):
+def count_words_in_file(path: str | Path) -> int:
     """Count the words in a UTF-8 text file."""
     return count_words(Path(path).read_text(encoding="utf-8"))

@@ -8,6 +8,6 @@ import pytest
 
 
 @pytest.fixture
-def tokens():
+def tokens() -> list[str]:
     """A short tokenised sentence, rebuilt fresh for every test that asks for it."""
     return ["le", "chat", "voit", "le", "chien"]
