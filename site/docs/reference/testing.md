@@ -125,24 +125,42 @@ Test passed.
 
 Three examples in `count_words` and one in `normalize` make four tests; the three "items" are the module and its two functions. Without `-v`, a passing run prints **nothing at all** — silence means success.
 
-Now break it on purpose: change the first expected answer from `3` to `4` and run either command again, without `-v`. With `python -m doctest`:
+Now write down something the code does not do yet. Say you decide that an apostrophe separates two words, so that *je m'appelle Kevin* counts as four: *je*, *m*, *appelle*, *Kevin*. Add that as a new example in the docstring of `count_words`, under the others:
+
+```python
+    >>> count_words("je m'appelle Kevin")
+    4
+```
+
+Run either command again, without `-v`. With `python -m doctest`:
 
 ```text
 **********************************************************************
-File "text_tools.py", line 12, in text_tools.count_words
+File "text_tools.py", line 18, in text_tools.count_words
 Failed example:
-    count_words("le chat dort")
+    count_words("je m'appelle Kevin")
 Expected:
     4
 Got:
     3
 **********************************************************************
 1 items had failures:
-   1 of   3 in text_tools.count_words
+   1 of   4 in text_tools.count_words
 ***Test Failed*** 1 failures.
 ```
 
-(Python prints the full path to the file on the `File` line; it is shortened here. Run as a script, the only other difference is that the function is called `__main__.count_words`.) The report names the line, the call, what you wrote and what the code actually returned. Put the `3` back.
+(Python prints the full path to the file on the `File` line; it is shortened here. Run as a script, the only other difference is that the function is called `__main__.count_words`.) The report names the line, the call, what you wrote and what the code actually returned: `split()` only cuts on whitespace, so `m'appelle` stays one word. The example is right; the code is not there yet. One change fixes it — replace the apostrophe with a space before splitting:
+
+```python
+def count_words(text: str) -> int:
+    ...
+    return len(text.replace("'", " ").split())
+```
+
+Run again: nothing is printed, and with `-v` the report ends with `5 passed and 0 failed.` You wrote the example first and the code second — which is the method of [exercise T.2](../exercises/testing-tdd.md).
+
+!!! note "Two apostrophes"
+    Text copied from a word processor or a web page often contains the **typographic** apostrophe `’` (U+2019), not the straight `'` your keyboard types. They are different characters: add the example `count_words("je m’appelle Kevin")` → `4` and it fails again (`Got: 3`) until you also replace `’`. Real text contains both.
 
 **When to use doctest.** For short examples that *are* documentation: someone reading the docstring learns how to call the function, and the example cannot silently go out of date, because it is checked.
 
