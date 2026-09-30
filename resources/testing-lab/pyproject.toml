@@ -1,0 +1,17 @@
+[project]
+name = "testing-lab"
+version = "0.1.0"
+description = "Examples, demo and exercises for the testing class (doctest, assert, pytest)"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+]
+
+[tool.pytest.ini_options]
+# Short tracebacks: the failing line and the values, without the whole function.
+addopts = "--tb=short"

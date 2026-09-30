@@ -1,0 +1,15 @@
+review_id,product,lang,rating,text
+201,livre,fr,4,Une belle histoire de famille
+202,livre,en,3,Too long for what it says
+203,casque,FR,8,Très bon rapport qualité prix
+204,casque,en,5,Best headphones I have owned
+205,cafetière,fr ,9,Le café est excellent
+206,cafetière,en,2,Leaks on the counter
+207,lampe,Fr,7,Jolie mais un peu petite
+208,lampe,en,4,
+209,sac,fr,5,Parfait pour les cours
+210,sac,EN,1,Strap broke on day one
+211,livre,fr,10,Un chef-d'œuvre
+212,casque,fr,3,"   "
+213,lampe,en,4,Does the job
+214,sac,fr,6,Correct pour le prix

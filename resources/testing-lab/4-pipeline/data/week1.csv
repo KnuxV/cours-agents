@@ -1,0 +1,15 @@
+review_id,product,lang,rating,text
+101,livre,fr,5,Un roman magnifique que je relirai
+102,livre,en,4,A good read but the ending is rushed
+103,casque,fr,2,Le son grésille au bout de deux jours
+104,casque,en,5,Great sound and very comfortable
+105,cafetière,fr,4,"Fait un bon café, un peu bruyante"
+106,cafetière,en,1,Stopped working after a week
+107,lampe,fr,3,Correcte sans plus
+108,lampe,en,4,Nice warm light for reading
+109,sac,fr,5,Solide et pratique pour le vélo
+110,sac,en,3,Fine but the zip feels cheap
+111,livre,fr,4,Bien écrit et très documenté
+112,casque,en,2,The left ear stopped working
+113,lampe,fr,5,Parfaite sur mon bureau
+114,sac,en,4,Lots of pockets and light
