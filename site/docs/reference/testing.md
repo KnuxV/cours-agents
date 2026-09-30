@@ -41,7 +41,7 @@ And if the objection is time, The Turing Way has the answer: "You should not ski
 A function that runs your code and asserts something about the result. That is all. No framework is required to understand it:
 
 ```python title="the whole idea, in four lines"
-def add_vat(price, rate):
+def add_vat(price: float, rate: float) -> float:
     return price * (1 + rate)
 
 assert add_vat(100, 0.20) == 120
@@ -179,11 +179,11 @@ The tests. The file name **must** start with `test_`, and so must each function 
 from vat import add_vat
 
 
-def test_twenty_percent():
+def test_twenty_percent() -> None:
     assert add_vat(100, 0.20) == 120
 
 
-def test_zero_rate_changes_nothing():
+def test_zero_rate_changes_nothing() -> None:
     assert add_vat(100, 0) == 100
 ```
 
@@ -262,7 +262,7 @@ def final_price(price: float, discount: float) -> float:
 from discount import final_price
 
 
-def test_twenty_percent_off_100():
+def test_twenty_percent_off_100() -> None:
     assert final_price(100, 0.20) == 80
 ```
 
@@ -274,7 +274,7 @@ uv run pytest tests/test_discount.py
 =================================== FAILURES ===================================
 _________________________ test_twenty_percent_off_100 __________________________
 
-    def test_twenty_percent_off_100():
+    def test_twenty_percent_off_100() -> None:
 >       assert final_price(100, 0.20) == 80
 E       assert 20.0 == 80
 E        +  where 20.0 = final_price(100, 0.2)
@@ -295,7 +295,7 @@ The fix is `price * (1 - discount)`. Delete the two files afterwards; they were 
 from vat import add_vat
 
 
-def test_tiny_price():
+def test_tiny_price() -> None:
     assert add_vat(0.1, 2) == 0.3
 ```
 
@@ -312,7 +312,7 @@ import pytest
 from vat import add_vat
 
 
-def test_tiny_price():
+def test_tiny_price() -> None:
     assert add_vat(0.1, 2) == pytest.approx(0.3)
 ```
 
@@ -323,7 +323,7 @@ This matters far beyond toy examples: every mean, rate, share or revenue in a da
 **Arrange, act, assert.** Three visual blocks, in that order. A test that mixes them is a test nobody can read six months later.
 
 ```python
-def test_revenue_per_region():
+def test_revenue_per_region() -> None:
     # Arrange
     rows = [("Alsace", 3, 2.0), ("Alsace", 1, 2.0), ("Bretagne", 5, 1.0)]
 
@@ -342,13 +342,13 @@ def test_revenue_per_region():
 total = 0  # shared between tests — a trap
 
 
-def test_increment():
+def test_increment() -> None:
     global total
     total += 1
     assert total == 1
 
 
-def test_increment_again():
+def test_increment_again() -> None:
     global total
     total += 1
     assert total == 2      # only passes if the other test ran first
@@ -371,7 +371,7 @@ import pytest
 from vat import add_vat
 
 
-def test_negative_rate_is_refused():
+def test_negative_rate_is_refused() -> None:
     with pytest.raises(ValueError):
         add_vat(100, -0.1)
 ```
@@ -392,7 +392,7 @@ Four near-identical tests are four places to change. One parametrised test is on
         (19.99, 0.0, 19.99),
     ],
 )
-def test_rates(price, rate, expected):
+def test_rates(price: float, rate: float, expected: float) -> None:
     assert add_vat(price, rate) == pytest.approx(expected)
 ```
 
@@ -430,24 +430,26 @@ def print_summary(csv_path: Path) -> None:
 ```
 
 ```python title="tests/test_io.py"
+from pathlib import Path
+
 import pytest
 
 from report import count_rows, print_summary
 
 
 @pytest.fixture
-def sales_csv(tmp_path):
+def sales_csv(tmp_path: Path) -> Path:
     """Write a two-row CSV in a directory pytest deletes after the test."""
     path = tmp_path / "sales.csv"
     path.write_text("region,units\nAlsace,3\nBretagne,5\n", encoding="utf-8")
     return path
 
 
-def test_count_rows(sales_csv):
+def test_count_rows(sales_csv: Path) -> None:
     assert count_rows(sales_csv) == 2
 
 
-def test_print_summary(sales_csv, capsys):
+def test_print_summary(sales_csv: Path, capsys: pytest.CaptureFixture[str]) -> None:
     print_summary(sales_csv)
     captured = capsys.readouterr()
     assert "2 rows" in captured.out
@@ -467,11 +469,13 @@ Three things happened worth naming. `sales_csv` is *your* fixture, and it asks f
 A fixture used by several test files goes in `conftest.py` — the same empty file you created in section 5.1, now earning its keep:
 
 ```python title="conftest.py"
+from pathlib import Path
+
 import pytest
 
 
 @pytest.fixture
-def sales_csv(tmp_path):
+def sales_csv(tmp_path: Path) -> Path:
     """A two-row CSV, available to every test in this project."""
     path = tmp_path / "sales.csv"
     path.write_text("region,units\nAlsace,3\nBretagne,5\n", encoding="utf-8")
@@ -708,7 +712,7 @@ The usual advice is a pyramid: many unit tests, fewer integration tests, very fe
 | Symptom | Cause | Fix |
 |---|---|---|
 | `ModuleNotFoundError: No module named 'yourfile'` | Your code is not on the import path when pytest imports `tests/` | Empty `conftest.py` next to `pyproject.toml` (§5.1) |
-| `collected 0 items` | The file or the function is not named `test_*` | Rename: `tests/test_thing.py`, `def test_thing()` |
+| `collected 0 items` | The file or the function is not named `test_*` | Rename: `tests/test_thing.py`, `def test_thing() -> None` |
 | `fixture 'sales_csv' not found` | The fixture is in another test file | Move it to `conftest.py` (§9) |
 | A test passes alone, fails with the others | Shared state between tests | No module-level mutable data; use a fixture (§7, §9) |
 | `assert 0.30000000000000004 == 0.3` | Comparing floats with `==` | `pytest.approx` (§6.1) |
@@ -734,7 +738,7 @@ The usual advice is a pyramid: many unit tests, fewer integration tests, very fe
 | `uv run pytest -x --lf` | Stop at the first failure; next time, only re-run the failures |
 | `uv run pytest -k "name"` | Only tests whose name matches |
 | `uv run --with pytest-cov pytest --cov=mymodule` | Which lines the tests never executed |
-| `def test_x():` in `tests/test_y.py` | How pytest finds a test |
+| `def test_x() -> None:` in `tests/test_y.py` | How pytest finds a test |
 | `assert value == expected` | The whole API |
 | `assert value == pytest.approx(expected)` | The same, for floats |
 | `with pytest.raises(ValueError):` | Assert that a call is refused |

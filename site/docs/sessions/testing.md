@@ -107,7 +107,7 @@ uv run pytest tests/test_clean.py
 Fix `clean()` in `pipeline.py` by adding the two highlighted lines:
 
 ```python title="pipeline.py" hl_lines="4 5"
-def clean(reviews):
+def clean(reviews: pd.DataFrame) -> pd.DataFrame:
     reviews = reviews.copy()
     reviews["text"] = reviews["text"].str.strip()
     reviews["lang"] = reviews["lang"].str.strip().str.lower()
