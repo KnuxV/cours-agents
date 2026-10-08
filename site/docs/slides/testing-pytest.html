@@ -381,7 +381,7 @@ def count_words(text: str) -> int:
     </section>
 
     <section class="slide" hidden data-clock="0:09" data-title="Les types de tests"
-      data-note="Liste de The Turing Way (page Overview) : smoke, unit, integration, system, acceptance, regression. J'ajoute les contrôles de données, qui ne sont pas des tests du code mais qu'on écrit avec les mêmes outils — on le verra dans la démo. Aujourd'hui : surtout unitaires, un peu de régression et de contrôle des données.">
+      data-note="Liste de The Turing Way (page Overview) : smoke, unit, integration, system, acceptance, regression. J'ajoute les contrôles de données, qui ne sont pas des tests du code mais qu'on écrit avec les mêmes outils — on le verra dans la démo. Les deux dernières lignes sont d'une autre nature : le test A/B et le test UX ne vérifient pas que le code est juste, ils demandent à des humains si le produit est le bon. A/B : on montre au hasard la version A ou B à de vrais utilisateurs et on compare une mesure (clics, achats) — c'est une expérience randomisée. UX : on observe quelques personnes accomplir une tâche et on note où elles bloquent. Aucun des deux ne s'écrit avec pytest. Aujourd'hui : surtout unitaires, un peu de régression et de contrôle des données.">
       <p class="kicker">0 — Vocabulaire</p>
       <h2>Les types de tests</h2>
       <div class="tablewrap">
@@ -394,6 +394,8 @@ def count_words(text: str) -> int:
           <tr><td>système / bout en bout</td><td>tout le programme, comme un utilisateur</td></tr>
           <tr><td><strong>régression</strong></td><td>le résultat n'a pas changé depuis la dernière fois</td></tr>
           <tr><td><strong>contrôle des données</strong></td><td>les fichiers ont la forme attendue</td></tr>
+          <tr><td>test A/B</td><td>deux versions, de vrais utilisateurs : laquelle marche le mieux ?</td></tr>
+          <tr><td>test UX / d'utilisabilité</td><td>on regarde de vraies personnes s'en servir</td></tr>
         </tbody>
       </table>
       </div>
