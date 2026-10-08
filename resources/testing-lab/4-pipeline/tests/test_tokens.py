@@ -13,5 +13,7 @@ from pipeline import add_n_tokens
     ],
 )
 def test_add_n_tokens(text: str, expected: int) -> None:
+    # un tableau d'une seule ligne, qui contient le texte à tester
     reviews = pd.DataFrame({"text": [text]})
+    # la colonne n_tokens doit contenir le nombre de mots attendu
     assert add_n_tokens(reviews)["n_tokens"].tolist() == [expected]

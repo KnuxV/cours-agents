@@ -23,7 +23,9 @@ def tokenize(text: str) -> list[str]:
     >>> "dort." not in tokenize("Le chat dort.")
     True
     """
+    # minuscules, découpage aux espaces, puis on retire la ponctuation collée à chaque mot
     words = [word.strip(".,;:!?") for word in text.lower().split()]
+    # on enlève les mots devenus vides (un "!" tout seul, par exemple)
     return [word for word in words if word != ""]
 
 
@@ -37,6 +39,7 @@ def longest_word(text: str) -> str:
     >>> longest_word("le chat dort") in ["chat", "dort"]
     True
     """
+    # max(..., key=len) : le mot dont la longueur est la plus grande
     return max(tokenize(text), key=len)
 
 
@@ -50,10 +53,12 @@ def type_token_ratio(tokens: list[str]) -> float:
     >>> type_token_ratio(["le", "chat", "le"]) < type_token_ratio(["le", "chat"])
     True
     """
+    # set() ne garde qu'un exemplaire de chaque mot : mots différents / nombre total de mots
     return len(set(tokens)) / len(tokens)
 
 
 if __name__ == "__main__":
+    # ce bloc ne tourne que si on lance ce fichier lui-même : il vérifie les exemples >>>
     import doctest
 
     doctest.testmod()

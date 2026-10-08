@@ -10,4 +10,6 @@ import pytest
 @pytest.fixture
 def tokens() -> list[str]:
     """A short tokenised sentence, rebuilt fresh for every test that asks for it."""
+    # une fixture : pytest appelle cette fonction et donne son résultat
+    # à chaque test qui a un paramètre nommé `tokens`
     return ["le", "chat", "voit", "le", "chien"]

@@ -665,7 +665,7 @@ tests/test_text_tools.py <span class="g">............</span>                    
       <h2>Lire un échec</h2>
       <p>Dans <code>text_tools.py</code>, enlevez <code>.strip()</code> dans <code>normalize</code>, relancez :</p>
       <pre class="out"><span class="r">_____________________ test_normalize_strips_and_lowercases _____________________</span>
-tests/test_text_tools.py:17: in test_normalize_strips_and_lowercases
+tests/test_text_tools.py:22: in test_normalize_strips_and_lowercases
     assert normalize("  Le Chat ") == "le chat"
 <span class="r">E   AssertionError: assert '  le chat ' == 'le chat'</span>
 E
@@ -902,17 +902,23 @@ fr            1          9.0          4.0</pre>
       <p class="kicker">4 — Démo · étape 4</p>
       <h2>Contrôler chaque fichier</h2>
       <pre><span class="d"># tests/test_data.py (extrait)</span>
-DATA_FILES: list[Path] = sorted(Path(...).glob("*.csv"))   <span class="d"># tous les CSV de data/</span>
+<span class="d"># la liste de tous les fichiers .csv du dossier data/</span>
+DATA_FILES: list[Path] = sorted(Path(...).glob("*.csv"))
 
+<span class="d"># params=DATA_FILES : pytest appelle cette fixture une fois par fichier de la liste</span>
+<span class="d"># ids=... : le nom du fichier s'affichera dans le rapport, entre crochets</span>
 <span class="k">@pytest.fixture(params=DATA_FILES, ids=lambda path: path.name)</span>
 def raw(request: pytest.FixtureRequest) -> pd.DataFrame:
+    <span class="d"># request.param : le fichier du tour en cours (week1.csv, puis week2.csv...)</span>
     return load(request.param)
 
+<span class="d"># ce test demande raw : il tourne donc une fois par fichier</span>
 def test_expected_columns(raw: pd.DataFrame) -> None:
-    <span class="d"># request.param : le fichier du tour en cours (week1.csv, puis week2.csv...)</span>
     assert list(raw.columns) == ["review_id", "product", "lang", "rating", "text"]
 
+<span class="d"># reviews : une autre fixture, le même fichier après clean()</span>
 def test_languages_are_fr_or_en(reviews: pd.DataFrame) -> None:
+    <span class="d"># les langues autres que fr et en ; liste vide = tout va bien</span>
     unknown = sorted(set(reviews["lang"]) - {"fr", "en"})
     assert unknown == []</pre>
       <pre><span class="k">uv run pytest tests/test_data.py -v</span></pre>

@@ -10,4 +10,6 @@ watch it fail, write just enough code to make it pass, then the next test.
 
 
 def parse_number(text: str) -> float:
+    # à vous : pour l'instant la fonction ne fait rien et lève une erreur.
+    # Remplacez cette ligne par juste assez de code pour faire passer le test en cours.
     raise NotImplementedError

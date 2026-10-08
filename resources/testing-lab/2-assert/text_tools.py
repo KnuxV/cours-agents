@@ -14,6 +14,7 @@ def count_words(text: str) -> int:
     >>> count_words("")
     0
     """
+    # split() coupe le texte à chaque espace ; len() compte les morceaux obtenus
     return len(text.split())
 
 
@@ -23,4 +24,5 @@ def normalize(text: str) -> str:
     >>> normalize("  Le Chat ")
     'le chat'
     """
+    # strip() enlève les espaces au début et à la fin, lower() met en minuscules
     return text.strip().lower()
