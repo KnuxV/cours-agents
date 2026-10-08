@@ -106,13 +106,13 @@ if __name__ == "__main__":
 `__name__` is `"__main__"` only when the file is the one you launched; when another file imports it — pytest will, in section 5 — the block is skipped. `doctest.testmod()` checks the examples of the current file.
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces — inside ~/testing-lab/1-doctest"
-uv run python text_tools.py -v
+uv run text_tools.py -v
 ```
 
 **Without adding anything.** The `doctest` module can be run on any file, block or no block:
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces — inside ~/testing-lab/1-doctest"
-uv run python -m doctest -v text_tools.py
+uv run -m doctest -v text_tools.py
 ```
 
 With `-v` (verbose), either command lists every example it tried and ends with:
@@ -177,7 +177,7 @@ Run again: nothing is printed, and with `-v` the report ends with `5 passed and 
 ```
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces — inside ~/testing-lab/1-doctest"
-uv run python vocabulary.py -v
+uv run vocabulary.py -v
 ```
 
 Each function starts with an ordinary example that prints the exact answer, so you can see what it does; the question-style examples come after. The report ends with `10 tests in 4 items.` and `10 passed and 0 failed.` This works around two of the limits above: when several answers are acceptable (`"chat"` and `"dort"` are equally long, so `longest_word` may return either), and for floats (`0 < ratio <= 1` does not depend on how `0.6666666666666666` is printed). The price shows when an example fails: doctest can only say `Expected: True`, `Got: False`, and no longer shows the value the function returned. Replace `max` with `min` in `longest_word` to see it.
@@ -620,9 +620,9 @@ Everything so far tests **code**. In data work, half the surprises come from the
 The story: a colleague sends one CSV of product reviews every week (`data/week1.csv`, `week2.csv`, `week3.csv`). `pipeline.py` loads a file, cleans it, counts the words of each review, and prints, per language, the number of reviews, the mean rating and the mean length. Run it on each week:
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces — inside ~/testing-lab/4-pipeline"
-uv run python pipeline.py data/week1.csv
-uv run python pipeline.py data/week2.csv
-uv run python pipeline.py data/week3.csv
+uv run pipeline.py data/week1.csv
+uv run pipeline.py data/week2.csv
+uv run pipeline.py data/week3.csv
 ```
 
 Week 1 works. Week 3 crashes with a `KeyError`, which is at least honest. Week 2 *works* — it prints a table — and the table is wrong, which you only see if you read it closely. That is the dangerous case, and it is the one tests are for.
@@ -777,8 +777,8 @@ The usual advice is a pyramid: many unit tests, fewer integration tests, very fe
 
 | Command / line | What it does |
 |---|---|
-| `uv run python -m doctest -v file.py` | Run the `>>>` examples in the docstrings of `file.py` |
-| `if __name__ == "__main__": doctest.testmod()` | The same, from inside the file: `uv run python file.py -v` |
+| `uv run -m doctest -v file.py` | Run the `>>>` examples in the docstrings of `file.py` |
+| `if __name__ == "__main__": doctest.testmod()` | The same, from inside the file: `uv run file.py -v` |
 | `uv run pytest --doctest-modules` | Let pytest run the doctests too |
 | `uv add --dev pytest` | pytest as a development dependency of the project |
 | `uv run pytest` | Run every test it can find |

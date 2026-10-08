@@ -24,8 +24,8 @@ If `git pull` refuses and mentions *stash*, you changed files inside the course 
 
 | Folder | What it shows | Run (from inside the folder) |
 |---|---|---|
-| `1-doctest/` | Examples inside a docstring that Python checks; `vocabulary.py` writes them with `in` and `>` instead of an exact value | `uv run python text_tools.py -v` or `uv run python -m doctest -v text_tools.py`; same for `vocabulary.py` |
-| `2-assert/` | Plain `assert`: stops at the first failure (on purpose) | `uv run python check_text_tools.py` |
+| `1-doctest/` | Examples inside a docstring that Python checks; `vocabulary.py` writes them with `in` and `>` instead of an exact value | `uv run text_tools.py -v` or `uv run -m doctest -v text_tools.py`; same for `vocabulary.py` |
+| `2-assert/` | Plain `assert`: stops at the first failure (on purpose) | `uv run check_text_tools.py` |
 | `3-pytest/` | `tests/` folder, parametrize, `pytest.raises`, `pytest.approx`, a fixture, `tmp_path`, a mock (`monkeypatch`) | `uv run pytest -v` |
 | `4-pipeline/` | The demo: a four-step pipeline, three weekly CSV files, data checks, unit tests, a regression test | see below |
 | `exo1-fix/` | Exercise 1 — the code is wrong, the tests say where | `uv run pytest` |
@@ -39,9 +39,9 @@ A colleague sends one CSV of product reviews every week. `pipeline.py` prints, p
 
 ```bash
 cd ~/testing-lab/4-pipeline
-uv run python pipeline.py data/week1.csv      # 1. works
-uv run python pipeline.py data/week2.csv      # 2. works... is it right?
-uv run python pipeline.py data/week3.csv      # 3. crashes
+uv run pipeline.py data/week1.csv             # 1. works
+uv run pipeline.py data/week2.csv             # 2. works... is it right?
+uv run pipeline.py data/week3.csv             # 3. crashes
 uv run pytest tests/test_data.py -v           # 4. check every file in data/
 uv run pytest tests/test_clean.py             # 5. what clean() should do: red
 #   6. fix clean() in pipeline.py (two lines, on the slide)

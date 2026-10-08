@@ -1,8 +1,8 @@
 """Small text helpers, with their examples written inside the docstrings.
 
 Run the examples, either way:
-    uv run python text_tools.py -v             (the block at the bottom of this file)
-    uv run python -m doctest -v text_tools.py  (works on any file, no block needed)
+    uv run text_tools.py -v                    (the block at the bottom of this file)
+    uv run -m doctest -v text_tools.py         (works on any file, no block needed)
 """
 
 

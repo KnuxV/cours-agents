@@ -6,8 +6,8 @@ print True, because they are questions about the answer — with `in`,
 `not in`, `>`, `<=`...
 
 Run the examples, either way:
-    uv run python vocabulary.py -v
-    uv run python -m doctest -v vocabulary.py
+    uv run vocabulary.py -v
+    uv run -m doctest -v vocabulary.py
 """
 
 

@@ -451,11 +451,11 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()</pre>
-          <pre><span class="k">uv run python text_tools.py -v</span></pre>
+          <pre><span class="k">uv run text_tools.py -v</span></pre>
         </div>
         <div>
           <h3>2 · Sans rien ajouter</h3>
-          <pre><span class="k">uv run python -m doctest -v text_tools.py</span></pre>
+          <pre><span class="k">uv run -m doctest -v text_tools.py</span></pre>
           <p>Marche sur n'importe quel fichier <code>.py</code>.</p>
         </div>
       </div>
@@ -491,7 +491,7 @@ Failed example:
       <pre>def count_words(text: str) -&gt; int:
     <span class="d">...</span>
     return len(text<span class="k">.replace("'", " ")</span>.split())</pre>
-      <pre class="out"><span class="k">uv run python text_tools.py -v</span>
+      <pre class="out"><span class="k">uv run text_tools.py -v</span>
 <span class="d">...</span>
 <span class="g">5 passed and 0 failed.
 Test passed.</span></pre>
@@ -525,7 +525,7 @@ True
 True</pre>
         </div>
         <div>
-          <pre class="out"><span class="k">uv run python vocabulary.py -v</span>
+          <pre class="out"><span class="k">uv run vocabulary.py -v</span>
 <span class="d">...</span>
 <span class="g">10 passed and 0 failed.</span></pre>
           <p><strong>Utile quand</strong> plusieurs réponses sont acceptables, ou pour un flottant.</p>
@@ -578,7 +578,7 @@ True</pre>
       <p class="kicker">2 — assert · à vous</p>
       <h2>Un script de vérifications</h2>
       <pre><span class="k">cd ~/testing-lab/2-assert
-uv run python check_text_tools.py</span></pre>
+uv run check_text_tools.py</span></pre>
       <pre>assert count_words("le chat dort") == 3
 assert count_words("") == 0
 <span class="r">assert count_words("Bonjour, le monde !") == 3, "punctuation counted as a word?"</span>
@@ -840,7 +840,7 @@ le CSV                                     note moyenne, longueur moyenne</pre>
       <p class="kicker">4 — Démo · étape 1</p>
       <h2>Semaine 1 : tout va bien</h2>
       <pre><span class="k">cd ~/testing-lab/4-pipeline
-uv run python pipeline.py data/week1.csv</span></pre>
+uv run pipeline.py data/week1.csv</span></pre>
       <pre class="out">      n_reviews  mean_rating  mean_tokens
 lang
 en            7         3.29         5.57
@@ -852,7 +852,7 @@ fr            7         4.00         5.57</pre>
       data-note="Laisser la salle chercher avant de passer à la slide suivante. Réponses : six 'langues' (FR, Fr, 'fr ' avec un espace, EN) ; une note moyenne française de 5.6 sur une échelle de 1 à 5 ; et, invisible ici, deux avis sans texte. Rien n'a planté. En semaine 30, personne ne relit plus le tableau.">
       <p class="kicker">4 — Démo · étape 2</p>
       <h2>Semaine 2 : c'est juste ?</h2>
-      <pre><span class="k">uv run python pipeline.py data/week2.csv</span></pre>
+      <pre><span class="k">uv run pipeline.py data/week2.csv</span></pre>
       <pre class="out">      n_reviews  mean_rating  mean_tokens
 lang
 EN            1          1.0          5.0
@@ -868,8 +868,8 @@ fr            1          9.0          4.0</pre>
       data-note="Le fichier a été enregistré depuis un Excel français : séparateur ; au lieu de , et la colonne s'appelle note. pandas lit tout comme une seule colonne. Le plantage est presque une bonne nouvelle — mais le message ne dit pas quel est le problème.">
       <p class="kicker">4 — Démo · étape 3</p>
       <h2>Semaine 3 : ça plante</h2>
-      <pre><span class="k">uv run python pipeline.py data/week3.csv</span></pre>
-      <pre class="out">  File "pipeline.py", line 22, in clean
+      <pre><span class="k">uv run pipeline.py data/week3.csv</span></pre>
+      <pre class="out">  File "pipeline.py", line 26, in clean
     reviews["text"] = reviews["text"].str.strip()
 <span class="d">...</span>
 <span class="r">KeyError: 'text'</span></pre>

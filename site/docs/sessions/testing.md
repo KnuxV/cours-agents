@@ -59,12 +59,12 @@ git pull
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces"
 cd ~/testing-lab/1-doctest
-uv run python text_tools.py -v                 # 4 passed and 0 failed
-uv run python -m doctest -v text_tools.py      # the same, without the block at the end of the file
-uv run python vocabulary.py -v                 # 10 passed: exact examples, then questions with in and >
+uv run text_tools.py -v                        # 4 passed and 0 failed
+uv run -m doctest -v text_tools.py             # the same, without the block at the end of the file
+uv run vocabulary.py -v                        # 10 passed: exact examples, then questions with in and >
 
 cd ~/testing-lab/2-assert
-uv run python check_text_tools.py              # stops at the 3rd check, on purpose
+uv run check_text_tools.py                     # stops at the 3rd check, on purpose
 
 cd ~/testing-lab/3-pytest
 uv run pytest                                  # 15 passed
@@ -81,9 +81,9 @@ A colleague collects product reviews and sends you one CSV file every week. `pip
 
 ```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces"
 cd ~/testing-lab/4-pipeline
-uv run python pipeline.py data/week1.csv
-uv run python pipeline.py data/week2.csv
-uv run python pipeline.py data/week3.csv
+uv run pipeline.py data/week1.csv
+uv run pipeline.py data/week2.csv
+uv run pipeline.py data/week3.csv
 ```
 
 | Week | What happens |

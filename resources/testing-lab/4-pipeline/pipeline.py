@@ -4,7 +4,7 @@ Every week a colleague sends a CSV of product reviews. This script reads it
 and prints, for each language, the number of reviews, the mean rating and
 the mean length of a review in words.
 
-Run:   uv run python pipeline.py data/week1.csv
+Run:   uv run pipeline.py data/week1.csv
 """
 import sys
 from pathlib import Path

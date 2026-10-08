@@ -1,6 +1,6 @@
 """Plain assert checks, no test framework.
 
-Run:   uv run python check_text_tools.py
+Run:   uv run check_text_tools.py
 """
 from text_tools import count_words, normalize
 

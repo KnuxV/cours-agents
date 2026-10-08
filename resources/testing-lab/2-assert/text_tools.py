@@ -1,6 +1,6 @@
 """Small text helpers, with their examples written inside the docstrings.
 
-Run the examples:   uv run python -m doctest -v text_tools.py
+Run the examples:   uv run -m doctest -v text_tools.py
 """
 
 
