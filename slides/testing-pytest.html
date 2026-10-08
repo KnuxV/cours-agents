@@ -898,7 +898,7 @@ fr            1          9.0          4.0</pre>
     </section>
 
     <section class="slide" hidden data-clock="1:12" data-title="Contrôler chaque fichier"
-      data-note="Ouvrir tests/test_data.py. La fixture raw a params=DATA_FILES : chaque test tourne une fois par fichier de data/, et un nouveau fichier est contrôlé automatiquement. La fixture reviews saute (skip) les fichiers dont les colonnes sont fausses : rien d'autre n'est vérifiable.">
+      data-note="Ouvrir tests/test_data.py. Dire en mots simples : request est un objet que pytest passe à la fixture, et request.param vaut un élément de params, un différent à chaque tour — comme la variable d'une boucle for sur DATA_FILES, sauf que c'est pytest qui fait la boucle. La fixture raw a params=DATA_FILES : chaque test tourne une fois par fichier de data/, et un nouveau fichier est contrôlé automatiquement. La fixture reviews saute (skip) les fichiers dont les colonnes sont fausses : rien d'autre n'est vérifiable.">
       <p class="kicker">4 — Démo · étape 4</p>
       <h2>Contrôler chaque fichier</h2>
       <pre><span class="d"># tests/test_data.py (extrait)</span>
@@ -909,6 +909,7 @@ def raw(request: pytest.FixtureRequest) -> pd.DataFrame:
     return load(request.param)
 
 def test_expected_columns(raw: pd.DataFrame) -> None:
+    <span class="d"># request.param : le fichier du tour en cours (week1.csv, puis week2.csv...)</span>
     assert list(raw.columns) == ["review_id", "product", "lang", "rating", "text"]
 
 def test_languages_are_fr_or_en(reviews: pd.DataFrame) -> None:
