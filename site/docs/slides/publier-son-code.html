@@ -679,16 +679,17 @@ def test_switching_to_random_changes_the_slider() -> None:
     </section>
 
     <section class="slide" hidden data-clock="1:33" data-title="Trois familles"
-      data-note="Permissive : faites ce que vous voulez, gardez juste la mention (MIT ; Apache-2.0 ajoute une clause sur les brevets). Copyleft : vous pouvez réutiliser, mais ce que vous distribuez qui en dérive doit rester sous la même licence (GPL). Pour les données et les textes, pas les licences de code : Creative Commons (CC BY = citer l'auteur) ; en France, la Licence Ouverte d'Etalab pour les données publiques (data.gouv.fr — aparté pour la salle d'économie). Les données ont leur slide juste après. Pour un projet d'examen : MIT, sans hésiter.">
+      data-note="Permissive : faites ce que vous voulez, gardez juste la mention (MIT ; Apache-2.0 ajoute une clause sur les brevets). Copyleft : vous pouvez réutiliser, mais ce que vous distribuez qui en dérive doit rester sous la même licence (GPL). Pour les données et les textes, pas les licences de code : Creative Commons (CC BY = citer l'auteur) ; en France, la Licence Ouverte d'Etalab pour les données publiques (data.gouv.fr — aparté pour la salle d'économie). Les données ont leur slide juste après. Les exemples : pytest et zxcvbn (MIT) et Streamlit (Apache-2.0) sont dans notre propre projet — vu avec pip-licenses ; gpt-oss, un des modèles de la plateforme Unistra, est sous Apache-2.0 ; Linux et Git sont sous GPL-2.0, R sous GPL-2 ou 3 : la salle d'économie utilise peut-être R, et peut le faire sans rien publier — la GPL ne joue que si l'on distribue un programme qui l'inclut. Pour un projet d'examen : MIT, sans hésiter.">
       <p class="kicker">5 — Licences</p>
       <h2>Trois <em>familles</em></h2>
       <div class="tablewrap">
       <table>
-        <thead><tr><th>Famille</th><th>Exemples</th><th>En une phrase</th></tr></thead>
+        <thead><tr><th>Famille</th><th>Licence</th><th>Qui l'utilise</th><th>En une phrase</th></tr></thead>
         <tbody>
-          <tr><td>Permissive</td><td>MIT, Apache-2.0</td><td>faites-en ce que vous voulez, gardez la mention</td></tr>
-          <tr><td>Copyleft</td><td>GPL-3.0</td><td>ce qui en dérive doit rester sous GPL</td></tr>
-          <tr><td>Données, textes</td><td>CC BY 4.0, Licence Ouverte</td><td>« le MIT des données » : réutilisez, citez la source</td></tr>
+          <tr><td>Permissive</td><td>MIT</td><td>pytest, zxcvbn, React</td><td>faites-en ce que vous voulez, gardez la mention</td></tr>
+          <tr><td>Permissive</td><td>Apache-2.0</td><td>Streamlit, Kubernetes, gpt-oss</td><td>pareil, avec une clause sur les brevets</td></tr>
+          <tr><td>Copyleft</td><td>GPL</td><td>Linux, Git, R</td><td>ce qui en dérive doit rester sous GPL</td></tr>
+          <tr><td>Données, textes</td><td>CC BY, Licence Ouverte</td><td>data.gouv.fr</td><td>« le MIT des données » : réutilisez, citez la source</td></tr>
         </tbody>
       </table>
       </div>
