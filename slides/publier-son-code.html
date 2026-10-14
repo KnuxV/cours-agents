@@ -679,7 +679,7 @@ def test_switching_to_random_changes_the_slider() -> None:
     </section>
 
     <section class="slide" hidden data-clock="1:33" data-title="Trois familles"
-      data-note="Permissive : faites ce que vous voulez, gardez juste la mention (MIT ; Apache-2.0 ajoute une clause sur les brevets). Copyleft : vous pouvez réutiliser, mais ce que vous distribuez qui en dérive doit rester sous la même licence (GPL). Pour les données et les textes, pas les licences de code : Creative Commons (CC BY = citer l'auteur) ; en France, la Licence Ouverte d'Etalab pour les données publiques (data.gouv.fr — aparté pour la salle d'économie). Correspondances code → données : MIT ≈ CC BY 4.0 / Licence Ouverte ; domaine public ≈ CC0 ; GPL ≈ CC BY-SA ou ODbL (OpenStreetMap) ; NC (pas d'usage commercial) et ND (pas de modification) n'ont pas d'équivalent en code et ne sont pas « ouvertes ». Trois spécificités des données : les faits ne sont pas protégés, la base de données l'est (droit sui generis en Europe) ; un corpus de textes appartient à leurs auteurs, l'avoir scrapé ne donne pas le droit de le republier (salle TAL) ; des données personnelles restent soumises au RGPD quelle que soit la licence (enquêtes, microdonnées). Pour un projet d'examen : MIT, sans hésiter.">
+      data-note="Permissive : faites ce que vous voulez, gardez juste la mention (MIT ; Apache-2.0 ajoute une clause sur les brevets). Copyleft : vous pouvez réutiliser, mais ce que vous distribuez qui en dérive doit rester sous la même licence (GPL). Pour les données et les textes, pas les licences de code : Creative Commons (CC BY = citer l'auteur) ; en France, la Licence Ouverte d'Etalab pour les données publiques (data.gouv.fr — aparté pour la salle d'économie). Les données ont leur slide juste après. Pour un projet d'examen : MIT, sans hésiter.">
       <p class="kicker">5 — Licences</p>
       <h2>Trois <em>familles</em></h2>
       <div class="tablewrap">
@@ -715,7 +715,28 @@ def test_switching_to_random_changes_the_slider() -> None:
       <p class="punch">Le code fermé est plein de code libre : MIT oui, GPL non — sinon il faut publier ses sources.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:38" data-title="Ce que vous embarquez"
+    <section class="slide" hidden data-clock="1:37" data-title="Et les données ?"
+      data-note="Les licences de code collent mal aux données, d'où des licences à part. CC BY 4.0 ≈ MIT : réutilisez tout, même commercialement, citez la source. Licence Ouverte 2.0 d'Etalab : la même chose pour les données publiques françaises (data.gouv.fr, INSEE) — aparté économie. CC0 ≈ domaine public : aucune condition. CC BY-SA et ODbL (OpenStreetMap) ≈ GPL : ce qui en dérive reste sous la même licence. NC (pas d'usage commercial) et ND (pas de modification) n'ont pas d'équivalent en code et ne sont pas « ouvertes » au sens strict. Les trois pièges : les faits ne sont pas protégés mais la base de données l'est (droit sui generis en Europe) ; un corpus de textes appartient à leurs auteurs, l'avoir scrapé ne donne pas le droit de le republier (salle TAL) ; des données personnelles restent soumises au RGPD quelle que soit la licence (enquêtes, microdonnées — les deux salles).">
+      <p class="kicker">5 — Licences</p>
+      <h2>Et <em>les données</em> ?</h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Pour le code</th><th>Pour les données, les textes</th><th>En une phrase</th></tr></thead>
+        <tbody>
+          <tr><td>MIT</td><td>CC BY 4.0, Licence Ouverte 2.0</td><td>réutilisez, citez la source</td></tr>
+          <tr><td>domaine public</td><td>CC0</td><td>aucune condition</td></tr>
+          <tr><td>GPL</td><td>CC BY-SA, ODbL</td><td>ce qui en dérive reste sous la même licence</td></tr>
+          <tr><td>—</td><td>CC BY-NC, CC BY-ND</td><td>pas d'usage commercial, pas de modification</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul>
+        <li>Un corpus scrapé appartient toujours à ses auteurs.</li>
+        <li>Des données personnelles restent sous le <strong>RGPD</strong>, quelle que soit la licence.</li>
+      </ul>
+    </section>
+
+    <section class="slide" hidden data-clock="1:39" data-title="Ce que vous embarquez"
       data-note="Le projet est MIT, mais il contient des choses qu'on n'a pas écrites. La liste de mots est de l'EFF, sous CC BY 3.0 US : on doit la créditer (c'est dans le README). Une dépendance demandée (streamlit) en fait venir une quarantaine : pip-licenses les liste. Ici tout est permissif (MIT, BSD, Apache). Un paquet GPL dans la liste changerait ce qu'on a le droit de distribuer.">
       <p class="kicker">5 — Licences</p>
       <h2>Ce que vous <em>embarquez</em></h2>
@@ -733,7 +754,7 @@ def test_switching_to_random_changes_the_slider() -> None:
       <p class="punch">Une dépendance ajoutée, 41 paquets installés : 41 licences.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:41" data-title="Ajouter une licence"
+    <section class="slide" hidden data-clock="1:42" data-title="Ajouter une licence"
       data-note="Le plus simple, dans le navigateur. Add file → Create new file, taper LICENSE comme nom : GitHub propose un bouton pour choisir un modèle (Choose a license template). Choisir MIT, vérifier l'année et le nom, Commit. La licence apparaît dans la colonne de droite du dépôt. À vérifier en direct : l'intitulé exact du bouton.">
       <p class="kicker">5 — Licences · 2 minutes</p>
       <h2>Ajouter <em>une licence</em></h2>
@@ -786,7 +807,7 @@ def test_switching_to_random_changes_the_slider() -> None:
     <span class="clock" id="clock">0:00</span>
     <span class="title" id="title">Publier son code</span>
     <button id="prev" type="button" aria-label="Slide précédente">←</button>
-    <span class="pos" id="pos">1 / 32</span>
+    <span class="pos" id="pos">1 / 33</span>
     <button id="next" type="button" aria-label="Slide suivante">→</button>
     <button id="themeBtn" type="button">light · t</button>
     <button id="noteBtn" type="button">notes · n</button>
