@@ -444,3 +444,24 @@ Instructor request, no task file: a class on testing Python code — doctest, th
 - `labeler.py`'s real call to the Unistra API was never executed (no key in this shell); only the mocked tests ran. The payload shape matches `resources/api/question.json`.
 - The deck has not been paged through on a projector; timing (2h for 46 slides + demo + two exercises) is an estimate. Cut order: "Et avec les agents", "Ce qu'on a fait", then the `raises/approx` slide.
 - The `solutions` branch must be pushed for students to switch to it — and anyone can switch to it before the class.
+
+### Shipping your code — 2h class, online (2026-10-14, instructor-driven, the day before the class)
+
+Instructor request, no task file: generate documentation from code, CI/CD on push, a tiny Markdown site on GitHub Pages, Streamlit, and licenses "quick and dirty". **Divergence from SPEC, recorded not resolved** — not one of SPEC's four sessions; it builds on Session 1 (GitHub), Session 2 (uv) and the testing class. Code lives in **two new public repositories outside this repo**, at the instructor's request, not in `resources/`.
+
+**Produced**
+
+- **github.com/KnuxV/password-app** (local: `~/Codebase/password-app`) — the password generator from exercise 2.3 rebuilt as a course example, one git tag per step: `step-0` generator + `strength.py` (zxcvbn wrapper) + pytest suite; `step-1` pdoc (`_WORDLIST_FILE` made private so the docs stop printing a local home path); `step-2` `.github/workflows/ci.yml` test → docs → deploy-pages, deploy skipped when a test fails; `step-3` Streamlit `app.py` + `tests/test_app.py` (AppTest); `step-4` MIT `LICENSE`, `license = "MIT"`, EFF wordlist credited (CC BY 3.0 US). The original `KnuxV/password-generator` is untouched (exercise 2.3 still points at it).
+- **github.com/KnuxV/tiny-site** (local: `~/Codebase/tiny-site`, template repository) — `index.md`, `a-propos.md`, `notes.md`, `_config.yml`, and `.github/workflows/bundle.yml` (pandoc → `site.html` + `site.docx`, kept with `upload-artifact`). Pages: *Deploy from a branch*.
+- `slides/publier-son-code.html` (+ copy in `site/docs/slides/`) — 30 slides in French, the testing deck's engine (storage keys `pub-`; clipboard rejection now caught). Linked from `sessions/index.md` and `README.md`. Also published as a private claude.ai artifact.
+
+**Verification** — `uv run pytest`: 18 passed (7 doctests, 9 unit tests, 2 AppTest) on CPython 3.12.14, pytest 9.1.1, streamlit 1.66.0, pdoc 16.0.0. pdoc output rendered and checked in headless Chromium; Streamlit served locally (health 200) and driven by AppTest. pandoc 3.10.2 produced `site.html` and `site.docx` locally. `pip-licenses` lists 41 packages, all permissive. Action versions read from the GitHub API on 2026-10-14 (`checkout@v7`, `setup-uv@v10.3.0` — no floating tags since v8, `upload-pages-artifact@v5`, `deploy-pages@v5`, `upload-artifact@v7`). `mkdocs build --strict` exit 0. Deck tags balanced; two dense slides rendered at 1440×900.
+
+**UNVERIFIED / needs human review**
+
+- **No workflow has run yet.** The `gh` token in this session lacks the `workflow` scope and SSH was refused from the sandbox, so `main` and tags `step-2`…`step-4` of password-app and all of tiny-site were not pushed by the agent. Pages for password-app is set to *GitHub Actions*; Pages for tiny-site must be enabled after its first push.
+- The "break a test" demo (dash separator → red test, docs and deploy skipped) was run locally only, not on GitHub.
+- `apt-get install pandoc` time on the runner, and the Ubuntu pandoc version's output.
+- Streamlit Community Cloud deploy (reads `uv.lock` per its docs) — not tried.
+- GitHub UI labels quoted on slides: *Use this template*, *Choose a license template*; whether workflows need enabling on a repository created from a template.
+- Nothing rehearsed on WSL, macOS, Git Bash or Codespaces; `uv sync` pulls ~41 packages for Streamlit.

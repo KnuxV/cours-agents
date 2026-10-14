@@ -6,4 +6,6 @@
 
 **Testing deck (French, same keys):** https://knuxv.github.io/cours-agents/slides/testing-pytest.html — code in `resources/testing-lab/`
 
+**Shipping deck (French, same keys):** https://knuxv.github.io/cours-agents/slides/publier-son-code.html — code in [KnuxV/password-app](https://github.com/KnuxV/password-app) and [KnuxV/tiny-site](https://github.com/KnuxV/tiny-site)
+
 Source repo for an 8h course taught in an NLP master and an economics master. `SPEC.md` is the contract; `site/` is the MkDocs site published to GitHub Pages; `slides/` holds the presenterm decks.

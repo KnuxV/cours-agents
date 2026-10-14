@@ -50,6 +50,14 @@ How do you know your script does what you think — today, and after every chang
 - Exercises: [T.1 Fix the code](../exercises/testing-fix.md) · [T.2 Test first](../exercises/testing-tdd.md)
 - Needs first: `uv` ([Session 2](s2.md)).
 
+## Shipping your code
+
+What goes *around* working code so that others can read it, trust it, try it and reuse it: documentation generated from docstrings (pdoc), a GitHub Actions robot that tests and publishes on every push, a static site in three Markdown files, a Streamlit app, and a license.
+
+- Slides (French): [Publier son code](../slides/publier-son-code.html){target="_blank"}
+- Code: [github.com/KnuxV/password-app](https://github.com/KnuxV/password-app) (one git tag per step) · [github.com/KnuxV/tiny-site](https://github.com/KnuxV/tiny-site) (a template repository)
+- Needs first: `uv` ([Session 2](s2.md)), a GitHub account ([Session 1](s1.md)), and the [testing class](testing.md).
+
 ## Session 4 — pi, a real harness
 
 The same loop, automated by a real agent harness: provider configuration, permissions you write yourself, `AGENTS.md`, tests as the anchor, subagents and the grill/build pattern.
