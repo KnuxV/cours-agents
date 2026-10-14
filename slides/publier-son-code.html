@@ -551,6 +551,26 @@ jobs:
       <p class="punch">Votre dépôt a le même robot : regardez votre onglet Actions.</p>
     </section>
 
+    <section class="slide" hidden data-clock="0:58" data-title="Le plus petit robot"
+      data-note="DÉMO, 2 min. Sur tiny-site, dans le navigateur : Add file → Create new file, nom .github/workflows/hello.yml (taper les / crée les dossiers), coller, Commit. Onglet Actions : le run « hello » apparaît. L'ouvrir, déplier chaque étape : le 4, puis le nom de la machine et le dossier — ce n'est pas mon ordinateur. Le message : un workflow, ce sont juste des commandes de terminal, lancées ailleurs. Tout ce qu'on sait taper, le robot peut le taper. Python est déjà installé sur ubuntu-latest. Sortie « runner » et chemin /home/runner/work/... : attendue, à vérifier en répétition.">
+      <p class="kicker">3 — Le plus petit robot · .github/workflows/hello.yml</p>
+      <h2>Le plus petit <em>robot</em></h2>
+      <pre><span class="k">name: hello
+on: push
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: python3 -c "print(2 + 2)"
+      - run: whoami &amp;&amp; hostname &amp;&amp; pwd</span></pre>
+      <p>Sur GitHub : <strong>Add file → Create new file</strong>, nom <code>.github/workflows/hello.yml</code>, coller, <strong>Commit</strong>. Puis onglet <strong>Actions</strong> → le run <em>hello</em> → déplier les étapes.</p>
+      <pre class="out">4
+runner
+<span class="d">(un nom de machine qui n'est pas la vôtre)</span>
+/home/runner/work/tiny-site/tiny-site</pre>
+      <p class="punch">Un workflow, ce sont des commandes de terminal lancées sur une autre machine. Tout ce que vous savez taper, le robot peut le taper.</p>
+    </section>
+
     <section class="slide" hidden data-clock="1:00" data-title="4 — Streamlit"
       data-note="Streamlit : une bibliothèque Python qui transforme un script en page web interactive. Pas de HTML, pas de JavaScript. Très utilisé pour les tableaux de bord de données et les démos de modèles — et pour une présentation d'examen, une démo cliquable vaut mieux qu'un terminal.">
       <p class="kicker">4 — Streamlit</p>
@@ -747,7 +767,7 @@ def test_switching_to_random_changes_the_slider() -> None:
     <span class="clock" id="clock">0:00</span>
     <span class="title" id="title">Publier son code</span>
     <button id="prev" type="button" aria-label="Slide précédente">←</button>
-    <span class="pos" id="pos">1 / 30</span>
+    <span class="pos" id="pos">1 / 31</span>
     <button id="next" type="button" aria-label="Slide suivante">→</button>
     <button id="themeBtn" type="button">light · t</button>
     <button id="noteBtn" type="button">notes · n</button>
