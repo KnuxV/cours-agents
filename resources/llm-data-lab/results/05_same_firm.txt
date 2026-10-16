@@ -1,0 +1,11 @@
+  OK  yes  letters 0.58  Total SA / TotalEnergies SE
+  OK  yes  letters 0.15  Facebook Inc. / Meta Platforms
+  OK  yes  letters 0.43  BNP Paribas / BNP
+  OK  yes  letters 0.43  France Télécom / Orange SA
+  OK  yes  letters 0.13  LVMH / Moët Hennessy Louis Vuitton
+  OK  yes  letters 0.70  Renault SA / Renault Group
+  OK   no  letters 0.57  Crédit Agricole / Crédit Mutuel
+  OK   no  letters 0.61  Apple Inc. / Apple Records
+  OK   no  letters 0.51  Delta Air Lines / Delta Faucet Company
+  OK   no  letters 0.46  Alstom / Alcatel
+accuracy: 10/10

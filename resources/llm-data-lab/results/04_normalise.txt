@@ -1,0 +1,22 @@
+  OK  rule  'USA'                        -> USA
+  OK  rule  'United States of America'   -> USA
+  OK  LLM   'Etats-Unis'                 -> USA
+  OK  LLM   'U.S.'                       -> USA
+  OK  rule  'germany '                   -> DEU
+  OK  LLM   'Allemagne'                  -> DEU
+  OK  LLM   'Deutschland'                -> DEU
+  OK  LLM   'UK'                         -> GBR
+  OK  LLM   'Great Britain'              -> GBR
+  OK  LLM   'Royaume-Uni'                -> GBR
+  OK  LLM   'Republic of Korea'          -> KOR
+  OK  LLM   'Corée du Sud'               -> KOR
+  OK  rule  "Côte d'Ivoire"              -> CIV
+  OK  LLM   'Ivory Coast'                -> CIV
+  OK  rule  'Russian Federation'         -> RUS
+  OK  LLM   'Russie'                     -> RUS
+  OK  LLM   'Chine'                      -> CHN
+  OK  LLM   'PRC'                        -> CHN
+  OK  LLM   'Holland'                    -> NLD
+  OK  LLM   'Pays-Bas'                   -> NLD
+  OK  rule  'Viet Nam'                   -> VNM
+correct: 21/21  (rules: 6, LLM: 15)

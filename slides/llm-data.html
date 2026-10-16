@@ -280,12 +280,43 @@
       <p class="lede">LLMs are not only for writing code. They turn text into data.</p>
       <p class="punch">Today: concrete examples, all run for real on the Unistra models.</p>
       <div class="links">
-        <p><span>Code</span><a href="https://github.com/KnuxV/llm-data-lab" target="_blank" rel="noopener">github.com/KnuxV/llm-data-lab</a></p>
+        <p><span>Code</span><a href="https://github.com/KnuxV/cours-agents/tree/main/resources/llm-data-lab" target="_blank" rel="noopener">cours-agents/resources/llm-data-lab</a></p>
         <p><span>Course</span><a href="https://knuxv.github.io/cours-agents/" target="_blank" rel="noopener">knuxv.github.io/cours-agents</a></p>
       </div>
     </section>
 
-    <section class="slide" hidden data-clock="0:02" data-title="Two ideas"
+    <section class="slide" hidden data-clock="0:02" data-title="Get the code"
+      data-note="Right away, so network or install problems show up now and not during the demos. Those who already cloned the course repository go into it and run git pull. If they changed files in it, git refuses (the message mentions 'stash'): git stash -u puts their changes aside, new files included, then git pull works. Nothing is lost: git stash pop brings them back. Then we copy the folder out of the repository so they can change it freely. The key is the one from Session 3. If uv is missing: Session 2 page on the site. No git or no network: llm-data-lab.zip on the site, session list, 'LLMs for data'.">
+      <p class="kicker">Right now · WSL · Mac · Linux</p>
+      <h2>Get the code</h2>
+      <div class="cols">
+        <div>
+          <h3>First time</h3>
+          <pre><span class="k">cd ~
+git clone https://github.com/KnuxV/cours-agents.git</span></pre>
+        </div>
+        <div>
+          <h3>Already cloned</h3>
+          <pre><span class="k">cd ~/cours-agents
+git pull</span></pre>
+        </div>
+      </div>
+      <p>Then, in both cases:</p>
+      <pre><span class="k">cp -r ~/cours-agents/resources/llm-data-lab ~/llm-data-lab
+cd ~/llm-data-lab
+uv sync
+export UNISTRA_API_KEY="sk-XXXX"     </span><span class="d"># your key, Session 3</span></pre>
+      <div class="callout">
+        <div>
+          <p><strong><code>git pull</code> refuses</strong> and mentions <em>stash</em>? You changed files in the repository: put them aside, then try again.</p>
+          <p>Nothing is lost: <code>git stash pop</code> brings them back.</p>
+        </div>
+        <pre><span class="k">git stash -u
+git pull</span></pre>
+      </div>
+    </section>
+
+    <section class="slide" hidden data-clock="0:05" data-title="Two ideas"
       data-note="The two ideas that come back on every slide. 1. Unordered to ordered: free text, misspelled names, an image as input; a clean column, a code, a table as output. That is exactly what you need to run econometrics on text. 2. The model has already read an enormous amount of text (pre-training): it 'knows' what a labour market, a permanent contract or a country is. You don't need to give it hundreds of examples.">
       <h2>Two ideas for the whole session</h2>
       <div class="count"><span class="n">1</span><p><strong>From unordered to ordered.</strong> Free text, misspelled names, a scanned page → a clean column, a code, a table.</p></div>
@@ -293,7 +324,7 @@
       <pre class="diagram">text, names, images  →  <b>LLM + an instruction</b>  →  labels, codes, columns</pre>
     </section>
 
-    <section class="slide" hidden data-clock="0:05" data-title="Before, after"
+    <section class="slide" hidden data-clock="0:07" data-title="Before, after"
       data-note="Example: extracting the contract type and the city from job ads. Without an LLM: hand-label a few hundred ads, train a model (for instance a named-entity recognition model with spaCy), evaluate it, start again. With an LLM: one instruction, zero examples, a result within an hour. Careful: the LLM does not remove evaluation. It removes the labelling phase to get started. For a publishable result you go back to a hand-labelled sample (end of the session).">
       <p class="kicker">Why this is new</p>
       <h2>LLMs excel <em>at prototyping</em></h2>
@@ -314,7 +345,7 @@
       <p class="punch">What does not go away: checking that it works. We come back to it at the end.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:08" data-title="Three ways to use an LLM"
+    <section class="slide" hidden data-clock="0:09" data-title="Three ways to use an LLM"
       data-note="Reminder from Session 3 (agents). The framing comes from an Anthropic article, 'Building effective agents' (anthropic.com/research/building-effective-agents). The question that separates the three: who decides the next step? Nobody (one call), your script (workflow), the model (agent). The session follows this order.">
       <p class="kicker">Today's plan</p>
       <h2>Who decides <em>the next step</em>?</h2>
@@ -606,7 +637,7 @@ for step in range(15):                         <span class="d"># cap: no infinit
     </section>
 
     <section class="slide" hidden data-clock="1:04" data-title="Demo: the Nobels"
-      data-note="Live demo if possible: cd llm-data-lab then uv run python 11_agent_nobel.py (needs UNISTRA_API_KEY). The Wikipedia pages are kept in data/wiki_cache.json, so the demo replays even without access to Wikipedia. If it fails, this slide shows the real trace. The model searches the three names at once, reads the three pages, computes the three ages with the tool, saves, says DONE. 5 turns, 3/3. The answers are known, so the script scores the agent.">
+      data-note="Live demo if possible: cd ~/llm-data-lab then uv run python 11_agent_nobel.py (needs UNISTRA_API_KEY). The Wikipedia pages are kept in data/wiki_cache.json, so the demo replays even without access to Wikipedia. If it fails, this slide shows the real trace. The model searches the three names at once, reads the three pages, computes the three ages with the tool, saves, says DONE. 5 turns, 3/3. The answers are known, so the script scores the agent.">
       <p class="kicker">3 — An agent · demo</p>
       <h2>The real trace <em>(qwen3)</em></h2>
       <pre class="out">[1] wikipedia_search({"query": "Esther Duflo"})      -> 'Esther Duflo\nAbhijit Banerjee…'
@@ -689,15 +720,12 @@ score 3/3, 5 steps</span></pre>
     </section>
 
     <section class="slide" hidden data-clock="1:21" data-title="Your turn"
-      data-note="The repository holds the 12 scripts of the session, the data, and the results obtained while preparing (results/ folder) to compare. You need the Session 3 key in UNISTRA_API_KEY. On Windows, in WSL: same commands. Linux: no sudo needed. Stuck: Codespaces from the repository page. Next slide: the template to classify your own data.">
+      data-note="The folder (copied at the start, slide Get the code) holds the 12 scripts of the session, the data, and the results obtained while preparing (results/ folder) to compare. You need the Session 3 key in UNISTRA_API_KEY: a new terminal forgets it, export it again. Stuck: Codespaces from the course repository page. Next slide: the template to classify your own data.">
       <p class="kicker">Your turn · WSL · Mac · Linux</p>
       <h2>Replay the examples</h2>
-      <pre><span class="k">cd ~
-git clone https://github.com/KnuxV/llm-data-lab.git
-cd llm-data-lab
-uv sync
-export UNISTRA_API_KEY="sk-XXXX"     </span><span class="d"># your key, Session 3</span><span class="k">
-uv run python 09_text_to_table.py</span></pre>
+      <pre><span class="k">cd ~/llm-data-lab
+uv run python 09_text_to_table.py</span>     <span class="d"># one example</span>
+<span class="k">uv run python run_all.py</span>              <span class="d"># all of them, saved in results/</span></pre>
       <p>Then, from easy to harder:</p>
       <div class="count"><span class="n">1</span><p>Change <code>MODEL</code> in <code>llm.py</code> (<code>mistral-small</code>): same score?</p></div>
       <div class="count"><span class="n">2</span><p>Add your own sentences to <code>data/wine_exports.txt</code>.</p></div>
@@ -744,7 +772,7 @@ Sentence: {text}"""</span>
     <span class="clock" id="clock">0:00</span>
     <span class="title" id="title">LLMs and data</span>
     <button id="prev" type="button" aria-label="Previous slide">←</button>
-    <span class="pos" id="pos">1 / 32</span>
+    <span class="pos" id="pos">1 / 33</span>
     <button id="next" type="button" aria-label="Next slide">→</button>
     <button id="themeBtn" type="button">light · t</button>
     <button id="noteBtn" type="button">notes · n</button>

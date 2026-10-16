@@ -1,0 +1,8 @@
+=== A: AIDSII: an AI-based digital system for intelligent irrigation
+  SDG    : ['SDG2', 'SDG6']   (expected ['SDG2', 'SDG6'])
+  ADT    : ['AI', 'IOT']   (expected ['AI', 'IOT'])
+  impact : {'SDG2': 'positive', 'SDG6': 'positive'}
+=== B: Can Bitcoin mining increase renewable electricity capacity?
+  SDG    : ['SDG7', 'SDG13']   (expected ['SDG7', 'SDG13'])
+  ADT    : ['BLOCKCHAIN']   (expected ['BLOCKCHAIN'])
+  impact : {'SDG7': 'mixed', 'SDG13': 'mixed'}

@@ -1,0 +1,8 @@
+arrondissement,ble,houblon,tabac
+Haguenau,412300,8150,2940
+Molsheim,198760,1020,410
+Saverne,305410,3870,1205
+Sélestat,251090,640,3380
+Strasbourg-Campagne,377520,5960,760
+Wissembourg,233800,4410,1990
+cells correct: 24/24

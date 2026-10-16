@@ -1,0 +1,11 @@
+  OK   yes  Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New
+  OK    no  The Market for "Lemons": Quality Uncertainty and the Market Mechanism
+  OK   yes  Are Emily and Greg More Employable Than Lakisha and Jamal? A Field Experime
+  OK    no  Rules Rather than Discretion: The Inconsistency of Optimal Plans
+  OK    no  The Colonial Origins of Comparative Development: An Empirical Investigation
+  OK   yes  The China Syndrome: Local Labor Market Effects of Import Competition in the
+  OK   yes  Robots and Jobs: Evidence from US Labor Markets
+  OK    no  Bank Runs, Deposit Insurance, and Liquidity
+  OK   yes  The Impact of the Mariel Boatlift on the Miami Labor Market
+  OK    no  To Slow or Not to Slow: The Economics of the Greenhouse Effect
+accuracy: 10/10

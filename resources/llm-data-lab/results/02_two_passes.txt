@@ -1,0 +1,16 @@
+=== A: AIDSII: an AI-based digital system for intelligent irrigation
+  SDG pass 1 (wide net) : ['SDG2', 'SDG6', 'SDG9']
+  SDG pass 2 (check)    : {'SDG2': 'Y', 'SDG6': 'Y', 'SDG9': 'N'}
+  SDG kept              : ['SDG2', 'SDG6']   (expected ['SDG2', 'SDG6'])
+  ADT pass 1 (wide net) : ['AI', 'IOT']
+  ADT pass 2 (check)    : {'AI': 'Y', 'IOT': 'Y'}
+  ADT kept              : ['AI', 'IOT']   (expected ['AI', 'IOT'])
+  impact : {'SDG2': 'positive', 'SDG6': 'positive'}
+=== B: Can Bitcoin mining increase renewable electricity capacity?
+  SDG pass 1 (wide net) : ['SDG7', 'SDG13']
+  SDG pass 2 (check)    : {'SDG7': 'Y', 'SDG13': 'Y'}
+  SDG kept              : ['SDG7', 'SDG13']   (expected ['SDG7', 'SDG13'])
+  ADT pass 1 (wide net) : ['BLOCKCHAIN']
+  ADT pass 2 (check)    : {'BLOCKCHAIN': 'Y'}
+  ADT kept              : ['BLOCKCHAIN']   (expected ['BLOCKCHAIN'])
+  impact : {'SDG7': 'mixed', 'SDG13': 'mixed'}

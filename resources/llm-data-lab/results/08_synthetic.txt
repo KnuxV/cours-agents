@@ -1,0 +1,9 @@
+  OK  true CDI        guess CDI        Nous recherchons un analyste économique pour rejoindre notre équipe de
+  OK  true CDI        guess CDI        Rejoignez notre cabinet de conseil pour une mission de longue durée en
+  OK  true CDD        guess CDD        Une banque régionale recrute un analyste financier pour une mission de
+  OK  true CDD        guess CDD        Nous offrons un contrat de trois mois à un profil junior pour soutenir
+  OK  true Stage      guess stage      Stage de six mois au sein de l'Institut national de la statistique. Ce
+  OK  true Stage      guess stage      Rejoignez notre startup en tant qu'analyste de données en stage pour t
+  OK  true Alternance guess alternance Nous proposons une alternance de deux ans pour préparer un master en é
+  OK  true Alternance guess alternance Devenez stagiaire en alternance au sein de notre équipe de politique p
+recovered: 8/8

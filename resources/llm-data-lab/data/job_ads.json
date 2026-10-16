@@ -1,0 +1,14 @@
+[
+  {
+    "text": "Le Crédit Mutuel recrute un(e) data analyst H/F en CDI à Strasbourg. Vous travaillerez sur nos tableaux de bord risques. Télétravail possible 2 jours par semaine. Rémunération : 42 à 46 k€ brut annuel selon profil.",
+    "expected": {"job": "data analyst", "contract": "CDI", "remote": true, "salary_min": 42000, "city": "Strasbourg"}
+  },
+  {
+    "text": "Stage de 6 mois au service études économiques d'une banque centrale, à Francfort. Gratification au taux légal. Présence sur site obligatoire. Début en mars.",
+    "expected": {"job": "économiste stagiaire", "contract": "stage", "remote": false, "salary_min": null, "city": "Francfort"}
+  },
+  {
+    "text": "Mulhouse — chargé d'études statistiques, contrat à durée déterminée de 12 mois, remplacement congé maternité. Salaire selon grille. Full remote impossible, mais un jour de télétravail accepté.",
+    "expected": {"job": "chargé d'études statistiques", "contract": "CDD", "remote": true, "salary_min": null, "city": "Mulhouse"}
+  }
+]

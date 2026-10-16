@@ -2,13 +2,17 @@
 
 The [LLMs for data](../sessions/index.md#llms-for-data) class showed eleven small experiments: labelling abstracts, matching firm names, reading a scanned table, an agent searching Wikipedia. This page opens them up. It explains what each piece of code does, so that you can point the same recipe at your own CSV file instead of ours.
 
-Everything quoted here comes from the class repository, [github.com/KnuxV/llm-data-lab](https://github.com/KnuxV/llm-data-lab). The outputs quoted come from its `results/` folder, a real run on the Unistra models. If you have not cloned it yet:
+Everything quoted here comes from the class folder, `resources/llm-data-lab` in the course repository. The outputs quoted come from its `results/` folder, a real run on the Unistra models. If you do not have it yet:
 
-```bash title="Linux / Mac Terminal / WSL / Git Bash — in the folder where you keep your projects"
-git clone https://github.com/KnuxV/llm-data-lab.git
-cd llm-data-lab
+```bash title="WSL / Mac Terminal / Linux / Git Bash / Codespaces"
+cd ~
+git clone https://github.com/KnuxV/cours-agents.git     # already cloned? instead: cd ~/cours-agents && git pull
+cp -r ~/cours-agents/resources/llm-data-lab ~/llm-data-lab
+cd ~/llm-data-lab
 uv sync
 ```
+
+No git, or the network is down? Download [llm-data-lab.zip](../files/llm-data-lab.zip), unzip it in your home folder, then `cd ~/llm-data-lab` and `uv sync`.
 
 The repository also contains a template script for classifying your own data. Read this page first: the template uses every idea below.
 

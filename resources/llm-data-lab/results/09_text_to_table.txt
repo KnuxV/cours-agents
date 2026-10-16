@@ -1,0 +1,7 @@
+USA,4.1
+GBR,1.9
+DEU,1.2
+BEL,1.0
+CHN,0.6
+JPN,0.4
+rows correct: 6/6

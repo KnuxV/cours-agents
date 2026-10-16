@@ -1,0 +1,7 @@
+  OK  hawkish    Inflation remains well above our target, and further rate increases may be neede
+  OK  dovish     Given the weakening labour market, we stand ready to lower interest rates.
+  OK  neutral    The committee decided to keep interest rates unchanged.
+  OK  hawkish    Price pressures are broadening; we will not hesitate to tighten policy further.
+  OK  dovish     Growth has slowed markedly, and policy will remain supportive for as long as nec
+  OK  neutral    Our next decision will depend on the data we receive in the coming weeks.
+accuracy: 6/6

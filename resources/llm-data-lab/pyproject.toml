@@ -1,0 +1,9 @@
+[project]
+name = "llm-data-lab"
+version = "0.1.0"
+description = "Small experiments: what an LLM can do with data (course example)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pycountry>=26.2.16",
+]
