@@ -14,6 +14,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from datetime import date
 
 from llm import MODEL, chat
 
@@ -81,9 +82,9 @@ def wikipedia_page(title: str) -> str:
 
 def age_at(birth_date: str, event_date: str) -> str:
     """Age in whole years between two dates written YYYY-MM-DD."""
-    by, bm, bd = (int(x) for x in birth_date.split("-"))
-    ey, em, ed = (int(x) for x in event_date.split("-"))
-    return str(ey - by - ((em, ed) < (bm, bd)))
+    # fromisoformat refuse "25 October 1972" ou "1972-13-45" : l'erreur repart au modèle
+    birth, event = date.fromisoformat(birth_date), date.fromisoformat(event_date)
+    return str(event.year - birth.year - ((event.month, event.day) < (birth.month, birth.day)))
 
 
 SAVED: dict[str, dict] = {}

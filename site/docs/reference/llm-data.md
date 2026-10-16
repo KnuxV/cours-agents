@@ -207,9 +207,12 @@ In every script so far, *your* code decides what happens next. In `11_agent_nobe
 A **tool** is two things: an ordinary Python function, and a description of it that the model reads (its name, what it does, its parameters).
 
 ```python title="11_agent_nobel.py (excerpt)"
+from datetime import date
+
 def age_at(birth_date: str, event_date: str) -> str:
     """Age in whole years between two dates written YYYY-MM-DD."""
-    ...
+    birth, event = date.fromisoformat(birth_date), date.fromisoformat(event_date)
+    return str(event.year - birth.year - ((event.month, event.day) < (birth.month, birth.day)))
 
 TOOLS = [
     describe("wikipedia_search", "Search English Wikipedia; returns page titles.", query="search words"),
@@ -236,7 +239,7 @@ for step in range(1, MAX_STEPS + 1):
 Three habits matter:
 
 - **Cap the steps.** `MAX_STEPS = 15`. Without a cap, a confused model can loop for as long as you pay for it.
-- **Give the model arithmetic and lookups as tools.** The age is computed by `age_at`, not by the model.
+- **Give the model arithmetic and lookups as tools.** The age is computed by `age_at`, not by the model. The model only turns "25 October 1972" into `1972-10-25`; `date.fromisoformat` refuses anything else, and the loop sends that error back to the model, which can try again.
 - **Read the trace.** Every tool call is printed. Our run took five steps: three searches, three page reads, three `age_at` calls, three `save_row` calls (several per step), then `DONE`, and scored 3/3. A correct final table reached by a wrong path is luck; the trace is how you tell.
 
 ```text
