@@ -245,6 +245,8 @@
   pre.out { border-left: 3px solid var(--line); }
   pre.diagram .g { color: var(--pass); }
   pre.diagram .r { color: var(--fail); }
+  td.g { color: var(--pass); font-weight: 600; }
+  td.r { color: var(--fail); font-weight: 600; }
   sup { font-size: .6em; }
   .slide a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
   .slide a:hover { text-decoration-thickness: 2px; }
@@ -420,7 +422,61 @@ What is this headline about: economy, politics or sport? Headline: {text}</span>
       </div>
     </section>
 
-    <section class="slide" hidden data-clock="0:16" data-title="1 — One call"
+    <section class="slide" hidden data-clock="0:16" data-title="1 — One call: raw"
+      data-note="Two invented paragraphs and the plainest question: which named entities are in this text? The real answer from qwen3 (shortened here, it is a bulleted list in Markdown). It is right: both people, the four organisations, the places, the dates, even the 2 %. You can read it. But it is prose: the categories are the model's own (Monetary Values, Percentages), the layout can change from one call to the next, and a script cannot turn it into a table without guessing. Recognising named entities (NER) is an old task: before LLMs it needed a model trained on annotated text. File: 00_entities.py.">
+      <p class="kicker">1 — One call · a raw call</p>
+      <h2>Ask a question, <em>get prose</em></h2>
+      <div class="cols">
+        <div>
+          <pre class="diagram">What are the named entities in this text?
+
+In March 2025, Claire Martin, chief economist
+at Crédit Agricole, told Le Monde that the
+European Central Bank would cut its rates twice
+before the summer. She expects inflation in
+France to fall below 2 % by the end of the year.
+
+In Strasbourg, the Grand Est region announced a
+40 million euro plan to support small firms hit
+by the energy crisis. The plan was presented by
+its president, Thomas Weber, on 14 April.</pre>
+        </div>
+        <div>
+          <pre class="out">Based on the text provided, the named
+entities can be categorized as follows:
+
+**Persons**
+*   Claire Martin
+*   Thomas Weber
+
+**Organizations**
+*   Crédit Agricole
+<span class="d">    … Le Monde, ECB, Grand Est region</span>
+
+**Locations** <span class="d">…</span>   **Dates and Times** <span class="d">…</span>
+**Monetary Values** <span class="d">…</span>   **Percentages** <span class="d">…</span></pre>
+        </div>
+      </div>
+      <p class="punch">Right, and readable. But it is prose: no script can build a table from it.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:18" data-title="1 — One call: constrained"
+      data-note="The same question, plus one paragraph that fixes the format: JSON, five keys we chose, lists of entities as written. Now the answer is data: json.loads gives a Python dict, and the script compares it with the answer we expect. Two differences, and they are instructive. 1. '2 %' is missing: the raw call had found it! Constraining the format does not make the content better, you still have to check. 2. 'Grand Est region' is filed under place, not organisation. Who is wrong? Both readings are defensible. Before running on 10,000 texts, write down your categories precisely, like an annotation guide: the model can only follow the definition you give.">
+      <p class="kicker">1 — One call · a constrained call</p>
+      <h2>Same question, <em>plus a format</em></h2>
+      <pre>What are the named entities in this text?
+Text: {text}
+<span class="k">Answer with JSON only, with the keys "person", "organisation", "place", "date"
+and "amount", each holding a list of the entities exactly as written in the text.</span></pre>
+      <pre class="out">{"person":       ["Claire Martin", "Thomas Weber"],
+ "organisation": ["Crédit Agricole", "Le Monde", "European Central Bank"],
+ "place":        ["France", "Strasbourg", <span class="r">"Grand Est region"</span>],
+ "date":         ["March 2025", "14 April"],
+ "amount":       ["40 million euro"]}          <span class="r">← "2 %" is missing</span></pre>
+      <p class="punch">Now it is data, so a script can check it: one miss, one debatable choice.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:20" data-title="The same move"
       data-note="Every slide in this part has the same shape: the instruction, then the real result. The model used everywhere unless stated: qwen3, temperature 0. The score is computed by the script against answers we know.">
       <p class="kicker">1 — One call</p>
       <h2>One question, <em>one constrained answer</em></h2>
@@ -431,7 +487,7 @@ What is this headline about: economy, politics or sport? Headline: {text}</span>
       <p class="punch">Classifying, normalising, deduplicating: it is the same move.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:17" data-title="Filter: yes or no"
+    <section class="slide" hidden data-clock="0:21" data-title="Filter: yes or no"
       data-note="The most common use case: sorting a database of papers before reading it. 10 famous titles, 5 about the labour market, 5 not. Zero examples given to the model. Result: 10/10. The script checks that the answer is yes or no: any other answer counts as an error (closed list). File: 03_relevance.py.">
       <p class="kicker">1 — One call · filter</p>
       <h2>Is this paper about <em>the labour market</em>?</h2>
@@ -446,7 +502,7 @@ Answer with one word: yes or no.</pre>
 <span class="g">accuracy: 10/10</span></pre>
     </section>
 
-    <section class="slide" hidden data-clock="0:20" data-title="Normalise countries"
+    <section class="slide" hidden data-clock="0:23" data-title="Normalise countries"
       data-note="Good habit: rules first. pycountry knows the official names and ISO codes; it recognises 6 names out of 21. The other 15 (French names, nicknames, abbreviations) go to the model. And the model's answer is checked: the code must exist in pycountry, otherwise it is INVALID. Result: 21/21. File: 04_normalise.py.">
       <p class="kicker">1 — One call · normalise</p>
       <h2>Rules first, <em>the LLM for the rest</em></h2>
@@ -461,7 +517,7 @@ Answer with one word: yes or no.</pre>
       <p class="punch">Don't ask the LLM what a rule can do. And check that its answer is in the list.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:23" data-title="Same firm?"
+    <section class="slide" hidden data-clock="0:25" data-title="Same firm?"
       data-note="The 'letters' column is string similarity (0 = nothing in common, 1 = identical), what classic fuzzy matching uses. It is wrong both ways: LVMH and Moët Hennessy Louis Vuitton look nothing alike (0.13) and are the same company; Crédit Agricole and Crédit Mutuel look alike (0.57) and are two different banks. The model knows that France Télécom became Orange. Result: 10/10. File: 05_same_firm.py.">
       <p class="kicker">1 — One call · deduplicate</p>
       <h2>Letters mislead, <em>the model knows</em></h2>
@@ -480,8 +536,8 @@ Answer with one word: yes or no.</pre>
       <p class="punch">10 pairs out of 10. What matters is not the spelling but what the name refers to.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:26" data-title="From text to a table"
-      data-note="Six sentences written quickly, mostly in French, figures invented. Not just typos: 'la perfide Albion' (the United Kingdom), 'the country that invented French fries' (Belgium, despite the name: a trap, since the obvious wrong answer is France), 'the land of the rising sun' (Japan). One instruction, and we get the two-column table directly, ready for pandas. Result: 6/6. File: 09_text_to_table.py.">
+    <section class="slide" hidden data-clock="0:27" data-title="From text to a table"
+      data-note="Six sentences written quickly, mostly in French, figures invented. Rerun with the French fries sentence in English: still BEL. Not just typos: 'la perfide Albion' (the United Kingdom), 'the country that invented French fries' (Belgium, despite the name: a trap, since the obvious wrong answer is France), 'the land of the rising sun' (Japan). One instruction, and we get the two-column table directly, ready for pandas. Result: 6/6. File: 09_text_to_table.py.">
       <p class="kicker">1 — One call · structure</p>
       <h2>Six messy sentences, <em>one clean table</em></h2>
       <div class="cols">
@@ -494,8 +550,7 @@ Enfin la Chiine, en baisse : 0,6 milliard seulement.
 Et le pays du soleil levant, 0,4 milliard.</pre>
         </div>
         <div>
-          <pre class="out">country,exports_bn_eur
-<span class="g">USA,4.1
+          <pre class="out"><span class="g">USA,4.1
 GBR,1.9
 DEU,1.2
 BEL,1.0
@@ -506,7 +561,7 @@ JPN,0.4</span></pre>
       <p class="punch">Instruction: "3-letter ISO codes, amounts in billions". 6 rows out of 6.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:29" data-title="Extract fields"
+    <section class="slide" hidden data-clock="0:30" data-title="Extract fields"
       data-note="This is named-entity recognition (NER): finding the contract, the city, the salary in a text. Without an LLM you would hand-label hundreds of ads and train a model. Here: zero examples. Note 'Full remote impossible, mais un jour de télétravail accepté' (no full remote, but one day of remote work): the model correctly set remote = true. And for the internship, no salary figure: null, it did not invent one. Result: 12 fields out of 12 over 3 ads. File: 07_extract.py.">
       <p class="kicker">1 — One call · extract</p>
       <h2>A job ad in French, <em>one database row</em></h2>
@@ -530,14 +585,23 @@ Molsheim,198760,1020,410
 <span class="g">cells correct: 24/24</span>   <span class="d">(model: gemma)</span></pre>
     </section>
 
-    <section class="slide" hidden data-clock="0:36" data-title="Summarise, then review"
-      data-note="Each paper summary fits in one sentence. Then a second model (mistral-small) reads it and says whether the summary claims anything the text does not: all three are OK. This is 'LLM as judge'. Handy to review thousands of rows, but the judge is itself a measurement: before trusting it, read about ten of its verdicts yourself. File: 06_summaries.py.">
+    <section class="slide" hidden data-clock="0:35" data-title="Summarise, then review"
+      data-note="The whole abstract, then its summary. Two kinds of check. The length (at most 120 characters) needs no model: the script counts, 93, OK. What a script cannot check goes to a second model, the judge (mistral-small), with three questions written in advance: does it state the main finding, does it claim anything unsupported, would a reader know the topic? Here: yes, no, yes. Same for the other abstract. Caution: a judge that says yes to everything is useless, and we have not yet seen ours say no. Test it with a summary you spoil on purpose, and read about ten of its verdicts yourself. This is 'LLM as judge'. File: 06_summaries.py.">
       <p class="kicker">1 — One call · summarise</p>
       <h2>A summary, <em>and a judge that reviews it</em></h2>
-      <pre class="out"><span class="k">summary :</span> Bitcoin mining increases renewable capacity but also carbon emissions,
-          though grid demand response significantly reduces these extra emissions.
-<span class="k">judge   :</span> <span class="g">OK</span>     <span class="d">(another model: mistral-small)</span></pre>
-      <p class="punch">The judge is a measurement too: read about ten of its verdicts before you trust it.</p>
+      <pre class="diagram">Supporters of Bitcoin claim that miners' demand for electricity leads to more
+renewable capacity. We estimate a Bitcoin electricity demand curve and add it to
+a long-run model of the Texas electricity market. Bitcoin mining does increase
+renewable capacity, but it also increases carbon emissions. When miners offer
+demand response to the grid, most of the extra emissions disappear.</pre>
+      <pre class="out"><span class="k">summary</span> <span class="d">(93 / 120 chars,</span> <span class="g">OK</span><span class="d">)</span>
+  Bitcoin mining boosts renewables but raises emissions, which demand response largely offsets.
+
+<span class="k">judge</span> <span class="d">(mistral-small)</span>
+  states the main finding?          <span class="g">yes</span>
+  claims anything unsupported?      <span class="g">no</span>
+  a reader knows the topic?         <span class="g">yes</span></pre>
+      <p class="punch">The length, the script checks. The rest, a judge, against questions written in advance.</p>
     </section>
 
     <section class="slide" hidden data-clock="0:39" data-title="Synthetic data"
@@ -712,7 +776,8 @@ for step in range(15):                         <span class="d"># cap: no infinit
         <div>
           <h3>The model reads this</h3>
           <pre>{"name": "age_at",
- "description": "Age in years between two dates.",
+ "description":
+   "Age in years between two dates.",
  "parameters": {
    "birth_date": "YYYY-MM-DD",
    "event_date": "YYYY-MM-DD"}}</pre>
@@ -744,24 +809,25 @@ for step in range(15):                         <span class="d"># cap: no infinit
     </section>
 
     <section class="slide" hidden data-clock="1:14" data-title="Why a tool?"
-      data-note="Honest point: the age_at tool is not strictly needed. Asked directly, the model gets most ages right. But a model reads text in chunks (tokens), not letter by letter, so it does not 'see' the three r in strawberry; and it writes a number digit by digit, as the most likely next characters, without computing it. Usually right, sometimes wrong, always with the same confidence. Reasoning models (qwen3 thinks before answering) do better, but slower, and still without a guarantee. Python: right every time, in a microsecond. Rule: the model reads and decides, the code counts. Script: 13_no_tool.py, same questions to two models, scored against Python.">
+      data-note="Honest point: the age_at tool is not strictly needed. Asked directly, both models get every age right (the Nobel age too, not shown). The model reads, the code counts. But on letters and long sums they fail, and nothing in the answer tells you: a wrong number looks exactly like a right one. Why: a model reads text in chunks (tokens), not letter by letter, so it does not really 'see' the letters of a sentence; and it writes a number digit by digit, as the most likely next characters, without computing it. Strawberry is right because it is famous (the failure was widely mocked in 2024); a sentence nobody has asked about fails. Python: right every time. Rule: the model reads and decides, the code counts. 9 questions in the script, 7 shown. File: 13_no_tool.py.">
       <p class="kicker">3 — An agent · why a tool?</p>
       <h2>The model can count. <em>Usually.</em></h2>
-      <p class="lede">Same questions, no tool, scored against Python. RESULTS PENDING: run 13_no_tool.py</p>
+      <p class="lede">No tool, scored against Python. qwen3: 6/9, mistral-small: 4/9.</p>
       <div class="tablewrap">
       <table>
         <thead><tr><th>Question</th><th>Python</th><th>qwen3</th><th>mistral-small</th></tr></thead>
         <tbody>
-          <tr><td>"r" in <em>strawberry</em></td><td>3</td><td>…</td><td>…</td></tr>
-          <tr><td>"n" in a 15-word sentence</td><td>7</td><td>…</td><td>…</td></tr>
-          <tr><td>48271 × 9365</td><td>452057915</td><td>…</td><td>…</td></tr>
-          <tr><td>Age: born 1990-10-15, on 2026-10-14</td><td>35</td><td>…</td><td>…</td></tr>
-          <tr><td>Days from 1972-10-25 to 2019-10-14</td><td>17155</td><td>…</td><td>…</td></tr>
+          <tr><td>"r" in <em>strawberry</em></td><td>3</td><td class="g">3</td><td class="g">3</td></tr>
+          <tr><td>"s" in <em>Mississippi</em></td><td>4</td><td class="g">4</td><td class="r">5</td></tr>
+          <tr><td>"n" in a 15-word sentence</td><td>7</td><td class="r">4</td><td class="r">4</td></tr>
+          <tr><td>48271 × 9365</td><td>452057915</td><td class="g">452057915</td><td class="r">451994815</td></tr>
+          <tr><td>Sum of 15 numbers</td><td>31024</td><td class="r">29944</td><td class="r">29779</td></tr>
+          <tr><td>Age: born 1990-10-15, on 2026-10-14</td><td>35</td><td class="g">35</td><td class="g">35</td></tr>
+          <tr><td>Days from 1972-10-25 to 2019-10-14</td><td>17155</td><td class="r">17171</td><td class="r">16763</td></tr>
         </tbody>
       </table>
       </div>
-      <p class="punch">A tool turns "usually right" into "always right". The model reads, the code counts.</p>
-      <pre><span class="k">uv run python 13_no_tool.py</span></pre>
+      <p class="punch">A tool turns "usually" into "always".</p>
     </section>
 
     <section class="slide" hidden data-clock="1:16" data-title="When it goes wrong"

@@ -1,0 +1,39 @@
+=== How many times does the letter "r" appear in "strawberry"?
+  python         3
+  qwen3          3  OK  (0 s)
+  mistral-small  3  OK  (0 s)
+=== How many times does the letter "s" appear in "Mississippi"?
+  python         4
+  qwen3          4  OK  (0 s)
+  mistral-small  5  BAD (0 s)
+=== How many times does the letter "n" appear in this sentence: "The Grand Est region announced a plan to support small firms hit by the energy crisis."
+  python         7
+  qwen3          4  BAD (0 s)
+  mistral-small  4  BAD (0 s)
+=== What is 7 × 8?
+  python         56
+  qwen3          56  OK  (0 s)
+  mistral-small  56  OK  (0 s)
+=== What is 48271 × 9365?
+  python         452057915
+  qwen3          452057915  OK  (0 s)
+  mistral-small  451994815  BAD (0 s)
+=== What is the sum of these numbers: 482, 1937, 75, 3061, 228, 914, 6502, 47, 1385, 799, 2614, 53, 8120, 336, 4471?
+  python         31024
+  qwen3          29944  BAD (0 s)
+  mistral-small  29779  BAD (0 s)
+=== How old was someone born on 1972-10-25 on 2019-10-14?
+  python         46
+  qwen3          46  OK  (0 s)
+  mistral-small  46  OK  (0 s)
+=== How old was someone born on 1990-10-15 on 2026-10-14?
+  python         35
+  qwen3          35  OK  (0 s)
+  mistral-small  35  OK  (0 s)
+=== How many days are there from 1972-10-25 to 2019-10-14?
+  python         17155
+  qwen3          17171  BAD (0 s)
+  mistral-small  16763  BAD (0 s)
+
+qwen3: 6/9 right
+mistral-small: 4/9 right

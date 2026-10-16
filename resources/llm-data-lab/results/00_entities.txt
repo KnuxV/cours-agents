@@ -1,0 +1,34 @@
+=== 1. raw call
+Based on the text provided, the named entities can be categorized as follows:
+
+**Persons**
+*   Claire Martin
+*   Thomas Weber
+
+**Organizations**
+*   Crédit Agricole
+*   Le Monde
+*   European Central Bank
+*   Grand Est region
+
+**Locations**
+*   France
+*   Strasbourg
+
+**Dates and Times**
+*   March 2025
+*   14 April
+
+**Monetary Values**
+*   40 million euro
+
+**Percentages**
+*   2 %
+
+=== 2. constrained call
+{"person": ["Claire Martin", "Thomas Weber"], "organisation": ["Crédit Agricole", "Le Monde", "European Central Bank"], "place": ["France", "Strasbourg", "Grand Est region"], "date": ["March 2025", "14 April"], "amount": ["40 million euro"]}
+  person       missing: -   extra: -
+  organisation missing: ['Grand Est region']   extra: -
+  place        missing: -   extra: ['grand est region']
+  date         missing: -   extra: -
+  amount       missing: ['2 %']   extra: -

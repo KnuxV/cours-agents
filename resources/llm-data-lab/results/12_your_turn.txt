@@ -1,0 +1,7 @@
+  OK  economy    ECB keeps interest rates unchanged
+  OK  politics   Parliament votes on the pension reform bill
+  OK  sport      Strasbourg wins 2-0 against Lyon
+  OK  economy    Unemployment falls to its lowest level in ten years
+  OK  politics   The prime minister announces a cabinet reshuffle
+  OK  sport      French cyclist takes the yellow jersey in the Alps
+accuracy: 6/6

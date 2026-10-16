@@ -1,9 +1,8 @@
-=== A (55 words)
-  summary : AIDSII, an IoT and deep learning app, optimizes irrigation to reduce water waste and improve crop yields.
-  judge   : OK
-=== B (59 words)
-  summary : Bitcoin mining increases renewable capacity but also carbon emissions, though grid demand response significantly reduces these extra emissions.
-  judge   : OK
-=== C (56 words)
-  summary : Short-circuiting the transformer's high-voltage side, rather than machine terminals, significantly reduces braking time for pumped hydro storage plants.
-  judge   : OK
+=== A: AIDSII: an AI-based digital system for intelligent irrigation
+  abstract (333 chars): Farmers face a shortage of water and fertile land while the demand for food keeps rising. We introduce AIDSII, an app that combines IoT sensors in the field with deep learning models (CNN-LSTM) to decide when and how much to irrigate. Farmers automate their irrigation from their phone, which reduces water waste and improves yields.
+  summary  (90 chars, OK): AIDSII app uses IoT and CNN-LSTM to automate irrigation, saving water and boosting yields.
+  judge    : {"main_finding": "yes", "unsupported": "no", "topic_clear": "yes", "why": "The summary accurately reflects the abstract's main finding, supported claims, and clearly states the paper's topic."}
+=== B: Can Bitcoin mining increase renewable electricity capacity?
+  abstract (383 chars): Supporters of Bitcoin claim that miners' demand for electricity leads to more renewable capacity. We estimate a Bitcoin electricity demand curve and add it to a long-run model of the Texas electricity market. Bitcoin mining does increase renewable capacity, but it also increases carbon emissions. When miners offer demand response to the grid, most of the extra emissions disappear.
+  summary  (93 chars, OK): Bitcoin mining boosts renewables but raises emissions, which demand response largely offsets.
+  judge    : {"main_finding": "yes", "unsupported": "no", "topic_clear": "yes", "why": "The summary accurately captures the paper's main findings, avoids unsupported claims, and clearly indicates the topic (Bitcoin mining's impact on renewables and emissions in the Texas electricity market)."}
