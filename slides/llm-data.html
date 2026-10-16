@@ -481,7 +481,7 @@ Answer with one word: yes or no.</pre>
     </section>
 
     <section class="slide" hidden data-clock="0:26" data-title="From text to a table"
-      data-note="Six sentences written quickly, in French, figures invented. Not just typos: 'la perfide Albion' (the United Kingdom), 'the country that invented fries' (Belgium, an origin disputed with France), 'the land of the rising sun' (Japan). One instruction, and we get the two-column table directly, ready for pandas. Result: 6/6. File: 09_text_to_table.py.">
+      data-note="Six sentences written quickly, mostly in French, figures invented. Not just typos: 'la perfide Albion' (the United Kingdom), 'the country that invented French fries' (Belgium, despite the name: a trap, since the obvious wrong answer is France), 'the land of the rising sun' (Japan). One instruction, and we get the two-column table directly, ready for pandas. Result: 6/6. File: 09_text_to_table.py.">
       <p class="kicker">1 — One call · structure</p>
       <h2>Six messy sentences, <em>one clean table</em></h2>
       <div class="cols">
@@ -489,7 +489,7 @@ Answer with one word: yes or no.</pre>
           <pre class="diagram">Nos ventes vers les Etats Unix ont atteint 4,1 milliards…
 La perfide Albion reste un gros client, avec 1,9 milliard.
 En Alemagne, on a vendu pour 1,2 milliard d'euros…
-Le pays qui a inventé les frites a acheté pour un milliard.
+The country that invented French fries bought exactly one billion.
 Enfin la Chiine, en baisse : 0,6 milliard seulement.
 Et le pays du soleil levant, 0,4 milliard.</pre>
         </div>
@@ -542,8 +542,8 @@ Molsheim,198760,1020,410
 
     <section class="slide" hidden data-clock="0:39" data-title="Synthetic data"
       data-note="The model writes 8 fake job ads whose contract type we know (2 permanent CDI, 2 fixed-term CDD, 2 internships, 2 work-study), then the same model has to find the contract back. 8/8. Useful to test a pipeline before you have real data. But too clean: the model easily recognises what it wrote itself. Draw no conclusions from synthetic data. File: 08_synthetic.py.">
-      <p class="kicker">1 — One call · generate</p>
-      <h2>Fake data <em>with known labels</em></h2>
+      <p class="kicker">1 — One call · synthetic data</p>
+      <h2>Synthetic data: <em>fake rows, known labels</em></h2>
       <pre class="out"><span class="g">OK</span>  true CDD        guess CDD        Nous offrons un contrat de trois mois à un profil junior…
 <span class="g">OK</span>  true Stage      guess stage      Rejoignez notre startup en tant qu'analyste de données…
 <span class="g">OK</span>  true Alternance guess alternance Nous proposons une alternance de deux ans pour préparer…
@@ -555,7 +555,8 @@ Molsheim,198760,1020,410
     <section class="slide" hidden data-clock="0:42" data-title="2 — A workflow"
       data-note="A change of level: several calls, chained by a script. This is what I do in my thesis: close to 164,000 Web of Science publications (2023-2025), at the intersection of the UN Sustainable Development Goals (SDGs) and six advanced digital technologies (ADTs: AI, Internet of Things, computing infrastructure, blockchain, robotics, additive manufacturing). The question: which technology helps or harms which goal?">
       <p class="kicker">2 — A workflow · my thesis example</p>
-      <h2>164,000 papers, <em>three questions each</em></h2>
+      <h2>How do we measure <em>the impact of technology</em> on sustainable development?</h2>
+      <p class="lede">164,000 papers, three questions each.</p>
       <div class="count"><span class="n">1</span><p><strong>Which UN goals</strong> (SDGs)? Hunger, water, energy, climate… 17 in total.</p></div>
       <div class="count"><span class="n">2</span><p><strong>Which technologies</strong>? AI, connected sensors, blockchain… 6 in total.</p></div>
       <div class="count"><span class="n">3</span><p><strong>What effect</strong> does the technology have on the goal? Positive, negative, mixed.</p></div>
@@ -663,7 +664,7 @@ a passing mention, a word used in another sense, or a generic claim of benefit.<
     </section>
 
     <section class="slide" hidden data-clock="1:04" data-title="3 — An agent"
-      data-note="Demystify: an agent is a while loop around calls to the model. At each turn, the model answers either with text (it is done) or with a tool request ('call wikipedia_search with these arguments'). Our script runs the tool and sends back the result. The 15-turn cap prevents an infinite loop. This is exactly what pi or OpenCode do, with other tools.">
+      data-note="Demystify: an agent is a while loop around calls to the model. At each turn, the model answers either with text (it is done) or with a tool request ('call wikipedia_search with these arguments'). Our script runs the tool and sends back the result. The 15-turn cap prevents an infinite loop. This is exactly what pi does, with other tools.">
       <p class="kicker">3 — An agent</p>
       <h2>An agent is <em>a loop</em></h2>
       <pre>messages = [{"role": "user", "content": TASK}]
@@ -695,24 +696,75 @@ for step in range(15):                         <span class="d"># cap: no infinit
       <p class="punch">The task: for Duflo, Tirole and Goldin, the PhD university and the age at the Nobel prize.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:10" data-title="Demo: the Nobels"
-      data-note="Live demo if possible: cd ~/llm-data-lab then uv run python 11_agent_nobel.py (needs UNISTRA_API_KEY). The Wikipedia pages are kept in data/wiki_cache.json, so the demo replays even without access to Wikipedia. If it fails, this slide shows the real trace. The model searches the three names at once, reads the three pages, computes the three ages with the tool, saves, says DONE. 5 turns, 3/3. The answers are known, so the script scores the agent.">
-      <p class="kicker">3 — An agent · demo</p>
-      <h2>The real trace <em>(qwen3)</em></h2>
-      <pre class="out">[1] wikipedia_search({"query": "Esther Duflo"})      -> 'Esther Duflo\nAbhijit Banerjee…'
-[2] wikipedia_page({"title": "Esther Duflo"})        -> 'Esther Caroline Duflo, FBA (… born 25 O…'
-[3] age_at({"birth_date": "1972-10-25", "event_date": "2019-10-14"}) -> '46'
-[4] save_row({"name": "Esther Duflo", "phd_institution": "Massachusetts Institute of Technology", …})
-<span class="d">    … same for Tirole and Goldin, in the same turns …</span>
-[5] model: DONE
-<span class="g">  OK  Duflo   MIT       46
-  OK  Tirole  MIT       61
-  OK  Goldin  Chicago   77
-score 3/3, 5 steps</span></pre>
-      <pre><span class="k">uv run python 11_agent_nobel.py</span></pre>
+    <section class="slide" hidden data-clock="1:09" data-title="One tool, in full"
+      data-note="The age_at tool exactly as it is in 11_agent_nobel.py. Left: the Python function. It runs on our machine, the model never sees it. Right: what the model receives, a name, a sentence, two parameters with their format. That's all it knows. When it wants an age, it answers with a request: age_at with these two dates. Our loop finds the function with that name, runs it, sends '46' back. date.fromisoformat refuses '25 October 1972' or '1972-13-45': the error goes back to the model, which can try again. The model's job is to turn 'born 25 October 1972' into 1972-10-25; Python's job is the subtraction.">
+      <p class="kicker">3 — An agent · the tools</p>
+      <h2><code>age_at</code>, <em>in full</em></h2>
+      <div class="cols">
+        <div>
+          <h3>Our code runs this</h3>
+          <pre><span class="k">def</span> age_at(birth_date: str, event_date: str) -&gt; str:
+    birth = date.fromisoformat(birth_date)
+    event = date.fromisoformat(event_date)
+    before = (event.month, event.day) &lt; (birth.month, birth.day)
+    <span class="k">return</span> str(event.year - birth.year - before)</pre>
+        </div>
+        <div>
+          <h3>The model reads this</h3>
+          <pre>{"name": "age_at",
+ "description": "Age in years between two dates.",
+ "parameters": {
+   "birth_date": "YYYY-MM-DD",
+   "event_date": "YYYY-MM-DD"}}</pre>
+        </div>
+      </div>
+      <pre class="out"><span class="d">model asks:</span>  age_at({"birth_date": "1972-10-25", "event_date": "2019-10-14"})
+<span class="d">we send back:</span> <span class="g">'46'</span></pre>
+      <p class="punch">The model never sees the code. It sees a name, a sentence, two parameters.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:15" data-title="When it goes wrong"
+    <section class="slide" hidden data-clock="1:11" data-title="Demo: the Nobels"
+      data-note="The question: where did Duflo, Tirole and Goldin get their PhD, and how old were they when the Nobel prize was announced? Live demo if possible: in the llm-data-lab folder, uv run python 11_agent_nobel.py (needs UNISTRA_API_KEY). The Wikipedia pages are kept in data/wiki_cache.json, so the demo replays even without access to Wikipedia. If it fails, this slide is the real trace, rewritten in plain words (the script prints the raw calls). The table shows Duflo's part; the model asks for the three people at once in each turn. Turn 2: the page is the whole Wikipedia article; the two facts it needs are in it. Turn 3: the model only copies the dates, Python computes. 5 turns, 3/3. The answers are known, so the script scores the agent.">
+      <p class="kicker">3 — An agent · demo</p>
+      <h2>Where did they do their PhD, <em>and how old were they at the Nobel?</em></h2>
+      <p class="lede">Duflo, Tirole, Goldin. The real trace (qwen3), Duflo's part:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Turn</th><th>The model asks for</th><th>Our code sends back</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><code>wikipedia_search</code> "Esther Duflo"</td><td>3 page titles: Esther Duflo, Abhijit Banerjee, Poor Economics</td></tr>
+          <tr><td>2</td><td><code>wikipedia_page</code> "Esther Duflo"</td><td>The article: "born 25 October 1972" … "MIT's PhD program in economics"</td></tr>
+          <tr><td>3</td><td><code>age_at</code> 1972-10-25, 2019-10-14</td><td>46</td></tr>
+          <tr><td>4</td><td><code>save_row</code> Duflo, MIT, 46</td><td>saved</td></tr>
+          <tr><td>5</td><td>nothing: it answers "DONE"</td><td>the loop stops</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="punch">Tirole and Goldin go through the same turns, at the same time. <span class="g">Score 3/3</span>: Duflo MIT 46, Tirole MIT 61, Goldin Chicago 77.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:14" data-title="Why a tool?"
+      data-note="Honest point: the age_at tool is not strictly needed. Asked directly, the model gets most ages right. But a model reads text in chunks (tokens), not letter by letter, so it does not 'see' the three r in strawberry; and it writes a number digit by digit, as the most likely next characters, without computing it. Usually right, sometimes wrong, always with the same confidence. Reasoning models (qwen3 thinks before answering) do better, but slower, and still without a guarantee. Python: right every time, in a microsecond. Rule: the model reads and decides, the code counts. Script: 13_no_tool.py, same questions to two models, scored against Python.">
+      <p class="kicker">3 — An agent · why a tool?</p>
+      <h2>The model can count. <em>Usually.</em></h2>
+      <p class="lede">Same questions, no tool, scored against Python. RESULTS PENDING: run 13_no_tool.py</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Question</th><th>Python</th><th>qwen3</th><th>mistral-small</th></tr></thead>
+        <tbody>
+          <tr><td>"r" in <em>strawberry</em></td><td>3</td><td>…</td><td>…</td></tr>
+          <tr><td>"n" in a 15-word sentence</td><td>7</td><td>…</td><td>…</td></tr>
+          <tr><td>48271 × 9365</td><td>452057915</td><td>…</td><td>…</td></tr>
+          <tr><td>Age: born 1990-10-15, on 2026-10-14</td><td>35</td><td>…</td><td>…</td></tr>
+          <tr><td>Days from 1972-10-25 to 2019-10-14</td><td>17155</td><td>…</td><td>…</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="punch">A tool turns "usually right" into "always right". The model reads, the code counts.</p>
+      <pre><span class="k">uv run python 13_no_tool.py</span></pre>
+    </section>
+
+    <section class="slide" hidden data-clock="1:16" data-title="When it goes wrong"
       data-note="Seen while preparing, with mistral-small: Wikipedia refused our requests (error 429, too many requests at once). The model retried 9 times, then saved the three answers from memory, without reading a single page, although the instruction said 'do not guess'. The answers happened to be right. Lesson: scoring the final answer is not enough, look at the path. Since then the script waits between requests and retries.">
       <p class="kicker">3 — An agent · what can fail</p>
       <h2>It <em>guessed</em> anyway</h2>
@@ -725,22 +777,25 @@ score 3/3, 5 steps</span></pre>
     </section>
 
     <section class="slide" hidden data-clock="1:18" data-title="And pi?"
-      data-note="According to pi's documentation (to check on pi.dev): by default pi has four tools, read, write, edit, bash, and no web search tool. But with bash it can run curl and query a page or an API: a 'poor man's' search. A real search tool can be added with a pi package or an MCP server. OpenCode has a built-in web tool. Same loop, other tools.">
+      data-note="pi comes with four tools: read, write, edit, bash. No web search. If your agent needs one, you add it; two ways, shown here, nobody has to do it today. 1. curl: a terminal program that fetches a web address and prints what comes back (a page, or JSON from an API). pi already has bash, so it can run curl itself. The example is DuckDuckGo's free answer API, run while preparing: it sends back a short summary taken from Wikipedia. 2. A package: other people have written search tools for pi. pi-web-access adds web_search and fetch_content, no key needed for its default search (according to its page on pi.dev/packages; not tested in class). The catalogue has several others. Same idea as our age_at: a capability the model lacks becomes a tool.">
       <p class="kicker">3 — An agent · your tools</p>
-      <h2>pi, OpenCode: <em>the same loop</em></h2>
+      <h2>pi has no web search. <em>Add a tool.</em></h2>
       <div class="cols">
         <div>
-          <h3>pi</h3>
-          <p>Four tools: read, write, edit, bash. No web search.</p>
-          <p>But <code>bash</code> + <code>curl</code> is enough to read a page.</p>
+          <h3>With curl</h3>
+          <p><code>curl</code> fetches a web address and prints what comes back. pi has <code>bash</code>, so it can run it:</p>
+          <pre><span class="k">curl "https://api.duckduckgo.com/?q=Esther+Duflo&amp;format=json"</span>
+<span class="d">{"Abstract":"Esther Caroline Duflo, FBA is a
+ French-American economist, …</span></pre>
         </div>
         <div>
-          <h3>Our script</h3>
-          <p>Four tools too, written in Python.</p>
-          <p>Adding a tool = writing a function and its description.</p>
+          <h3>With a package</h3>
+          <p>Someone already wrote a search tool for pi:</p>
+          <pre><span class="k">pi install npm:pi-web-access</span></pre>
+          <p>Adds <code>web_search</code> and <code>fetch_content</code>. More on <code>pi.dev/packages</code>.</p>
         </div>
       </div>
-      <p class="punch">An agent is never stronger than its tools.</p>
+      <p class="punch">An agent is never stronger than its tools. Missing one? Add it.</p>
     </section>
 
     <section class="slide" hidden data-clock="1:20" data-title="4 — Does it really work?"
