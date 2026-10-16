@@ -324,29 +324,7 @@ git pull</span></pre>
       <pre class="diagram">text, names, images  →  <b>LLM + an instruction</b>  →  labels, codes, columns</pre>
     </section>
 
-    <section class="slide" hidden data-clock="0:07" data-title="Before, after"
-      data-note="Example: extracting the contract type and the city from job ads. Without an LLM: hand-label a few hundred ads, train a model (for instance a named-entity recognition model with spaCy), evaluate it, start again. With an LLM: one instruction, zero examples, a result within an hour. Careful: the LLM does not remove evaluation. It removes the labelling phase to get started. For a publishable result you go back to a hand-labelled sample (end of the session).">
-      <p class="kicker">Why this is new</p>
-      <h2>LLMs excel <em>at prototyping</em></h2>
-      <div class="cols">
-        <div>
-          <h3>Without an LLM</h3>
-          <p>Hand-label hundreds of examples.</p>
-          <p>Train a model, evaluate it, start again.</p>
-          <p><strong>Weeks.</strong></p>
-        </div>
-        <div>
-          <h3>With an LLM</h3>
-          <p>Write a one-paragraph instruction.</p>
-          <p>Zero examples: it already knows the language.</p>
-          <p><strong>An hour.</strong></p>
-        </div>
-      </div>
-      <p class="punch">What does not go away: checking that it works. We come back to it at the end.</p>
-    </section>
-
-
-    <section class="slide" hidden data-clock="0:09" data-title="Classic machine learning"
+    <section class="slide" hidden data-clock="0:07" data-title="Classic machine learning"
       data-note="How text classification worked before LLMs (and still works, it is cheaper at scale). The model starts knowing nothing about your task. You hand-label a dataset, typically hundreds to thousands of examples per category, and split it in two: the train set, which the model learns from, and the test set, which you hide from it and use only to measure how good it is. If you test on examples it has seen, the score is meaningless: it may have memorised them. The expensive part is the labelling, not the computing.">
       <p class="kicker">Before LLMs</p>
       <h2>Classic machine learning: <em>learn from your labels</em></h2>
@@ -366,7 +344,7 @@ git pull</span></pre>
       <p class="punch">No labels, no model. The expensive part is the labelling.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:11" data-title="Zero-, one-, few-shot"
+    <section class="slide" hidden data-clock="0:09" data-title="Zero-, one-, few-shot"
       data-note="A 'shot' is an example. Zero-shot: only the instruction, which is what every script of this session does. One-shot: one example in the prompt. Few-shot: a handful. The examples go in the prompt: the model is not retrained, its weights do not change, it just reads them. Few-shot helps when your categories are your own (what exactly counts as 'neutral' for you) or when you want a precise output format. Try it in 12_your_turn.py: add two or three examples to QUESTION and compare the score. What does not disappear: the test set. You skip the train set, not the evaluation.">
       <p class="kicker">With an LLM</p>
       <h2>Zero, one or a few examples, <em>in the prompt</em></h2>
@@ -381,6 +359,26 @@ Example: "We stand ready to cut rates." → dovish
 Example: "Rates are unchanged." → neutral
 Is this sentence hawkish, dovish or neutral? Sentence: {text}</span></pre>
       <p class="punch">No train set: the model is not retrained, it reads the examples. But keep a test set.</p>
+    </section>
+    <section class="slide" hidden data-clock="0:11" data-title="Before, after"
+      data-note="Example: extracting the contract type and the city from job ads. Without an LLM: hand-label a few hundred ads, train a model (for instance a named-entity recognition model with spaCy), evaluate it, start again. With an LLM: one instruction, zero examples, a result within an hour. Careful: the LLM does not remove evaluation. It removes the labelling phase to get started. For a publishable result you go back to a hand-labelled sample (end of the session).">
+      <p class="kicker">So</p>
+      <h2>LLMs excel <em>at prototyping</em></h2>
+      <div class="cols">
+        <div>
+          <h3>Without an LLM</h3>
+          <p>Hand-label a train set and a test set.</p>
+          <p>Train a model, evaluate it, start again.</p>
+          <p><strong>Weeks.</strong></p>
+        </div>
+        <div>
+          <h3>With an LLM</h3>
+          <p>Write a one-paragraph instruction.</p>
+          <p>Zero or a few examples: it already knows the language.</p>
+          <p><strong>An hour.</strong></p>
+        </div>
+      </div>
+      <p class="punch">What does not go away: the test set. Checking that it works comes at the end.</p>
     </section>
 
     <section class="slide" hidden data-clock="0:13" data-title="Three ways to use an LLM"
@@ -796,9 +794,6 @@ Sentence: {text}"""</span>
       <pre><span class="k">uv run python 12_your_turn.py</span></pre>
       <p class="punch">Abstracts by field, survey answers by theme, headlines by tone: your data, three lines to change.</p>
     </section>
-
-
-
 
   </div>
 
