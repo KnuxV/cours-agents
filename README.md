@@ -8,4 +8,6 @@
 
 **Shipping deck (French, same keys):** https://knuxv.github.io/cours-agents/slides/publier-son-code.html — code in [KnuxV/password-app](https://github.com/KnuxV/password-app) and [KnuxV/tiny-site](https://github.com/KnuxV/tiny-site)
 
+**LLMs-for-data deck (French, same keys):** https://knuxv.github.io/cours-agents/slides/llm-donnees.html — code in [KnuxV/llm-data-lab](https://github.com/KnuxV/llm-data-lab)
+
 Source repo for an 8h course taught in an NLP master and an economics master. `SPEC.md` is the contract; `site/` is the MkDocs site published to GitHub Pages; `slides/` holds the presenterm decks.

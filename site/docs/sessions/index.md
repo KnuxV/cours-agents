@@ -58,6 +58,14 @@ What goes *around* working code so that others can read it, trust it, try it and
 - Code: [github.com/KnuxV/password-app](https://github.com/KnuxV/password-app) (one git tag per step) · [github.com/KnuxV/tiny-site](https://github.com/KnuxV/tiny-site) (a template repository)
 - Needs first: `uv` ([Session 2](s2.md)), a GitHub account ([Session 1](s1.md)), and the [testing class](testing.md).
 
+## LLMs for data
+
+What a language model can do with data besides writing code: turning unordered text, names and scanned pages into ordered columns with almost no examples, a multi-step labelling workflow from a real thesis, an agent with its own tools, and how to check that any of it works. Every result on the slides comes from a real run on the Unistra models.
+
+- Slides (French): [Les LLM et les données](../slides/llm-donnees.html){target="_blank"}
+- Code: [github.com/KnuxV/llm-data-lab](https://github.com/KnuxV/llm-data-lab) (11 small experiments, with the outputs of the run used for the slides)
+- Needs first: `uv` and `UNISTRA_API_KEY` ([Session 2](s2.md)), calling the API ([Session 3](s3.md)).
+
 ## Session 4 — pi, a real harness
 
 The same loop, automated by a real agent harness: provider configuration, permissions you write yourself, `AGENTS.md`, tests as the anchor, subagents and the grill/build pattern.

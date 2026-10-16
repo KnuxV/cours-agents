@@ -465,3 +465,11 @@ Instructor request, no task file: generate documentation from code, CI/CD on pus
 - Streamlit Community Cloud deploy (reads `uv.lock` per its docs) — not tried.
 - GitHub UI labels quoted on slides: *Use this template*, *Choose a license template*; whether workflows need enabling on a repository created from a template.
 - Nothing rehearsed on WSL, macOS, Git Bash or Codespaces; `uv sync` pulls ~41 packages for Streamlit.
+
+## LLMs for data — last 2h session (2026-10-16)
+
+**Produced** — `slides/llm-donnees.html` (French, 31 slides, same engine and keys as the shipping deck; copy in `site/docs/slides/`, linked from `site/docs/sessions/index.md` and `README.md`). Student repo `~/Codebase/llm-data-lab` (local commit, not on GitHub yet): 11 experiments, stdlib API helper `llm.py`, small data files, `results/` with the outputs of the prep run. Thesis example: two abstracts from the instructor's WoS corpus, simplified, with three short prompts derived from `prompts/sdg_pass1.md`, `sdg_pass2.md` and `adt_pass1.md`. `resources/agent-lab/tool_loop_check.py` removed (never committed; replaced by `11_agent_nobel.py`).
+
+**Verification** — every number on the slides comes from a real run on the Unistra endpoint made by the instructor on 2026-10-16 (qwen3 unless stated; gemma for the image; mistral-small as judge). Scripts dry-run end to end with a fake model. `mkdocs build --strict` exit 0. Six dense slides rendered at 1280×720.
+
+**UNVERIFIED / needs human review** — `gpt-oss` returned HTTP 400 on the tool-calling request (error body not captured; avoided). pi's default toolset and add-ons (no web search by default, packages, MCP) are taken from the instructor's notes, not checked against pi.dev. Gilardi et al. figures (~25 points, ~30× cheaper) quoted from a research summary, not from the paper. `results/09_text_to_table.txt` still shows the 0/6 from a header-parsing bug fixed after the run; rerun `uv run python run_all.py 09`. GitHub repo `KnuxV/llm-data-lab` must be created before class (README and deck link to it).
