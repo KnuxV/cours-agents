@@ -213,6 +213,7 @@ def age_at(birth_date: str, event_date: str) -> str:
     """Age in whole years between two dates written YYYY-MM-DD."""
     birth = date.fromisoformat(birth_date)
     event = date.fromisoformat(event_date)
+    # True (= 1) if the birthday has not come yet that year
     before = (event.month, event.day) < (birth.month, birth.day)
     return str(event.year - birth.year - before)
 

@@ -85,7 +85,8 @@ def age_at(birth_date: str, event_date: str) -> str:
     # fromisoformat refuse "25 October 1972" ou "1972-13-45" : l'erreur repart au modèle
     birth = date.fromisoformat(birth_date)
     event = date.fromisoformat(event_date)
-    before = (event.month, event.day) < (birth.month, birth.day)  # pas encore son anniversaire
+    # True (= 1) if the birthday has not come yet that year
+    before = (event.month, event.day) < (birth.month, birth.day)
     return str(event.year - birth.year - before)
 
 

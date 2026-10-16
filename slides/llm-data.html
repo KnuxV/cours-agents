@@ -761,15 +761,18 @@ for step in range(15):                         <span class="d"># cap: no infinit
     </section>
 
     <section class="slide" hidden data-clock="1:09" data-title="One tool, in full"
-      data-note="The age_at tool exactly as it is in 11_agent_nobel.py. Left: the Python function. It runs on our machine, the model never sees it. Right: what the model receives, a name, a sentence, two parameters with their format. That's all it knows. When it wants an age, it answers with a request: age_at with these two dates. Our loop finds the function with that name, runs it, sends '46' back. date.fromisoformat refuses '25 October 1972' or '1972-13-45': the error goes back to the model, which can try again. The model's job is to turn 'born 25 October 1972' into 1972-10-25; Python's job is the subtraction.">
+      data-note="The age_at tool exactly as it is in 11_agent_nobel.py. Left: the Python function. 'before' compares (month, day) pairs: for Duflo, (10, 14) < (10, 25) is True, her birthday had not come yet in 2019; Python counts True as 1, so 2019 - 1972 - 1 = 46. It runs on our machine, the model never sees it. Right: what the model receives, a name, a sentence, two parameters with their format. That's all it knows. When it wants an age, it answers with a request: age_at with these two dates. Our loop finds the function with that name, runs it, sends '46' back. date.fromisoformat refuses '25 October 1972' or '1972-13-45': the error goes back to the model, which can try again. The model's job is to turn 'born 25 October 1972' into 1972-10-25; Python's job is the subtraction.">
       <p class="kicker">3 — An agent · the tools</p>
       <h2><code>age_at</code>, <em>in full</em></h2>
       <div class="cols">
         <div>
           <h3>Our code runs this</h3>
-          <pre><span class="k">def</span> age_at(birth_date: str, event_date: str) -&gt; str:
+          <pre><span class="k">from</span> datetime <span class="k">import</span> date
+
+<span class="k">def</span> age_at(birth_date: str, event_date: str) -&gt; str:
     birth = date.fromisoformat(birth_date)
     event = date.fromisoformat(event_date)
+    <span class="d"># True (= 1) if the birthday has not come yet that year</span>
     before = (event.month, event.day) &lt; (birth.month, birth.day)
     <span class="k">return</span> str(event.year - birth.year - before)</pre>
         </div>
@@ -781,11 +784,12 @@ for step in range(15):                         <span class="d"># cap: no infinit
  "parameters": {
    "birth_date": "YYYY-MM-DD",
    "event_date": "YYYY-MM-DD"}}</pre>
+          <p>Docs: <a href="https://docs.python.org/3/library/datetime.html#datetime.date.fromisoformat">date.fromisoformat</a></p>
         </div>
       </div>
       <pre class="out"><span class="d">model asks:</span>  age_at({"birth_date": "1972-10-25", "event_date": "2019-10-14"})
 <span class="d">we send back:</span> <span class="g">'46'</span></pre>
-      <p class="punch">The model never sees the code. It sees a name, a sentence, two parameters.</p>
+      <p class="punch">The model never sees the code, only what is on the right.</p>
     </section>
 
     <section class="slide" hidden data-clock="1:11" data-title="Demo: the Nobels"
