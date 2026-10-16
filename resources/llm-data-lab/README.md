@@ -79,4 +79,4 @@ From easy to harder:
 The thesis abstracts in `data/thesis_abstracts.json` are simplified
 paraphrases of published abstracts; the source of each is given in the
 file. The scanned table, the wine exports, the job ads and the
-central-bank sentences are invented.
+news headlines are invented.

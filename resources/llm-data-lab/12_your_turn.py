@@ -1,7 +1,7 @@
 """Your turn: classify your own texts.
 
-This file is a template. The example sorts central-bank sentences into
-hawkish / dovish / neutral (sentences invented for the example). To
+This file is a template. The example sorts news headlines into
+economy / politics / sport (headlines invented for the example). To
 classify something else, change only the three things marked CHANGE:
 
 1. LABELS: the closed list of answers you accept.
@@ -16,12 +16,11 @@ import csv
 from llm import ask
 
 # CHANGE 1: the closed list of answers
-LABELS = ["hawkish", "dovish", "neutral"]
+LABELS = ["economy", "politics", "sport"]
 
 # CHANGE 2: the question, one paragraph ({text} is each row)
-QUESTION = """Is this sentence from a central bank hawkish (in favour of higher interest rates),
-dovish (in favour of lower rates) or neutral?
-Sentence: {text}"""
+QUESTION = """What is this news headline about: economy, politics or sport?
+Headline: {text}"""
 
 # CHANGE 3: your CSV, with a "text" column (and "label" if you know the answer)
 DATA = "data/my_data.csv"
