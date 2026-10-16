@@ -64,6 +64,10 @@ the class (qwen3, October 2026), so you can compare yours with it.
 
 The model is set in `llm.py` (`MODEL = "qwen3"`). The data is in `data/`.
 
+To understand how it works, read `llm.py` first: it is the whole connection to the API (the same request as the `curl` of Session 3, in Python), and every line is commented. Then read one script, for example `09_text_to_table.py`: the prompt at the top, one call per text, the check against the truth file.
+
+`run_all.py` writes over `results/`. To compare your run with the one made while preparing the course: `diff -r results ~/cours-agents/resources/llm-data-lab/results`. Small differences are normal: even at temperature 0, a model is not perfectly repeatable.
+
 ## Try this
 
 From easy to harder:

@@ -904,16 +904,15 @@ for step in range(15):                         <span class="d"># cap: no infinit
     </section>
 
     <section class="slide" hidden data-clock="1:27" data-title="Your turn"
-      data-note="The folder (copied at the start, slide Get the code) holds the 12 scripts of the session, the data, and the results obtained while preparing (results/ folder) to compare. You need the Session 3 key in UNISTRA_API_KEY: a new terminal forgets it, export it again. Stuck: Codespaces from the course repository page. Next slide: the template to classify your own data.">
+      data-note="The folder (copied at the start, slide Get the code) holds the scripts of the session, the data, and the results obtained while preparing. run_all.py writes over results/, so to compare, diff against the copy still in the course repository. Small differences are normal: even at temperature 0 a model is not perfectly repeatable, and that is worth seeing for yourself. Then read the code, starting with llm.py: it is the whole connection to the API, every line is commented, and it is the same request as the curl of Session 3. Then one script, 09 is a good start: the prompt at the top, one call per text, the check against the truth file. Stuck on a line? Ask pi to explain it, in the folder. Harder, for those who are fast: change MODEL in llm.py and rerun, add sentences to data/wine_exports.txt, give the agent in 11 a new tool. You need the Session 3 key in UNISTRA_API_KEY: a new terminal forgets it, export it again.">
       <p class="kicker">Your turn · WSL · Mac · Linux</p>
-      <h2>Replay the examples</h2>
+      <h2>Rerun the experiments, <em>then read the code</em></h2>
       <pre><span class="k">cd ~/llm-data-lab
-uv run python 09_text_to_table.py</span>     <span class="d"># one example</span>
-<span class="k">uv run python run_all.py</span>              <span class="d"># all of them, saved in results/</span></pre>
-      <p>Then, from easy to harder:</p>
-      <div class="count"><span class="n">1</span><p>Change <code>MODEL</code> in <code>llm.py</code> (<code>mistral-small</code>): same score?</p></div>
-      <div class="count"><span class="n">2</span><p>Add your own sentences to <code>data/wine_exports.txt</code>.</p></div>
-      <div class="count"><span class="n">3</span><p>Give the agent a new tool: a Python function and its description.</p></div>
+uv run python run_all.py</span>        <span class="d"># all of them, saved in results/</span>
+<span class="k">diff -r results ~/cours-agents/resources/llm-data-lab/results</span>   <span class="d"># vs mine</span></pre>
+      <div class="count"><span class="n">1</span><p>Same results as mine? Small differences are normal: look at where.</p></div>
+      <div class="count"><span class="n">2</span><p>Read <code>llm.py</code>: the whole API in one file, every line commented.</p></div>
+      <div class="count"><span class="n">3</span><p>Read one script (<code>09_text_to_table.py</code>): the prompt, the call, the check. Stuck? Ask pi.</p></div>
     </section>
 
     <section class="slide" hidden data-clock="1:31" data-title="What to remember"
