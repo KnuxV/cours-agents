@@ -956,6 +956,35 @@ Headline: {text}"""</span>
       <p class="punch">The same move as today: messy notes in, an ordered table out. Keep the folder under git.</p>
     </section>
 
+    <section class="slide" hidden data-clock="1:38" data-title="Skills"
+      data-note="Reminder from the agents practice session: a skill is a Markdown file of instructions, in a folder under .agents/skills/. pi puts only the name and the description in the model's context; the model reads the rest of the file when the task matches the description, or when you type /skill:name. So a skill is a prompt you wrote once, carefully, and reuse: nothing more. Two skills for the second brain. add-note: retrieval first (find the notes on the same topic), then add only what is new, with its source, and never delete. ask-notes: retrieval again, then answer only from what the notes say, with the path of each note, and say so when the notes do not answer. That last rule is the 'do not guess' of the Nobel agent: right answer, wrong path is still wrong. Folder from pi's documentation (pi.dev/docs/latest/skills). These two skills are not tested: a starting point to adapt.">
+      <p class="kicker">Going further · skills</p>
+      <h2>A skill = <em>instructions on top of the prompt</em></h2>
+      <p class="lede">A Markdown file in <code>.agents/skills/</code>. The model sees its name and description, and reads the rest when the task matches, or when you type <code>/skill:name</code>.</p>
+      <div class="cols">
+        <div>
+          <pre><span class="d">---</span>
+<span class="k">name: add-note</span>
+<span class="k">description: File new material into my notes.</span>
+<span class="d">---</span>
+1. Find the notes on the same topic.
+2. Add only what is new, with its source.
+3. No close note? Create one.
+4. Never delete. List what you changed.</pre>
+        </div>
+        <div>
+          <pre><span class="d">---</span>
+<span class="k">name: ask-notes</span>
+<span class="k">description: Answer from my notes only.</span>
+<span class="d">---</span>
+1. Find and read the relevant notes.
+2. Answer only from them, citing each path.
+3. Not in the notes? Say so. Do not guess.</pre>
+        </div>
+      </div>
+      <pre><span class="k">/skill:ask-notes What have I read about the minimum wage?</span></pre>
+    </section>
+
   </div>
 
   <div class="track"><i id="track" style="width:2%"></i></div>
