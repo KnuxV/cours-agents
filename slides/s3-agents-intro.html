@@ -1,0 +1,893 @@
+<title>Inside the Chatbot</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #eef1ef;
+    --surface: #ffffff;
+    --surface-2: #e2e8e5;
+    --ink: #151a19;
+    --ink-soft: #3c4644;
+    --muted: #6a7673;
+    --line: #d4dcd8;
+    --accent: #0d5c4b;
+    --accent-soft: #d9ebe4;
+    --warn: #93441a;
+    --code-bg: #121817;
+    --code-ink: #dce6e2;
+    --code-key: #7fd3bb;
+    --code-dim: #7d8a86;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c100f;
+      --surface: #141a19;
+      --surface-2: #1b2422;
+      --ink: #e9efec;
+      --ink-soft: #c4cecb;
+      --muted: #8c9995;
+      --line: #263030;
+      --accent: #5fc9ac;
+      --accent-soft: #123029;
+      --warn: #e2a071;
+      --code-bg: #060a09;
+      --code-ink: #dce6e2;
+      --code-key: #7fd3bb;
+      --code-dim: #79857f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0c100f;
+    --surface: #141a19;
+    --surface-2: #1b2422;
+    --ink: #e9efec;
+    --ink-soft: #c4cecb;
+    --muted: #8c9995;
+    --line: #263030;
+    --accent: #5fc9ac;
+    --accent-soft: #123029;
+    --warn: #e2a071;
+    --code-bg: #060a09;
+    --code-ink: #dce6e2;
+    --code-key: #7fd3bb;
+    --code-dim: #79857f;
+  }
+
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.45;
+    overflow: hidden;
+  }
+
+  .stage {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---- slide area ---- */
+  .deck {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(20px, 4vh, 52px) 20px;
+  }
+  .slide {
+    width: 100%;
+    max-width: 980px;
+    margin: auto;
+  }
+  .slide h2 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(30px, 5.2vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -.015em;
+    margin: 0 0 clamp(14px, 2.4vh, 30px);
+    text-wrap: balance;
+  }
+  .slide h2 em { font-style: italic; color: var(--accent); }
+  .slide p, .slide li {
+    font-size: clamp(17px, 1.65vw, 25px);
+    color: var(--ink-soft);
+    margin: 0 0 .7em;
+    max-width: 44ch;
+  }
+  .slide .lede { color: var(--ink); }
+  .slide strong { color: var(--ink); font-weight: 600; }
+  .slide ul { margin: 0 0 .7em; padding-left: 1.1em; }
+  .slide li { margin-bottom: .45em; }
+  .kicker {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: clamp(11px, .95vw, 14px);
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 clamp(10px, 1.6vh, 18px);
+  }
+  .punch {
+    font-size: clamp(19px, 2vw, 30px);
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding-left: clamp(12px, 1.4vw, 20px);
+    margin: clamp(14px, 2.4vh, 28px) 0 0;
+    max-width: 46ch;
+  }
+
+  pre {
+    background: var(--code-bg); color: var(--code-ink);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: clamp(12px, 1.16vw, 19px);
+    line-height: 1.55;
+    padding: clamp(12px, 1.6vw, 22px) clamp(14px, 1.8vw, 26px);
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 0 0 clamp(12px, 2vh, 22px);
+  }
+  pre { position: relative; cursor: copy; }
+  pre::after {
+    content: "copy"; position: absolute; top: 6px; right: 10px;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--code-dim); opacity: 0; transition: opacity .15s ease;
+  }
+  pre:hover::after { opacity: 1; }
+  pre.copied::after { content: "copied"; color: var(--code-key); opacity: 1; }
+  pre.diagram { cursor: default; }
+  pre.diagram::after { content: none; }
+  pre .k { color: var(--code-key); }
+  pre .d { color: var(--code-dim); }
+  pre.diagram { background: none; color: var(--ink-soft); padding-left: 0; font-size: clamp(11px, 1.15vw, 18px); }
+  pre.diagram b { color: var(--accent); font-weight: 500; }
+
+  table { border-collapse: collapse; width: 100%; margin: 0 0 clamp(10px, 1.8vh, 20px); }
+  th, td {
+    text-align: left; padding: .5em .9em .5em 0;
+    border-bottom: 1px solid var(--line);
+    font-size: clamp(14px, 1.4vw, 21px);
+  }
+  th {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(10px, .9vw, 13px); letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted); font-weight: 500;
+  }
+  td:first-child { color: var(--ink); font-weight: 500; }
+  td.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; color: var(--accent); }
+
+  kbd {
+    font-family: "IBM Plex Mono", monospace; font-size: .82em;
+    border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px;
+    padding: 1px 5px; background: var(--surface-2); color: var(--ink);
+  }
+  .tablewrap { overflow-x: auto; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3.5vw, 54px); }
+  .cols h3 {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(11px, 1vw, 14px); letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 .8em; font-weight: 600;
+  }
+  .cols.split h3.b { color: var(--warn); }
+  .cols p, .cols li { max-width: none; }
+
+  code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .88em; background: var(--surface-2);
+    padding: .1em .35em; border-radius: 4px; color: var(--ink);
+  }
+
+  .count {
+    display: grid; grid-template-columns: auto 1fr; gap: clamp(12px, 1.6vw, 22px);
+    align-items: start; margin-bottom: clamp(12px, 2vh, 22px);
+  }
+  .count .n {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600;
+    font-size: clamp(14px, 1.3vw, 20px); color: var(--accent);
+    background: var(--accent-soft); border-radius: 6px; padding: .15em .5em;
+  }
+  .count p { margin: 0; max-width: 42ch; }
+
+  /* ---- chrome ---- */
+  .bar {
+    flex: none;
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 20px calc(10px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  .bar .clock { color: var(--accent); font-variant-numeric: tabular-nums; }
+  .bar .title { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar button {
+    font: inherit; color: var(--muted); background: none;
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 3px 9px; cursor: pointer;
+  }
+  .bar button:hover { color: var(--ink); border-color: var(--accent); }
+  .bar .pos { font-variant-numeric: tabular-nums; }
+  .track { flex: none; height: 2px; background: var(--line); }
+  .track i { display: block; height: 100%; background: var(--accent); transition: width .18s ease; }
+
+  .note {
+    flex: none;
+    border-top: 1px solid var(--line);
+    background: var(--surface-2);
+    padding: 12px 20px;
+    font-size: 14px; line-height: 1.5; color: var(--ink-soft);
+    max-height: 26vh; overflow-y: auto;
+  }
+  .note b {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+    display: block; margin-bottom: 4px;
+  }
+
+  @media (max-width: 620px) {
+    .cols { grid-template-columns: 1fr; gap: 18px; }
+    .bar .title { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+
+<div class="stage">
+  <div class="deck" id="deck">
+
+
+
+    <section class="slide" data-clock="0:00" data-title="Today"
+      data-note="Thesis of the course in one line — an AI coding agent is not magic, it is an HTTP call in a loop wrapped in engineering decisions. Pacing — the clock in the bottom bar is the target time for each slide; the full path runs about 45 minutes, about 38 with the two CUT slides dropped. If you want 30, the API section is worth the overrun and the hands-on absorbs it.">
+      <p class="kicker">Meta-programming · Session 3</p>
+      <h2>What is inside the <em>chatbot</em></h2>
+      <p class="lede">Three parts: this, then driving a real agent in your terminal, then exercises where it is wrong and you catch it. One of the slides you type yourself.</p>
+      <p class="punch">By the end, five words you can define without hand-waving — <strong>model · API · context · tool · skill</strong> — and then, for free, <strong>agent</strong>.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:02" data-title="Where you are now"
+      data-note="This framing is the spine of the hour. Say 'same model, different engineering' twice — it is what they should remember if they remember one thing.">
+      <h2>Where you are now</h2>
+      <div class="cols">
+        <div>
+          <h3>A chatbot</h3>
+          <p>You ask. It answers. Nothing in the world changes.</p>
+          <p>You copy the code, you paste it, you run it. <strong>You</strong> are the machinery.</p>
+        </div>
+        <div>
+          <h3>An agent</h3>
+          <p>You ask. It reads your files, runs commands, writes files, reads the errors, tries again.</p>
+          <p>Something changes — on <strong>your</strong> disk, under <strong>your</strong> account.</p>
+        </div>
+      </div>
+      <p class="punch">Same model in both columns. The difference is engineering, not intelligence.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:04" data-title="1 — The model"
+      data-note="The economics room knows estimation — lean on it. The surprise to plant here is the amnesia, because every later concept is a workaround for it.">
+      <p class="kicker">1 — The model</p>
+      <h2>A frozen function</h2>
+      <ul>
+        <li>trained once, at enormous cost, then <strong>frozen</strong></li>
+        <li>it predicts the next piece of text, over and over</li>
+        <li>between two calls it learns nothing and remembers nothing</li>
+      </ul>
+      <p class="punch">The weights are the coefficients. Nobody re-estimates them because you talked to it.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:06" data-title="Tokens"
+      data-note="tiktokenizer.vercel.app is the 30-second demo if there is wifi. The platform is free for them, which hides the cost — say that free means someone else pays, and the limit stays when the bill does not.">
+      <p class="kicker">The unit of account</p>
+      <h2>Tokens</h2>
+      <pre>"econometrics"  →  "econom" + "etrics"     <span class="d">2 tokens</span>
+"survey.csv"    →  "survey" + "." + "csv"  <span class="d">3 tokens</span></pre>
+      <p>Everything is counted in them: what you send, what comes back, the price you pay, and the <strong>limit</strong> on how much the model can see at once.</p>
+      <p class="punch">Tokens are the price system of this entire industry.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:08" data-title="2 — The API"
+      data-note="API means the contract, not the intelligence. The model runs in a machine room in Strasbourg; you never touch it. You fill in a form and you get a form back — and the form is the whole of what you control.">
+      <p class="kicker">2 — The API</p>
+      <h2>A counter with a fixed contract</h2>
+      <p class="lede">The model runs on a machine you will never touch. Between you and it there is one address, and one agreed shape for the paperwork.</p>
+      <pre>POST <span class="k">https://conversation.ia.unistra.fr/api/chat/completions</span>
+<span class="d">Authorization: Bearer $UNISTRA_API_KEY
+Content-Type: application/json</span></pre>
+      <p class="punch">An API is the paperwork, not the intelligence. Every chatbot, every agent, every plugin you have ever used is this request with a different wrapper.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:10" data-title="The request, field by field"
+      data-note="Go slowly here — every field comes back later. model is a choice with a price. messages is the entire memory. temperature is the variance dial; demo it at 0 and at 1.5 next session. Say that this file is on the course site and they will send it in ten minutes.">
+      <h2>The request, field by field</h2>
+      <pre><span class="d">// question.json</span>
+{
+  <span class="k">"model"</span>:    "coder",          <span class="d">← which model answers. A choice with a price.</span>
+  <span class="k">"messages"</span>: [ ... ],          <span class="d">← everything it will know. See next slide.</span>
+  <span class="k">"temperature"</span>: 0              <span class="d">← 0 = the most likely words, every time.</span>
+}</pre>
+      <p class="punch">Three fields. There is no fourth thing where the intelligence hides.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:13" data-title="Three roles"
+      data-note="The heart of the API section. system is the standing instruction — it is what an AGENTS.md file and a skill both compile down to. user is them. assistant is what the model said, which THEY store and resend. Ask the room where the model's memory is kept — the answer is in this array, on their disk.">
+      <h2>Three roles, and that is all</h2>
+      <pre>"messages": [
+  {"role": <span class="k">"system"</span>,    "content": "You are a teaching assistant.
+                              Answer in one short sentence."},
+  {"role": <span class="k">"user"</span>,      "content": "What is a token?"},
+  {"role": <span class="k">"assistant"</span>, "content": "A token is a piece of a word..."}
+]</pre>
+      <table>
+        <tbody>
+          <tr><td>system</td><td>standing instructions — the job description, set once, in front of everything</td></tr>
+          <tr><td>user</td><td>you</td></tr>
+          <tr><td>assistant</td><td>what the model said last time — stored and re-sent <strong>by you</strong></td></tr>
+        </tbody>
+      </table>
+      <p class="punch">There is no fourth place where a conversation lives.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:16" data-title="Send it yourself"
+      data-note="Have them type it. The file is in the course repo under resources/api. No tools, no agent, no loop — one question, one answer. Expect the 401 — it says your session has expired, which means the key is missing in THIS terminal, not that they must log into the website. python3 -m json.tool is the pretty-printer that ships with Python itself; jq does the same job but is not installed everywhere.">
+      <h2>Send it yourself</h2>
+      <pre><span class="d">// question.json — the whole request</span>
+{
+  "model": "coder",
+  "messages": [
+    {"role": <span class="k">"system"</span>, "content": "Answer in one short sentence."},
+    {"role": <span class="k">"user"</span>,   "content": "What is a token, for a language model?"}
+  ],
+  "temperature": 0
+}</pre>
+      <pre>curl -s https://conversation.ia.unistra.fr/api/chat/completions \
+  -H <span class="k">"Authorization: Bearer $UNISTRA_API_KEY"</span> \
+  -H "Content-Type: application/json" \
+  -d <span class="k">@question.json</span> | python3 -m json.tool</pre>
+      <p class="punch">Your key is never in the file. <code>$UNISTRA_API_KEY</code> is read from your environment at the moment of the call.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:19" data-title="What comes back"
+      data-note="Same question, its answer. The wording will differ on the day — the shape will not. Point at usage, the invoice on every call, and at what is missing — no session id, no memory, nothing tying this reply to the next request. Note too that the model could not have counted anything here; it can only write. Hold that thought for four slides.">
+      <h2>What comes back</h2>
+      <pre>{
+  <span class="k">"choices"</span>: [{
+    "index": 0,
+    "message": {
+      "role": "assistant",
+      "content": <span class="k">"A token is a piece of a word — the unit a language
+                  model reads and writes."</span>
+    },
+    "finish_reason": "stop"
+  }],
+  "model": "coder",
+  <span class="k">"usage"</span>: {"prompt_tokens": 38, "completion_tokens": 19,
+            "total_tokens": 57}
+}</pre>
+      <p class="punch">The answer is one field of a JSON document. No session id, no memory, nothing tying this reply to your next request.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:21" data-title="Input tokens, output tokens"
+      data-note="The two numbers behave completely differently. Input is everything you sent — system prompt, the whole history, the files you pasted, the tool definitions — and it is re-billed on every single turn. Output is only what it wrote this time, and it costs several times more per token. Hence the two habits — short standing instructions, and fresh sessions.">
+      <h2>Input tokens, output tokens</h2>
+      <table>
+        <thead><tr><th></th><th>what it counts</th><th>behaviour</th></tr></thead>
+        <tbody>
+          <tr><td>prompt_tokens<br><span style="color:var(--muted);font-weight:400">input</span></td><td>everything you sent: system prompt + whole history + pasted files + tool definitions</td><td>grows every turn, and is <strong>paid again</strong> every turn</td></tr>
+          <tr><td>completion_tokens<br><span style="color:var(--muted);font-weight:400">output</span></td><td>only what the model wrote this time</td><td>usually smaller — and priced several times higher per token</td></tr>
+        </tbody>
+      </table>
+      <p class="punch">A long conversation is not expensive because of what it says. It is expensive because you keep re-sending it.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:23" data-title="Make it faster"
+      data-note="The demo they will remember. If the room looks sceptical, promise them they will do exactly this with curl next session and watch it fail.">
+      <p class="kicker">3 — Context</p>
+      <h2>“Make it faster.”</h2>
+      <pre>{"model": "coder", "messages": [{"role": "user",
+                                 "content": "Make it faster."}]}</pre>
+      <p class="punch">Make <em>what</em> faster? The model never saw the first message. Each call starts from zero.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:24" data-title="A conversation is a re-send"
+      data-note="The forged assistant message is the moment the mystique dies. Consequences they now get for free — why long chats cost more, why it forgot, why a fresh tab answers differently.">
+      <h2>A conversation is a re-send</h2>
+      <pre>{"messages": [
+  {"role": <span class="k">"system"</span>,    "content": "You are a helpful assistant."},
+  {"role": <span class="k">"user"</span>,      "content": "Write a function that sorts a list."},
+  {"role": <span class="k">"assistant"</span>, "content": "def my_sort(...): ..."},
+  {"role": <span class="k">"user"</span>,      "content": "Make it faster."}
+]}</pre>
+      <p>Every turn, the whole transcript goes back up. So “memory” is a file you re-upload — and a file can be <strong>edited</strong>.</p>
+      <p class="punch">Context is constructed, not recalled.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:27" data-title="The context window"
+      data-note="Context rot — the mechanism is attention spread thin over more tokens. Give them the habit, not the theory — /session to see the number, /compact to squeeze it, /new when the conversation has gone stale. Most students will never type /session unless you make them do it once, so do it once in the hands-on. A permanent display is possible via a status-line or footer extension, but nothing shows it by default.">
+      <h2>The context window</h2>
+      <p>Everything must fit: standing instructions + the whole transcript + the files you pasted + the tool definitions + the tool outputs.</p>
+      <table>
+        <thead><tr><th>model</th><th>window</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>ministral — 3B, Unistra</td><td class="num">32 768</td><td style="color:var(--muted)">~25 000 words</td></tr>
+          <tr><td>coder — 80B, Unistra</td><td class="num">262 144</td><td style="color:var(--muted)">~200 000 words · two novels</td></tr>
+          <tr><td>GPT-5.5 · Claude Opus 5</td><td class="num">1 000 000</td><td style="color:var(--muted)">~750 000 words · a shelf</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:clamp(13px,1.2vw,17px);color:var(--muted)">Roughly ¾ of an English word per token. The frontier models are about four times the local coder — and you pay for every token of it, every turn.</p>
+      <p class="punch">And before the hard limit, a soft one: <strong>a model gets worse as its context fills</strong>, long before it is full. A three-hour session is not just dearer — it is dumber.</p>
+      <p style="font-size:clamp(14px,1.35vw,20px);margin-top:.8em">Watch it: <code>/session</code> inside pi prints the token count of the conversation. When it climbs, <code>/compact</code> summarises it, and <code>/new</code> starts clean. Fresh context plus a short written brief beats a long transcript, every time.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:30" data-title="4 — Tools"
+      data-note="Insist — you did not give it any power, you gave it a vocabulary. The model has no hands, no network, no shell.">
+      <p class="kicker">4 — Tools</p>
+      <h2>You add a paragraph. Not code — a description.</h2>
+      <pre>"tools": [{"type": "function", "function": {
+  <span class="k">"name"</span>: "run_bash",
+  <span class="k">"description"</span>: "Run a shell command and return its output",
+  <span class="k">"parameters"</span>: {"type": "object",
+                 "properties": {"command": {"type": "string"}}}}}]</pre>
+      <p class="punch">You are telling the model: these are the actions you may <em>ask for</em>.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:32" data-title="The punchline"
+      data-note="The centre of the whole course. Next session they play the harness by hand for one round — copy the command, run it, paste the output back in a second curl. Tedious on purpose. This is also where permissions live, because the decision to execute belongs to the program, not the model.">
+      <h2>The punchline</h2>
+      <pre>{"choices": [{"finish_reason": <span class="k">"tool_calls"</span>,
+  "message": {"content": <span class="k">null</span>,
+    "tool_calls": [{"function": {"name": "run_bash",
+      "arguments": "{\"command\": \"ls *.md | wc -l\"}"}}]}}]}</pre>
+      <p><code>"content": null</code> — <strong>there is no answer.</strong> The model did not run anything. It returned a <strong>request</strong>.</p>
+      <p class="punch">Someone must execute it and send the result back. That someone is a program. That program is the harness.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:35" data-title="What else can it ask for?"
+      data-note="The point is that tools are a list you choose, not a property of the model. Two real additions worth naming — an MCP server (a database, the university's API) and a function of their own. Then the warning, which matters more than the list — every tool name and description sits in the context of every single request, and a model choosing between twenty tools chooses worse than one choosing between seven. bash already covers most of what people rush to add.">
+      <h2>What else can it ask for?</h2>
+      <p>pi hands the model seven tools out of the box:</p>
+      <pre><span class="k">read   bash   edit   write   grep   find   ls</span></pre>
+      <p>You can add your own: an <strong>MCP server</strong> (a database, your university's API, a calendar), a Python function you wrote, a web search, a plotting tool.</p>
+      <p class="punch">But every tool's name and description sits in the context of <em>every</em> request. Twenty tools cost tokens and make the choice harder — and <code>bash</code> already covers most of what people rush to add.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:37" data-title="5 — The loop"
+      data-note="Correct the intuition explicitly — the loop does not run until the answer is good, it runs until the model stops asking for tools. Satisfaction is the model's own judgement, and it is a bad judge of its own work. Everything reliable is bolted on from outside — a test suite, git, a second agent that only reads. That is the whole second half of the class.">
+      <p class="kicker">5 — The loop</p>
+      <h2>An agent</h2>
+      <pre class="diagram">        you: <b>"find the income gap by region"</b>
+                      │
+                      ▼
+ ┌───▶   <b>model</b>   ───▶  asks for a tool?  ──no──▶  answers you
+ │         ▲               │
+ │         │              yes
+ │         │               ▼
+ │         │        <b>the harness runs it</b>
+ │         │               │
+ └─────────┴───────────────┘
+      result appended to the context</pre>
+      <p>The loop ends when the model <strong>stops asking</strong> — that is, when it decides it is done.</p>
+      <p class="punch">“Done” is its own judgement, not a check. Which is why everything reliable sits <em>outside</em> the loop: a test that fails, git, a second agent that only reads.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:39" data-title="Three things people call AI"
+      data-note="Give the three examples as things they have actually seen or will do today. The middle row is the one they underestimate — most of what a research assistant does is that row, not the third.">
+      <h2>Three things people call “AI”</h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>who decides the steps</th><th>what it looks like</th></tr></thead>
+        <tbody>
+          <tr><td>chatbot</td><td>you, one turn at a time</td><td>you paste a traceback into a tab and it explains it</td></tr>
+          <tr><td>workflow</td><td>the programmer, in advance</td><td>a script that walks 800 open-ended survey answers and asks the model to classify each one</td></tr>
+          <tr><td>agent</td><td>the model, at run time</td><td>“find out why my regression drops 200 rows, and fix it” — in your terminal, in twenty minutes</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="punch">Only the third one is a delegation. You set the objective; it chooses the means.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:41" data-title="A workflow worth writing"
+      data-note="This is the slide that saves them money and grief. Same prompt every time, one job per call, no autonomy — so it is cheap, restartable, auditable, and testable on twenty rows before it touches eight hundred. Say plainly that most of what people reach for an agent to do is really this, and that an agent here would be slower, dearer and less reproducible.">
+      <h2>A workflow worth writing</h2>
+      <pre><span class="d"># classify.py — you decide every step</span>
+for answer in open_answers:              <span class="d"># 800 survey responses</span>
+    label = ask_model(PROMPT + answer)   <span class="d"># one call, one job</span>
+    rows.append((answer, label))
+write_csv(rows)</pre>
+      <ul>
+        <li>the same prompt every time — so you can <strong>test it on twenty rows</strong> first</li>
+        <li>one job per call — nothing accumulates, nothing drifts</li>
+        <li>it crashed at row 512? restart at row 512</li>
+      </ul>
+      <p class="punch">Most of what people want an agent for is a workflow. If you can write the steps down, write them down.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:43" data-title="6 — Skills"
+      data-note="Concrete example they will type — before using a column, print the column names. A skill is procedural memory that survives the amnesia, and unlike a chat prompt it is a file, so it is reviewable, committable, shareable. That is the whole of the hype in one sentence.">
+      <p class="kicker">6 — Skills</p>
+      <h2>A folder with a text file in it</h2>
+      <pre>data-check/
+  SKILL.md        <span class="d">← name, a description, the procedure</span>
+  references/     <span class="d">← optional, read only when needed</span></pre>
+      <ul>
+        <li>the harness shows the model only the <strong>name and one-line description</strong></li>
+        <li>the model asks for the full text <strong>when a task matches</strong></li>
+        <li>a hundred skills cost almost nothing until one is used</li>
+      </ul>
+      <p class="punch">The onboarding binder for a colleague who starts from zero every morning.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:45" data-title="A skill, in full"
+      data-note="Read the three mechanism lines slowly — this is where the mystique around skills dies. The description is the only thing the model sees until it decides the skill applies; the body is plain instructions that end up in the conversation like a message nobody typed. No training, no fine-tuning, no magic. Which means a bad skill is just badly written text, and that is on them.">
+      <h2>A skill, in full</h2>
+      <pre><span class="d">.agents/skills/tests-first/SKILL.md</span>
+<span class="k">---
+name: tests-first
+description: Writing a test before writing or changing code, and
+  running it. Use when asked to add a function, fix a bug, refactor.
+---</span>
+# Tests first
+
+A change is not finished because it looks right. It is finished
+when something that failed now passes.
+
+1. Write the assertion first. Show it failing — paste the real output.
+2. Write the least code that makes it pass.
+3. Run the whole suite. A test you have not run is a claim.</pre>
+      <ol style="font-size:clamp(14px,1.35vw,20px)">
+        <li>at startup, pi reads the <strong>name and description</strong> of every skill and puts that one-line list in the system prompt;</li>
+        <li>when the model judges a task matches, it reads the file;</li>
+        <li>the text is dropped into the conversation — like a message nobody typed.</li>
+      </ol>
+      <p class="punch">A skill is text arriving at the right moment. No training, no magic — which is why writing it well is entirely your job.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:47" data-title="Your four dials"
+      data-note="Point out the asymmetry — three of the four change mid-session with a slash command, the tool list is fixed when you launch the process. That is not a design flaw, it is the reason it is the only real guarantee: the model cannot vote itself more tools.">
+      <h2>Your four dials</h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>dial</th><th>the question</th><th>how you turn it</th></tr></thead>
+        <tbody>
+          <tr><td>model</td><td>who does the work?</td><td><code>/model</code> — inside pi, any time</td></tr>
+          <tr><td>context</td><td>what does it know?</td><td><code>AGENTS.md</code> in the folder · <code>@file</code> · <code>/new</code></td></tr>
+          <tr><td>tools</td><td>what may it do?</td><td><code>pi --tools read,grep,find,ls</code> — when you launch it</td></tr>
+          <tr><td>skills</td><td>which procedure?</td><td><code>.agents/skills/&lt;name&gt;/SKILL.md</code> · <code>/skill:&lt;name&gt;</code></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="punch">Three of them you turn mid-session. The tool list you choose <em>before</em> you start — which is exactly why it is the one hard guarantee.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:48" data-title="Limitations"
+      data-note="Sycophancy is the one to dwell on, because it is the one that will bite them in a thesis — the model is trained to be agreeable, and agreeable beats correct when the two conflict. Demo if there is time — get a right answer, say that is wrong, watch it fold. For replication work — pin everything, log everything, verify against something you did not generate.">
+      <h2>Limitations</h2>
+      <ul>
+        <li><strong>hallucination is not rare</strong> — it is the normal behaviour of a system optimised to always produce a plausible continuation</li>
+        <li><strong>sycophancy</strong> — it agrees with you. Say “that coefficient looks wrong” and it will find a reason. Push twice and it will abandon a correct answer</li>
+        <li><strong>it never says “I do not know”</strong> unless you make room for it to</li>
+        <li><strong>it is not reproducible</strong> — same prompt, same data, different code tomorrow</li>
+        <li><strong>a discrepancy is a finding, not a bug</strong> — an agent asked to “fix” one will smooth it away</li>
+      </ul>
+    </section>
+
+    <section class="slide" hidden data-clock="0:50" data-title="Good at / bad at · CUT IF LATE"
+      data-note="CUT candidate. Careful not to oversell either column. If asked about jobs, the honest answer is that nobody knows, and that the students who can specify precisely and verify cheaply are the ones this does not replace.">
+      <h2>So what is it actually good for</h2>
+      <div class="cols split">
+        <div>
+          <h3>Good</h3>
+          <ul>
+            <li>boilerplate, glue, plotting</li>
+            <li>translating code between languages</li>
+            <li>reading an unfamiliar codebase</li>
+            <li>the tedious 80% of data cleaning</li>
+            <li>explaining an error message</li>
+            <li>writing the tests you avoid writing</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="b">Bad</h3>
+          <ul>
+            <li>deciding what the question is</li>
+            <li>identification, causality, judgement</li>
+            <li>anything you cannot check</li>
+            <li>long unmonitored autonomy</li>
+            <li>being trusted about its own work</li>
+          </ul>
+        </div>
+      </div>
+      <p class="punch">The job that disappears is typing. The job that grows is specifying and verifying.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+00" data-title="Together, now"
+      data-note="Read the map out loud before anyone types. Forty-five minutes, six things built on top of each other, every one of them a dial from the last slide. The warning is not decoration — an agent in the wrong folder is a bad afternoon.">
+      <p class="kicker">Forty-five minutes, together</p>
+      <h2>Together, now</h2>
+      <p class="lede">We build one small project, and turn each of the four dials on it.</p>
+      <div class="cols">
+        <div><ul>
+          <li>get the course files</li>
+          <li>a lab that git can undo</li>
+          <li><strong>1 ·</strong> first contact</li>
+          <li><strong>2 ·</strong> synthetic data</li>
+        </ul></div>
+        <div><ul>
+          <li><strong>3 ·</strong> an analysis</li>
+          <li><strong>4 ·</strong> a small dashboard</li>
+          <li><strong>5 ·</strong> tests, written by someone else</li>
+          <li><strong>6 ·</strong> a referee · <strong>7 ·</strong> search</li>
+        </ul></div>
+      </div>
+      <p class="punch">Rule for the hour: never start an agent in your home folder. Only inside a git repository you can throw away.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+03" data-title="Get the course files"
+      data-note="Everyone clones. This is also the first time most of them clone something that is not their own — point at it. If the network chokes, the two files that matter are make_survey.py and the skills, and both fit on a slide.">
+      <h2>Get the course files</h2>
+      <pre><span class="k">cd ~
+git clone https://github.com/KnuxV/cours-agents.git
+ls cours-agents/resources</span></pre>
+      <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td>resources/skills/</td><td>five skills: <code>data-check</code>, <code>figure-style</code>, <code>tests-first</code>, <code>referee</code>, <code>explain-the-error</code></td></tr>
+          <tr><td>resources/api/</td><td>the <code>question.json</code> you sent with curl earlier</td></tr>
+          <tr><td>resources/agent-lab/</td><td><code>AGENTS.md.example</code>, and a fallback data generator</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="punch">Five skills, none longer than a page. You will read one of them before the hour is out.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+06" data-title="A lab that git can undo"
+      data-note="The commit is the undo button for the whole hour — make them do it before the agent touches anything. .agents/skills is the folder pi looks in; AGENTS.md is the standing instruction file it reads at startup. Both are just files in a folder, which is the point.">
+      <h2>A lab that git can undo</h2>
+      <pre><span class="k">mkdir ~/agent-lab && cd ~/agent-lab && git init
+
+mkdir -p .agents
+cp -r ~/cours-agents/resources/skills .agents/skills
+cp ~/cours-agents/resources/agent-lab/AGENTS.md.example AGENTS.md
+
+git add -A && git commit -m "lab setup"</span></pre>
+      <p>Two folders now matter: <code>.agents/skills/</code> — where pi looks for procedures. <code>AGENTS.md</code> — the standing instructions it reads at startup.</p>
+      <p class="punch">That commit is your undo button for the next forty minutes.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+10" data-title="1 · First contact"
+      data-note="Everyone types the same harmless thing at the same time, and watches the tool calls scroll past — ls, maybe read. That is the loop from the slides, running on their own machine, and it is worth thirty seconds of silence while they look at it. Change nothing is in the prompt on purpose — say why. Then /session, so they have seen the token counter once; most of them never will again otherwise. Ctrl+T collapses thinking blocks — coder never emits any, so switch to gpt-oss with /model if you want them to see one fold away.">
+      <p class="kicker">1 · the loop, observed</p>
+      <h2>First contact</h2>
+      <pre><span class="k">pi</span></pre>
+      <pre>What is in this folder? Change nothing.</pre>
+      <p>Watch the lines that scroll past <em>before</em> the answer: <code>ls</code>, maybe <code>read</code>. It asked, pi did it, pi sent the result back. That is the diagram, on your machine.</p>
+      <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><code>/session</code></td><td>the token count so far — the invoice, live</td></tr>
+          <tr><td><kbd>ctrl</kbd>+<kbd>t</kbd></td><td>collapse or expand the model's reasoning, when it shows any</td></tr>
+          <tr><td><code>/new</code> · <kbd>esc</kbd></td><td>start a fresh conversation · interrupt it mid-thought</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="slide" hidden data-clock="H+14" data-title="2 · Synthetic data"
+      data-note="First contact with the loop. Watch the tool calls scroll — write, then bash, then read. Point out that it ran its own code and read its own error if it made one. Then commit, out loud, together.">
+      <p class="kicker">2 · your first build</p>
+      <h2>Synthetic data</h2>
+      <pre><span class="k">pi</span></pre>
+      <pre>Write make_survey.py, using only the Python standard library, that
+generates survey.csv: 1000 rows, columns id, region, education,
+years_experience, hours_worked, income. Income depends on education
+and experience, with noise. Then run it and show me the first 3 rows.</pre>
+      <p class="punch">Watch the lines before the answer: <code>write</code>, then <code>bash</code>, then <code>read</code>. That is the diagram, running. Then: <code>!git add -A && git commit -m "data"</code></p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+19" data-title="3 · The analysis"
+      data-note="First skill in anger. Before the prompt, open .agents/skills/data-check/SKILL.md on the projector and read three lines of it — they should see that it is just instructions, written by a human, in a file. Then watch the agent print df.columns before using anything, because the skill told it to.">
+      <p class="kicker">3 · the skills dial</p>
+      <h2>The analysis</h2>
+      <pre>/skill:data-check
+What is the income gap between master and high school, by region?
+Save the table to out/gap_by_region.csv</pre>
+      <p>Open <code>.agents/skills/data-check/SKILL.md</code> on the way past. It is one page of plain instructions — print the columns first, one script per question, report the n behind every number.</p>
+      <p class="punch">Same model, same question, different procedure. That is the whole of what a skill is.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+25" data-title="4 · A small dashboard"
+      data-note="The figure-style skill carries the house rules — labelled axes with units, n stated, sorted bars, saved to out/ at 150 dpi. Compare with what it produced in step 2 without a skill if you have a spare minute; the difference is the argument for writing skills at all.">
+      <p class="kicker">4 · a second skill</p>
+      <h2>A small dashboard</h2>
+      <pre>/skill:figure-style
+Three figures from survey.csv: income by education, income by region,
+and experience against income. Save them under out/, then write
+out/report.md with one sentence under each figure.</pre>
+      <p class="punch">Labelled axes with units, the n stated, bars sorted by value — because a file said so, not because you asked nicely.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+30" data-title="5 · Tests, by someone else"
+      data-note="The sycophancy cure, made concrete. The second pi never saw the first one defend its code, so it has nothing to be loyal to — and --tools without edit means it physically cannot make a failing test pass by changing the program. Say both halves.">
+      <p class="kicker">5 · a fresh context</p>
+      <h2>Tests, written by someone else</h2>
+      <pre><span class="d"># a SECOND terminal, same folder, brand new conversation</span>
+<span class="k">cd ~/agent-lab && pi --tools read,bash,write</span>
+
+/skill:tests-first Write a pytest suite for make_survey.py.
+Do not modify make_survey.py.</pre>
+      <p>It cannot edit — so it cannot make a failing test pass by quietly changing the program.</p>
+      <p class="punch">A fresh context is the cheapest cure for sycophancy there is. It costs one terminal.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+36" data-title="6 · The referee"
+      data-note="Third instance, read-only, paid to find fault. It checks every number in report.md against the CSV and the code that produced it. A number with no line of code behind it is a FAIL. This is the seed of the whole structure argument — separate contexts, opposing incentives, no shared loyalty.">
+      <p class="kicker">6 · separation of powers</p>
+      <h2>The referee</h2>
+      <pre><span class="d"># a THIRD terminal — it may read, and nothing else</span>
+<span class="k">cd ~/agent-lab && pi --tools read,grep,find,ls</span>
+
+/skill:referee Review out/report.md against survey.csv and the scripts.</pre>
+      <p>Its instructions: for every number in the report, find the line of code that produced it. A number with no line behind it is a <strong>FAIL</strong>.</p>
+      <p class="punch">Three processes, one model, opposing incentives. Reliability comes from the structure, not from a bigger model.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+41" data-title="7 · Can it search the web?"
+      data-note="The honest answer is no, and then yes. The model has no internet and its knowledge stopped on a date it will not tell you reliably. pi ships no web-search tool either — but it has bash, and bash has curl, so an agent can fetch a page and answer from it instead of from memory. Watch the tool call — bash, then read. Say what real search looks like — an MCP server or an extension you add, which is what the frontier harnesses ship with. And connect it to the exercise — this is how they check argparse against the actual documentation rather than against a recollection of it. If the university network blocks the fetch, that is itself the lesson — the tool is only as good as the machine it runs on.">
+      <p class="kicker">7 · the knowledge cutoff</p>
+      <h2>Can it search the web?</h2>
+      <p>No. The model has no internet, and its knowledge stopped on a date. pi ships no web-search tool either.</p>
+      <p>But it has <code>bash</code>. And <code>bash</code> has <code>curl</code>:</p>
+      <pre>Use curl to fetch https://docs.python.org/3/library/argparse.html
+and tell me how to give an option a default value. Quote the page.</pre>
+      <p>Watch it: <code>bash</code>, then <code>read</code>. It answered from a page it fetched thirty seconds ago, not from memory.</p>
+      <p class="punch">Real web search is a tool you add — an MCP server, an extension. The difference between a model that remembers and an agent that goes and looks is one tool.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="H+45" data-title="What you just did"
+      data-note="Close the loop with the dials slide — they have now turned all four on one project. The last line is the one to leave in the room before the exercises.">
+      <h2>What you just did</h2>
+      <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td>model</td><td><code>/model</code> — you chose who was working</td></tr>
+          <tr><td>context</td><td><code>AGENTS.md</code>, <code>/new</code>, and three separate conversations</td></tr>
+          <tr><td>tools</td><td><code>--tools</code> — a tester that cannot edit, a referee that cannot write</td></tr>
+          <tr><td>skills</td><td>four files that changed how the same model behaved</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="punch">The agent is a confident junior colleague with no memory of yesterday. You keep git, the tests, and the last word.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="ex 1" data-title="Exercise 1 — the password generator"
+      data-note="Give them the brief, not the solution. Two kinds of password is the whole design problem — one joins words from a list, the other draws characters from a set, and the user has to be able to say which. argparse is how the user says it. The rule is the exercise — the agent may explain and read errors with them, they type every line. Part two is where today lands — the agent that wrote the code will write a test that passes; a fresh one with tests-first writes a test that checks.">
+      <p class="kicker">Exercise 1 · on your own</p>
+      <h2>The password generator</h2>
+      <p class="lede">Write a small Python program that generates passwords automatically — the kind the user asks for.</p>
+      <ul>
+        <li><strong>memorable</strong> — words joined together, <code>cheval-ancre-banane-07</code>: long, typeable, easy to remember</li>
+        <li><strong>random</strong> — characters drawn from a set, <code>k7$Rm2!qXz</code>: short and hostile</li>
+      </ul>
+      <p>The user chooses on the command line, with <code>argparse</code>: which kind, how long, how many, digits or not. The agent may <strong>explain</strong>; you type every line. Ask the same question twice — once to the agent, once to the official <code>argparse</code> documentation.</p>
+      <p class="punch">Done when <code>--help</code> explains your options to a stranger, and <code>--style memorable --count 5</code> prints five of them.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="ex 1b" data-title="Exercise 1, part two — the tests"
+      data-note="Make them run both halves and compare. The first suite will assert what the code already does — including its bugs. The second, written blind from the brief, tests what was asked for. That gap is the lesson of the whole session, and it is the one thing they can carry into a thesis.">
+      <p class="kicker">Exercise 1 · part two</p>
+      <h2>Now have it tested — by someone else</h2>
+      <pre><span class="d"># the terminal that wrote the code</span>
+Write me some tests for passgen.py
+
+<span class="d"># a SECOND terminal, fresh conversation, cannot edit the program</span>
+<span class="k">pi --tools read,bash,write</span>
+/skill:tests-first Write a pytest suite for passgen.py from this brief:
+memorable and random styles, --length, --count, --no-digits.
+Do not modify passgen.py.</pre>
+      <p class="punch">Compare the two suites. The first tests what the code does — bugs included. The second tests what you asked for.</p>
+    </section>
+
+  </div>
+
+  <div class="track"><i id="track" style="width:5%"></i></div>
+
+  <div class="note" id="note" hidden><b>speaker note</b><span id="noteText"></span></div>
+
+  <div class="bar">
+    <span class="clock" id="clock">0:00</span>
+    <span class="title" id="title">Today</span>
+    <button id="prev" type="button" aria-label="Previous slide">←</button>
+    <span class="pos" id="pos">1 / 37</span>
+    <button id="next" type="button" aria-label="Next slide">→</button>
+    <button id="themeBtn" type="button">light · t</button>
+    <button id="noteBtn" type="button">notes · n</button>
+  </div>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var deck = document.getElementById("deck");
+  var note = document.getElementById("note");
+  var noteText = document.getElementById("noteText");
+  var i = 0, showNotes = false;
+
+  try {
+    var savedNotes = localStorage.getItem("itc-notes");
+    if (savedNotes === "1") showNotes = true;
+    var savedSlide = parseInt(localStorage.getItem("itc-slide"), 10);
+    if (savedSlide >= 0 && savedSlide < slides.length) i = savedSlide;
+  } catch (e) { /* storage blocked — start at the first slide */ }
+
+  function render() {
+    slides.forEach(function (s, n) { s.hidden = n !== i; });
+    var cur = slides[i];
+    document.getElementById("clock").textContent = cur.dataset.clock || "";
+    document.getElementById("title").textContent = cur.dataset.title || "";
+    document.getElementById("pos").textContent = (i + 1) + " / " + slides.length;
+    document.getElementById("track").style.width = ((i + 1) / slides.length * 100) + "%";
+    noteText.textContent = " " + (cur.dataset.note || "—");
+    note.hidden = !showNotes;
+    deck.scrollTop = 0;
+    try {
+      localStorage.setItem("itc-slide", String(i));
+      localStorage.setItem("itc-notes", showNotes ? "1" : "0");
+    } catch (e) { /* ignore */ }
+  }
+
+  function go(d) { i = Math.min(slides.length - 1, Math.max(0, i + d)); render(); }
+
+  document.getElementById("next").addEventListener("click", function () { go(1); });
+  document.getElementById("prev").addEventListener("click", function () { go(-1); });
+  document.getElementById("noteBtn").addEventListener("click", function () {
+    showNotes = !showNotes; render();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); go(1); }
+    else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(-1); }
+    else if (e.key === "Home") { i = 0; render(); }
+    else if (e.key === "End") { i = slides.length - 1; render(); }
+    else if (e.key === "n" || e.key === "N") { showNotes = !showNotes; render(); }
+  });
+
+  var x0 = null;
+  deck.addEventListener("touchstart", function (e) { x0 = e.changedTouches[0].clientX; }, { passive: true });
+  deck.addEventListener("touchend", function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
+    x0 = null;
+  }, { passive: true });
+
+  // Click any command block to copy it.
+  document.addEventListener("click", function (e) {
+    var pre = e.target.closest ? e.target.closest("pre") : null;
+    if (!pre || pre.classList.contains("diagram")) return;
+    try {
+      navigator.clipboard.writeText(pre.textContent.replace(/^\n+/, "").trimEnd());
+      pre.classList.add("copied");
+      setTimeout(function () { pre.classList.remove("copied"); }, 1400);
+    } catch (err) { /* clipboard unavailable — the text is selectable anyway */ }
+  });
+
+  // Force light or dark, for a projector that disagrees with your laptop.
+  var themeBtn = document.getElementById("themeBtn");
+  function applyTheme(t) {
+    if (t) document.documentElement.setAttribute("data-theme", t);
+    else document.documentElement.removeAttribute("data-theme");
+    themeBtn.textContent = (t === "light" ? "dark · t" : "light · t");
+    try { t ? localStorage.setItem("itc-theme", t) : localStorage.removeItem("itc-theme"); } catch (e) {}
+  }
+  var theme = null;
+  try { theme = localStorage.getItem("itc-theme"); } catch (e) {}
+  applyTheme(theme);
+  function flipTheme() {
+    var cur = document.documentElement.getAttribute("data-theme");
+    applyTheme(cur === "light" ? "dark" : "light");
+  }
+  themeBtn.addEventListener("click", flipTheme);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "t" || e.key === "T") flipTheme();
+  });
+
+  render();
+</script>

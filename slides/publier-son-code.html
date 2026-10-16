@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publier son code</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #eef1ef;
+    --surface: #ffffff;
+    --surface-2: #e2e8e5;
+    --ink: #151a19;
+    --ink-soft: #3c4644;
+    --muted: #6a7673;
+    --line: #d4dcd8;
+    --accent: #0d5c4b;
+    --accent-soft: #d9ebe4;
+    --warn: #93441a;
+    --code-bg: #121817;
+    --code-ink: #dce6e2;
+    --code-key: #7fd3bb;
+    --code-dim: #7d8a86;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c100f;
+      --surface: #141a19;
+      --surface-2: #1b2422;
+      --ink: #e9efec;
+      --ink-soft: #c4cecb;
+      --muted: #8c9995;
+      --line: #263030;
+      --accent: #5fc9ac;
+      --accent-soft: #123029;
+      --warn: #e2a071;
+      --code-bg: #060a09;
+      --code-ink: #dce6e2;
+      --code-key: #7fd3bb;
+      --code-dim: #79857f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0c100f;
+    --surface: #141a19;
+    --surface-2: #1b2422;
+    --ink: #e9efec;
+    --ink-soft: #c4cecb;
+    --muted: #8c9995;
+    --line: #263030;
+    --accent: #5fc9ac;
+    --accent-soft: #123029;
+    --warn: #e2a071;
+    --code-bg: #060a09;
+    --code-ink: #dce6e2;
+    --code-key: #7fd3bb;
+    --code-dim: #79857f;
+  }
+
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.45;
+    overflow: hidden;
+  }
+
+  .stage {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---- slide area ---- */
+  .deck {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(20px, 4vh, 52px) 20px;
+  }
+  .slide {
+    width: 100%;
+    max-width: 980px;
+    margin: auto;
+  }
+  .slide h2 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(30px, 5.2vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -.015em;
+    margin: 0 0 clamp(14px, 2.4vh, 30px);
+    text-wrap: balance;
+  }
+  .slide h2 em { font-style: italic; color: var(--accent); }
+  .slide p, .slide li {
+    font-size: clamp(17px, 1.65vw, 25px);
+    color: var(--ink-soft);
+    margin: 0 0 .7em;
+    max-width: 44ch;
+  }
+  .slide .lede { color: var(--ink); }
+  .slide strong { color: var(--ink); font-weight: 600; }
+  .slide ul { margin: 0 0 .7em; padding-left: 1.1em; }
+  .slide li { margin-bottom: .45em; }
+  .kicker {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: clamp(11px, .95vw, 14px);
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 clamp(10px, 1.6vh, 18px);
+  }
+  .punch {
+    font-size: clamp(19px, 2vw, 30px);
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding-left: clamp(12px, 1.4vw, 20px);
+    margin: clamp(14px, 2.4vh, 28px) 0 0;
+    max-width: 46ch;
+  }
+
+  pre {
+    background: var(--code-bg); color: var(--code-ink);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: clamp(12px, 1.16vw, 19px);
+    line-height: 1.55;
+    padding: clamp(12px, 1.6vw, 22px) clamp(14px, 1.8vw, 26px);
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 0 0 clamp(12px, 2vh, 22px);
+  }
+  pre { position: relative; cursor: copy; }
+  pre::after {
+    content: "copy"; position: absolute; top: 6px; right: 10px;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--code-dim); opacity: 0; transition: opacity .15s ease;
+  }
+  pre:hover::after { opacity: 1; }
+  pre.copied::after { content: "copied"; color: var(--code-key); opacity: 1; }
+  pre.diagram { cursor: default; }
+  pre.diagram::after { content: none; }
+  pre .k { color: var(--code-key); }
+  pre .d { color: var(--code-dim); }
+  pre.diagram { background: none; color: var(--ink-soft); padding-left: 0; font-size: clamp(11px, 1.15vw, 18px); }
+  pre.diagram b { color: var(--accent); font-weight: 500; }
+
+  table { border-collapse: collapse; width: 100%; margin: 0 0 clamp(10px, 1.8vh, 20px); }
+  th, td {
+    text-align: left; padding: .5em .9em .5em 0;
+    border-bottom: 1px solid var(--line);
+    font-size: clamp(14px, 1.4vw, 21px);
+  }
+  th {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(10px, .9vw, 13px); letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted); font-weight: 500;
+  }
+  td:first-child { color: var(--ink); font-weight: 500; }
+  td.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; color: var(--accent); }
+
+  kbd {
+    font-family: "IBM Plex Mono", monospace; font-size: .82em;
+    border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px;
+    padding: 1px 5px; background: var(--surface-2); color: var(--ink);
+  }
+  .tablewrap { overflow-x: auto; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3.5vw, 54px); }
+  .cols h3 {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(11px, 1vw, 14px); letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 .8em; font-weight: 600;
+  }
+  .cols.split h3.b { color: var(--warn); }
+  .cols p, .cols li { max-width: none; }
+
+  code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .88em; background: var(--surface-2);
+    padding: .1em .35em; border-radius: 4px; color: var(--ink);
+  }
+
+  .count {
+    display: grid; grid-template-columns: auto 1fr; gap: clamp(12px, 1.6vw, 22px);
+    align-items: start; margin-bottom: clamp(12px, 2vh, 22px);
+  }
+  .count .n {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600;
+    font-size: clamp(14px, 1.3vw, 20px); color: var(--accent);
+    background: var(--accent-soft); border-radius: 6px; padding: .15em .5em;
+  }
+  .count p { margin: 0; max-width: 42ch; }
+
+  /* ---- chrome ---- */
+  .bar {
+    flex: none;
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 20px calc(10px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  .bar .clock { color: var(--accent); font-variant-numeric: tabular-nums; }
+  .bar .title { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar button {
+    font: inherit; color: var(--muted); background: none;
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 3px 9px; cursor: pointer;
+  }
+  .bar button:hover { color: var(--ink); border-color: var(--accent); }
+  .bar .pos { font-variant-numeric: tabular-nums; }
+  .track { flex: none; height: 2px; background: var(--line); }
+  .track i { display: block; height: 100%; background: var(--accent); transition: width .18s ease; }
+
+  .note {
+    flex: none;
+    border-top: 1px solid var(--line);
+    background: var(--surface-2);
+    padding: 12px 20px;
+    font-size: 14px; line-height: 1.5; color: var(--ink-soft);
+    max-height: 26vh; overflow-y: auto;
+  }
+  .note b {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+    display: block; margin-bottom: 4px;
+  }
+
+  @media (max-width: 620px) {
+    .cols { grid-template-columns: 1fr; gap: 18px; }
+    .bar .title { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* ---- additions for the testing deck ---- */
+  :root { --pass: #1f7a3a; --fail: #b3261e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --pass: #6fd08c; --fail: #ff8a80; } }
+  :root[data-theme="dark"] { --pass: #6fd08c; --fail: #ff8a80; }
+  pre .g { color: #6fd08c; }
+  pre .r { color: #ff8a80; }
+  pre.out { border-left: 3px solid var(--line); }
+  pre.diagram .g { color: var(--pass); }
+  pre.diagram .r { color: var(--fail); }
+  sup { font-size: .6em; }
+  .slide a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .slide a:hover { text-decoration-thickness: 2px; }
+  td a { white-space: nowrap; }
+  .links { margin-top: clamp(18px, 3vh, 36px); }
+  .links p { display: grid; grid-template-columns: 5.5em auto; justify-content: start; align-items: baseline; gap: 1em;
+    margin: 0 0 .3em; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: clamp(14px, 1.3vw, 20px); max-width: none; }
+  .links span { color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: .72em; }
+  .callout {
+    border: 1px solid var(--warn); border-left-width: 4px; border-radius: 10px;
+    background: var(--surface); padding: clamp(10px, 1.4vw, 18px) clamp(14px, 1.8vw, 24px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+  }
+  .callout { display: grid; grid-template-columns: 1fr auto; gap: clamp(12px, 2vw, 28px); align-items: center; }
+  .callout p { max-width: none; margin-bottom: .35em; }
+  .callout { margin-bottom: clamp(12px, 2vh, 20px); }
+  .callout pre { margin: 0; }
+  @media (max-width: 620px) { .callout { grid-template-columns: 1fr; } }
+  .cols pre { margin-bottom: 0; }
+  .cols pre + pre { margin-top: 10px; }
+  .cols pre + p { margin-top: 14px; }
+  .cols + pre { margin-top: clamp(12px, 2vh, 20px); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="deck" id="deck">
+
+    <section class="slide" data-clock="0:00" data-title="Publier son code"
+      data-note="Deux heures, en ligne. Un seul projet (le générateur de mots de passe) qu'on habille étape par étape : doc, robot, site, appli, licence. Plus un deuxième dépôt tout petit pour le site statique. Les étudiants lancent les commandes ; les démos CI, c'est moi qui pousse. Horloge en bas : l'heure cible de chaque slide. Ordre de coupe si retard : l'exercice Streamlit, puis la mise en ligne Streamlit, puis « Le grand frère ».">
+      <p class="kicker">Programmation avancée · Publier</p>
+      <h2>Publier son code : <em>doc, robot, site, appli, licence</em></h2>
+      <p class="lede">Votre code marche sur votre machine. Comment le rendre lisible, vérifié, visible et réutilisable par d'autres ?</p>
+      <p class="punch">Rien de magique : des fichiers, des commandes, et un robot qui les relance à chaque <code>git push</code>.</p>
+      <div class="links">
+        <p><span>Code</span><a href="https://github.com/KnuxV/password-app" target="_blank" rel="noopener">github.com/KnuxV/password-app</a></p>
+        <p><span>Site</span><a href="https://github.com/KnuxV/tiny-site" target="_blank" rel="noopener">github.com/KnuxV/tiny-site</a></p>
+        <p><span>Cours</span><a href="https://knuxv.github.io/cours-agents/" target="_blank" rel="noopener">knuxv.github.io/cours-agents</a></p>
+      </div>
+    </section>
+
+    <section class="slide" hidden data-clock="0:01" data-title="Au programme"
+      data-note="Annoncer que tout part d'un seul projet, déjà écrit et déjà testé. On ne code presque pas aujourd'hui : on ajoute ce qui entoure le code. Pour l'examen, c'est exactement ce qui fait la différence entre « un script » et « un projet ».">
+      <h2>Au programme</h2>
+      <div class="count"><span class="n">1</span><p><strong>La doc</strong> — générée depuis les docstrings, avec <code>pdoc</code></p></div>
+      <div class="count"><span class="n">2</span><p><strong>CI/CD</strong> — un robot GitHub qui teste et publie à chaque push</p></div>
+      <div class="count"><span class="n">3</span><p><strong>Un site statique</strong> — trois pages Markdown en ligne, sans rien installer</p></div>
+      <div class="count"><span class="n">4</span><p><strong>Streamlit</strong> — le même code devient une appli web</p></div>
+      <div class="count"><span class="n">5</span><p><strong>Les licences</strong> — qui a le droit de faire quoi avec votre code</p></div>
+    </section>
+
+    <section class="slide" hidden data-clock="0:03" data-title="Récupérer le code"
+      data-note="Tout de suite, pour que les problèmes d'installation arrivent maintenant. uv sync télécharge Streamlit et ses dépendances (une quarantaine de paquets) : ça peut prendre une minute. Attendu : 18 passed. Si quelqu'un est bloqué : la bouée, c'est Codespaces (bouton vert Code → Codespaces → Create codespace sur la page du dépôt), un terminal Linux dans le navigateur.">
+      <p class="kicker">Tout de suite · WSL · Mac · Linux · Git Bash</p>
+      <h2>Récupérer le code</h2>
+      <pre><span class="k">cd ~
+git clone https://github.com/KnuxV/password-app.git
+cd password-app
+uv sync
+uv run pytest</span></pre>
+      <pre class="out"><span class="d">..................                                [100%]</span>
+<span class="g">18 passed in 0.33s</span></pre>
+      <p>Puis essayez :</p>
+      <pre><span class="k">uv run strong_password.py</span>     <span class="d"># un mot de passe de 5 mots</span>
+<span class="k">uv run strength.py</span>            <span class="d"># mémorisable contre aléatoire</span></pre>
+    </section>
+
+    <section class="slide" hidden data-clock="0:08" data-title="Le projet, en étapes"
+      data-note="Chaque étape est un tag git : une étiquette posée sur un commit. git switch --detach step-1 remet le dossier dans l'état de l'étape 1 (detached = on regarde, on ne travaille pas dessus). git diff entre deux étapes montre exactement ce qu'une étape a ajouté. Si quelqu'un est perdu pendant la séance : git switch main et il retrouve la version finale.">
+      <p class="kicker">Le fil rouge</p>
+      <h2>Un projet, <em>cinq étapes</em></h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Tag</th><th>Ce que l'étape ajoute</th></tr></thead>
+        <tbody>
+          <tr><td><code>step-0</code></td><td>le générateur, le score de force, les tests</td></tr>
+          <tr><td><code>step-1</code></td><td>la doc générée avec pdoc</td></tr>
+          <tr><td><code>step-2</code></td><td>le robot CI/CD : tests → doc → mise en ligne</td></tr>
+          <tr><td><code>step-3</code></td><td>l'appli Streamlit</td></tr>
+          <tr><td><code>step-4</code></td><td>la licence</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <pre><span class="k">git log --oneline --decorate</span>       <span class="d"># les étapes et leurs tags</span>
+<span class="k">git diff step-2 step-3 --stat</span>      <span class="d"># ce que l'étape 3 a ajouté</span>
+<span class="k">git switch --detach step-1</span>         <span class="d"># revenir à l'étape 1</span>
+<span class="k">git switch main</span>                    <span class="d"># revenir à la fin</span></pre>
+    </section>
+
+    <section class="slide" hidden data-clock="0:10" data-title="1 — La doc est déjà là"
+      data-note="Ouvrir strong_password.py dans l'éditeur. Les docstrings, ils en ont écrit à la séance tests (les doctests). help() les affiche déjà dans le terminal. Sortir de help() avec q. Le message : la doc n'est pas un document à part, elle vit dans le code, à côté de ce qu'elle décrit.">
+      <p class="kicker">1 — La documentation</p>
+      <h2>La doc est <em>déjà dans le code</em></h2>
+      <pre>def check_strength(password: str) -> Strength:
+<span class="k">    """Score a password with `zxcvbn`.
+
+    Args:
+        password: the password to judge.
+
+    Returns:
+        Its score (0 to 4) and an estimated crack time.
+
+    Example:
+        &gt;&gt;&gt; check_strength("password").score
+        0
+    """</span></pre>
+      <pre><span class="k">uv run python -c "import strength; help(strength.check_strength)"</span></pre>
+      <p class="punch">Une docstring, c'est déjà de la doc. Il manque juste une jolie page.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:13" data-title="pdoc"
+      data-note="pdoc est dans les dépendances de dev (uv add --dev pdoc). -d google : nos docstrings suivent le style Google (Args:, Returns:, Example:). La commande ouvre le navigateur sur un petit serveur local ; Ctrl+C pour l'arrêter. Montrer : la barre de recherche, les annotations de type affichées, « View Source », les exemples >>> mis en forme. Changer une docstring, enregistrer, recharger la page : c'est à jour.">
+      <p class="kicker">1 — La documentation</p>
+      <h2>Une commande : <em>pdoc</em></h2>
+      <pre><span class="k">uv run pdoc -d google strong_password.py strength.py</span></pre>
+      <p>Le navigateur s'ouvre sur la doc : une page par fichier, avec les types, les exemples et la recherche. <kbd>Ctrl</kbd>+<kbd>C</kbd> dans le terminal pour arrêter.</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Dans le code</th><th>Sur la page</th></tr></thead>
+        <tbody>
+          <tr><td><code>"""docstring"""</code></td><td>le texte, en Markdown</td></tr>
+          <tr><td><code>password: str -&gt; Strength</code></td><td>les types, avec des liens</td></tr>
+          <tr><td><code>Args:</code> <code>Returns:</code></td><td>des listes propres</td></tr>
+          <tr><td><code>_WORDLIST_FILE</code></td><td>rien : le <code>_</code> veut dire « privé »</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="slide" hidden data-clock="0:17" data-title="Un site, ce sont des fichiers"
+      data-note="Anecdote vraie de la préparation : la première version affichait WORDLIST_FILE avec le chemin complet de ma machine (/home/...). Passer la variable en privé avec _ l'a fait disparaître de la doc. Ensuite -o site : plus de serveur, juste des fichiers HTML. Les ouvrir (double-clic sur site/index.html ou xdg-open / open). site/ est dans .gitignore : on ne versionne pas ce qu'on peut regénérer.">
+      <p class="kicker">1 — La documentation</p>
+      <h2>Un site web, <em>ce sont des fichiers</em></h2>
+      <pre><span class="k">uv run pdoc -d google strong_password.py strength.py -o site
+ls site</span></pre>
+      <pre class="out">index.html  search.js  strength.html  strong_password.html</pre>
+      <p>Quatre fichiers. Pas de serveur, pas de base de données. N'importe quel hébergeur de fichiers peut les servir.</p>
+      <p class="punch">On ne versionne pas <code>site/</code> : on peut le regénérer. Il reste à le regénérer <strong>et le publier</strong> à chaque modification — sans y penser.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:20" data-title="2 — CI/CD"
+      data-note="CI : continuous integration, chaque push est testé par une machine qui n'est pas la vôtre (fin du « ça marche chez moi »). CD : continuous delivery/deployment, ce qui passe les tests est publié automatiquement. GitHub Actions est la version GitHub ; GitLab a la même chose (.gitlab-ci.yml). Gratuit pour les dépôts publics.">
+      <p class="kicker">2 — CI/CD</p>
+      <h2>Un robot qui travaille <em>à chaque push</em></h2>
+      <div class="cols">
+        <div>
+          <h3>CI — intégration continue</h3>
+          <p>À chaque push, une machine de GitHub récupère le code et <strong>lance les tests</strong>.</p>
+          <p>Fini « ça marche chez moi ».</p>
+        </div>
+        <div>
+          <h3>CD — déploiement continu</h3>
+          <p>Si les tests passent, la même machine <strong>construit et publie</strong> : ici, la doc.</p>
+          <p>Personne ne lance rien à la main.</p>
+        </div>
+      </div>
+      <pre class="diagram">git push  →  <b>test</b>  →  <b>docs</b>  →  <b>deploy</b>  →  knuxv.github.io/password-app</pre>
+      <p class="punch">Le robot est décrit dans un fichier du dépôt : <code>.github/workflows/ci.yml</code>.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:23" data-title="Le fichier du robot"
+      data-note="Lire le fichier ensemble, de haut en bas. on : quand. jobs : trois étapes, chacune sur une machine Ubuntu neuve, effacée après. uses : une action toute faite (récupérer le code, installer uv). run : une commande, exactement celle qu'on tape. needs : l'ordre, et surtout la condition. Le job deploy (non montré ici) envoie le dossier site/ à GitHub Pages. Version complète dans le dépôt.">
+      <p class="kicker">2 — CI/CD · .github/workflows/ci.yml (extrait)</p>
+      <h2>Le fichier <em>du robot</em></h2>
+      <pre><span class="k">on:</span>
+  push:
+    branches: [main]            <span class="d"># quand : à chaque push sur main</span>
+
+<span class="k">jobs:</span>
+  test:
+    runs-on: ubuntu-latest      <span class="d"># une machine Linux prêtée par GitHub</span>
+    steps:
+      - uses: actions/checkout@v7          <span class="d"># récupérer le code</span>
+      - uses: astral-sh/setup-uv@v10.3.0   <span class="d"># installer uv</span>
+      - run: uv sync
+      - run: <span class="k">uv run pytest</span>                <span class="d"># la même commande que vous</span>
+
+  docs:
+    <span class="k">needs: test</span>                 <span class="d"># seulement si les tests passent</span>
+    steps:
+      - run: <span class="k">uv run pdoc -d google strong_password.py strength.py -o site</span>
+      - uses: actions/upload-pages-artifact@v5</pre>
+    </section>
+
+    <section class="slide" hidden data-clock="0:27" data-title="Démo : on casse un test"
+      data-note="DÉMO (moi, partage d'écran). Dans strong_password.py, generate_memorable : remplacer ' '.join par '-'.join. uv run pytest en local d'abord : 2 échecs (le test des espaces et le doctest du module). Commit, push, onglet Actions : test rouge, docs et deploy « skipped » (gris). Le site garde sa dernière bonne version. Puis git revert HEAD et push : tout repasse au vert. Le message : un code cassé n'est jamais publié, et ce n'est pas une question de vigilance.">
+      <p class="kicker">2 — CI/CD · démo</p>
+      <h2>On casse un test, <em>on pousse</em></h2>
+      <pre><span class="d"># dans generate_memorable : " ".join  →  "-".join</span>
+<span class="k">uv run pytest -q</span></pre>
+      <pre class="out"><span class="r">FAILED tests/test_memorable.py::test_five_words_four_spaces</span>
+<span class="r">FAILED strong_password.py::strong_password</span></pre>
+      <pre><span class="k">git commit -am "use dashes" &amp;&amp; git push</span></pre>
+      <pre class="diagram"><span class="r">✗ test</span>   →   ⊘ docs (skipped)   →   ⊘ deploy (skipped)</pre>
+      <p class="punch">Le site garde sa dernière bonne version. Le code cassé n'est jamais publié.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:33" data-title="Où regarder"
+      data-note="Montrer l'onglet Actions : la liste des runs, un run ouvert, les trois jobs reliés par des flèches, les logs de chaque étape (dérouler « uv run pytest »). Puis la page Pages. Le badge vert/rouge à côté du dernier commit sur la page d'accueil du dépôt, c'est le même robot.">
+      <p class="kicker">2 — CI/CD</p>
+      <h2>Où <em>regarder</em></h2>
+      <div class="count"><span class="n">1</span><p>Onglet <strong>Actions</strong> du dépôt : un run par push, les logs de chaque commande.</p></div>
+      <div class="count"><span class="n">2</span><p>La pastille <span style="color:var(--pass)">✓</span> / <span style="color:var(--fail)">✗</span> à côté du dernier commit, sur la page du dépôt.</p></div>
+      <div class="count"><span class="n">3</span><p>La doc en ligne : <a href="https://knuxv.github.io/password-app/" target="_blank" rel="noopener">knuxv.github.io/password-app</a></p></div>
+      <p class="punch">Sur votre propre dépôt, une fois : <strong>Settings → Pages → Source : GitHub Actions</strong>.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:36" data-title="3 — Site statique"
+      data-note="Statique : le serveur envoie des fichiers tels quels, identiques pour tout le monde. GitHub Pages ne sait faire que ça, et c'est gratuit pour les dépôts publics. Dynamique : un programme tourne sur le serveur et calcule la page à chaque visite — c'est ce que fera Streamlit dans la partie 4, et c'est pour ça qu'il ne peut pas aller sur Pages.">
+      <p class="kicker">3 — Site statique</p>
+      <h2>Statique ou <em>dynamique</em> ?</h2>
+      <div class="cols">
+        <div>
+          <h3>Statique</h3>
+          <p>Le serveur envoie des <strong>fichiers</strong>, les mêmes pour tout le monde.</p>
+          <p>La doc pdoc, un CV, un blog, le site du cours.</p>
+          <p>Hébergement : <strong>GitHub Pages</strong>, gratuit.</p>
+        </div>
+        <div>
+          <h3>Dynamique</h3>
+          <p>Un <strong>programme</strong> tourne sur le serveur et calcule chaque page.</p>
+          <p>Une appli Streamlit, un formulaire, une recherche.</p>
+          <p>Il faut une machine qui reste allumée.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" hidden data-clock="0:38" data-title="tiny-site"
+      data-note="Ouvrir github.com/KnuxV/tiny-site. Trois pages .md et un _config.yml. GitHub Pages passe les fichiers Markdown dans Jekyll, qui en fait des pages HTML avec un thème. Les liens entre pages s'écrivent vers les .md : Jekyll les réécrit en .html. Le README n'est pas publié (exclude dans _config.yml).">
+      <p class="kicker">3 — Site statique · github.com/KnuxV/tiny-site</p>
+      <h2>Trois fichiers Markdown, <em>un site</em></h2>
+      <pre class="diagram">tiny-site/
+├── <b>index.md</b>        → la page d'accueil
+├── <b>a-propos.md</b>     → /a-propos.html
+├── <b>notes.md</b>        → /notes.html
+└── _config.yml     → le titre du site</pre>
+      <pre><span class="d"># index.md</span>
+# Bienvenue
+
+- [À propos](a-propos.md)
+- [Notes](notes.md)</pre>
+      <p class="punch">Pas de HTML écrit à la main. GitHub transforme le Markdown en pages web.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:40" data-title="À vous : votre site"
+      data-note="EXERCICE, 10 min, tout dans le navigateur : rien à installer, idéal en ligne. Le dépôt doit être public (Pages gratuit seulement en public). Le site met une à deux minutes à apparaître la première fois ; l'adresse s'affiche en haut de Settings → Pages. Ceux qui vont vite : modifier a-propos.md avec le crayon, Commit changes, recharger le site une minute après. Ils peuvent coller leur lien dans le chat.">
+      <p class="kicker">3 — À vous · 10 min · dans le navigateur</p>
+      <h2>Votre site, <em>en ligne</em></h2>
+      <div class="count"><span class="n">1</span><p>Sur <a href="https://github.com/KnuxV/tiny-site" target="_blank" rel="noopener">github.com/KnuxV/tiny-site</a> : <strong>Use this template → Create a new repository</strong>, en <strong>public</strong>.</p></div>
+      <div class="count"><span class="n">2</span><p>Dans votre dépôt : <strong>Settings → Pages</strong>, Source : <strong>Deploy from a branch</strong>, branche <code>main</code>, dossier <code>/ (root)</code>, <strong>Save</strong>.</p></div>
+      <div class="count"><span class="n">3</span><p>Une à deux minutes plus tard, l'adresse apparaît en haut de la page : <code>votre-nom.github.io/tiny-site</code></p></div>
+      <div class="count"><span class="n">4</span><p>Modifiez <code>a-propos.md</code> avec le crayon ✏️ → <strong>Commit changes</strong>. Rechargez le site.</p></div>
+      <p class="punch">Collez votre lien dans le chat.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:51" data-title="Le grand frère"
+      data-note="CUT possible. Le site du cours est le même principe en plus grand : des dizaines de pages Markdown dans site/docs, MkDocs (avec le thème Material) au lieu de Jekyll, et un workflow (site.yml) qui construit et publie à chaque push. Montrer le dépôt cours-agents, le dossier site/docs, puis le site. mkdocstrings fait pour MkDocs ce que pdoc fait seul : la doc depuis les docstrings, dans le même site.">
+      <p class="kicker">3 — Site statique</p>
+      <h2>Le grand frère : <em>le site du cours</em></h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>tiny-site</th><th>cours-agents</th></tr></thead>
+        <tbody>
+          <tr><td>Pages</td><td>3 fichiers <code>.md</code></td><td>des dizaines, dans <code>site/docs/</code></td></tr>
+          <tr><td>Outil</td><td>Jekyll (celui de GitHub)</td><td>MkDocs + thème Material</td></tr>
+          <tr><td>Publication</td><td>Deploy from a branch</td><td>un workflow, à chaque push</td></tr>
+          <tr><td>Installation</td><td>rien</td><td><code>mkdocs</code> en Python</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><a href="https://knuxv.github.io/cours-agents/" target="_blank" rel="noopener">knuxv.github.io/cours-agents</a> · source : <a href="https://github.com/KnuxV/cours-agents" target="_blank" rel="noopener">github.com/KnuxV/cours-agents</a></p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:53" data-title="Un robot qui fabrique un fichier"
+      data-note="Le workflow de tiny-site ne publie rien : il fabrique deux fichiers et les garde. pandoc convertit entre formats de documents (Markdown, HTML, Word, LaTeX, PDF…). sudo ici : on est sur la machine de GitHub, pas la leur — la règle « jamais de sudo » concerne leurs ordinateurs et ceux de la fac. « Artifact », c'est le mot de GitHub pour un fichier produit par un run.">
+      <p class="kicker">3 — Site statique · .github/workflows/bundle.yml</p>
+      <h2>Un robot qui <em>fabrique un fichier</em></h2>
+      <pre><span class="k">on: push</span>
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: sudo apt-get update &amp;&amp; sudo apt-get install -y pandoc
+      - run: <span class="k">pandoc index.md a-propos.md notes.md -s -o site.html</span>
+      - run: <span class="k">pandoc index.md a-propos.md notes.md -o site.docx</span>
+      - uses: actions/upload-artifact@v7    <span class="d"># garder les fichiers</span>
+        with:
+          name: site
+          path: |
+            site.html
+            site.docx</pre>
+      <p class="punch">Votre directeur de mémoire veut un .docx ? Le robot le refait à chaque push.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:56" data-title="Démo : le .docx"
+      data-note="DÉMO. Sur tiny-site, modifier a-propos.md dans le navigateur, Commit. Onglet Actions : le run « bundle » démarre (une demi-minute, surtout l'installation de pandoc). En bas de la page du run, section Artifacts : site.zip. Le télécharger (il faut être connecté à GitHub), ouvrir site.docx : la modification est dedans. Ceux qui ont fait l'exercice ont le même robot dans leur dépôt : leur onglet Actions a déjà tourné.">
+      <p class="kicker">3 — Site statique · démo</p>
+      <h2>Un push, <em>deux résultats</em></h2>
+      <div class="count"><span class="n">1</span><p>Modifier <code>a-propos.md</code> dans le navigateur → <strong>Commit changes</strong>.</p></div>
+      <div class="count"><span class="n">2</span><p>Le site se met à jour : c'est GitHub Pages.</p></div>
+      <div class="count"><span class="n">3</span><p>Onglet <strong>Actions</strong> → le run <em>bundle</em> → en bas, <strong>Artifacts</strong> → <code>site</code>.</p></div>
+      <div class="count"><span class="n">4</span><p>Ouvrir <code>site.docx</code> : les trois pages, avec la modification.</p></div>
+      <p class="punch">Votre dépôt a le même robot : regardez votre onglet Actions.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:58" data-title="Le plus petit robot"
+      data-note="DÉMO, 2 min. Sur tiny-site, dans le navigateur : Add file → Create new file, nom .github/workflows/hello.yml (taper les / crée les dossiers), coller, Commit. Onglet Actions : le run « hello » apparaît. L'ouvrir, déplier chaque étape : le 4, puis le nom de la machine et le dossier — ce n'est pas mon ordinateur. Le message : un workflow, ce sont juste des commandes de terminal, lancées ailleurs. Tout ce qu'on sait taper, le robot peut le taper. Python est déjà installé sur ubuntu-latest. Sortie « runner » et chemin /home/runner/work/... : attendue, à vérifier en répétition.">
+      <p class="kicker">3 — Le plus petit robot · .github/workflows/hello.yml</p>
+      <h2>Le plus petit <em>robot</em></h2>
+      <pre><span class="k">name: hello
+on: push
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: python3 -c "print(2 + 2)"
+      - run: whoami &amp;&amp; hostname &amp;&amp; pwd</span></pre>
+      <p>Sur GitHub : <strong>Add file → Create new file</strong>, nom <code>.github/workflows/hello.yml</code>, coller, <strong>Commit</strong>. Puis onglet <strong>Actions</strong> → le run <em>hello</em> → déplier les étapes.</p>
+      <pre class="out">4
+runner
+<span class="d">(un nom de machine qui n'est pas la vôtre)</span>
+/home/runner/work/tiny-site/tiny-site</pre>
+      <p class="punch">Un workflow, ce sont des commandes de terminal lancées sur une autre machine. Tout ce que vous savez taper, le robot peut le taper.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:00" data-title="4 — Streamlit"
+      data-note="Streamlit : une bibliothèque Python qui transforme un script en page web interactive. Pas de HTML, pas de JavaScript. Très utilisé pour les tableaux de bord de données et les démos de modèles — et pour une présentation d'examen, une démo cliquable vaut mieux qu'un terminal.">
+      <p class="kicker">4 — Streamlit</p>
+      <h2>Un script Python <em>devient une page web</em></h2>
+      <pre><span class="k">git diff step-2 step-3 --stat</span></pre>
+      <pre class="out"> README.md         |   8 +
+ app.py            |  33 ++
+ pyproject.toml    |   1 +
+ tests/test_app.py |  16 +
+ uv.lock           | 944 +++++++++++++++++++++++++++++++
+ 5 files changed, 1001 insertions(+), 1 deletion(-)</pre>
+      <p>Une dépendance (<code>uv add streamlit</code>), un fichier <code>app.py</code>. Pas de HTML, pas de JavaScript.</p>
+      <p class="punch">Le générateur ne change pas. L'appli ne fait que l'appeler. (Les 944 lignes de <code>uv.lock</code> : Streamlit et ses dépendances, à la version près.)</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:02" data-title="app.py"
+      data-note="Lire le fichier ensemble. Chaque widget (radio, slider) rend sa valeur : une variable Python ordinaire, qu'on utilise dans un if. st.code affiche le mot de passe avec un bouton copier. st.metric : un grand chiffre. Le bouton ne fait rien lui-même : cliquer relance le script.">
+      <p class="kicker">4 — Streamlit · app.py (extrait)</p>
+      <h2>Toute l'appli</h2>
+      <pre>import streamlit as st
+
+st.title("Password generator")
+
+<span class="k">kind = st.radio("Kind", ["memorable", "random"], horizontal=True)</span>
+if kind == "memorable":
+    <span class="k">length = st.slider("Number of words", min_value=3, max_value=10, value=5)</span>
+else:
+    length = st.slider("Number of characters", min_value=8, max_value=40, value=16)
+
+password = StrongPassword(length=length, type_p=TypePassword(kind)).generate()
+<span class="k">st.code(password, language=None)</span>      <span class="d"># avec un bouton « copier »</span>
+
+strength = check_strength(password)
+st.metric("Score", f"{strength.score} / 4")
+st.write(f"Time to crack it: **{strength.crack_time}**")
+st.button("Another one")</pre>
+    </section>
+
+    <section class="slide" hidden data-clock="1:06" data-title="Lancer l'appli"
+      data-note="Tout le monde lance. Le navigateur s'ouvre tout seul ; sinon ouvrir http://localhost:8501 à la main. localhost : votre propre machine, personne d'autre ne la voit. WSL : l'adresse marche depuis le navigateur Windows. Codespaces : un bouton « Open in Browser » apparaît. Streamlit peut demander un e-mail au premier lancement : Entrée pour passer. Ctrl+C pour arrêter.">
+      <p class="kicker">4 — Streamlit · tout le monde</p>
+      <h2>Lancer <em>l'appli</em></h2>
+      <pre><span class="k">uv run streamlit run app.py</span></pre>
+      <pre class="out">  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501</pre>
+      <p>Le navigateur s'ouvre. Bougez le curseur, changez de type, cliquez <em>Another one</em>.</p>
+      <p><code>localhost</code> = votre machine. Personne d'autre ne voit l'appli. <kbd>Ctrl</kbd>+<kbd>C</kbd> pour l'arrêter.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:10" data-title="Le modèle Streamlit"
+      data-note="C'est la seule idée à retenir sur Streamlit : à chaque interaction, tout le script est réexécuté de haut en bas, avec les nouvelles valeurs des widgets. C'est pour ça que le bouton « Another one » marche sans code : cliquer relance le script, donc generate() est rappelé. Conséquence : un calcul lent (charger un gros fichier, un modèle) est refait à chaque clic — d'où st.cache_data, à mentionner seulement.">
+      <p class="kicker">4 — Streamlit</p>
+      <h2>Chaque clic <em>relance tout le script</em></h2>
+      <pre class="diagram">clic  →  app.py de la ligne 1 à la fin  →  la page redessinée
+         <b>kind</b> et <b>length</b> ont leurs nouvelles valeurs</pre>
+      <p>C'est pour ça que <code>st.button("Another one")</code> marche sans code : cliquer relance le script, donc <code>generate()</code> est rappelé.</p>
+      <p class="punch">Un calcul lent est refait à chaque clic. Pour l'éviter : <code>@st.cache_data</code>.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:12" data-title="Tester une appli"
+      data-note="Lien avec la séance tests. AppTest lance app.py sans navigateur, lit les widgets et peut les manipuler (set_value puis run). Ces tests tournent aussi dans le robot CI : une appli cassée bloque la publication de la doc.">
+      <p class="kicker">4 — Streamlit · tests/test_app.py</p>
+      <h2>Une appli, <em>ça se teste</em></h2>
+      <pre>from streamlit.testing.v1 import AppTest
+
+def test_switching_to_random_changes_the_slider() -> None:
+    app = AppTest.from_file("../app.py").run()      <span class="d"># sans navigateur</span>
+    <span class="k">app.radio[0].set_value("random").run()</span>          <span class="d"># « cliquer »</span>
+    assert app.slider[0].label == "Number of characters"
+    assert len(app.code[0].value) == 16</pre>
+      <p class="punch">Ces tests tournent aussi dans le robot : une appli cassée ne passe pas.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:15" data-title="À vous : un widget"
+      data-note="EXERCICE, 10 min. Solution : remplacer la ligne st.write(...) par : if st.checkbox('Show the crack time', value=True): puis st.write(...) indenté dessous. La page se recharge toute seule quand on enregistre app.py (ou bouton Rerun en haut à droite). Bonus : uv run pytest — les tests passent encore ? (Oui, ils ne regardent pas le temps de cassage.) Plus rapide encore : st.checkbox ne fait que rendre True ou False.">
+      <p class="kicker">4 — À vous · 10 min</p>
+      <h2>Ajoutez <em>un widget</em></h2>
+      <p class="lede">Une case à cocher <strong>« Show the crack time »</strong> : décochée, le temps de cassage disparaît.</p>
+      <pre><span class="d"># un widget rend sa valeur : ici True ou False</span>
+<span class="k">show = st.checkbox("Show the crack time", value=True)</span></pre>
+      <p>Enregistrez <code>app.py</code> : la page se met à jour. Puis :</p>
+      <pre><span class="k">uv run pytest</span></pre>
+      <p>Plus loin : <a href="https://docs.streamlit.io/develop/api-reference" target="_blank" rel="noopener">docs.streamlit.io</a> — <code>st.selectbox</code>, <code>st.text_input</code>, <code>st.bar_chart</code>…</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:26" data-title="La mettre en ligne"
+      data-note="CUT possible : le montrer seulement. Une appli Streamlit est dynamique : GitHub Pages ne peut pas la servir. Streamlit Community Cloud la fait tourner gratuitement depuis un dépôt GitHub public : share.streamlit.io, se connecter avec GitHub, choisir le dépôt et app.py. Il lit uv.lock en priorité pour installer les dépendances, donc rien à ajouter. Le premier démarrage prend quelques minutes. Non répété en conditions réelles avant la séance : prévoir de le faire à la maison.">
+      <p class="kicker">4 — Streamlit · bonus</p>
+      <h2>La mettre <em>en ligne</em></h2>
+      <p>GitHub Pages ne sert que des fichiers : il ne peut pas faire tourner Python.</p>
+      <div class="count"><span class="n">1</span><p><a href="https://share.streamlit.io" target="_blank" rel="noopener">share.streamlit.io</a> → se connecter avec GitHub.</p></div>
+      <div class="count"><span class="n">2</span><p>Choisir le dépôt, la branche <code>main</code>, le fichier <code>app.py</code>.</p></div>
+      <div class="count"><span class="n">3</span><p>Il lit <code>uv.lock</code> et installe les mêmes versions que chez vous.</p></div>
+      <p class="punch">Gratuit, pour un dépôt public. Parfait pour une démo d'examen.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:30" data-title="5 — Licences"
+      data-note="Citation de choosealicense.com (page No License). La croyance courante : « c'est public sur GitHub, donc libre ». Faux. Les conditions de GitHub permettent seulement de voir et de forker. Pour que quelqu'un puisse réutiliser votre code dans son projet, il faut une licence.">
+      <p class="kicker">5 — Licences</p>
+      <h2>Public <em>≠ libre</em></h2>
+      <p class="lede">Sans licence, votre code est sous <strong>droit d'auteur exclusif</strong>, même sur un dépôt public.</p>
+      <p>« Nobody else can copy, distribute, or modify your work without being at risk of take-downs, shake-downs, or litigation. »</p>
+      <p><a href="https://choosealicense.com/no-permission/" target="_blank" rel="noopener">choosealicense.com/no-permission</a></p>
+      <p class="punch">GitHub permet de voir et de forker. Pour réutiliser, il faut une licence.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:33" data-title="Trois familles"
+      data-note="Permissive : faites ce que vous voulez, gardez juste la mention (MIT ; Apache-2.0 ajoute une clause sur les brevets). Copyleft : vous pouvez réutiliser, mais ce que vous distribuez qui en dérive doit rester sous la même licence (GPL). Pour les données et les textes, pas les licences de code : Creative Commons (CC BY = citer l'auteur) ; en France, la Licence Ouverte d'Etalab pour les données publiques (data.gouv.fr — aparté pour la salle d'économie). Les données ont leur slide juste après. Les exemples : pytest et zxcvbn (MIT) et Streamlit (Apache-2.0) sont dans notre propre projet — vu avec pip-licenses ; gpt-oss, un des modèles de la plateforme Unistra, est sous Apache-2.0 ; Linux et Git sont sous GPL-2.0, R sous GPL-2 ou 3 : la salle d'économie utilise peut-être R, et peut le faire sans rien publier — la GPL ne joue que si l'on distribue un programme qui l'inclut. Pour un projet d'examen : MIT, sans hésiter.">
+      <p class="kicker">5 — Licences</p>
+      <h2>Trois <em>familles</em></h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Famille</th><th>Licence</th><th>Qui l'utilise</th><th>En une phrase</th></tr></thead>
+        <tbody>
+          <tr><td>Permissive</td><td>MIT</td><td>pytest, zxcvbn, React</td><td>faites-en ce que vous voulez, gardez la mention</td></tr>
+          <tr><td>Permissive</td><td>Apache-2.0</td><td>Streamlit, Kubernetes, gpt-oss</td><td>pareil, avec une clause sur les brevets</td></tr>
+          <tr><td>Copyleft</td><td>GPL</td><td>Linux, Git, R</td><td>ce qui en dérive doit rester sous GPL</td></tr>
+          <tr><td>Données, textes</td><td>CC BY, Licence Ouverte</td><td>data.gouv.fr</td><td>« le MIT des données » : réutilisez, citez la source</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Pour comparer : <a href="https://choosealicense.com" target="_blank" rel="noopener">choosealicense.com</a></p>
+      <p class="punch">Pour votre projet d'examen : MIT.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:35" data-title="Fermé, ouvert, entre les deux"
+      data-note="Code fermé (propriétaire) : on n'a pas le code, seulement un droit d'usage, défini par un contrat (CLUF / EULA) ou des conditions d'utilisation : pas de copie, pas de modification, pas de rétro-ingénierie, souvent un nombre de postes. Stata, SPSS, MATLAB : la salle d'économie connaît. Source-available : le code est visible mais la licence restreint — un dépôt public sans licence, la licence de Llama (plafond d'utilisateurs), HashiCorp passé à la BSL en 2023 ; beaucoup de modèles « open weights » sont ici. Le fermé est plein de code libre : légal avec MIT/Apache (les pages « licences tierces » des applis), pas avec GPL — distribuer un programme qui contient du GPL oblige à publier ses sources sous GPL. La GPL ne se déclenche qu'à la distribution : un service web ne distribue rien ; l'AGPL comble ce trou (l'accès par le réseau compte). Double licence : GPL gratuite ou licence payante pour rester fermé (Qt, MySQL). Au travail : le logiciel écrit par un salarié dans ses fonctions appartient à l'employeur (art. L113-9 CPI — à vérifier), contrat doctoral compris ; un stagiaire n'est pas salarié, lire la convention. Réplication : un résultat qui exige un outil fermé ne peut être vérifié que par ceux qui paient l'outil.">
+      <p class="kicker">5 — Licences</p>
+      <h2>Fermé, ouvert, <em>et entre les deux</em></h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Type</th><th>Voir le code ?</th><th>Le réutiliser ?</th><th>Exemples</th></tr></thead>
+        <tbody>
+          <tr><td>Fermé, propriétaire</td><td>non</td><td>selon le contrat</td><td>Windows, Stata, ChatGPT</td></tr>
+          <tr><td>Source visible</td><td>oui</td><td>avec restrictions</td><td>un dépôt sans licence, Llama</td></tr>
+          <tr><td>Libre, permissif</td><td>oui</td><td>oui, gardez la mention</td><td>MIT, Apache-2.0</td></tr>
+          <tr><td>Libre, copyleft</td><td>oui</td><td>oui, et ça reste libre</td><td>GPL, AGPL</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Avec du fermé, on n'achète pas le code : on achète <strong>le droit de s'en servir</strong>.</p>
+      <p class="punch">Le code fermé est plein de code libre : MIT oui, GPL non — sinon il faut publier ses sources.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:37" data-title="Et les données ?"
+      data-note="Les licences de code collent mal aux données, d'où des licences à part. CC BY 4.0 ≈ MIT : réutilisez tout, même commercialement, citez la source. Licence Ouverte 2.0 d'Etalab : la même chose pour les données publiques françaises (data.gouv.fr, INSEE) — aparté économie. CC0 ≈ domaine public : aucune condition. CC BY-SA et ODbL (OpenStreetMap) ≈ GPL : ce qui en dérive reste sous la même licence. NC (pas d'usage commercial) et ND (pas de modification) n'ont pas d'équivalent en code et ne sont pas « ouvertes » au sens strict. Les trois pièges : les faits ne sont pas protégés mais la base de données l'est (droit sui generis en Europe) ; un corpus de textes appartient à leurs auteurs, l'avoir scrapé ne donne pas le droit de le republier (salle TAL) ; des données personnelles restent soumises au RGPD quelle que soit la licence (enquêtes, microdonnées — les deux salles).">
+      <p class="kicker">5 — Licences</p>
+      <h2>Et <em>les données</em> ?</h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Pour le code</th><th>Pour les données, les textes</th><th>En une phrase</th></tr></thead>
+        <tbody>
+          <tr><td>MIT</td><td>CC BY 4.0, Licence Ouverte 2.0</td><td>réutilisez, citez la source</td></tr>
+          <tr><td>domaine public</td><td>CC0</td><td>aucune condition</td></tr>
+          <tr><td>GPL</td><td>CC BY-SA, ODbL</td><td>ce qui en dérive reste sous la même licence</td></tr>
+          <tr><td>—</td><td>CC BY-NC, CC BY-ND</td><td>pas d'usage commercial, pas de modification</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul>
+        <li>Un corpus scrapé appartient toujours à ses auteurs.</li>
+        <li>Des données personnelles restent sous le <strong>RGPD</strong>, quelle que soit la licence.</li>
+      </ul>
+    </section>
+
+    <section class="slide" hidden data-clock="1:39" data-title="Ce que vous embarquez"
+      data-note="Le projet est MIT, mais il contient des choses qu'on n'a pas écrites. La liste de mots est de l'EFF, sous CC BY 3.0 US : on doit la créditer (c'est dans le README). Une dépendance demandée (streamlit) en fait venir une quarantaine : pip-licenses les liste. Ici tout est permissif (MIT, BSD, Apache). Un paquet GPL dans la liste changerait ce qu'on a le droit de distribuer.">
+      <p class="kicker">5 — Licences</p>
+      <h2>Ce que vous <em>embarquez</em></h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Dans le dépôt</th><th>Licence</th></tr></thead>
+        <tbody>
+          <tr><td>notre code</td><td>MIT</td></tr>
+          <tr><td><code>data/eff_large_wordlist.txt</code></td><td>CC BY 3.0 US — à créditer</td></tr>
+          <tr><td><code>zxcvbn</code> · <code>streamlit</code> · <code>pdoc</code></td><td>MIT · Apache-2.0 · MIT-0</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <pre><span class="k">uv run --with pip-licenses pip-licenses</span></pre>
+      <p class="punch">Une dépendance ajoutée, 41 paquets installés : 41 licences.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:42" data-title="Ajouter une licence"
+      data-note="Le plus simple, dans le navigateur. Add file → Create new file, taper LICENSE comme nom : GitHub propose un bouton pour choisir un modèle (Choose a license template). Choisir MIT, vérifier l'année et le nom, Commit. La licence apparaît dans la colonne de droite du dépôt. À vérifier en direct : l'intitulé exact du bouton.">
+      <p class="kicker">5 — Licences · 2 minutes</p>
+      <h2>Ajouter <em>une licence</em></h2>
+      <div class="count"><span class="n">1</span><p>Sur votre dépôt : <strong>Add file → Create new file</strong>.</p></div>
+      <div class="count"><span class="n">2</span><p>Nom du fichier : <code>LICENSE</code>. GitHub propose <strong>Choose a license template</strong>.</p></div>
+      <div class="count"><span class="n">3</span><p>MIT → vérifier l'année et le nom → <strong>Commit changes</strong>.</p></div>
+      <p>Et dans <code>pyproject.toml</code> :</p>
+      <pre>license = "MIT"</pre>
+    </section>
+
+    <section class="slide" hidden data-clock="1:44" data-title="Pour l'examen"
+      data-note="La liste à recopier pour leur projet d'examen. Chaque ligne correspond à une séance du cours. Tout n'est pas obligatoire ; mais un dépôt avec les cinq premières lignes se présente tout seul.">
+      <p class="kicker">Et maintenant</p>
+      <h2>Votre projet d'examen, <em>habillé</em></h2>
+      <div class="count"><span class="n">✓</span><p><code>README.md</code> — quoi, comment l'installer, comment le lancer</p></div>
+      <div class="count"><span class="n">✓</span><p><code>uv.lock</code> — les mêmes versions chez tout le monde</p></div>
+      <div class="count"><span class="n">✓</span><p><code>tests/</code> — et <code>uv run pytest</code> qui passe</p></div>
+      <div class="count"><span class="n">✓</span><p><code>.github/workflows/</code> — le robot qui le vérifie</p></div>
+      <div class="count"><span class="n">✓</span><p><code>LICENSE</code></p></div>
+      <div class="count"><span class="n">+</span><p>une doc pdoc en ligne, une appli Streamlit pour la démo</p></div>
+    </section>
+
+    <section class="slide" hidden data-clock="1:47" data-title="Ce qu'on a fait"
+      data-note="Récap. Chaque couche répond à une question de quelqu'un d'autre que vous : comment ça marche (doc), est-ce que ça marche (CI), où je le vois (site), comment je l'essaie (appli), est-ce que j'ai le droit (licence). Questions jusqu'à la fin.">
+      <p class="kicker">Récap</p>
+      <h2>Ce qu'on a <em>ajouté autour du code</em></h2>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Couche</th><th>Répond à</th><th>Outil</th></tr></thead>
+        <tbody>
+          <tr><td>Doc</td><td>comment ça marche ?</td><td>docstrings + pdoc</td></tr>
+          <tr><td>CI/CD</td><td>est-ce que ça marche encore ?</td><td>GitHub Actions</td></tr>
+          <tr><td>Site</td><td>où je le lis ?</td><td>GitHub Pages</td></tr>
+          <tr><td>Appli</td><td>comment je l'essaie ?</td><td>Streamlit</td></tr>
+          <tr><td>Licence</td><td>ai-je le droit de le réutiliser ?</td><td>LICENSE</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="punch">Chaque couche répond à une question que se pose quelqu'un d'autre que vous.</p>
+    </section>
+
+
+  </div>
+
+  <div class="track"><i id="track" style="width:2%"></i></div>
+
+  <div class="note" id="note" hidden><b>notes</b><span id="noteText"></span></div>
+
+  <div class="bar">
+    <span class="clock" id="clock">0:00</span>
+    <span class="title" id="title">Publier son code</span>
+    <button id="prev" type="button" aria-label="Slide précédente">←</button>
+    <span class="pos" id="pos">1 / 33</span>
+    <button id="next" type="button" aria-label="Slide suivante">→</button>
+    <button id="themeBtn" type="button">light · t</button>
+    <button id="noteBtn" type="button">notes · n</button>
+  </div>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var deck = document.getElementById("deck");
+  var note = document.getElementById("note");
+  var noteText = document.getElementById("noteText");
+  var i = 0, showNotes = false;
+
+  try {
+    var savedNotes = localStorage.getItem("pub-notes");
+    if (savedNotes === "1") showNotes = true;
+    var savedSlide = parseInt(localStorage.getItem("pub-slide"), 10);
+    if (savedSlide >= 0 && savedSlide < slides.length) i = savedSlide;
+  } catch (e) { /* storage blocked — start at the first slide */ }
+
+  function render() {
+    slides.forEach(function (s, n) { s.hidden = n !== i; });
+    var cur = slides[i];
+    document.getElementById("clock").textContent = cur.dataset.clock || "";
+    document.getElementById("title").textContent = cur.dataset.title || "";
+    document.getElementById("pos").textContent = (i + 1) + " / " + slides.length;
+    document.getElementById("track").style.width = ((i + 1) / slides.length * 100) + "%";
+    noteText.textContent = " " + (cur.dataset.note || "—");
+    note.hidden = !showNotes;
+    deck.scrollTop = 0;
+    try {
+      localStorage.setItem("pub-slide", String(i));
+      localStorage.setItem("pub-notes", showNotes ? "1" : "0");
+    } catch (e) { /* ignore */ }
+  }
+
+  function go(d) { i = Math.min(slides.length - 1, Math.max(0, i + d)); render(); }
+
+  document.getElementById("next").addEventListener("click", function () { go(1); });
+  document.getElementById("prev").addEventListener("click", function () { go(-1); });
+  document.getElementById("noteBtn").addEventListener("click", function () {
+    showNotes = !showNotes; render();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); go(1); }
+    else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(-1); }
+    else if (e.key === "Home") { i = 0; render(); }
+    else if (e.key === "End") { i = slides.length - 1; render(); }
+    else if (e.key === "n" || e.key === "N") { showNotes = !showNotes; render(); }
+  });
+
+  var x0 = null;
+  deck.addEventListener("touchstart", function (e) { x0 = e.changedTouches[0].clientX; }, { passive: true });
+  deck.addEventListener("touchend", function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
+    x0 = null;
+  }, { passive: true });
+
+  // Click any command block to copy it.
+  document.addEventListener("click", function (e) {
+    var pre = e.target.closest ? e.target.closest("pre") : null;
+    if (!pre || pre.classList.contains("diagram")) return;
+    try {
+      navigator.clipboard.writeText(pre.textContent.replace(/^\n+/, "").trimEnd()).catch(function () {});
+      pre.classList.add("copied");
+      setTimeout(function () { pre.classList.remove("copied"); }, 1400);
+    } catch (err) { /* clipboard unavailable — the text is selectable anyway */ }
+  });
+
+  // Force light or dark, for a projector that disagrees with your laptop.
+  var themeBtn = document.getElementById("themeBtn");
+  function applyTheme(t) {
+    if (t) document.documentElement.setAttribute("data-theme", t);
+    else document.documentElement.removeAttribute("data-theme");
+    themeBtn.textContent = (t === "light" ? "dark · t" : "light · t");
+    try { t ? localStorage.setItem("pub-theme", t) : localStorage.removeItem("pub-theme"); } catch (e) {}
+  }
+  var theme = null;
+  try { theme = localStorage.getItem("pub-theme"); } catch (e) {}
+  applyTheme(theme);
+  function flipTheme() {
+    var cur = document.documentElement.getAttribute("data-theme");
+    applyTheme(cur === "light" ? "dark" : "light");
+  }
+  themeBtn.addEventListener("click", flipTheme);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "t" || e.key === "T") flipTheme();
+  });
+
+  render();
+</script>
+</body>
+</html>
