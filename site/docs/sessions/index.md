@@ -62,9 +62,10 @@ What goes *around* working code so that others can read it, trust it, try it and
 
 What a language model can do with data besides writing code: turning unordered text, names and scanned pages into ordered columns with almost no examples, a multi-step labelling workflow from a real thesis, an agent with its own tools, and how to check that any of it works. Every result on the slides comes from a real run on the Unistra models.
 
-- Slides (French): [Les LLM et les données](../slides/llm-donnees.html){target="_blank"}
-- Code: [github.com/KnuxV/llm-data-lab](https://github.com/KnuxV/llm-data-lab) (11 small experiments, with the outputs of the run used for the slides)
+- Slides: [LLMs and data](../slides/llm-data.html){target="_blank"}
+- Code: [github.com/KnuxV/llm-data-lab](https://github.com/KnuxV/llm-data-lab) (11 small experiments with the outputs of the run used for the slides, plus `12_your_turn.py`, a template to classify your own texts)
 - Needs first: `uv` and `UNISTRA_API_KEY` ([Session 2](s2.md)), calling the API ([Session 3](s3.md)).
+- Reference: [Using an LLM on your own data](../reference/llm-data.md) — how the examples work, so you can run them on your own data
 
 ## Session 4 — pi, a real harness
 

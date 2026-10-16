@@ -27,6 +27,7 @@ Nothing here has to be read in order. Use the search box at the top of the page 
 | Page | What it answers | Introduced in |
 |---|---|---|
 | [pi — install, connect, tutor](pi.md) | Installing the `pi` agent without administrator rights, pointing it at the university's models, and running the course tutor | used from [Session 1](../sessions/practice-git.md) onwards, studied in [Session 4](../sessions/s4.md) |
+| [Using an LLM on your own data](llm-data.md) | One API call from Python, a closed list of answers, getting a table or reading an image, agents with tools, running on many rows, and checking the result | [LLMs for data](../sessions/index.md#llms-for-data) |
 
 ## Files and configs
 

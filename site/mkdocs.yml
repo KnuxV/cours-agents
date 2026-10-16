@@ -122,4 +122,5 @@ nav:
           - Testing your code with pytest: reference/testing.md
       - Agents and tools:
           - pi — install, connect, tutor: reference/pi.md
+          - Using an LLM on your own data: reference/llm-data.md
       - Files and configs: resources.md
