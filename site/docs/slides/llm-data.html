@@ -345,7 +345,45 @@ git pull</span></pre>
       <p class="punch">What does not go away: checking that it works. We come back to it at the end.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:09" data-title="Three ways to use an LLM"
+
+    <section class="slide" hidden data-clock="0:09" data-title="Classic machine learning"
+      data-note="How text classification worked before LLMs (and still works, it is cheaper at scale). The model starts knowing nothing about your task. You hand-label a dataset, typically hundreds to thousands of examples per category, and split it in two: the train set, which the model learns from, and the test set, which you hide from it and use only to measure how good it is. If you test on examples it has seen, the score is meaningless: it may have memorised them. The expensive part is the labelling, not the computing.">
+      <p class="kicker">Before LLMs</p>
+      <h2>Classic machine learning: <em>learn from your labels</em></h2>
+      <pre class="diagram">2,000 sentences labelled by hand
+        │
+        ├── 80 %  <b>train set</b>  →  the model learns the task from these
+        │
+        └── 20 %  <b>test set</b>   →  hidden during training, used to measure the score</pre>
+      <div class="cols">
+        <div>
+          <p>The model starts from <strong>nothing</strong>: everything it knows about your task comes from your labels.</p>
+        </div>
+        <div>
+          <p>So you need <strong>many</strong> labelled examples, often hundreds per category, before it works at all.</p>
+        </div>
+      </div>
+      <p class="punch">No labels, no model. The expensive part is the labelling.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:11" data-title="Zero-, one-, few-shot"
+      data-note="A 'shot' is an example. Zero-shot: only the instruction, which is what every script of this session does. One-shot: one example in the prompt. Few-shot: a handful. The examples go in the prompt: the model is not retrained, its weights do not change, it just reads them. Few-shot helps when your categories are your own (what exactly counts as 'neutral' for you) or when you want a precise output format. Try it in 12_your_turn.py: add two or three examples to QUESTION and compare the score. What does not disappear: the test set. You skip the train set, not the evaluation.">
+      <p class="kicker">With an LLM</p>
+      <h2>Zero, one or a few examples, <em>in the prompt</em></h2>
+      <pre><span class="d"># zero-shot: the instruction only</span>
+<span class="k">Is this sentence hawkish, dovish or neutral? Sentence: {text}</span></pre>
+      <pre><span class="d"># one-shot: plus one example</span>
+<span class="k">Example: "Rates will have to rise again." → hawkish
+Is this sentence hawkish, dovish or neutral? Sentence: {text}</span></pre>
+      <pre><span class="d"># few-shot: plus a handful of examples</span>
+<span class="k">Example: "Rates will have to rise again." → hawkish
+Example: "We stand ready to cut rates." → dovish
+Example: "Rates are unchanged." → neutral
+Is this sentence hawkish, dovish or neutral? Sentence: {text}</span></pre>
+      <p class="punch">No train set: the model is not retrained, it reads the examples. But keep a test set.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="0:13" data-title="Three ways to use an LLM"
       data-note="Reminder from Session 3 (agents). The framing comes from an Anthropic article, 'Building effective agents' (anthropic.com/research/building-effective-agents). The question that separates the three: who decides the next step? Nobody (one call), your script (workflow), the model (agent). The session follows this order.">
       <p class="kicker">Today's plan</p>
       <h2>Who decides <em>the next step</em>?</h2>
@@ -361,7 +399,7 @@ git pull</span></pre>
       </div>
     </section>
 
-    <section class="slide" hidden data-clock="0:10" data-title="1 — One call"
+    <section class="slide" hidden data-clock="0:14" data-title="1 — One call"
       data-note="Every slide in this part has the same shape: the instruction, then the real result. The model used everywhere unless stated: qwen3, temperature 0. The score is computed by the script against answers we know.">
       <p class="kicker">1 — One call</p>
       <h2>One question, <em>one constrained answer</em></h2>
@@ -372,7 +410,7 @@ git pull</span></pre>
       <p class="punch">Classifying, normalising, deduplicating: it is the same move.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:11" data-title="Filter: yes or no"
+    <section class="slide" hidden data-clock="0:15" data-title="Filter: yes or no"
       data-note="The most common use case: sorting a database of papers before reading it. 10 famous titles, 5 about the labour market, 5 not. Zero examples given to the model. Result: 10/10. The script checks that the answer is yes or no: any other answer counts as an error (closed list). File: 03_relevance.py.">
       <p class="kicker">1 — One call · filter</p>
       <h2>Is this paper about <em>the labour market</em>?</h2>
@@ -387,7 +425,7 @@ Answer with one word: yes or no.</pre>
 <span class="g">accuracy: 10/10</span></pre>
     </section>
 
-    <section class="slide" hidden data-clock="0:14" data-title="Normalise countries"
+    <section class="slide" hidden data-clock="0:18" data-title="Normalise countries"
       data-note="Good habit: rules first. pycountry knows the official names and ISO codes; it recognises 6 names out of 21. The other 15 (French names, nicknames, abbreviations) go to the model. And the model's answer is checked: the code must exist in pycountry, otherwise it is INVALID. Result: 21/21. File: 04_normalise.py.">
       <p class="kicker">1 — One call · normalise</p>
       <h2>Rules first, <em>the LLM for the rest</em></h2>
@@ -402,7 +440,7 @@ Answer with one word: yes or no.</pre>
       <p class="punch">Don't ask the LLM what a rule can do. And check that its answer is in the list.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:17" data-title="Same firm?"
+    <section class="slide" hidden data-clock="0:21" data-title="Same firm?"
       data-note="The 'letters' column is string similarity (0 = nothing in common, 1 = identical), what classic fuzzy matching uses. It is wrong both ways: LVMH and Moët Hennessy Louis Vuitton look nothing alike (0.13) and are the same company; Crédit Agricole and Crédit Mutuel look alike (0.57) and are two different banks. The model knows that France Télécom became Orange. Result: 10/10. File: 05_same_firm.py.">
       <p class="kicker">1 — One call · deduplicate</p>
       <h2>Letters mislead, <em>the model knows</em></h2>
@@ -421,7 +459,7 @@ Answer with one word: yes or no.</pre>
       <p class="punch">10 pairs out of 10. What matters is not the spelling but what the name refers to.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:20" data-title="From text to a table"
+    <section class="slide" hidden data-clock="0:24" data-title="From text to a table"
       data-note="Six sentences written quickly, in French, figures invented. Not just typos: 'la perfide Albion' (the United Kingdom), 'the country that invented fries' (Belgium, an origin disputed with France), 'the land of the rising sun' (Japan). One instruction, and we get the two-column table directly, ready for pandas. Result: 6/6. File: 09_text_to_table.py.">
       <p class="kicker">1 — One call · structure</p>
       <h2>Six messy sentences, <em>one clean table</em></h2>
@@ -447,7 +485,7 @@ JPN,0.4</span></pre>
       <p class="punch">Instruction: "3-letter ISO codes, amounts in billions". 6 rows out of 6.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:23" data-title="Extract fields"
+    <section class="slide" hidden data-clock="0:27" data-title="Extract fields"
       data-note="This is named-entity recognition (NER): finding the contract, the city, the salary in a text. Without an LLM you would hand-label hundreds of ads and train a model. Here: zero examples. Note 'Full remote impossible, mais un jour de télétravail accepté' (no full remote, but one day of remote work): the model correctly set remote = true. And for the internship, no salary figure: null, it did not invent one. Result: 12 fields out of 12 over 3 ads. File: 07_extract.py.">
       <p class="kicker">1 — One call · extract</p>
       <h2>A job ad in French, <em>one database row</em></h2>
@@ -459,7 +497,7 @@ mais un jour de télétravail accepté.</pre>
       <p class="punch">Zero training examples. 12 fields right out of 12.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:26" data-title="Read an image"
+    <section class="slide" hidden data-clock="0:30" data-title="Read an image"
       data-note="A statistical yearbook page invented for the example (we made it, slightly crooked and noisy like a scan). The gemma model reads images. It copies the table as CSV, removing the thousands separators. Result: 24 cells out of 24. For archives (yearbooks, old reports), this can replace the OCR step and the cleaning that follows. On real archives, check a sample. File: 10_read_table.py.">
       <p class="kicker">1 — One call · read an image</p>
       <h2>A scanned page, <em>a CSV</em></h2>
@@ -471,7 +509,7 @@ Molsheim,198760,1020,410
 <span class="g">cells correct: 24/24</span>   <span class="d">(model: gemma)</span></pre>
     </section>
 
-    <section class="slide" hidden data-clock="0:30" data-title="Summarise, then review"
+    <section class="slide" hidden data-clock="0:34" data-title="Summarise, then review"
       data-note="Each paper summary fits in one sentence. Then a second model (mistral-small) reads it and says whether the summary claims anything the text does not: all three are OK. This is 'LLM as judge'. Handy to review thousands of rows, but the judge is itself a measurement: before trusting it, read about ten of its verdicts yourself. File: 06_summaries.py.">
       <p class="kicker">1 — One call · summarise</p>
       <h2>A summary, <em>and a judge that reviews it</em></h2>
@@ -481,7 +519,7 @@ Molsheim,198760,1020,410
       <p class="punch">The judge is a measurement too: read about ten of its verdicts before you trust it.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:33" data-title="Synthetic data"
+    <section class="slide" hidden data-clock="0:37" data-title="Synthetic data"
       data-note="The model writes 8 fake job ads whose contract type we know (2 permanent CDI, 2 fixed-term CDD, 2 internships, 2 work-study), then the same model has to find the contract back. 8/8. Useful to test a pipeline before you have real data. But too clean: the model easily recognises what it wrote itself. Draw no conclusions from synthetic data. File: 08_synthetic.py.">
       <p class="kicker">1 — One call · generate</p>
       <h2>Fake data <em>with known labels</em></h2>
@@ -493,7 +531,7 @@ Molsheim,198760,1020,410
       <p class="punch">Perfect to test a pipeline. Too clean to draw conclusions from.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:36" data-title="2 — A workflow"
+    <section class="slide" hidden data-clock="0:40" data-title="2 — A workflow"
       data-note="A change of level: several calls, chained by a script. This is what I do in my thesis: close to 164,000 Web of Science publications (2023-2025), at the intersection of the UN Sustainable Development Goals (SDGs) and six advanced digital technologies (ADTs: AI, Internet of Things, computing infrastructure, blockchain, robotics, additive manufacturing). The question: which technology helps or harms which goal?">
       <p class="kicker">2 — A workflow · my thesis example</p>
       <h2>164,000 papers, <em>three questions each</em></h2>
@@ -503,7 +541,7 @@ Molsheim,198760,1020,410
       <pre class="diagram">paper  →  <b>SDG</b>  →  <b>technologies</b>  →  <b>effect</b>  →  one row of the table</pre>
     </section>
 
-    <section class="slide" hidden data-clock="0:38" data-title="Two abstracts"
+    <section class="slide" hidden data-clock="0:42" data-title="Two abstracts"
       data-note="Two real abstracts from the corpus, simplified to fit on the slide. A: Software Impacts, 2023. B: Resource and Energy Economics, 2023, an economics paper with an effect in both directions. Note that B never says 'blockchain': it talks about Bitcoin.">
       <p class="kicker">2 — A workflow · the data</p>
       <h2>One positive effect, <em>one mixed effect</em></h2>
@@ -519,7 +557,7 @@ Molsheim,198760,1020,410
       </div>
     </section>
 
-    <section class="slide" hidden data-clock="0:40" data-title="Three instructions"
+    <section class="slide" hidden data-clock="0:44" data-title="Three instructions"
       data-note="Three one-paragraph instructions, short versions of the thesis prompts. {sdgs} is replaced by the list of the 17 goals. The third uses the answers of the first two: this is prompt chaining. The script decides the order: this is a workflow. A detail that matters: the definition 'BLOCKCHAIN (blockchain, cryptocurrencies)'. Without it, the model saw no blockchain in the Bitcoin paper. File: 01_thesis_labels.py.">
       <p class="kicker">2 — A workflow · the instructions</p>
       <h2>One paragraph <em>per question</em></h2>
@@ -531,7 +569,7 @@ Molsheim,198760,1020,410
   help the goal (positive), harm it (negative), both (mixed), or does the abstract not say?</pre>
     </section>
 
-    <section class="slide" hidden data-clock="0:43" data-title="The result"
+    <section class="slide" hidden data-clock="0:47" data-title="The result"
       data-note="Everything right on goals and technologies, for both papers. For Bitcoin, the technology was found although the word blockchain never appears: the model knows Bitcoin is a blockchain (helped by the definition in the instruction). We look at the 'effect' column on the next slide.">
       <p class="kicker">2 — A workflow · the result</p>
       <h2>The real result</h2>
@@ -547,7 +585,7 @@ Molsheim,198760,1020,410
       <p class="punch">Goals and technologies: all right. The word "blockchain" never appears in B.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:45" data-title="The model hedges"
+    <section class="slide" hidden data-clock="0:49" data-title="The model hedges"
       data-note="For Bitcoin, I would have answered: SDG7 positive (more renewables), SDG13 negative (more emissions). The model says 'mixed' for both. It is not wrong (the paper says demand response removes part of the emissions), but it is not what I wanted to measure. The lesson: define precisely what each category means, and compare with hand-labelled answers. The model cannot read your mind.">
       <p class="kicker">2 — A workflow · reading the result</p>
       <h2>Bitcoin: <em>"mixed" everywhere</em></h2>
@@ -566,7 +604,7 @@ Molsheim,198760,1020,410
       <p class="punch">Defensible, but not what I wanted to measure. Define your categories precisely.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:47" data-title="Two passes"
+    <section class="slide" hidden data-clock="0:51" data-title="Two passes"
       data-note="In the thesis, each question is asked in two passes. Pass 1: we ask the model to be broad (a goal it misses is lost for good). Pass 2: for each proposed label, a closed yes/no question, which is easier. Real result on paper A: pass 1 proposes SDG2, SDG6 and SDG9 (innovation), pass 2 removes SDG9. Same principle for the technologies. The cost: more calls (one per proposed label). File: 02_two_passes.py.">
       <p class="kicker">2 — A workflow · two passes</p>
       <h2>Cast a wide net, <em>then check</em></h2>
@@ -579,7 +617,7 @@ a passing mention, a word used in another sense, or a generic claim of benefit.<
       <p class="punch">One broad question, then closed questions: each is easier than everything at once.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:50" data-title="Five ways to chain"
+    <section class="slide" hidden data-clock="0:54" data-title="Five ways to chain"
       data-note="Vocabulary from the Anthropic article. Prompt chaining: SDG, then technologies, then effect. Routing: a first question decides which instruction to use next. Parallelisation: split the work, or ask the same question several times and vote. Orchestrator-workers: one call splits the task, others do it. Evaluator-optimiser: one call checks or criticises another's work, which is our pass 2 and our summary judge.">
       <p class="kicker">2 — A workflow · the vocabulary</p>
       <h2>Five ways <em>to chain calls</em></h2>
@@ -597,13 +635,13 @@ a passing mention, a word used in another sense, or a generic claim of benefit.<
       </div>
     </section>
 
-    <section class="slide" hidden data-clock="0:53" data-title="Break"
+    <section class="slide" hidden data-clock="0:57" data-title="Break"
       data-note="5 minutes. During the break, those who want can already clone the repository (slide 'Your turn').">
       <h2>Break</h2>
       <p class="lede">Five minutes. Then: the model takes control.</p>
     </section>
 
-    <section class="slide" hidden data-clock="0:58" data-title="3 — An agent"
+    <section class="slide" hidden data-clock="1:02" data-title="3 — An agent"
       data-note="Demystify: an agent is a while loop around calls to the model. At each turn, the model answers either with text (it is done) or with a tool request ('call wikipedia_search with these arguments'). Our script runs the tool and sends back the result. The 15-turn cap prevents an infinite loop. This is exactly what pi or OpenCode do, with other tools.">
       <p class="kicker">3 — An agent</p>
       <h2>An agent is <em>a loop</em></h2>
@@ -618,7 +656,7 @@ for step in range(15):                         <span class="d"># cap: no infinit
       <p class="punch">The model decides what to do. Your code does it.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:01" data-title="Tools"
+    <section class="slide" hidden data-clock="1:05" data-title="Tools"
       data-note="A tool is an ordinary Python function, plus a description the model reads. Three kinds: search (Wikipedia), compute (the age: we don't trust the model with arithmetic), write (save a row). The model never sees the code, only the name, the description and the parameters.">
       <p class="kicker">3 — An agent · the tools</p>
       <h2>A tool = <em>a function + its description</em></h2>
@@ -636,7 +674,7 @@ for step in range(15):                         <span class="d"># cap: no infinit
       <p class="punch">The task: for Duflo, Tirole and Goldin, the PhD university and the age at the Nobel prize.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:04" data-title="Demo: the Nobels"
+    <section class="slide" hidden data-clock="1:08" data-title="Demo: the Nobels"
       data-note="Live demo if possible: cd ~/llm-data-lab then uv run python 11_agent_nobel.py (needs UNISTRA_API_KEY). The Wikipedia pages are kept in data/wiki_cache.json, so the demo replays even without access to Wikipedia. If it fails, this slide shows the real trace. The model searches the three names at once, reads the three pages, computes the three ages with the tool, saves, says DONE. 5 turns, 3/3. The answers are known, so the script scores the agent.">
       <p class="kicker">3 — An agent · demo</p>
       <h2>The real trace <em>(qwen3)</em></h2>
@@ -653,7 +691,7 @@ score 3/3, 5 steps</span></pre>
       <pre><span class="k">uv run python 11_agent_nobel.py</span></pre>
     </section>
 
-    <section class="slide" hidden data-clock="1:09" data-title="When it goes wrong"
+    <section class="slide" hidden data-clock="1:13" data-title="When it goes wrong"
       data-note="Seen while preparing, with mistral-small: Wikipedia refused our requests (error 429, too many requests at once). The model retried 9 times, then saved the three answers from memory, without reading a single page, although the instruction said 'do not guess'. The answers happened to be right. Lesson: scoring the final answer is not enough, look at the path. Since then the script waits between requests and retries.">
       <p class="kicker">3 — An agent · what can fail</p>
       <h2>It <em>guessed</em> anyway</h2>
@@ -665,7 +703,7 @@ score 3/3, 5 steps</span></pre>
       <p class="punch">Right answer, wrong path. For an agent, read the trace, not just the result.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:12" data-title="And pi?"
+    <section class="slide" hidden data-clock="1:16" data-title="And pi?"
       data-note="According to pi's documentation (to check on pi.dev): by default pi has four tools, read, write, edit, bash, and no web search tool. But with bash it can run curl and query a page or an API: a 'poor man's' search. A real search tool can be added with a pi package or an MCP server. OpenCode has a built-in web tool. Same loop, other tools.">
       <p class="kicker">3 — An agent · your tools</p>
       <h2>pi, OpenCode: <em>the same loop</em></h2>
@@ -684,7 +722,7 @@ score 3/3, 5 steps</span></pre>
       <p class="punch">An agent is never stronger than its tools.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:14" data-title="4 — Does it really work?"
+    <section class="slide" hidden data-clock="1:18" data-title="4 — Does it really work?"
       data-note="All our scores are 100%. Don't rely on that: the examples are small, clean, and chosen by me. On your real data it will be worse, and you will only know by how much by comparing with hand-labelled answers. Every column produced by an LLM is a measurement, like a survey variable: before using it in a regression, measure its error.">
       <p class="kicker">4 — Evaluate</p>
       <h2>Everything is at 100%. <em>Be suspicious.</em></h2>
@@ -692,7 +730,7 @@ score 3/3, 5 steps</span></pre>
       <p class="punch">A column produced by an LLM is a measurement. Before using it, measure its error.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:16" data-title="How to check"
+    <section class="slide" hidden data-clock="1:20" data-title="How to check"
       data-note="For one call: hand-label 50 to 100 rows, compare, look at which categories get confused (confusion matrix). For a workflow: evaluate each step separately, and look where passes or models disagree: that is where to reread. For an agent: questions with known answers, and the trace (number of turns, tool errors, did it stop?). Keep these examples and rerun them at every change of instruction or model, like tests.">
       <p class="kicker">4 — Evaluate</p>
       <h2>Compare with <em>what you already know</em></h2>
@@ -710,7 +748,7 @@ score 3/3, 5 steps</span></pre>
       <p class="punch">Keep your labelled examples and rerun them at every change: they are your tests.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:19" data-title="Worth it"
+    <section class="slide" hidden data-clock="1:23" data-title="Worth it"
       data-note="Gilardi, Alizadeh and Kubli, PNAS 2023, 'ChatGPT outperforms crowd workers for text-annotation tasks' (arxiv.org/abs/2303.15056). On several annotation tasks on political texts, ChatGPT with no examples does better than crowd workers paid per task (MTurk), for a cost per annotation about thirty times lower (orders of magnitude from the paper's summary, check before quoting precise figures). And they showed it by comparing with trained annotators: the evaluation is what makes the result credible.">
       <p class="kicker">4 — Evaluate · the research</p>
       <h2>Better than paid annotators, <em>for far less</em></h2>
@@ -719,7 +757,7 @@ score 3/3, 5 steps</span></pre>
       <p class="punch">And we know it because they compared with trained annotators.</p>
     </section>
 
-    <section class="slide" hidden data-clock="1:21" data-title="Your turn"
+    <section class="slide" hidden data-clock="1:25" data-title="Your turn"
       data-note="The folder (copied at the start, slide Get the code) holds the 12 scripts of the session, the data, and the results obtained while preparing (results/ folder) to compare. You need the Session 3 key in UNISTRA_API_KEY: a new terminal forgets it, export it again. Stuck: Codespaces from the course repository page. Next slide: the template to classify your own data.">
       <p class="kicker">Your turn · WSL · Mac · Linux</p>
       <h2>Replay the examples</h2>
@@ -732,7 +770,7 @@ uv run python 09_text_to_table.py</span>     <span class="d"># one example</span
       <div class="count"><span class="n">3</span><p>Give the agent a new tool: a Python function and its description.</p></div>
     </section>
 
-    <section class="slide" hidden data-clock="1:25" data-title="What to remember"
+    <section class="slide" hidden data-clock="1:29" data-title="What to remember"
       data-note="Everything we saw fits in a few lines of Python and an API key. The longest part is not writing the instruction, it is checking the result. Then leave the last slide on screen for the rest of the time: the template.">
       <h2>What to remember</h2>
       <div class="count"><span class="n">1</span><p><strong>Unordered to ordered</strong>: text, names, images → clean columns.</p></div>
@@ -741,7 +779,7 @@ uv run python 09_text_to_table.py</span>     <span class="d"># one example</span
       <div class="count"><span class="n">4</span><p><strong>Every column is a measurement</strong>: compare with what you already know.</p></div>
     </section>
 
-    <section class="slide" hidden data-clock="1:27" data-title="Classify anything"
+    <section class="slide" hidden data-clock="1:31" data-title="Classify anything"
       data-note="Leave this slide on screen for the rest of the session. 12_your_turn.py is a template: the example sorts invented central-bank sentences into hawkish, dovish or neutral. To classify something else, change only the three marked lines: the list of labels, the question, and the CSV file (one 'text' column; add a 'label' column with your own answers on a few rows to get a score). Ideas: abstracts by field, survey answers by theme, news headlines by sentiment, job ads by sector. Walk around (or open the chat) and help.">
       <p class="kicker">Your turn · 12_your_turn.py</p>
       <h2>Classify <em>something of your own</em></h2>
@@ -772,7 +810,7 @@ Sentence: {text}"""</span>
     <span class="clock" id="clock">0:00</span>
     <span class="title" id="title">LLMs and data</span>
     <button id="prev" type="button" aria-label="Previous slide">←</button>
-    <span class="pos" id="pos">1 / 33</span>
+    <span class="pos" id="pos">1 / 35</span>
     <button id="next" type="button" aria-label="Next slide">→</button>
     <button id="themeBtn" type="button">light · t</button>
     <button id="noteBtn" type="button">notes · n</button>
