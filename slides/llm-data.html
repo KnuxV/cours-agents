@@ -926,9 +926,10 @@ uv run python 09_text_to_table.py</span>     <span class="d"># one example</span
     </section>
 
     <section class="slide" hidden data-clock="1:33" data-title="Classify anything"
-      data-note="Leave this slide on screen for the rest of the session. 12_your_turn.py is a template: the example sorts invented news headlines into economy, politics or sport. To classify something else, change only the three marked lines: the list of labels, the question, and the CSV file (one 'text' column; add a 'label' column with your own answers on a few rows to get a score). Ideas: abstracts by field, survey answers by theme, reviews by sentiment, job ads by sector. Then try few-shot: add two or three examples to QUESTION and compare the score. Walk around (or open the chat) and help.">
+      data-note="Leave this slide on screen during the practice. Step zero is retrieval: before classifying anything, the texts have to be somewhere a script can read, one row per text in a CSV with a 'text' column. Where from: a spreadsheet you already have (File > Save as CSV), an API (Wikipedia, as in 11, or any open-data portal) called with curl or Python, or a scraping script, which pi can write for you. Check the terms of use of the site, and keep the raw files: if the extraction changes, you can redo it. Then 12_your_turn.py is a template: the example sorts invented news headlines into economy, politics or sport. To classify something else, change only the three marked lines: the list of labels, the question, and the CSV file (one 'text' column; add a 'label' column with your own answers on a few rows to get a score). Ideas: abstracts by field, survey answers by theme, reviews by sentiment, job ads by sector. Then try few-shot: add two or three examples to QUESTION and compare the score. Walk around (or open the chat) and help.">
       <p class="kicker">Your turn · 12_your_turn.py</p>
       <h2>Classify <em>something of your own</em></h2>
+      <p class="lede"><strong>Step 0: get the texts</strong> into a CSV (spreadsheet export, an API via <code>curl</code>, a script pi writes).</p>
       <pre><span class="d"># CHANGE 1: the closed list of answers</span>
 <span class="k">LABELS = ["economy", "politics", "sport"]</span>
 
@@ -939,7 +940,21 @@ Headline: {text}"""</span>
 <span class="d"># CHANGE 3: your CSV, with a "text" column (and "label" if you know the answer)</span>
 <span class="k">DATA = "data/my_data.csv"</span></pre>
       <pre><span class="k">uv run python 12_your_turn.py</span></pre>
-      <p class="punch">Abstracts by field, survey answers by theme, reviews by sentiment: your data, three lines to change.</p>
+      <p class="punch">Step 1: change three lines. Step 2: run, check a few rows by hand.</p>
+    </section>
+
+    <section class="slide" hidden data-clock="1:36" data-title="A second brain"
+      data-note="To finish, one idea to take home. A 'second brain' is a name (popularised by Tiago Forte's book Building a Second Brain) for keeping everything you read and think in one place: reading notes, lecture notes, ideas. If those notes are plain Markdown files in a folder (that is what Obsidian does, for example), an agent like pi can work on them with the tools it already has: read, write, edit, bash. Two examples. 1. Same move as today: messy reading notes in, an ordered table out (paper, question, data, method, result), plus the list of notes where it found nothing: that is where you reread. 2. Questions across your notes, answered with links to the notes, so you can check. Two habits from this course: keep the folder under git (session 1), so you can see and undo what the agent changed; and remember that whatever the agent reads is sent to the model's server, so choose a provider you trust for private notes. Not tested in class: these are prompts to try.">
+      <p class="kicker">Going further · a second brain</p>
+      <h2>Your notes, <em>read by an agent</em></h2>
+      <p class="lede">All your notes as plain text files in one folder. pi can read, search and write files, so it can work on them.</p>
+      <pre><span class="d">~/notes $</span> <span class="k">pi</span>
+<span class="d">&gt;</span> Read my reading notes in papers/. Make a table: paper, question, data,
+  method, main result. Save it as papers/overview.csv, and list the notes
+  where you could not find the method.
+
+<span class="d">&gt;</span> What have I read about the minimum wage? Answer with links to the notes.</pre>
+      <p class="punch">The same move as today: messy notes in, an ordered table out. Keep the folder under git.</p>
     </section>
 
   </div>
