@@ -83,8 +83,10 @@ def wikipedia_page(title: str) -> str:
 def age_at(birth_date: str, event_date: str) -> str:
     """Age in whole years between two dates written YYYY-MM-DD."""
     # fromisoformat refuse "25 October 1972" ou "1972-13-45" : l'erreur repart au modèle
-    birth, event = date.fromisoformat(birth_date), date.fromisoformat(event_date)
-    return str(event.year - birth.year - ((event.month, event.day) < (birth.month, birth.day)))
+    birth = date.fromisoformat(birth_date)
+    event = date.fromisoformat(event_date)
+    before = (event.month, event.day) < (birth.month, birth.day)  # pas encore son anniversaire
+    return str(event.year - birth.year - before)
 
 
 SAVED: dict[str, dict] = {}

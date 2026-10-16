@@ -47,18 +47,20 @@ the class (qwen3, October 2026), so you can compare yours with it.
 
 | Script | What it shows |
 |---|---|
+| `00_entities.py` | Which named entities are in two short paragraphs? Asked raw (prose back), then constrained to JSON (data back) |
 | `01_thesis_labels.py` | Label research abstracts: which SDG, which technology, which impact (3 chained steps) |
 | `02_two_passes.py` | Pass 1 casts a wide net, pass 2 checks each label |
 | `03_relevance.py` | Yes/no filter: is this paper about the labour market? |
 | `04_normalise.py` | Messy country names to ISO codes: rules first, the LLM for the rest |
 | `05_same_firm.py` | Is "Total SA" the same firm as "TotalEnergies SE"? |
-| `06_summaries.py` | One-line summaries, checked by a second model (LLM as judge) |
+| `06_summaries.py` | Summaries of at most 120 characters (checked by the script), then a second model judges them on three written criteria |
 | `07_extract.py` | A French job ad to a JSON record (contract, remote, salary, city) |
 | `08_synthetic.py` | The model writes fake job ads with known labels, then finds the labels back |
 | `09_text_to_table.py` | Six sentences with misspelled or nicknamed countries ("la perfide Albion") to a clean table of ISO codes and amounts |
 | `10_read_table.py` | A scanned table (image) to CSV, checked cell by cell |
 | `11_agent_nobel.py` | An agent with 4 tools searches Wikipedia for 3 Nobel economists |
 | `12_your_turn.py` | **A template for your own classification**: change the labels, the question and the CSV |
+| `13_no_tool.py` | Letters, arithmetic, dates asked with no tool: why `11` gives the model one |
 
 The model is set in `llm.py` (`MODEL = "qwen3"`). The data is in `data/`.
 
